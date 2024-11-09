@@ -67,11 +67,7 @@ const Typewriter_3: React.FC<TypewriterProps> = ({
       <a
         href="#"
         className={`typewrite ${className}`}
-<<<<<<< HEAD
         data-period={typingSpeed}
-=======
-        data-period={period}
->>>>>>> 810e3dcb62b93e639fc9fc75c6fd0f889ca169e8
         style={{
           borderRight: `${cursorWidth}px solid ${cursorColor}`,
         }}
