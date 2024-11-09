@@ -54,7 +54,7 @@ interface TypewriterComponentProps {
   className?: string;
 }
 
-const TypewriterComponent: React.FC<TypewriterComponentProps> = ({
+const Typewriter_2: React.FC<TypewriterComponentProps> = ({
   message,
   cursorColor = "green", // Default cursor color
   duration = 3.5, // Default duration
@@ -73,4 +73,4 @@ const TypewriterComponent: React.FC<TypewriterComponentProps> = ({
   );
 };
 
-export default TypewriterComponent;
+export default Typewriter_2;

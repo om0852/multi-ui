@@ -1,7 +1,5 @@
 import React from "react";
-
-import Typewriter_1 from "./_components/Typewriter_1";
-import TypewriterComponent from "./_components/Typewriter_2";
+import Typewriter_3 from "./_components/Typewriter_3";
 
 const Page = () => {
   return (
@@ -13,7 +11,17 @@ const Page = () => {
         steps={10}
         className="text-4xl text-red-400 w-[auto]"
       /> */}
-      <TypewriterComponent message="om salunke welcome" duration={2} className="w-[10vh]"/>
+      {/* <Typewriter_2 message="om salunke welcome" duration={2} className="w-[10vh]"/> */}
+      <Typewriter_3
+        messages={[
+          "Hi, I'm Si.",
+          "I am Creative.",
+          "I Love Design.",
+          "I Love to Develop.",
+        ]}
+        period={20}
+        className="text-4xl text-red-400 w-[auto]"
+      />
     </div>
   );
 };
