@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from "react";
 
 interface TypewriterProps {
   messages: string[]; // Array of messages to rotate through
-  period: number; // Period before starting the next message
+  typingSpeed: number; // Period before starting the next message
   className?: string; // Optional class name for styling
   cursorColor?: string; // Custom cursor color
   cursorWidth?: number; // Custom cursor width in pixels
@@ -11,7 +11,7 @@ interface TypewriterProps {
 
 const Typewriter_3: React.FC<TypewriterProps> = ({
   messages,
-  period = 2000,
+  typingSpeed = 2000,
   className = "",
   cursorColor = "#000",
   cursorWidth = 4,
@@ -42,7 +42,7 @@ const Typewriter_3: React.FC<TypewriterProps> = ({
 
       // When typing is complete
       if (!isDeleting && textRef.current === currentMessage) {
-        nextDelta = period;
+        nextDelta = typingSpeed;
         setIsDeleting(true);
       } else if (isDeleting && textRef.current === "") {
         setIsDeleting(false);
@@ -60,14 +60,14 @@ const Typewriter_3: React.FC<TypewriterProps> = ({
 
     // Cleanup effect when component is unmounted or changes
     return () => clearTimeout(timeoutId);
-  }, [isDeleting, loopNum, messages, period]); // Removed 'text' from dependencies
+  }, [isDeleting, loopNum, messages, typingSpeed]); // Removed 'text' from dependencies
 
   return (
     <h1>
       <a
         href="#"
         className={`typewrite ${className}`}
-        data-period={period}
+        data-period={typingSpeed}
         style={{
           borderRight: `${cursorWidth}px solid ${cursorColor}`,
         }}
