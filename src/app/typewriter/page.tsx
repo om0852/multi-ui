@@ -4,6 +4,7 @@ import Typewriter_3 from "./_components/Typewriter_3";
 import Typewriter_4 from "./_components/Typewriter_4";
 import Typewriter_2 from "./_components/Typewriter_2";
 import Typewriter_1 from "./_components/Typewriter_1";
+import Typewriter_6 from "./_components/Typewriter_6";
 // import Typewriter_3 from "./_components/Typewriter_3";
 // import Typewriter_4 from "./_components/Typewriter_4";
 
@@ -39,6 +40,7 @@ const Page = () => {
         loop={true}
         speed={2} // slower typing speed
       />
+<Typewriter_6 text="I'm a Web Developer" speed={100} loop={true} reverse={false} />
 
     </div>
   );
