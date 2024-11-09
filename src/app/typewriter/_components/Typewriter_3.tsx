@@ -5,12 +5,16 @@ interface TypewriterProps {
   messages: string[]; // Array of messages to rotate through
   period: number; // Period before starting the next message
   className?: string; // Optional class name for styling
+  cursorColor?: string; // Custom cursor color
+  cursorWidth?: number; // Custom cursor width in pixels
 }
 
 const Typewriter_3: React.FC<TypewriterProps> = ({
   messages,
   period = 2000,
   className = "",
+  cursorColor = "#000",
+  cursorWidth = 4,
 }) => {
   const [text, setText] = useState<string>(""); // Text to display
   const [isDeleting, setIsDeleting] = useState<boolean>(false); // Is deleting the current text
@@ -60,7 +64,14 @@ const Typewriter_3: React.FC<TypewriterProps> = ({
 
   return (
     <h1>
-      <a href="#" className={`typewrite ${className}`} data-period={period}>
+      <a
+        href="#"
+        className={`typewrite ${className}`}
+        data-period={period}
+        style={{
+          borderRight: `${cursorWidth}px solid ${cursorColor}`,
+        }}
+      >
         <span className="wrap">{text}</span>
       </a>
     </h1>
