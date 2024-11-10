@@ -29,7 +29,7 @@ const Typewriter_7: React.FC<TypewriterProps> = ({
   useEffect(() => {
     const currentMessage = messages[messageIndex];
     let index = 0;
-    let typingDirection = isTypingForward ? 1 : -1;
+    const typingDirection = reverse ? 'reverse' : 'forward';
 
     const type = () => {
       setDisplayedText((prev) => {
@@ -38,9 +38,9 @@ const Typewriter_7: React.FC<TypewriterProps> = ({
       });
 
       if (isTypingForward && index < currentMessage.length) {
-        index += typingDirection;
+        index += 1;
       } else if (!isTypingForward && index > 0) {
-        index += typingDirection;
+        index -= 1;
       } else {
         if (reverse && !isTypingForward && index === 0) {
           setMessageIndex((prevIndex) =>
