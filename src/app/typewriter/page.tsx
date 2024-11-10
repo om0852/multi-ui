@@ -5,13 +5,14 @@ import Typewriter_4 from "./_components/Typewriter_4";
 import Typewriter_2 from "./_components/Typewriter_2";
 import Typewriter_1 from "./_components/Typewriter_1";
 import Typewriter_6 from "./_components/Typewriter_6";
+import Typewriter_7 from "./_components/Typewriter_7";
 // import Typewriter_3 from "./_components/Typewriter_3";
 // import Typewriter_4 from "./_components/Typewriter_4";
 
 const Page = () => {
   return (
     <div className="">
-      <Typewriter_1
+      {/* <Typewriter_1
         message="Follow the multi ui "
         cursorColor="green"
         duration={2}
@@ -40,7 +41,16 @@ const Page = () => {
         loop={true}
         speed={2} // slower typing speed
       />
-<Typewriter_6 text="I'm a Web Developer" speed={100} loop={true} reverse={false} />
+<Typewriter_6 text="I'm a Web Developer" speed={100} loop={true} reverse={false} /> */}
+<Typewriter_7 
+  messages={["Hello, World!"]} 
+  typeSpeed={120} 
+  cursorColor="red" 
+  className="text-bold" 
+  duration={0.6} 
+  loop={true} 
+  reverse={true}
+/>
 
     </div>
   );
