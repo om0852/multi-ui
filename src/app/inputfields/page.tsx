@@ -1,27 +1,28 @@
-"use client";
-import React, { useState } from "react";
-import CustomInput from "./_components/InputField_3";
+"use client"
+import React from 'react';
+import CustomInput from './_components/InputField_4';
 
-const Page = () => {
-  const [inputValue, setInputValue] = useState("");
-  const [error, setError] = useState("");
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-
-    // Example validation
-    if (e.target.value === "") {
-      setError("This field is required");
-    } else {
-      setError("");
-    }
-  };
-
+const Form = () => {
   return (
-    <div className="p-[10vh]">
-      <CustomInput name="om" id="om" options={["salunke","om"]} className="border-black border-[1px]" />
-    </div>
+    <form className='p-[10vh]'>
+      <CustomInput
+        name="name"
+        id="name"
+        placeholder="Enter your name"
+        label="Name"
+        required
+        error='welcome'
+      />
+      {/* You can also add an image URL */}
+      <CustomInput
+        name="email"
+        id="email"
+        placeholder="Enter your email"
+        label="Email"
+        required
+      />
+    </form>
   );
 };
 
-export default Page;
+export default Form;
