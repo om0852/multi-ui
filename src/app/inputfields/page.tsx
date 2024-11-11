@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import ComboBox from "./_components/InputFields_2";
+import CustomInput from "./_components/InputField_3";
 
 const Page = () => {
   const [inputValue, setInputValue] = useState("");
@@ -19,7 +19,7 @@ const Page = () => {
 
   return (
     <div className="p-[10vh]">
-      <ComboBox name="om" id="om" options={["salunke","om"]} className="border-black border-[1px]" />
+      <CustomInput name="om" id="om" options={["salunke","om"]} className="border-black border-[1px]" />
     </div>
   );
 };

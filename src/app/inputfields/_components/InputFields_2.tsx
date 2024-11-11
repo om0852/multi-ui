@@ -55,7 +55,7 @@ const StyledDataList = styled.datalist`
   color: black;
 `;
 
-const ComboBox: React.FC<ComboBoxProps> = ({
+const InputField_2: React.FC<ComboBoxProps> = ({
   className,
   placeholder,
   inputType = "text",
@@ -91,4 +91,4 @@ const ComboBox: React.FC<ComboBoxProps> = ({
   );
 };
 
-export default ComboBox;
+export default InputField_2;
