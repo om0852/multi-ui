@@ -4,8 +4,14 @@ import styled, { keyframes } from "styled-components";
 
 // Define the keyframes for typing and cursor blinking animations
 const typing = (duration: number, steps: number) => keyframes`
-  from { width: 0; }
-  to { width: 100%; }
+  from { 
+    width: 0;
+    visibility: visible;
+  }
+  to { 
+    width: ${steps}ch;
+    visibility: visible;
+  }
 `;
 
 const blinkCaret = (cursorColor: string) => keyframes`

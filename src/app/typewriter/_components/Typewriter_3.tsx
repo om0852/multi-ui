@@ -19,7 +19,6 @@ const Typewriter_3: React.FC<TypewriterProps> = ({
   const [text, setText] = useState<string>(""); // Text to display
   const [isDeleting, setIsDeleting] = useState<boolean>(false); // Is deleting the current text
   const [loopNum, setLoopNum] = useState<number>(0); // Current message index
-  const [delta, setDelta] = useState<number>(200); // Speed of typing
   const textRef = useRef<string>(""); // Use ref to hold the current text value
 
   // Function to update the text every interval
@@ -49,8 +48,6 @@ const Typewriter_3: React.FC<TypewriterProps> = ({
         setLoopNum(loopNum + 1);
         nextDelta = 500;
       }
-
-      setDelta(nextDelta);
 
       // Schedule next tick
       timeoutId = setTimeout(handleTick, nextDelta);
