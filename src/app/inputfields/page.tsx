@@ -1,13 +1,27 @@
-"use client"
-import React from 'react'
-import InputField from './_components/InputField_1'
+"use client";
+import React, { useState } from "react";
+import ComboBox from "./_components/InputFields_2";
 
 const Page = () => {
-  return (
-    <div className='p-[10vh]'>
-      <InputField label='Email' value='' onChange={()=>2+2} />
-    </div>
-  )
-}
+  const [inputValue, setInputValue] = useState("");
+  const [error, setError] = useState("");
 
-export default Page
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setInputValue(e.target.value);
+
+    // Example validation
+    if (e.target.value === "") {
+      setError("This field is required");
+    } else {
+      setError("");
+    }
+  };
+
+  return (
+    <div className="p-[10vh]">
+      <ComboBox name="om" id="om" options={["salunke","om"]} className="border-black border-[1px]" />
+    </div>
+  );
+};
+
+export default Page;
