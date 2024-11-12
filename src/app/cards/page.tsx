@@ -2,6 +2,7 @@ import React from 'react';
 import Card_1 from './_components//Card_1';
 import Card_2 from './_components/Card_2';
 import Card_3 from './_components/Card_3';
+import Card_4 from './_components/Card_4';
 
 const App = () => {
 
@@ -31,6 +32,12 @@ const App = () => {
         height='400px'
         width='400px'
       />
+      <Card_4 height={"400px"} width={"220px"} >
+        <h1>Card 4</h1>
+        <h1>Card 4</h1>
+        <h1>Card 4</h1>
+        <h1>Card 4</h1>
+      </Card_4>
     </div>
   );
 };
