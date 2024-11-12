@@ -1,6 +1,6 @@
 "use client";
 import React, { FC } from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 interface InputProps {
   name: string;
@@ -9,10 +9,10 @@ interface InputProps {
   label: string;
   value?: string;
   required?: boolean;
-  className?: string; // Allow user to set a custom className
-  onChange?: React.ChangeEventHandler<HTMLInputElement>; // Allow user to handle input changes
-  options?: string[]; // Options for the datalist
-  error?: string; // Error message
+  className?: string;
+  onChange?: React.ChangeEventHandler<HTMLInputElement>;
+  options?: string[];
+  error?: string;
 }
 
 const FormGroup = styled.div`
@@ -22,17 +22,23 @@ const FormGroup = styled.div`
   width: 50%;
 `;
 
-const InputField = styled.input<{ hasError?: boolean }>`
+const InputField = styled.input<{ error?: string }>`
   font-family: inherit;
   width: 100%;
   border: 0;
-  border-bottom: 2px solid ${({ hasError }) => (hasError ? 'red' : '#9b9b9b')}; // Red border for error
+  border-bottom: 2px solid #9b9b9b;
   outline: 0;
   font-size: 1.3rem;
   color: white;
   padding: 7px 0;
   background: transparent;
   transition: border-color 0.2s;
+
+  ${({ error }) =>
+    error &&
+    css`
+      border-bottom-color: red;
+    `}
 
   &::placeholder {
     color: transparent;
@@ -49,7 +55,7 @@ const InputField = styled.input<{ hasError?: boolean }>`
       font-size: 1rem;
       color: #11998e;
       font-weight: 700;
-      top: -0px;  // This ensures that the label moves above the input when focused
+      top: -0px;
     }
     padding-bottom: 6px;
     font-weight: 700;
@@ -66,13 +72,13 @@ const InputField = styled.input<{ hasError?: boolean }>`
 
 const Label = styled.label`
   position: absolute;
-  top: 30px;  // Adjust position so the label starts inside the input field
+  top: 30px;
   display: block;
   transition: 0.2s;
   font-size: 1rem;
   color: #9b9b9b;
-  pointer-events: none; // Prevent the label from blocking the input field
-  z-index: 1; // Ensure the label stays above the input
+  pointer-events: none;
+  z-index: 1;
 `;
 
 const ErrorText = styled.div`
@@ -103,10 +109,9 @@ const InputField_4: FC<InputProps> = ({
         required={required}
         value={value}
         onChange={onChange}
-        className={className} // Allow user to add custom className
-        list={options ? `${id}-datalist` : undefined} // Show datalist if options are provided
-        // Pass error state as a styled-component prop, not as an attribute to <input>
-        hasError={!!error} 
+        className={className}
+        list={options ? `${id}-datalist` : undefined}
+        error={error}
       />
       {options && (
         <datalist id={`${id}-datalist`}>
@@ -116,7 +121,7 @@ const InputField_4: FC<InputProps> = ({
         </datalist>
       )}
       <Label htmlFor={id} className="form__label">{label}</Label>
-      {error && <ErrorText>{error}</ErrorText>} {/* Show error message if exists */}
+      {error && <ErrorText>{error}</ErrorText>}
     </FormGroup>
   );
 };
