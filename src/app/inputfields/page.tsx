@@ -8,6 +8,7 @@ import AnimatedInput from "./_components/InputField_8";
 import GradientInput from "./_components/InputField_9";
 import InputField_10 from "./_components/InputField_10";
 import InputField_11 from "./_components/InputField_11";
+import InputWithAnimation from "./_components/InputField_12";
 
 const Form = () => {
   return (
@@ -18,7 +19,8 @@ const Form = () => {
         {/* <NotifyForm width={"100vh"}/> */}
         {/* <AnimatedInput/> */}
         {/* <GradientInput placeholder="first name" height={"10vh"}  className="h-[20vh]" /> */}
-        <InputField_11/>
+        {/* <InputField_11/> */}
+        <InputWithAnimation/>
         
         </div>
       {/* <EmailInput /> */}
