@@ -167,7 +167,7 @@ interface NotifyFormProps extends InputHTMLAttributes<HTMLInputElement> {
   buttonWidth?: string;
 }
 
-const NotifyForm: React.FC<NotifyFormProps> = ({
+const InputField_7: React.FC<NotifyFormProps> = ({
   inputHeight,
   inputWidth,
   buttonHeight,
@@ -202,4 +202,4 @@ const NotifyForm: React.FC<NotifyFormProps> = ({
   );
 };
 
-export default NotifyForm;
+export default InputField_7;
