@@ -93,7 +93,7 @@ interface AnimatedInputProps extends InputHTMLAttributes<HTMLInputElement> {
   pattern?: string;
 }
 
-const AnimatedInput: React.FC<AnimatedInputProps> = ({ pattern = ".{6,}", ...props }) => {
+const InputField_8: React.FC<AnimatedInputProps> = ({ pattern = ".{6,}", ...props }) => {
   return (
     <Container>
       <InputWrapper>
@@ -115,4 +115,4 @@ const AnimatedInput: React.FC<AnimatedInputProps> = ({ pattern = ".{6,}", ...pro
   );
 };
 
-export default AnimatedInput;
+export default InputField_8;

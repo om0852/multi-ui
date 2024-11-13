@@ -68,7 +68,7 @@ interface AnimatedInputProps extends InputHTMLAttributes<HTMLInputElement> {
   height?: string;  // Allow custom height
 }
 
-const GradientInput: React.FC<AnimatedInputProps> = ({ placeholder = "Gradient border focus fun", height, ...props }) => {
+const InputField_9: React.FC<AnimatedInputProps> = ({ placeholder = "Gradient border focus fun", height, ...props }) => {
   return (
     <StyledInputContainer height={height}>
       <div className="input">
@@ -79,4 +79,4 @@ const GradientInput: React.FC<AnimatedInputProps> = ({ placeholder = "Gradient b
   );
 };
 
-export default GradientInput;
+export default InputField_9;
