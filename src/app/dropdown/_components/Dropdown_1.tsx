@@ -6,6 +6,7 @@ import { motion } from "framer-motion";
 interface DropdownOption {
   label: string;
   disabled?: boolean;
+  onClick?: (value: string) => void; // Add an onClick function for individual options
 }
 
 interface DropdownProps {
@@ -47,6 +48,12 @@ const DropdownButton = styled.button<{ isOpen: boolean }>`
   color: ${({ isOpen }) => (isOpen ? "#fff" : "#0d41e1")};
   transition: background 0.3s, color 0.3s;
 `;
+
+// Remove isOpen from the props of the native button element using attrs
+const DropdownButtonWithProps = styled(DropdownButton).attrs((props: { isOpen: boolean }) => ({
+  // This removes the isOpen prop from being passed to the native DOM element
+  isOpen: undefined,
+}))``;
 
 const DropdownMenu = styled(motion.ul)`
   position: absolute;
@@ -130,15 +137,22 @@ const Dropdown_1: React.FC<DropdownProps> = ({ label, options }) => {
     setOpenIndex(openIndex === index ? null : index);
   };
 
+  const handleOptionClick = (option: DropdownOption) => {
+    // If the option has an onClick handler, call it
+    if (option.onClick) {
+      option.onClick(option.label);
+    }
+  };
+
   return (
     <NavList>
       <Dropdown>
-        <DropdownButton
+        <DropdownButtonWithProps
           isOpen={openIndex !== null}
           onClick={() => handleDropdownToggle(openIndex === null ? -1 : openIndex)}
         >
           {label}
-        </DropdownButton>
+        </DropdownButtonWithProps>
         <DropdownMenu
           initial={{ opacity: 0, height: 0 }}
           animate={{
@@ -152,9 +166,17 @@ const Dropdown_1: React.FC<DropdownProps> = ({ label, options }) => {
               key={index}
               className={option.disabled ? "disabled" : ""}
             >
-              <a href="#" onClick={e => option.disabled && e.preventDefault()}>
-                {option.label}{" "}
-                <i className="fa-solid fa-star"></i>
+              <a
+                href="#"
+                onClick={(e) => {
+                  if (option.disabled) {
+                    e.preventDefault();
+                  } else {
+                    handleOptionClick(option);
+                  }
+                }}
+              >
+                {option.label} <i className="fa-solid fa-star"></i>
               </a>
             </DropdownMenuItem>
           ))}
