@@ -2,13 +2,11 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import { motion } from "framer-motion";
-import Link from "next/link";
 
 interface DropdownOption {
   label: string;
   disabled?: boolean;
   onClick?: (value: string) => void; // Add an onClick function for individual options
-  href?: string; // Optional href for navigation
 }
 
 interface DropdownProps {
@@ -52,7 +50,7 @@ const DropdownButton = styled.button<{ isOpen: boolean }>`
 `;
 
 const DropdownButtonWithProps = styled(DropdownButton).attrs((props: { isOpen: boolean }) => ({
-  isOpen: undefined,
+  isOpen: undefined, 
 }))``;
 
 const DropdownMenu = styled(motion.ul)`
@@ -84,17 +82,17 @@ const DropdownMenuItem = styled.li`
     transform: translateX(calc(15% / 2));
   }
 
-  button,
-  a {
+  button {
     font-size: 0.85rem;
     padding: 0.5rem 1rem;
     display: flex;
     justify-content: space-between;
     text-decoration: none;
     color: inherit;
-    position: relative;
     background: transparent;
     border: none;
+    cursor: pointer;
+    position: relative;
 
     &:hover {
       color: #0d41e1;
@@ -141,7 +139,6 @@ const Dropdown_1: React.FC<DropdownProps> = ({ label, options }) => {
   };
 
   const handleOptionClick = (option: DropdownOption) => {
-    // If the option has an onClick handler, call it
     if (option.onClick) {
       option.onClick(option.label);
     }
@@ -169,25 +166,18 @@ const Dropdown_1: React.FC<DropdownProps> = ({ label, options }) => {
               key={index}
               className={option.disabled ? "disabled" : ""}
             >
-              {/* Conditional rendering for a button or a link */}
-              {option.href ? (
-                <Link href={option.href}>
-                  {option.label} <i className="fa-solid fa-star"></i>
-                </Link>
-              ) : (
-                <button
-                  onClick={(e) => {
-                    if (option.disabled) {
-                      e.preventDefault();
-                    } else {
-                      handleOptionClick(option);
-                    }
-                  }}
-                  disabled={option.disabled}
-                >
-                  {option.label} <i className="fa-solid fa-star"></i>
-                </button>
-              )}
+              <button
+                onClick={(e) => {
+                  if (option.disabled) {
+                    e.preventDefault();
+                  } else {
+                    handleOptionClick(option);
+                  }
+                }}
+                disabled={option.disabled}
+              >
+                {option.label} <i className="fa-solid fa-star"></i>
+              </button>
             </DropdownMenuItem>
           ))}
         </DropdownMenu>

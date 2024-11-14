@@ -1,6 +1,7 @@
 "use client"
 import React, { useState } from "react";
 import Dropdown_1 from "./_components/Dropdown_1";
+import Dropdown_2 from "./_components/Dropdown_2";
 
 const page = () => {
   const [selectedValue, setSelectedValue] = useState<string>("");
@@ -14,7 +15,7 @@ const page = () => {
        <Dropdown_1
       label="Select Option"
       options={[
-        { label: "Option 1", value: "option1",onClick:(value)=>{alert(value)} },
+        { label: "Option 1", value: "option1",onClick:(value)=>{alert(value)} ,href:"/"},
         { label: "Option 2", value: "option2", disabled: true },
         { label: "Option 3", value: "option3" },
       ]}
