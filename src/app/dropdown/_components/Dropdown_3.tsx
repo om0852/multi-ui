@@ -42,13 +42,6 @@ const DropdownButton = styled.button`
   }
 `;
 
-const ChevronIcon = styled.svg<{ isOpen: boolean }>`
-  width: 1rem;
-  height: 1rem;
-  transform: ${(props) => (props.isOpen ? "rotate(-180deg)" : "rotate(0)")};
-  transition: transform 0.3s ease;
-`;
-
 const DropdownContent = styled.div`
   position: absolute;
   top: 3rem;
@@ -89,6 +82,27 @@ const DropdownLink = styled.button<{ disabled?: boolean }>`
   }
 `;
 
+// ChevronIcon component with forwardRef
+const ChevronIcon = styled(
+  React.forwardRef<SVGSVGElement, { isopen: boolean }>((props, ref) => (
+    <svg
+      ref={ref}
+      xmlns="http://www.w3.org/2000/svg"
+      viewBox="0 0 24 24"
+      strokeWidth="1.5"
+      stroke="currentColor"
+      {...props}
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+    </svg>
+  ))
+)`
+  width: 1rem;
+  height: 1rem;
+  transform: ${(props) => (props.isopen ? "rotate(-180deg)" : "rotate(0)")};
+  transition: transform 0.3s ease;
+`;
+
 const Dropdown: React.FC<DropdownProps> = ({ label, options, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -125,9 +139,7 @@ const Dropdown: React.FC<DropdownProps> = ({ label, options, onChange }) => {
     <DropdownWrapper className="dropdown-wrapper">
       <DropdownButton onClick={handleButtonClick}>
         {label}
-        <ChevronIcon isOpen={isOpen} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-        </ChevronIcon>
+        <ChevronIcon isopen={isOpen} />
       </DropdownButton>
       <DropdownContent className={isOpen ? "active" : ""}>
         {options.map((option, index) => (

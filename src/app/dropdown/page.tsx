@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Dropdown_1 from "./_components/Dropdown_1";
 import Dropdown_2 from "./_components/Dropdown_2";
 import Dropdown from "./_components/Dropdown_3";
+import ProfileDropdown from "./_components/Dropdown_4";
 
 const page = () => {
   const [selectedValue, setSelectedValue] = useState<string>("");
@@ -14,9 +15,18 @@ const page = () => {
   const handleDropdownChange = (value: string) => {
     console.log("Selected Option:", value);
   };
+  const profileImage = "https://d39qlo6vcf2ui2.cloudfront.net/codepen/profile-drop-down/pexels-pixabay-415829.jpg";
+  const options = [
+    { label: "Profile", icon: "person-outline" },
+    { label: "Inbox", icon: "mail-outline" },
+    { label: "Settings", icon: "settings-outline" },
+    { label: "Help", icon: "help-circle-outline" },
+    { label: "Logout", icon: "log-out-outline" },
+  ];
 
   return (
     <div>
+      <ProfileDropdown profileImage={profileImage} options={options} />
        {/* <Dropdown_1
       label="Select Option"
       options={[
@@ -29,7 +39,7 @@ const page = () => {
       onClick={(value) => console.log("Clicked on:", value)}
       onSelect={handleSelect}
     /> */}
-  <Dropdown
+  {/* <Dropdown
   label="Select Option"
   options={[
     { label: "Option 1", value: "option1", onClick: (value) => alert(value) }, 
@@ -37,7 +47,8 @@ const page = () => {
     { label: "Option 3", value: "option3" },
   ]}
   onChange={(value) => console.log(value)}
-/>  </div>
+/>  */}
+ </div>
   );
 };
 
