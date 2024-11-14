@@ -80,7 +80,7 @@ const ErrorMessage = styled.div`
   margin-top: 0.3em;
 `;
 
-const CustomInput: React.FC<InputGroupProps> = ({
+const InputField_3: React.FC<InputGroupProps> = ({
   className,
   placeholder,
   inputType = "text",
@@ -107,4 +107,4 @@ const CustomInput: React.FC<InputGroupProps> = ({
   );
 };
 
-export default CustomInput;
+export default InputField_3;

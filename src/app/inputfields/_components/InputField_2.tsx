@@ -12,6 +12,8 @@ interface ComboBoxProps {
   label?: string;
   error?: string;
   options?: string[];
+  leadingIcon?: string; // Leading icon URL
+  trailingIcon?: string; // Trailing icon URL
 }
 
 const InputWrapper = styled.div`
@@ -24,22 +26,36 @@ const Label = styled.label`
   font-weight: 500;
 `;
 
-const Input = styled.input`
+const ComboBoxWrapper = styled.div`
+  position: relative;
+  display: flex;
+  flex-direction: column;
+`;
+
+const Icon = styled.img<{ position: 'left' | 'right' }>`
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  ${({ position }) => (position === 'left' ? 'left: 10px;' : 'right: 10px;')}
+  pointer-events: none; // Prevents the icon from interfering with clicks in the input
+`;
+
+const Input = styled.input<{ hasLeadingIcon: boolean; hasTrailingIcon: boolean }>`
   font: inherit;
-  padding: 0.2em 0.5em;
+  padding: 0.5em 0.5em;
   border: 1px solid #ddd;
   border-radius: 4px;
   width: 100%;
+  padding-left: ${({ hasLeadingIcon }) => (hasLeadingIcon ? '35px' : '10px')};
+  padding-right: ${({ hasTrailingIcon }) => (hasTrailingIcon ? '35px' : '10px')};
 `;
 
 const ErrorMessage = styled.div`
   color: red;
   font-size: 0.8em;
   margin-top: 0.3em;
-`;
-
-const ComboBoxWrapper = styled.div`
-  position: relative;
 `;
 
 const StyledDataList = styled.datalist`
@@ -63,12 +79,15 @@ const InputField_2: React.FC<ComboBoxProps> = ({
   id,
   label,
   error,
-  options
+  options,
+  leadingIcon,
+  trailingIcon,
 }) => {
   return (
-    <InputWrapper >
+    <InputWrapper>
       {label && <Label htmlFor={id}>{label}</Label>}
       <ComboBoxWrapper>
+        {leadingIcon && <Icon src={leadingIcon} alt="leading icon" position="left" />}
         <Input
           type={inputType}
           name={name}
@@ -77,7 +96,10 @@ const InputField_2: React.FC<ComboBoxProps> = ({
           placeholder={placeholder}
           list={`${id}-options`}
           autoComplete="off"
+          hasLeadingIcon={!!leadingIcon}
+          hasTrailingIcon={!!trailingIcon}
         />
+        {trailingIcon && <Icon src={trailingIcon} alt="trailing icon" position="right" />}
         <StyledDataList id={`${id}-options`}>
           {options && options.map((option, index) => (
             <motion.option key={index} value={option} whileHover={{ scale: 1.05 }}>

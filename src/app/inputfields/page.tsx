@@ -9,6 +9,10 @@ import GradientInput from "./_components/InputField_9";
 import InputField_10 from "./_components/InputField_10";
 import InputField_11 from "./_components/InputField_11";
 import InputWithAnimation from "./_components/InputField_12";
+import AnimatedInputField from "./_components/InputField_13";
+import InputField_2 from "./_components/InputField_2";
+import InputField_3 from "./_components/InputField_3";
+import CreditCardInputField from "./_components/InputField_13";
 
 const Form = () => {
   return (
@@ -19,9 +23,12 @@ const Form = () => {
         {/* <NotifyForm width={"100vh"}/> */}
         {/* <AnimatedInput/> */}
         {/* <GradientInput placeholder="first name" height={"10vh"}  className="h-[20vh]" /> */}
-        {/* <InputField_11/> */}
-        <InputWithAnimation/>
-        
+        {/* <InputField_2 trailingIcon="https://img.icons8.com/?size=100&id=60688&format=png&color=000000" leadingIcon="https://img.icons8.com/?size=100&id=60688&format=png&color=000000" placeholder="w"  className="border-red-300"/> */}
+        {/* <InputField_3  leadingIcon="https://img.icons8.com/?size=100&id=60688&format=png&color=000000"/> */}
+    
+      {/* <InputWithAnimation/> */}
+     {/* <AnimatedInputField/> */}
+    <CreditCardInputField/>    
         </div>
       {/* <EmailInput /> */}
     </div>
