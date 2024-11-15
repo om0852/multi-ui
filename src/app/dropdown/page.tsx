@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Dropdown_1 from "./_components/Dropdown_1";
 import Dropdown_2 from "./_components/Dropdown_2";
-import Dropdown from "./_components/Dropdown_6";
+import Dropdown from "./_components/Dropdown_10";
 import ProfileDropdown from "./_components/ProfileDropdown";
 import  CustomDropdown  from "./_components/Dropdown_9";
 import { MultiLevelDropdown } from "./_components/Dropdown_8";
@@ -65,14 +65,19 @@ const page = () => {
   const handleOptionClick = (value: string) => {
     console.log("Selected option:", value);
   };
-  const optionss = [
-    { value: "item1", label: "Item 10" },
-    { value: "item2", label: "Item 2" },
-    { value: "item3", label: "Item 3" },
+  // Define the DropdownOption type to include the separator
+  type DropdownOption = 
+    | { value: string; label: string; onSelect?: () => void; separator?: never }
+    | { separator: true; value?: never; label?: never; onSelect?: never };
+
+  // Update the optionsa array to match the DropdownOption type
+  const optionsa: DropdownOption[] = [
+    { label: "Profile", value: "profile" },
+    { label: "Dashboard", value: "dashboard" },
+    { separator: true },
+    { label: "Settings", value: "settings" },
+    { label: "Sign Out", value: "signout", onSelect: () => alert("Signed out") },
   ];
-  const handleSelect = (value: string) => {
-    console.log("Selected:", value);
-  };
 
   const handleChange = (value: string) => {
     console.log("Changed:", value);
@@ -102,14 +107,18 @@ const page = () => {
         items={dropdownItems}
         onClick={handleOptionClick}
       /> */}
-      <CustomDropdown options={optionss} placeholder="Choose an option" />
+      {/* <CustomDropdown options={optionss} placeholder="Choose an option" />
       <CustomDropdown
         options={dropdownItems}
         placeholder="Select an option"
         onSelect={handleSelect}
         onChange={handleChange}
-      />
-      </div>
+      /> */}
+<Dropdown
+  options={optionsa}
+  placeholder="Choose an action"
+  onChange={(value) => console.log("Selected:", value)}
+/>      </div>
   );
 };
 
