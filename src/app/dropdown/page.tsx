@@ -4,16 +4,16 @@ import Dropdown_1 from "./_components/Dropdown_1";
 import Dropdown_2 from "./_components/Dropdown_2";
 import Dropdown from "./_components/Dropdown_6";
 import ProfileDropdown from "./_components/ProfileDropdown";
-import { CustomDropdown } from "./_components/Dropdown_7";
+import  CustomDropdown  from "./_components/Dropdown_9";
 import { MultiLevelDropdown } from "./_components/Dropdown_8";
 
 const page = () => {
   const [selectedValue, setSelectedValue] = useState<string>("");
 
-  const handleSelect = (value: string) => {
-    console.log("Selected value:", value);
-    setSelectedValue(value);
-  };
+  // const handleSelect = (value: string) => {
+  //   console.log("Selected value:", value);
+  //   setSelectedValue(value);
+  // };
   const handleDropdownChange = (value: string) => {
     console.log("Selected Option:", value);
   };
@@ -50,21 +50,33 @@ const page = () => {
         {
           label: "Another Dropdown",
           subItems: [
-            { label: "Level 3" },
-            { label: "Level 3" },
-            { label: "Level 3" },
+            { label: "Level 3A" },
+            { label: "Level 3B" },
+            { label: "Level 3C" },
           ],
         },
-        { label: "Level 2" },
+        { label: "Level 2B" },
       ],
     },
-    { label: "Level 1" },
+    { label: "Level 1B" },
   ];
+  
 
   const handleOptionClick = (value: string) => {
     console.log("Selected option:", value);
   };
+  const optionss = [
+    { value: "item1", label: "Item 10" },
+    { value: "item2", label: "Item 2" },
+    { value: "item3", label: "Item 3" },
+  ];
+  const handleSelect = (value: string) => {
+    console.log("Selected:", value);
+  };
 
+  const handleChange = (value: string) => {
+    console.log("Changed:", value);
+  };
   return (
     <div className="p-4">
       {/* <CustomDropdown
@@ -85,11 +97,19 @@ const page = () => {
       />
        */}
 
-<MultiLevelDropdown
+{/* <MultiLevelDropdown
         label="Dropdown Button"
         items={dropdownItems}
         onClick={handleOptionClick}
-      />    </div>
+      /> */}
+      <CustomDropdown options={optionss} placeholder="Choose an option" />
+      <CustomDropdown
+        options={dropdownItems}
+        placeholder="Select an option"
+        onSelect={handleSelect}
+        onChange={handleChange}
+      />
+      </div>
   );
 };
 
