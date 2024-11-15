@@ -6,6 +6,7 @@ import Dropdown from "./_components/Dropdown_12";
 // import ProfileDropdown from "./_components/ProfileDropdown";
 import CustomDropdown from "./_components/Dropdown_9";
 import { MultiLevelDropdown } from "./_components/Dropdown_8";
+import Dropdown_13 from "./_components/Dropdown_13";
 
 const page = () => {
   const [selectedValue, setSelectedValue] = useState<string>("");
@@ -87,6 +88,22 @@ const page = () => {
   const handleChange = (value: string) => {
     console.log("Changed:", value);
   };
+
+  const optionss = [
+    {
+      category: 'Artwork',
+      options: ['Painting', 'Sculpture', 'Digital Art'],
+    },
+    {
+      category: 'All',
+      options: ['Option 1', 'Option 2', 'Option 3'],
+    },
+    {
+      category: 'All Tags',
+      options: ['Tag 1', 'Tag 2', 'Tag 3'],
+    },
+  ];
+  
   return (
     <div className="p-4">
       {/* <CustomDropdown
@@ -125,7 +142,8 @@ const page = () => {
   onChange={(value) => console.log("Selected:", value)}
 />      */}
 
-      <Dropdown label="Choose an option" options={options}  />
+      {/* <Dropdown label="Choose an option" options={options}  /> */}
+      <Dropdown_13 options={optionss} />
     </div>
   );
 };
