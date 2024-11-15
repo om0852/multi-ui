@@ -9,6 +9,7 @@ import { MultiLevelDropdown } from "./_components/Dropdown_8";
 import Dropdown_13 from "./_components/Dropdown_13";
 import DropdownMenu from "./_components/Dropdown_14";
 import NestedCategoryMenu from "./_components/Dropdown_16";
+import CustomSelectMenu from "./_components/Dropdown_17";
 
 const page = () => {
   const [selectedValue, setSelectedValue] = useState<string>("");
@@ -126,6 +127,13 @@ const page = () => {
     },
   ];
   
+  const optionslan = [
+    { label: "English", value: "en", disabled: true },
+    { label: "Arabic", value: "ar" },
+    { label: "Hindi", value: "hi" },
+    { label: "Spanish", value: "es" },
+    { label: "French", value: "fr" },
+  ];
   return (
     <div className="p-4">
       {/* <CustomDropdown
@@ -168,7 +176,8 @@ const page = () => {
       {/* <Dropdown_13 options={optionss} /> */}
       {/* <DropdownMenu options={options}/> */}
       {/* <Dropdown options={options}/> */}
-      <NestedCategoryMenu options={menuOptions}/>
+      {/* <NestedCategoryMenu options={menuOptions}/> */}
+      <CustomSelectMenu options={optionslan}/>
     </div>
   );
 };
