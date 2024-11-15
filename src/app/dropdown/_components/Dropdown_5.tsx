@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 
-const Dropdown: React.FC = () => {
+const Dropdown_5: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState<string[]>([]);
   const [selectAllChecked, setSelectAllChecked] = useState(false);
@@ -135,4 +135,4 @@ const Dropdown: React.FC = () => {
   );
 };
 
-export default Dropdown;
+export default Dropdown_5;

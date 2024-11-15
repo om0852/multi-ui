@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import Dropdown_1 from "./_components/Dropdown_1";
 import Dropdown_2 from "./_components/Dropdown_2";
-import Dropdown from "./_components/Dropdown_5";
-import ProfileDropdown from "./_components/Dropdown_4";
+import Dropdown from "./_components/Dropdown_6";
+import ProfileDropdown from "./_components/ProfileDropdown";
 
 const page = () => {
   const [selectedValue, setSelectedValue] = useState<string>("");
@@ -26,7 +26,13 @@ const page = () => {
 
   return (
     <div>
-      <Dropdown/>
+      <Dropdown label="choose"  options={[
+    { label: "Option 1", value: "option1", onClick: (value) => alert(value) }, 
+    { label: "Option 2", value: "option2", disabled: true },
+    { label: "Option 3", value: "option3" },
+  ]}
+  onChange={(value) => console.log(value)}/>
+      
       {/* <ProfileDropdown profileImage={profileImage} options={options} /> */}
        {/* <Dropdown_1
       label="Select Option"

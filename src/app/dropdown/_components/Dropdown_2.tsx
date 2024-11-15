@@ -131,7 +131,7 @@ const Main = styled.main`
   text-align: center;
 `;
 
-const Dropdown_1: React.FC<DropdownProps> = ({ label, options }) => {
+const Dropdown_2: React.FC<DropdownProps> = ({ label, options }) => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   const handleDropdownToggle = (index: number) => {
@@ -186,4 +186,4 @@ const Dropdown_1: React.FC<DropdownProps> = ({ label, options }) => {
   );
 };
 
-export default Dropdown_1;
+export default Dropdown_2;
