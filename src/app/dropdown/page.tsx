@@ -5,6 +5,7 @@ import Dropdown_2 from "./_components/Dropdown_2";
 import Dropdown from "./_components/Dropdown_6";
 import ProfileDropdown from "./_components/ProfileDropdown";
 import { CustomDropdown } from "./_components/Dropdown_7";
+import { MultiLevelDropdown } from "./_components/Dropdown_8";
 
 const page = () => {
   const [selectedValue, setSelectedValue] = useState<string>("");
@@ -36,9 +37,37 @@ const page = () => {
       console.log("Selected:", value);
     };
   };
+  type DropdownItem = {
+    label: string;
+    subItems?: DropdownItem[];
+  };
+  
+  const dropdownItems: DropdownItem[] = [
+    {
+      label: "Level 1",
+      subItems: [
+        { label: "Level 2" },
+        {
+          label: "Another Dropdown",
+          subItems: [
+            { label: "Level 3" },
+            { label: "Level 3" },
+            { label: "Level 3" },
+          ],
+        },
+        { label: "Level 2" },
+      ],
+    },
+    { label: "Level 1" },
+  ];
+
+  const handleOptionClick = (value: string) => {
+    console.log("Selected option:", value);
+  };
+
   return (
     <div className="p-4">
-      <CustomDropdown
+      {/* <CustomDropdown
         label="Example Dropdown"
         placeholder="Select an option"
         options={[
@@ -54,8 +83,13 @@ const page = () => {
         onSelect={(value) => console.log("Selected:", value)}
         onChange={(value) => console.log("Changed:", value)}
       />
-      
-    </div>
+       */}
+
+<MultiLevelDropdown
+        label="Dropdown Button"
+        items={dropdownItems}
+        onClick={handleOptionClick}
+      />    </div>
   );
 };
 
