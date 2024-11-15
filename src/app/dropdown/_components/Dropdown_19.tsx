@@ -15,7 +15,7 @@ interface DropdownMenuProps {
   onClick?: () => void;
 }
 
-const DropdownMenu: React.FC<DropdownMenuProps> = ({
+const Dropdown_19: React.FC<DropdownMenuProps> = ({
   options,
   placeholder = "Select Option",  // Default placeholder if not provided
   onSelect,
@@ -87,4 +87,4 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
   );
 };
 
-export default DropdownMenu;
+export default Dropdown_19;

@@ -7,7 +7,7 @@ import Dropdown from "./_components/Dropdown_15";
 import CustomDropdown from "./_components/Dropdown_9";
 import { MultiLevelDropdown } from "./_components/Dropdown_8";
 import Dropdown_13 from "./_components/Dropdown_13";
-import DropdownMenu from "./_components/Dropdown_19";
+import DropdownMenu from "./_components/Dropdown_18";
 import NestedCategoryMenu from "./_components/Dropdown_16";
 import CustomSelectMenu from "./_components/Dropdown_17";
 
@@ -178,8 +178,8 @@ const page = () => {
       {/* <DropdownMenu options={options}/> */}
       {/* <Dropdown options={options}/> */}
       {/* <NestedCategoryMenu options={menuOptions}/> */}
-      {/* <CustomSelectMenu options={optionslan}/> */}
-      <DropdownMenu options={optionslan} placeholder="select"/>
+      <CustomSelectMenu options={optionslan}/>
+      {/* <DropdownMenu options={optionslan} placeholder="ok"/> */}
     </div>
   );
 };

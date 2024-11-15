@@ -9,13 +9,15 @@ interface Option {
 
 interface CustomSelectMenuProps {
   options: Option[];
+  placeholder?: string; // Optional placeholder prop
   onSelect?: (selected: Option) => void;
   onChange?: (selected: Option) => void;
   onClick?: () => void;
 }
 
-const CustomSelectMenu: React.FC<CustomSelectMenuProps> = ({
+const Dropdown_17: React.FC<CustomSelectMenuProps> = ({
   options,
+  placeholder = "Select Option", // Default placeholder if not provided
   onSelect,
   onChange,
   onClick,
@@ -43,7 +45,7 @@ const CustomSelectMenu: React.FC<CustomSelectMenuProps> = ({
         className="bg-gray-800 text-white p-4 rounded-lg flex items-center justify-between cursor-pointer"
         onClick={toggleMenu}
       >
-        <span>{selectedOption ? selectedOption.label : "Select Option"}</span>
+        <span>{selectedOption ? selectedOption.label : placeholder}</span>
         <motion.img
           src="https://img.icons8.com/?size=100&id=2760&format=png&color=ffffff"
           alt="dropdown icon"
@@ -85,4 +87,4 @@ const CustomSelectMenu: React.FC<CustomSelectMenuProps> = ({
   );
 };
 
-export default CustomSelectMenu;
+export default Dropdown_17;

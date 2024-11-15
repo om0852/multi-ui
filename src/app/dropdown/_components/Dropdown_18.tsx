@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 interface Option {
   label: string;
@@ -8,19 +9,24 @@ interface Option {
 
 interface DropdownMenuProps {
   options: Option[];
+  placeholder?: string; // Optional placeholder prop
   onSelect?: (option: Option) => void;
   onChange?: (option: Option) => void;
   onClick?: () => void;
 }
 
-const DropdownMenu: React.FC<DropdownMenuProps> = ({
+const Dropdown_18: React.FC<DropdownMenuProps> = ({
   options,
+  placeholder = "Select Option", // Default placeholder if not provided
   onSelect,
   onChange,
   onClick,
 }) => {
+  const [selected, setSelected] = useState<Option | null>(null); // Keep track of selected option
+
   const handleOptionClick = (option: Option) => {
     if (option.disabled) return; // Prevent selection if option is disabled
+    setSelected(option); // Update selected option
     if (onSelect) onSelect(option);
     if (onChange) onChange(option);
   };
@@ -38,7 +44,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
             className="border-2 border-[#c1121f] rounded-xl px-6 py-3 bg-transparent text-[#c1121f] group-hover:border-[#fdf0d5] group-hover:text-[#fdf0d5]"
             onClick={onClick}
           >
-            Service
+            {selected ? selected.label : placeholder} {/* Display selected label or placeholder */}
           </a>
 
           {/* Submenu */}
@@ -69,4 +75,4 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
   );
 };
 
-export default DropdownMenu;
+export default Dropdown_18;
