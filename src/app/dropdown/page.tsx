@@ -2,11 +2,12 @@
 import React, { useState } from "react";
 import Dropdown_1 from "./_components/Dropdown_1";
 import Dropdown_2 from "./_components/Dropdown_2";
-import Dropdown from "./_components/Dropdown_12";
+import Dropdown from "./_components/Dropdown_14";
 // import ProfileDropdown from "./_components/ProfileDropdown";
 import CustomDropdown from "./_components/Dropdown_9";
 import { MultiLevelDropdown } from "./_components/Dropdown_8";
 import Dropdown_13 from "./_components/Dropdown_13";
+import DropdownMenu from "./_components/Dropdown_14";
 
 const page = () => {
   const [selectedValue, setSelectedValue] = useState<string>("");
@@ -28,11 +29,12 @@ const page = () => {
   //   { label: "Logout", icon: "log-out-outline" },
   // ];
   const options = [
-    { id: "square", value: "square", label: "Square" },
-    { id: "circle", value: "circle", label: "Circle",disabled:true },
-    { id: "triangle", value: "triangle", label: "Triangle" },
-    { id: "SA", value: "SA", label: "TriaSAngle" },
-    { id: "SAS", value: "SAS", label: "SAS" },
+    { id: 'square', value: 'square', label: 'Square' },
+    { id: 'circle', value: 'circle', label: 'Circle', disabled: true },
+    { id: 'triangle', value: 'triangle', label: 'Triangle' },
+    { separator: true },
+    { id: 'SA', value: 'SA', label: 'TriaSAngle' },
+    { id: 'SAS', value: 'SAS', label: 'SAS' },
   ];
 
   const ExampleComponent = () => {
@@ -143,7 +145,8 @@ const page = () => {
 />      */}
 
       {/* <Dropdown label="Choose an option" options={options}  /> */}
-      <Dropdown_13 options={optionss} />
+      {/* <Dropdown_13 options={optionss} /> */}
+      <DropdownMenu options={options}/>
     </div>
   );
 };
