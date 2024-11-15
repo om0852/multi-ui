@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Dropdown_1 from "./_components/Dropdown_1";
 import Dropdown_2 from "./_components/Dropdown_2";
-import Dropdown from "./_components/Dropdown_14";
+import Dropdown from "./_components/Dropdown_15";
 // import ProfileDropdown from "./_components/ProfileDropdown";
 import CustomDropdown from "./_components/Dropdown_9";
 import { MultiLevelDropdown } from "./_components/Dropdown_8";
@@ -146,7 +146,8 @@ const page = () => {
 
       {/* <Dropdown label="Choose an option" options={options}  /> */}
       {/* <Dropdown_13 options={optionss} /> */}
-      <DropdownMenu options={options}/>
+      {/* <DropdownMenu options={options}/> */}
+      <Dropdown options={options}/>
     </div>
   );
 };
