@@ -2,9 +2,9 @@
 import React, { useState } from "react";
 import Dropdown_1 from "./_components/Dropdown_1";
 import Dropdown_2 from "./_components/Dropdown_2";
-import Dropdown from "./_components/Dropdown_10";
-import ProfileDropdown from "./_components/ProfileDropdown";
-import  CustomDropdown  from "./_components/Dropdown_9";
+import Dropdown from "./_components/Dropdown_12";
+// import ProfileDropdown from "./_components/ProfileDropdown";
+import CustomDropdown from "./_components/Dropdown_9";
 import { MultiLevelDropdown } from "./_components/Dropdown_8";
 
 const page = () => {
@@ -28,8 +28,10 @@ const page = () => {
   // ];
   const options = [
     { id: "square", value: "square", label: "Square" },
-    { id: "circle", value: "circle", label: "Circle" },
+    { id: "circle", value: "circle", label: "Circle",disabled:true },
     { id: "triangle", value: "triangle", label: "Triangle" },
+    { id: "SA", value: "SA", label: "TriaSAngle" },
+    { id: "SAS", value: "SAS", label: "SAS" },
   ];
 
   const ExampleComponent = () => {
@@ -41,7 +43,7 @@ const page = () => {
     label: string;
     subItems?: DropdownItem[];
   };
-  
+
   const dropdownItems: DropdownItem[] = [
     {
       label: "Level 1",
@@ -60,13 +62,12 @@ const page = () => {
     },
     { label: "Level 1B" },
   ];
-  
 
   const handleOptionClick = (value: string) => {
     console.log("Selected option:", value);
   };
   // Define the DropdownOption type to include the separator
-  type DropdownOption = 
+  type DropdownOption =
     | { value: string; label: string; onSelect?: () => void; separator?: never }
     | { separator: true; value?: never; label?: never; onSelect?: never };
 
@@ -76,7 +77,11 @@ const page = () => {
     { label: "Dashboard", value: "dashboard" },
     { separator: true },
     { label: "Settings", value: "settings" },
-    { label: "Sign Out", value: "signout", onSelect: () => alert("Signed out") },
+    {
+      label: "Sign Out",
+      value: "signout",
+      onSelect: () => alert("Signed out"),
+    },
   ];
 
   const handleChange = (value: string) => {
@@ -102,7 +107,7 @@ const page = () => {
       />
        */}
 
-{/* <MultiLevelDropdown
+      {/* <MultiLevelDropdown
         label="Dropdown Button"
         items={dropdownItems}
         onClick={handleOptionClick}
@@ -114,11 +119,14 @@ const page = () => {
         onSelect={handleSelect}
         onChange={handleChange}
       /> */}
-<Dropdown
+      {/* <Dropdown
   options={optionsa}
   placeholder="Choose an action"
   onChange={(value) => console.log("Selected:", value)}
-/>      </div>
+/>      */}
+
+      <Dropdown label="Choose an option" options={options}  />
+    </div>
   );
 };
 

@@ -117,16 +117,3 @@ export const CustomDropdown = ({
     </div>
   );
 };
-
-// Usage Example
-<CustomDropdown
-  label="Example Dropdown"
-  placeholder="Select an option"
-  options={[
-    { id: "1", label: "Option 1", value: "option1", onClick: (value) => alert(value) },
-    { id: "2", label: "Option 2", value: "option2", disabled: true },
-    { id: "3", label: "Option 3", value: "option3" },
-  ]}
-  onSelect={(value) => console.log("Selected:", value)}
-  onChange={(value) => console.log("Changed:", value)}
-/>;

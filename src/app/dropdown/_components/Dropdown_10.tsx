@@ -17,7 +17,7 @@ const DROPDOWN_ANIMATION = {
   exit: { scale: 0, opacity: 0 },
 };
 
-const Dropdown: React.FC<DropdownProps> = ({
+const Dropdown_10: React.FC<DropdownProps> = ({
   options,
   placeholder = "Select an option",
   onChange,
@@ -97,4 +97,4 @@ const Dropdown: React.FC<DropdownProps> = ({
   );
 };
 
-export default Dropdown;
+export default Dropdown_10;
