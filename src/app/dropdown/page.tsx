@@ -179,7 +179,7 @@ const page = () => {
       {/* <Dropdown options={options}/> */}
       {/* <NestedCategoryMenu options={menuOptions}/> */}
       {/* <CustomSelectMenu options={optionslan}/> */}
-      <DropdownMenu options={optionslan}/>
+      <DropdownMenu options={optionslan} placeholder="select"/>
     </div>
   );
 };

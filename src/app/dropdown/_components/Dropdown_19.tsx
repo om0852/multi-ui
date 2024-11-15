@@ -9,6 +9,7 @@ interface Option {
 
 interface DropdownMenuProps {
   options: Option[];
+  placeholder?: string;  // Optional placeholder prop
   onSelect?: (selected: Option) => void;
   onChange?: (selected: Option) => void;
   onClick?: () => void;
@@ -16,11 +17,12 @@ interface DropdownMenuProps {
 
 const DropdownMenu: React.FC<DropdownMenuProps> = ({
   options,
+  placeholder = "Select Option",  // Default placeholder if not provided
   onSelect,
   onChange,
   onClick,
 }) => {
-  const [selected, setSelected] = useState<Option | null>(options[0]);
+  const [selected, setSelected] = useState<Option | null>(null);  // Initialize as null to show placeholder
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const handleSelect = (option: Option) => {
@@ -37,19 +39,21 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
   };
 
   return (
-    <div className="flex justify-center items-center w-full h-screen">
-      <div className="relative">
+    <div className=" justify-center items-center w-full">
+      <div className="relative w-full">
         {/* Selected Item */}
         <motion.div
-          className="flex items-center justify-between bg-gray-600 text-gray-200 px-6 py-3 rounded-xl cursor-pointer border-4 border-gray-700 hover:bg-gray-700 w-80"
+          className="w-full items-center justify-between bg-gray-600 text-gray-200 px-6 py-3 rounded-xl cursor-pointer border-4 border-gray-700 hover:bg-gray-700 flex"
           onMouseEnter={() => setIsOpen(true)} // Open on hover
           onMouseLeave={() => setIsOpen(false)} // Close on hover out
           onClick={handleToggle} // Toggle dropdown when clicked
           whileHover={{ scale: 1.05 }}
         >
-          <span className="text-lg">{selected ? selected.label : "Select Option"}</span>
+          <span className="text-lg">
+            {selected ? selected.label : placeholder} {/* Show placeholder if no option is selected */}
+          </span>
           <motion.img
-            src="https://img.icons8.com/?size=100&id=2760&format=png&color=000000"
+            src="https://img.icons8.com/?size=100&id=2760&format=png&color=ffffff"
             alt="dropdown icon"
             className="w-5 h-5"
             animate={{ rotate: isOpen ? 180 : 0 }}
@@ -59,7 +63,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({
 
         {/* Options List */}
         <motion.ul
-          className={`absolute top-full left-0 mt-1 w-80 bg-gray-800 text-gray-200 rounded-b-xl overflow-hidden transform ${
+          className={`absolute w-full top-full left-0 mt-1  bg-gray-800 text-gray-200 rounded-b-xl overflow-hidden transform ${
             isOpen ? "scale-y-100 p-5" : "scale-y-0 p-0"
           } transition-all duration-300`}
           onMouseEnter={() => setIsOpen(true)} // Keep open when hovering over the dropdown
