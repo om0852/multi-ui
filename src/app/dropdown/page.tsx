@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Dropdown_1 from "./_components/Dropdown_1";
 import Dropdown_2 from "./_components/Dropdown_2";
-import Dropdown from "./_components/Dropdown_15";
+import Dropdown from "./_components/Dropdown_20";
 // import ProfileDropdown from "./_components/ProfileDropdown";
 import CustomDropdown from "./_components/Dropdown_9";
 import { MultiLevelDropdown } from "./_components/Dropdown_8";
@@ -172,13 +172,14 @@ const page = () => {
   placeholder="Choose an action"
   onChange={(value) => console.log("Selected:", value)}
 />      */}
-
-      {/* <Dropdown label="Choose an option" options={options}  /> */}
+<div className="pt-[40vh]">
+      <Dropdown placeholder="Choose an option" options={optionslan}  />
+</div>
       {/* <Dropdown_13 options={optionss} /> */}
       {/* <DropdownMenu options={options}/> */}
       {/* <Dropdown options={options}/> */}
       {/* <NestedCategoryMenu options={menuOptions}/> */}
-      <CustomSelectMenu options={optionslan}/>
+      {/* <CustomSelectMenu options={optionslan}/> */}
       {/* <DropdownMenu options={optionslan} placeholder="ok"/> */}
     </div>
   );
