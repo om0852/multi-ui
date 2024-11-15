@@ -8,6 +8,7 @@ import CustomDropdown from "./_components/Dropdown_9";
 import { MultiLevelDropdown } from "./_components/Dropdown_8";
 import Dropdown_13 from "./_components/Dropdown_13";
 import DropdownMenu from "./_components/Dropdown_14";
+import NestedCategoryMenu from "./_components/Dropdown_16";
 
 const page = () => {
   const [selectedValue, setSelectedValue] = useState<string>("");
@@ -105,6 +106,25 @@ const page = () => {
       options: ['Tag 1', 'Tag 2', 'Tag 3'],
     },
   ];
+  const menuOptions = [
+    {
+      name: "Cars",
+      children: [
+        {
+          name: "SUV",
+          children: [{ name: "Audi Q7", link: "#" }],
+        },
+        {
+          name: "Sedan",
+          children: [{ name: "Toyota Camry", link: "#" }],
+        },
+      ],
+    },
+    {
+      name: "Bikes",
+      children: [{ name: "Ducati Monster", link: "#" }],
+    },
+  ];
   
   return (
     <div className="p-4">
@@ -147,7 +167,8 @@ const page = () => {
       {/* <Dropdown label="Choose an option" options={options}  /> */}
       {/* <Dropdown_13 options={optionss} /> */}
       {/* <DropdownMenu options={options}/> */}
-      <Dropdown options={options}/>
+      {/* <Dropdown options={options}/> */}
+      <NestedCategoryMenu options={menuOptions}/>
     </div>
   );
 };
