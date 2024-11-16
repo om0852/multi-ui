@@ -4,10 +4,10 @@ import Dropdown_1 from "./_components/Dropdown_1";
 import Dropdown_2 from "./_components/Dropdown_2";
 import Dropdown from "./_components/Dropdown_20";
 // import ProfileDropdown from "./_components/ProfileDropdown";
-import CustomDropdown from "./_components/Dropdown_9";
+import CustomDropdown from "./_components/Dropdown_21";
 import { MultiLevelDropdown } from "./_components/Dropdown_8";
 import Dropdown_13 from "./_components/Dropdown_13";
-import DropdownMenu from "./_components/Dropdown_18";
+import DropdownMenu from "./_components/Dropdown_22";
 import NestedCategoryMenu from "./_components/Dropdown_16";
 import CustomSelectMenu from "./_components/Dropdown_17";
 
@@ -135,6 +135,28 @@ const page = () => {
     { label: "Spanish", value: "es" },
     { label: "French", value: "fr" },
   ];
+  const optionspl = [
+    {
+      id: "plants",
+      label: "Plants",
+      children: [
+        { id: "plant1", label: "Plant 1" },
+        { id: "plant2", label: "Plant 2" },
+        { id: "plant3", label: "Plant 3", disabled: true },
+      ],
+    },
+    {
+      id: "gifts",
+      label: "Gifts",
+      children: [
+        { id: "gift1", label: "Gift 1" },
+        { id: "gift2", label: "Gift 2" },
+      ],
+    },
+    { id: "contact", label: "Contact Us" },
+    { id: "about", label: "About Us", disabled: true },
+  ];
+
   return (
     <div className="p-4">
       {/* <CustomDropdown
@@ -173,7 +195,9 @@ const page = () => {
   onChange={(value) => console.log("Selected:", value)}
 />      */}
 <div className="pt-[40vh]">
-      <Dropdown placeholder="Choose an option" options={optionslan}  />
+      {/* <Dropdown placeholder="Choose an option" options={optionslan}  /> */}
+      {/* <CustomDropdown options={options} onChange={(value)=>{console.log(value)}}/> */}
+      <DropdownMenu options={optionspl}/>
 </div>
       {/* <Dropdown_13 options={optionss} /> */}
       {/* <DropdownMenu options={options}/> */}
