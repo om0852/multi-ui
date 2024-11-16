@@ -10,6 +10,7 @@ import Dropdown_13 from "./_components/Dropdown_13";
 import DropdownMenu from "./_components/Dropdown_22";
 import NestedCategoryMenu from "./_components/Dropdown_16";
 import CustomSelectMenu from "./_components/Dropdown_17";
+import SelectMenu from "./_components/Dropdown_23";
 
 const page = () => {
   const [selectedValue, setSelectedValue] = useState<string>("");
@@ -34,7 +35,6 @@ const page = () => {
     { id: 'square', value: 'square', label: 'Square' },
     { id: 'circle', value: 'circle', label: 'Circle', disabled: true },
     { id: 'triangle', value: 'triangle', label: 'Triangle' },
-    { separator: true },
     { id: 'SA', value: 'SA', label: 'TriaSAngle' },
     { id: 'SAS', value: 'SAS', label: 'SAS' },
   ];
@@ -80,7 +80,6 @@ const page = () => {
   const optionsa: DropdownOption[] = [
     { label: "Profile", value: "profile" },
     { label: "Dashboard", value: "dashboard" },
-    { separator: true },
     { label: "Settings", value: "settings" },
     {
       label: "Sign Out",
@@ -127,7 +126,15 @@ const page = () => {
     },
   ];
   const optionsC = ["UA", "EN", "PL", "IS", "UK"];
-
+  const countries = [
+    { id: 1, label: "Anguilla", value: "Ang", disabled: false },
+    { id: 2, label: "Aruba", value: "Arb", disabled: false },
+    { id: 3, label: "India", value: "Ind", disabled: true },
+    { id: 4, label: "Austria", value: "Aut", disabled: false },
+    { id: 5, label: "Belgium", value: "Bel", disabled: false },
+    // add more countries with unique ids...
+  ];
+  
   const optionslan = [
     { label: "English", value: "en", disabled: true },
     { label: "Arabic", value: "ar" },
@@ -197,7 +204,8 @@ const page = () => {
 <div className="pt-[40vh]">
       {/* <Dropdown placeholder="Choose an option" options={optionslan}  /> */}
       {/* <CustomDropdown options={options} onChange={(value)=>{console.log(value)}}/> */}
-      <DropdownMenu options={optionspl}/>
+      {/* <DropdownMenu options={optionspl}/> */}
+      <SelectMenu options={countries}/>
 </div>
       {/* <Dropdown_13 options={optionss} /> */}
       {/* <DropdownMenu options={options}/> */}
