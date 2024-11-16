@@ -12,6 +12,7 @@ import NestedCategoryMenu from "./_components/Dropdown_16";
 import CustomSelectMenu from "./_components/Dropdown_17";
 import SelectMenu from "./_components/Dropdown_23";
 import Dropdown_25 from "./_components/Dropdown_25";
+import Menu from "./_components/Dropdown_26";
 
 const page = () => {
   const [selectedValue, setSelectedValue] = useState<string>("");
@@ -211,7 +212,20 @@ const page = () => {
       disabled: false,
     },
   ];
-
+  const menuData = [
+    [
+      { label: 'Home', link: '/' },
+      { label: 'About Us', link: '/about' },
+    ],
+    [
+      { label: 'Services', link: '/services' },
+      { label: 'Contact Us', link: '/contact' },
+    ],
+    [
+      { label: 'Blog', link: '/blog' },
+      { label: 'Careers', link: '/careers' },
+    ],
+  ];
 
   return (
     <div className="p-4">
@@ -255,8 +269,15 @@ const page = () => {
       {/* <CustomDropdown options={options} onChange={(value)=>{console.log(value)}}/> */}
       {/* <DropdownMenu options={optionspl}/> */}
       {/* <DropdownMenu options={menuOptions}/> */}
-      <Dropdown_25   options={options_25}/>
-      {/* <SelectMenu options={countries}/> */}
+      {/* <Dropdown_25   options={options_25}/> */}
+      <Menu
+          textColor="text-gray-800"
+          hoverBgColor="hover:bg-blue-50"
+          hoverTextColor="hover:text-blue-700"
+          maxWidth="w-96"
+          menuData={menuData}
+          placeholder="No menu items available"
+        />      {/* <SelectMenu options={countries}/> */}
 </div>
       {/* <Dropdown_13 options={optionss} /> */}
       {/* <DropdownMenu options={options}/> */}
