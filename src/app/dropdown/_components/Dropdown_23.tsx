@@ -23,7 +23,8 @@ const Dropdown_23: React.FC<SelectMenuProps> = ({ options, onChange, onSelect, o
 
   const toggleDropdown = () => setIsOpen((prev) => !prev);
 
-  const handleOptionClick = (option: string) => {
+  const handleOptionClick = (option: string, disabled: boolean) => {
+    if (disabled) return; // Prevent click if option is disabled
     setSelectedOption(option);
     setSearchTerm("");
     setIsOpen(false);
@@ -46,13 +47,13 @@ const Dropdown_23: React.FC<SelectMenuProps> = ({ options, onChange, onSelect, o
         }}
       >
         <span>{selectedOption || "Select a country"}</span>
-        <motion.div
-          animate={{ rotate: isOpen ? -180 : 0 }}
-          transition={{ duration: 0.2 }}
-          className="text-lg"
-        >
-          ▼
-        </motion.div>
+        <motion.img
+          src="https://img.icons8.com/?size=100&id=2760&format=png&color=ffffff"
+          alt="dropdown icon"
+          className="w-5 h-5"
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ duration: 0.3 }}
+        />
       </div>
 
       {/* Dropdown Content */}
@@ -85,7 +86,7 @@ const Dropdown_23: React.FC<SelectMenuProps> = ({ options, onChange, onSelect, o
                     className={`px-4 py-2 cursor-pointer hover:bg-gray-600 ${
                       selectedOption === country.label ? "bg-gray-700" : ""
                     } ${country.disabled ? "text-gray-400 cursor-not-allowed" : ""}`}
-                    onClick={() => !country.disabled && handleOptionClick(country.label)}
+                    onClick={() => handleOptionClick(country.label, country.disabled)} // Pass disabled flag
                   >
                     {country.label}
                   </li>
