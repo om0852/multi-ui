@@ -7,7 +7,7 @@ import Dropdown from "./_components/Dropdown_20";
 import CustomDropdown from "./_components/Dropdown_21";
 import { MultiLevelDropdown } from "./_components/Dropdown_8";
 import Dropdown_13 from "./_components/Dropdown_13";
-import DropdownMenu from "./_components/Dropdown_22";
+import DropdownMenu from "./_components/Dropdown_24";
 import NestedCategoryMenu from "./_components/Dropdown_16";
 import CustomSelectMenu from "./_components/Dropdown_17";
 import SelectMenu from "./_components/Dropdown_23";
@@ -205,7 +205,8 @@ const page = () => {
       {/* <Dropdown placeholder="Choose an option" options={optionslan}  /> */}
       {/* <CustomDropdown options={options} onChange={(value)=>{console.log(value)}}/> */}
       {/* <DropdownMenu options={optionspl}/> */}
-      <SelectMenu options={countries}/>
+      <DropdownMenu options={menuOptions}/>
+      {/* <SelectMenu options={countries}/> */}
 </div>
       {/* <Dropdown_13 options={optionss} /> */}
       {/* <DropdownMenu options={options}/> */}
