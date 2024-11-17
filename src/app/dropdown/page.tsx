@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Dropdown_1 from "./_components/Dropdown_1";
 import Dropdown_2 from "./_components/Dropdown_2";
-import Dropdown from "./_components/Dropdown_20";
+import Dropdown from "./_components/Dropdown_27";
 // import ProfileDropdown from "./_components/ProfileDropdown";
 import CustomDropdown from "./_components/Dropdown_21";
 import { MultiLevelDropdown } from "./_components/Dropdown_8";
@@ -226,7 +226,20 @@ const page = () => {
       { label: 'Careers', link: '/careers' },
     ],
   ];
-
+  const optionser = [
+    {
+      category: "mysqlconnector1",
+      items: ["testAPI", "getUser", "postData", "addPerson"],
+    },
+    {
+      category: "restAPIConnector1",
+      items: ["testAPI", "getData", "delete_user", "get_person"],
+    },
+    {
+      category: "GraphQLConnector",
+      items: ["addPerson"],
+    },
+  ];
   return (
     <div className="p-4">
       {/* <CustomDropdown
@@ -270,14 +283,17 @@ const page = () => {
       {/* <DropdownMenu options={optionspl}/> */}
       {/* <DropdownMenu options={menuOptions}/> */}
       {/* <Dropdown_25   options={options_25}/> */}
-      <Menu
+      {/* <Menu
           textColor="text-gray-800"
           hoverBgColor="hover:bg-blue-50"
           hoverTextColor="hover:text-blue-700"
           maxWidth="w-96"
           menuData={menuData}
           placeholder="No menu items available"
-        />      {/* <SelectMenu options={countries}/> */}
+        />  */}
+             {/* <SelectMenu options={countries}/> */}
+
+             <Dropdown options={optionser}/>
 </div>
       {/* <Dropdown_13 options={optionss} /> */}
       {/* <DropdownMenu options={options}/> */}
