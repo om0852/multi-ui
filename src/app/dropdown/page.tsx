@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Dropdown_1 from "./_components/Dropdown_1";
 import Dropdown_2 from "./_components/Dropdown_2";
-import Dropdown from "./_components/Dropdown_27";
+import Dropdown from "./_components/Dropdown_28";
 // import ProfileDropdown from "./_components/ProfileDropdown";
 import CustomDropdown from "./_components/Dropdown_21";
 import { MultiLevelDropdown } from "./_components/Dropdown_8";
@@ -21,6 +21,12 @@ const page = () => {
   //   console.log("Selected value:", value);
   //   setSelectedValue(value);
   // };
+  const dropdownItemss = [
+    { label: "Attract Talent" },
+    { label: "Access Talent" },
+    { label: "Simplify Hiring" },
+  ];
+
   const handleDropdownChange = (value: string) => {
     console.log("Selected Option:", value);
   };
@@ -293,7 +299,7 @@ const page = () => {
         />  */}
              {/* <SelectMenu options={countries}/> */}
 
-             <Dropdown options={optionser}/>
+             <Dropdown options={countries}/>
 </div>
       {/* <Dropdown_13 options={optionss} /> */}
       {/* <DropdownMenu options={options}/> */}
