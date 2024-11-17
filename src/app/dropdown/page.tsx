@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Dropdown_1 from "./_components/Dropdown_1";
 import Dropdown_2 from "./_components/Dropdown_2";
-import Dropdown from "./_components/Dropdown_29";
+import Dropdown from "./_components/Dropdown_30";
 // import ProfileDropdown from "./_components/ProfileDropdown";
 import CustomDropdown from "./_components/Dropdown_21";
 import { MultiLevelDropdown } from "./_components/Dropdown_8";
@@ -21,6 +21,25 @@ const page = () => {
   //   console.log("Selected value:", value);
   //   setSelectedValue(value);
   // };
+  const optionserach = [
+    {
+      category: "Photos",
+      values: ["Landscape", "Portrait", "Macro"],
+    },
+    {
+      category: "Graphics",
+      values: ["Vector", "3D Models", "Icons"],
+    },
+    {
+      category: "Templates",
+      values: ["Flyers", "Posters", "Resumes"],
+    },
+    {
+      category: "Plugins",
+      values: ["Figma", "Sketch", "Adobe XD"],
+    },
+  ];
+
   const dropdownItemss = [
     { label: "Attract Talent" },
     { label: "Access Talent" },
@@ -300,15 +319,7 @@ const page = () => {
         />  */}
         {/* <SelectMenu options={countries}/> */}
 
-        <Dropdown
-          options={[
-            { id: 1, label: "Special Option 1" },
-            { id: 2, label: "Special Option 2" },
-            { id: 3, label: "Special Option 3" },
-            { id: 4, label: "Special Option 4" },
-          ]}
-          placeholder="Pick a different option!"
-        />
+        <Dropdown options={optionserach}/>
       </div>
       {/* <Dropdown_13 options={optionss} /> */}
       {/* <DropdownMenu options={options}/> */}
