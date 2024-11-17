@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Dropdown_1 from "./_components/Dropdown_1";
 import Dropdown_2 from "./_components/Dropdown_2";
-import Dropdown from "./_components/Dropdown_28";
+import Dropdown from "./_components/Dropdown_29";
 // import ProfileDropdown from "./_components/ProfileDropdown";
 import CustomDropdown from "./_components/Dropdown_21";
 import { MultiLevelDropdown } from "./_components/Dropdown_8";
@@ -40,11 +40,11 @@ const page = () => {
   //   { label: "Logout", icon: "log-out-outline" },
   // ];
   const options = [
-    { id: 'square', value: 'square', label: 'Square' },
-    { id: 'circle', value: 'circle', label: 'Circle', disabled: true },
-    { id: 'triangle', value: 'triangle', label: 'Triangle' },
-    { id: 'SA', value: 'SA', label: 'TriaSAngle' },
-    { id: 'SAS', value: 'SAS', label: 'SAS' },
+    { id: "square", value: "square", label: "Square" },
+    { id: "circle", value: "circle", label: "Circle", disabled: true },
+    { id: "triangle", value: "triangle", label: "Triangle" },
+    { id: "SA", value: "SA", label: "TriaSAngle" },
+    { id: "SAS", value: "SAS", label: "SAS" },
   ];
 
   const ExampleComponent = () => {
@@ -102,16 +102,16 @@ const page = () => {
 
   const optionss = [
     {
-      category: 'Artwork',
-      options: ['Painting', 'Sculpture', 'Digital Art'],
+      category: "Artwork",
+      options: ["Painting", "Sculpture", "Digital Art"],
     },
     {
-      category: 'All',
-      options: ['Option 1', 'Option 2', 'Option 3'],
+      category: "All",
+      options: ["Option 1", "Option 2", "Option 3"],
     },
     {
-      category: 'All Tags',
-      options: ['Tag 1', 'Tag 2', 'Tag 3'],
+      category: "All Tags",
+      options: ["Tag 1", "Tag 2", "Tag 3"],
     },
   ];
   const menuOptions = [
@@ -142,7 +142,7 @@ const page = () => {
     { id: 5, label: "Belgium", value: "Bel", disabled: false },
     // add more countries with unique ids...
   ];
-  
+
   const optionslan = [
     { label: "English", value: "en", disabled: true },
     { label: "Arabic", value: "ar" },
@@ -172,7 +172,8 @@ const page = () => {
     { id: "about", label: "About Us", disabled: true },
   ];
   const icons = {
-    linkedin: "M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z",
+    linkedin:
+      "M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z",
     instagram:
       "M8 0C5.829 0 5.556.01 4.703.048 3.85.088 3.269.222 2.76.42a3.917 3.917 0 0 0-1.417.923A3.927 3.927 0 0 0 .42 2.76C.222 3.268.087 3.85.048 4.7.01 5.555 0 5.827 0 8.001c0 2.172.01 2.444.048 3.297.04.852.174 1.433.372 1.942.205.526.478.972.923 1.417.444.445.89.719 1.416.923.51.198 1.09.333 1.942.372C5.555 15.99 5.827 16 8 16s2.444-.01 3.298-.048c.851-.04 1.434-.174 1.943-.372a3.916 3.916 0 0 0 1.416-.923c.445-.445.718-.891.923-1.417.197-.509.332-1.09.372-1.942C15.99 10.445 16 10.173 16 8s-.01-2.445-.048-3.299c-.04-.851-.175-1.433-.372-1.941a3.926 3.926 0 0 0-.923-1.417A3.911 3.911 0 0 0 13.24.42c-.51-.198-1.092-.333-1.943-.372C10.443.01 10.172 0 7.998 0h.003z",
     facebook: "Your Facebook SVG path here",
@@ -220,16 +221,16 @@ const page = () => {
   ];
   const menuData = [
     [
-      { label: 'Home', link: '/' },
-      { label: 'About Us', link: '/about' },
+      { label: "Home", link: "/" },
+      { label: "About Us", link: "/about" },
     ],
     [
-      { label: 'Services', link: '/services' },
-      { label: 'Contact Us', link: '/contact' },
+      { label: "Services", link: "/services" },
+      { label: "Contact Us", link: "/contact" },
     ],
     [
-      { label: 'Blog', link: '/blog' },
-      { label: 'Careers', link: '/careers' },
+      { label: "Blog", link: "/blog" },
+      { label: "Careers", link: "/careers" },
     ],
   ];
   const optionser = [
@@ -283,13 +284,13 @@ const page = () => {
   placeholder="Choose an action"
   onChange={(value) => console.log("Selected:", value)}
 />      */}
-<div className="pt-[40vh]">
-      {/* <Dropdown placeholder="Choose an option" options={optionslan}  /> */}
-      {/* <CustomDropdown options={options} onChange={(value)=>{console.log(value)}}/> */}
-      {/* <DropdownMenu options={optionspl}/> */}
-      {/* <DropdownMenu options={menuOptions}/> */}
-      {/* <Dropdown_25   options={options_25}/> */}
-      {/* <Menu
+      <div className="pt-[40vh]">
+        {/* <Dropdown placeholder="Choose an option" options={optionslan}  /> */}
+        {/* <CustomDropdown options={options} onChange={(value)=>{console.log(value)}}/> */}
+        {/* <DropdownMenu options={optionspl}/> */}
+        {/* <DropdownMenu options={menuOptions}/> */}
+        {/* <Dropdown_25   options={options_25}/> */}
+        {/* <Menu
           textColor="text-gray-800"
           hoverBgColor="hover:bg-blue-50"
           hoverTextColor="hover:text-blue-700"
@@ -297,10 +298,18 @@ const page = () => {
           menuData={menuData}
           placeholder="No menu items available"
         />  */}
-             {/* <SelectMenu options={countries}/> */}
+        {/* <SelectMenu options={countries}/> */}
 
-             <Dropdown options={countries}/>
-</div>
+        <Dropdown
+          options={[
+            { id: 1, label: "Special Option 1" },
+            { id: 2, label: "Special Option 2" },
+            { id: 3, label: "Special Option 3" },
+            { id: 4, label: "Special Option 4" },
+          ]}
+          placeholder="Pick a different option!"
+        />
+      </div>
       {/* <Dropdown_13 options={optionss} /> */}
       {/* <DropdownMenu options={options}/> */}
       {/* <Dropdown options={options}/> */}
