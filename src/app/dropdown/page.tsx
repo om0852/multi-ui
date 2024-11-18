@@ -15,6 +15,7 @@ import Dropdown_25 from "./_components/Dropdown_25";
 import Menu from "./_components/Dropdown_26";
 import LanguageSelector from "./_components/Dropdown_32";
 import CountryDropdown from "./_components/Dropdown_33";
+import Dropdown_34 from "./_components/Dropdown_34";
 
 const page = () => {
   const [selectedValue, setSelectedValue] = useState<string>("");
@@ -269,6 +270,7 @@ const page = () => {
     },
   ];
   const [selectedCountryCode, setSelectedCountryCode] = useState("");
+  const optionswel = ["Artboards", "Pages", "Templates"];
 
   const handleCountrySelect = (code: string) => {
     // Assuming a mapping of country codes to phone codes
@@ -342,7 +344,8 @@ const page = () => {
         options={["Option 1", "Option 2", "Option 3", "Option 4"]}
         placeholder="Select your options"
       />     */}
-      <CountryDropdown onCountryChange={()=>null}/>
+      {/* <CountryDropdown onCountryChange={()=>null}/> */}
+      <Dropdown_34 options={optionswel}/>
         </div>
       {/* <Dropdown_13 options={optionss} /> */}
       {/* <DropdownMenu options={options}/> */}
