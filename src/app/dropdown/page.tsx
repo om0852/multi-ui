@@ -14,6 +14,7 @@ import SelectMenu from "./_components/Dropdown_23";
 import Dropdown_25 from "./_components/Dropdown_25";
 import Menu from "./_components/Dropdown_26";
 import LanguageSelector from "./_components/Dropdown_32";
+import CountryDropdown from "./_components/Dropdown_33";
 
 const page = () => {
   const [selectedValue, setSelectedValue] = useState<string>("");
@@ -267,6 +268,17 @@ const page = () => {
       items: ["addPerson"],
     },
   ];
+  const [selectedCountryCode, setSelectedCountryCode] = useState("");
+
+  const handleCountrySelect = (code: string) => {
+    // Assuming a mapping of country codes to phone codes
+    const phoneCodeMapping: { [key: string]: string } = {
+      US: "1",
+      IN: "91",
+      // Add other mappings as needed
+    };
+    setSelectedCountryCode(phoneCodeMapping[code] || "");
+  };
   return (
     <div className="p-4">
       {/* <CustomDropdown
@@ -326,10 +338,12 @@ const page = () => {
         onChange={handleChange}
         value=""
       />       */}
- <Dropdown
+ {/* <Dropdown
         options={["Option 1", "Option 2", "Option 3", "Option 4"]}
         placeholder="Select your options"
-      />      </div>
+      />     */}
+      <CountryDropdown onCountryChange={()=>null}/>
+        </div>
       {/* <Dropdown_13 options={optionss} /> */}
       {/* <DropdownMenu options={options}/> */}
       {/* <Dropdown options={options}/> */}
