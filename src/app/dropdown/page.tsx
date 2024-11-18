@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Dropdown_1 from "./_components/Dropdown_1";
 import Dropdown_2 from "./_components/Dropdown_2";
-import Dropdown from "./_components/Dropdown_30";
+import Dropdown from "./_components/Dropdown_32";
 // import ProfileDropdown from "./_components/ProfileDropdown";
 import CustomDropdown from "./_components/Dropdown_21";
 import { MultiLevelDropdown } from "./_components/Dropdown_8";
@@ -13,6 +13,7 @@ import CustomSelectMenu from "./_components/Dropdown_17";
 import SelectMenu from "./_components/Dropdown_23";
 import Dropdown_25 from "./_components/Dropdown_25";
 import Menu from "./_components/Dropdown_26";
+import LanguageSelector from "./_components/Dropdown_32";
 
 const page = () => {
   const [selectedValue, setSelectedValue] = useState<string>("");
@@ -319,8 +320,16 @@ const page = () => {
         />  */}
         {/* <SelectMenu options={countries}/> */}
 
-        <Dropdown options={optionserach}/>
-      </div>
+        {/* <Dropdown
+        options={["Option 1", "Option 2", "Option 3", "Option 4"]}
+        placeholder="Choose an option"
+        onChange={handleChange}
+        value=""
+      />       */}
+ <Dropdown
+        options={["Option 1", "Option 2", "Option 3", "Option 4"]}
+        placeholder="Select your options"
+      />      </div>
       {/* <Dropdown_13 options={optionss} /> */}
       {/* <DropdownMenu options={options}/> */}
       {/* <Dropdown options={options}/> */}
