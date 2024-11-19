@@ -1,33 +1,39 @@
 "use client";
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import "./toast.css";
+
+import React, { useMemo, useState } from "react";
 import { ToastContext } from "./toast-context";
-import { useTime } from "framer-motion";
-import { Toast } from "./Toast_1";
 
-
-type ToastProviderProperties = {
-  children: React.ReactElement;
-};
 type ToastType = {
-  message: string;
   id: number;
+  message: string;
 };
-export function ToastProvider({ children }: ToastProviderProperties) {
+
+type ToastProviderProps = {
+  children: React.ReactNode;
+  Toast: React.FC<{ message: string; close: () => void }>; // Toast component
+};
+
+export const ToastProvider: React.FC<ToastProviderProps> = ({
+  children,
+  Toast,
+}) => {
   const [toasts, setToasts] = useState<ToastType[]>([]);
 
-  function openToast(message: string) {
-    console.log(message);
+  // Open a new toast
+  const openToast = (message: string) => {
     const newToast = {
       id: Date.now(),
-      message: message,
+      message,
     };
     setToasts((prev) => [...prev, newToast]);
-  }
-  function closeToast(id: number) {
-    setToasts((prev) => prev.filter((toast) => toast.id != id));
-  }
+  };
 
+  // Close a specific toast
+  const closeToast = (id: number) => {
+    setToasts((prev) => prev.filter((toast) => toast.id !== id));
+  };
+
+  // Memoize context value to avoid unnecessary re-renders
   const contextValue = useMemo(
     () => ({
       open: openToast,
@@ -37,22 +43,17 @@ export function ToastProvider({ children }: ToastProviderProperties) {
   );
 
   return (
-    <>
-      <ToastContext.Provider value={contextValue}>
-        {children}
-        <div className="toasts">
-          {toasts &&
-            toasts.map((toast) => {
-              return (
-                <Toast
-                  key={toast.id}
-                  message={toast.message}
-                  close={() => closeToast(toast.id)}
-                />
-              );
-            })}
-        </div>
-      </ToastContext.Provider>
-    </>
+    <ToastContext.Provider value={contextValue}>
+      {children}
+      <div className="fixed top-4 right-4 space-y-2 z-50">
+        {toasts.map((toast) => (
+          <Toast
+            key={toast.id}
+            message={toast.message}
+            close={() => closeToast(toast.id)}
+          />
+        ))}
+      </div>
+    </ToastContext.Provider>
   );
-}
+};
