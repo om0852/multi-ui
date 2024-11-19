@@ -33,7 +33,7 @@ const Page = () => {
           toast?.success("Operation successful!", {
             duration: 5000,
             position: "top-right",
-            animationType: "zoom",
+            animationType: "slide",
           });
         }}
       >
@@ -42,7 +42,9 @@ const Page = () => {
 
       <button
         className="w-[20vh] h-10 bg-red-600 text-white rounded hover:bg-red-700 transition"
-        onClick={() => toast?.error("An error occurred!")}
+        onClick={() =>
+          toast?.error("An error occurred!", { animationType: "slide" })
+        }
       >
         Error Toast
       </button>

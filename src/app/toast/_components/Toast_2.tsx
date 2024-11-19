@@ -16,14 +16,14 @@ type ToastProps = {
   actionButton?: { label: string; onClick: () => void };
 };
 
-const Toast_1: React.FC<ToastProps> = ({
+const Toast_2: React.FC<ToastProps> = ({
   message,
   close,
-  icon,
+  icon = "🔔", // Default icon for Toast_2
   position = "top-right",
-  theme = "light",
-  duration = 3000,
-  animationType = "slide",
+  theme = "dark", // Default theme for Toast_2
+  duration = 4000,
+  animationType = "bounce",
   autoDismiss = true,
   onHoverPause = true,
   actionButton,
@@ -41,25 +41,33 @@ const Toast_1: React.FC<ToastProps> = ({
       animate="visible"
       exit="exit"
       variants={animationVariants[animationType]}
-      transition={{ type: "spring", stiffness: 100, damping: 15 }}
+      transition={{ type: "spring", stiffness: 120, damping: 20 }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={clsx(
-        "fixed flex items-center p-4 rounded shadow-md border-l-4 z-50",
+        "fixed flex items-center justify-between p-4 rounded-lg shadow-lg border-2 z-50",
+        "w-[300px] h-[80px]", // Fixed width and height for consistency
         themeClasses[theme],
         positionClasses[position]
       )}
     >
-      {icon && <div className="mr-3">{icon}</div>}
-      <div className="flex-1">{message}</div>
+      {/* Icon */}
+      <div className="text-xl mr-4">{icon}</div>
+      
+      {/* Message */}
+      <div className="flex-1 text-center text-base font-medium">{message}</div>
+      
+      {/* Action Button */}
       {actionButton && (
         <button
           onClick={actionButton.onClick}
-          className="ml-4 px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+          className="ml-4 px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700"
         >
           {actionButton.label}
         </button>
       )}
+      
+      {/* Close Button */}
       <button
         onClick={close}
         className="ml-4 text-lg font-bold focus:outline-none hover:opacity-80"
@@ -71,4 +79,4 @@ const Toast_1: React.FC<ToastProps> = ({
   );
 };
 
-export default Toast_1;
+export default Toast_2;
