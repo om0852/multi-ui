@@ -1,17 +1,13 @@
-"use client"
-import React, { useEffect } from "react";
-import toast from "./_components/toast";
-import { ToastProvider, useToast } from "./_components/ToastContext";
-import Test from "./Test";
+"use client";
+import React from "react";
+import { useToast } from "./_components/toast-context";
 
-const Page: React.FC = () => {
+const Page = () => {
+  const toast = useToast();
 
   return (
-      <ToastProvider>
-    <Test />
-  </ToastProvider>
-      
+      <button className="w-[20vh] h-10 bg-red-600"  onClick={()=>toast?.open("this is a toast message!")}>toast</button>
   );
 };
 
-export default Page
+export default Page;
