@@ -31,7 +31,7 @@ const Page = () => {
         onClick={() => {
           toast?.success("Operation successful!", {
             duration: 4000,
-            theme:"success",
+            theme:"dark",
             position: "top-right",
             animationType: "slide",
             autoDismiss:true,
@@ -50,6 +50,7 @@ const Page = () => {
       >
         Error Toast
       </button>
+      <button></button>
     </div>
   );
 };

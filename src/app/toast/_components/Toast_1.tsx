@@ -1,7 +1,14 @@
 import React from "react";
 import { motion } from "framer-motion";
 import clsx from "clsx";
-import { animationVariants, themeClasses, positionClasses, textColor, useToastTimer } from "./utils";
+import {
+  animationVariants,
+  themeClasses,
+  positionClasses,
+  textColor,
+  useToastTimer,
+  closeIconColors,
+} from "./utils";
 import { ToastProps } from "./toast-context";
 
 const Toast_1: React.FC<ToastProps> = ({
@@ -15,7 +22,7 @@ const Toast_1: React.FC<ToastProps> = ({
   autoDismiss = true,
   onHoverPause = true,
   actionButton,
-  stack
+  stack,
 }) => {
   const { handleMouseEnter, handleMouseLeave } = useToastTimer(
     autoDismiss,
@@ -44,9 +51,7 @@ const Toast_1: React.FC<ToastProps> = ({
       {icon && <div className="mr-3">{icon}</div>}
 
       {/* Message */}
-      <div className={clsx("flex-1", textColor[theme])}>
-        {message}
-      </div>
+      <div className={clsx("flex-1", textColor[theme])}>{message}</div>
 
       {/* Action Button */}
       {actionButton && (
@@ -59,13 +64,29 @@ const Toast_1: React.FC<ToastProps> = ({
       )}
 
       {/* Close Button */}
-      <button
+      <motion.button
         onClick={close}
-        className="ml-4 text-lg font-bold focus:outline-none hover:opacity-80"
+        className="grid place-items-center pr-4 right-2 top-2 h-full focus:outline-none"
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ delay: 0.5, duration: 0.3 }}
         aria-label="Close Toast"
       >
-        ×
-      </button>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          strokeWidth={1.5}
+          stroke="currentColor"
+          className={clsx("w-6 h-6", closeIconColors[theme])}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M6 18L18 6M6 6l12 12"
+          />
+        </svg>
+      </motion.button>
     </motion.div>
   );
 };

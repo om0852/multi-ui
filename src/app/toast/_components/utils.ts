@@ -90,6 +90,20 @@ export const gradientThemeClasses = {
   cyan: "bg-gradient-to-br from-cyan-300 via-cyan-400 to-cyan-500 text-black border-cyan-400",
   teal: "bg-gradient-to-br from-teal-400 via-teal-500 to-teal-600 text-white border-teal-500",
 };
+export const closeIconColors = {
+  light: "text-gray-700", // Darker text for light themes
+  dark: "text-white", // White for dark themes
+  custom: "text-white",
+  success: "text-white",
+  danger: "text-white",
+  warning: "text-gray-800",
+  info: "text-white",
+  neutral: "text-gray-800",
+  vibrant: "text-white",
+  pink: "text-white",
+  cyan: "text-black",
+  teal: "text-white",
+};
 
 export const ThemeClassesBorder = {
   light: "bg-white text-black border-l-[5px] border-gray-200",
