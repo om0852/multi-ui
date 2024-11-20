@@ -12,6 +12,7 @@ type ToastProps = {
   duration?: number;
   animationType?: "slide" | "fade" | "zoom" | "bounce";
   autoDismiss?: boolean;
+  stack:boolean
   onHoverPause?: boolean;
   actionButton?: { label: string; onClick: () => void };
 };
@@ -27,6 +28,7 @@ const Toast_2: React.FC<ToastProps> = ({
   autoDismiss = true,
   onHoverPause = true,
   actionButton,
+  stack
 }) => {
   const { handleMouseEnter, handleMouseLeave } = useToastTimer(
     autoDismiss,
@@ -48,7 +50,9 @@ const Toast_2: React.FC<ToastProps> = ({
         "fixed flex items-center justify-between p-4 rounded-lg shadow-lg border-2 z-50",
         "w-[300px] h-[80px]", // Fixed width and height for consistency
         themeClasses[theme],
-        positionClasses[position]
+        positionClasses[position],
+        stack ? "static" : "fixed"
+
       )}
     >
       {/* Icon */}

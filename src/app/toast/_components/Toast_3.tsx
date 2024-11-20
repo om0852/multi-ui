@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { motion } from "framer-motion";
 import clsx from "clsx";
 import { animationVariants, themeClasses, positionClasses, useToastTimer } from "./utils";
@@ -13,22 +13,22 @@ type ToastProps = {
   animationType?: "slide" | "fade" | "zoom" | "bounce";
   autoDismiss?: boolean;
   onHoverPause?: boolean;
-  stack:boolean;
   actionButton?: { label: string; onClick: () => void };
+  stack: boolean;
 };
 
-const Toast_1: React.FC<ToastProps> = ({
+const Toast: React.FC<ToastProps> = ({
   message,
   close,
-  icon,
+  icon = "🔔", // Default icon
   position = "top-right",
-  theme = "light",
-  duration = 3000,
+  theme = "dark", // Default theme
+  duration = 4000,
   animationType = "slide",
   autoDismiss = true,
   onHoverPause = true,
   actionButton,
-  stack
+  stack,
 }) => {
   const { handleMouseEnter, handleMouseLeave } = useToastTimer(
     autoDismiss,
@@ -43,27 +43,34 @@ const Toast_1: React.FC<ToastProps> = ({
       animate="visible"
       exit="exit"
       variants={animationVariants[animationType]}
-      transition={{ type: "spring", stiffness: 100, damping: 15 }}
+      transition={{ type: "spring", stiffness: 120, damping: 20 }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={clsx(
-        "fixed flex items-center p-4 rounded shadow-md border-l-4 z-50",
+        `flex items-center justify-between p-4 rounded-lg shadow-lg border-2 z-50 `,
+        "w-[300px] h-[80px]", // Fixed dimensions
         themeClasses[theme],
         positionClasses[position],
         stack ? "static" : "fixed"
-
       )}
     >
-      {icon && <div className="mr-3">{icon}</div>}
-      <div className="flex-1">{message}</div>
+      {/* Icon */}
+      <div className="text-xl mr-4">{icon}</div>
+
+      {/* Message */}
+      <div className="flex-1 text-center text-base font-medium">{message}</div>
+
+      {/* Action Button */}
       {actionButton && (
         <button
           onClick={actionButton.onClick}
-          className="ml-4 px-3 py-1 bg-blue-600 text-white rounded hover:bg-blue-700"
+          className="ml-4 px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700"
         >
           {actionButton.label}
         </button>
       )}
+
+      {/* Close Button */}
       <button
         onClick={close}
         className="ml-4 text-lg font-bold focus:outline-none hover:opacity-80"
@@ -75,4 +82,5 @@ const Toast_1: React.FC<ToastProps> = ({
   );
 };
 
-export default Toast_1;
+// Wrap the component with React.memo for memoization
+export default React.memo(Toast);

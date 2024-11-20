@@ -12,6 +12,15 @@ export default {
         background: "var(--background)",
         foreground: "var(--foreground)",
       },
+      keyframes: {
+        progress: {
+          '0%': { width: '100%' },
+          '100%': { width: '0%' },
+        },
+      },
+      animation: {
+        progress: 'progress 4000ms linear forwards', // Duration is the same as toast lifespan
+      },
     },
   },
   plugins: [],

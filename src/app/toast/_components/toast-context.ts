@@ -16,7 +16,7 @@ export type ToastProps = {
 type ToastType = ToastProps & { id: number };
 
 type ToastContextValue = {
-  open?: (toast: ToastProps) => void;
+  open? :(toast: ToastProps) => void;
   success?: (message: string) => void;
   error?: (message: string) => void;
   close?: (id: number) => void;

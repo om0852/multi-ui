@@ -1,8 +1,9 @@
 "use client";
 
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useCallback } from "react";
 import { ToastContext } from "./toast-context";
 import { AnimatePresence } from "framer-motion";
+import { positionClasses } from "./utils";
 
 type ToastType = {
   id: number;
@@ -19,94 +20,90 @@ type ToastType = {
 
 type ToastProviderProps = {
   children: React.ReactNode;
-  Toast: React.FC<ToastType & { close: () => void }>; // Toast component
+  Toast: React.FC<ToastType & { close: () => void; stack: boolean }>;
+  position?: "top-right" | "top-left" | "bottom-right" | "bottom-left" | "center";
+  stack?: boolean;
 };
 
 export const ToastProvider: React.FC<ToastProviderProps> = ({
   children,
   Toast,
+  position = "top-right",
+  stack = true,
 }) => {
   const [toasts, setToasts] = useState<ToastType[]>([]);
 
-  // Open a new toast with full customization options
-  const openToast = (toast: Omit<ToastType, "id">) => {
-    const newToast = { ...toast, id: Date.now() };
-    setToasts((prev) => [...prev, newToast]);
-  };
+  // Memoized function to open a new toast
+  const openToast = useCallback(
+    (toast: Omit<ToastType, "id">) => {
+      const newToast = { ...toast, id: Date.now() };
+      setToasts((prev) => [...prev, newToast]);
+    },
+    [] // Stable reference
+  );
 
-  // Convenience methods for different toast types
-  const successToast = (message: string, options?: Omit<ToastType, "id" | "message">) => {
-    openToast({
-      message,
-      icon: "✅",  
-      theme: "light",
-      position: "top-right",
-      animationType: "slide",
-      ...options, // Merge user-provided options
-    });
-  };
+  // Convenience methods
+  const successToast = useCallback(
+    (message: string, options?: Omit<ToastType, "id" | "message">) => {
+      openToast({
+        message,
+        icon: "✅",
+        theme: "light",
+        position,
+        animationType: "slide",
+        ...options,
+      });
+    },
+    [position, openToast] // Stable reference
+  );
 
-  const errorToast = (message: string, options?: Omit<ToastType, "id" | "message">) => {
-    openToast({
-      message,
-      icon: "❌",
-      theme: "dark",
-      position: "top-right",
-      animationType: "fade",
-      ...options, // Merge user-provided options
-    });
-  };
+  const errorToast = useCallback(
+    (message: string, options?: Omit<ToastType, "id" | "message">) => {
+      openToast({
+        message,
+        icon: "❌",
+        theme: "dark",
+        position,
+        animationType: "fade",
+        ...options,
+      });
+    },
+    [position, openToast] // Stable reference
+  );
 
-  const warningToast = (message: string, options?: Omit<ToastType, "id" | "message">) => {
-    openToast({
-      message,
-      icon: "⚠️",
-      theme: "custom", // A custom theme could be defined for warning
-      position: "top-right",
-      animationType: "bounce",
-      ...options, // Merge user-provided options
-    });
-  };
-
-  const notifyToast = (message: string, options?: Omit<ToastType, "id" | "message">) => {
-    openToast({
-      message,
-      icon: "ℹ️",
-      theme: "light",
-      position: "bottom-left",
-      animationType: "zoom",
-      ...options, // Merge user-provided options
-    });
-  };
-
-  // Close a specific toast by ID
-  const closeToast = (id: number) => {
+  const closeToast = useCallback((id: number) => {
     setToasts((prev) => prev.filter((toast) => toast.id !== id));
-  };
+  }, []);
 
-  // Memoize context value to avoid unnecessary re-renders
+  // Memoize the context value
   const contextValue = useMemo(
     () => ({
       open: openToast,
       success: successToast,
       error: errorToast,
-      warning: warningToast,
-      notify: notifyToast,
       close: closeToast,
     }),
-    []
+    [openToast, successToast, errorToast, closeToast]
   );
+
+  // Memoize the Toast component
+  const MemoizedToast = useMemo(() => React.memo(Toast), [Toast]);
 
   return (
     <ToastContext.Provider value={contextValue}>
       {children}
-      <div className="fixed z-50 p-4 space-y-2">
+      <div
+        className={`fixed z-50 p-4 ${
+          stack ? "flex flex-col gap-4" : "block"
+        } ${positionClasses[position]}`}
+      >
         <AnimatePresence>
           {toasts.map((toast) => (
-            <Toast
+            <MemoizedToast
               key={toast.id}
               {...toast}
               close={() => closeToast(toast.id)}
+              stack={stack} // Pass the stable stack value
             />
           ))}
         </AnimatePresence>
