@@ -1,21 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
 import clsx from "clsx";
-import { animationVariants, themeClasses, positionClasses, useToastTimer } from "./utils";
-
-type ToastProps = {
-  message: string | React.ReactNode;
-  close: () => void;
-  icon?: React.ReactNode;
-  position?: "top-right" | "top-left" | "bottom-right" | "bottom-left" | "center";
-  theme?: "light" | "dark" | "custom";
-  duration?: number;
-  animationType?: "slide" | "fade" | "zoom" | "bounce";
-  autoDismiss?: boolean;
-  onHoverPause?: boolean;
-  stack:boolean;
-  actionButton?: { label: string; onClick: () => void };
-};
+import { animationVariants, themeClasses, positionClasses, textColor, useToastTimer } from "./utils";
+import { ToastProps } from "./toast-context";
 
 const Toast_1: React.FC<ToastProps> = ({
   message,
@@ -51,11 +38,17 @@ const Toast_1: React.FC<ToastProps> = ({
         themeClasses[theme],
         positionClasses[position],
         stack ? "static" : "fixed"
-
       )}
     >
+      {/* Icon */}
       {icon && <div className="mr-3">{icon}</div>}
-      <div className="flex-1">{message}</div>
+
+      {/* Message */}
+      <div className={clsx("flex-1", textColor[theme])}>
+        {message}
+      </div>
+
+      {/* Action Button */}
       {actionButton && (
         <button
           onClick={actionButton.onClick}
@@ -64,6 +57,8 @@ const Toast_1: React.FC<ToastProps> = ({
           {actionButton.label}
         </button>
       )}
+
+      {/* Close Button */}
       <button
         onClick={close}
         className="ml-4 text-lg font-bold focus:outline-none hover:opacity-80"

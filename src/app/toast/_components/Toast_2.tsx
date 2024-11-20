@@ -1,21 +1,8 @@
 import React from "react";
 import { motion } from "framer-motion";
 import clsx from "clsx";
-import { animationVariants, themeClasses, positionClasses, useToastTimer } from "./utils";
-
-type ToastProps = {
-  message: string | React.ReactNode;
-  close: () => void;
-  icon?: React.ReactNode;
-  position?: "top-right" | "top-left" | "bottom-right" | "bottom-left" | "center";
-  theme?: "light" | "dark" | "custom";
-  duration?: number;
-  animationType?: "slide" | "fade" | "zoom" | "bounce";
-  autoDismiss?: boolean;
-  stack:boolean
-  onHoverPause?: boolean;
-  actionButton?: { label: string; onClick: () => void };
-};
+import { animationVariants, themeClasses, positionClasses, textColor, useToastTimer } from "./utils";
+import { ToastProps } from "./toast-context";
 
 const Toast_2: React.FC<ToastProps> = ({
   message,
@@ -52,14 +39,15 @@ const Toast_2: React.FC<ToastProps> = ({
         themeClasses[theme],
         positionClasses[position],
         stack ? "static" : "fixed"
-
       )}
     >
       {/* Icon */}
       <div className="text-xl mr-4">{icon}</div>
       
       {/* Message */}
-      <div className="flex-1 text-center text-base font-medium">{message}</div>
+      <div className={clsx("flex-1 text-center text-base font-medium", textColor[theme])}>
+        {message}
+      </div>
       
       {/* Action Button */}
       {actionButton && (

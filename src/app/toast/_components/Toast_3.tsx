@@ -1,23 +1,10 @@
 import React, { useMemo } from "react";
 import { motion } from "framer-motion";
 import clsx from "clsx";
-import { animationVariants, themeClasses, positionClasses, useToastTimer } from "./utils";
+import { animationVariants, themeClasses, positionClasses, textColor, useToastTimer } from "./utils";
+import { ToastProps } from "./toast-context";
 
-type ToastProps = {
-  message: string | React.ReactNode;
-  close: () => void;
-  icon?: React.ReactNode;
-  position?: "top-right" | "top-left" | "bottom-right" | "bottom-left" | "center";
-  theme?: "light" | "dark" | "custom";
-  duration?: number;
-  animationType?: "slide" | "fade" | "zoom" | "bounce";
-  autoDismiss?: boolean;
-  onHoverPause?: boolean;
-  actionButton?: { label: string; onClick: () => void };
-  stack: boolean;
-};
-
-const Toast: React.FC<ToastProps> = ({
+const Toast_3: React.FC<ToastProps> = ({
   message,
   close,
   icon = "🔔", // Default icon
@@ -47,9 +34,9 @@ const Toast: React.FC<ToastProps> = ({
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={clsx(
-        `flex items-center justify-between p-4 rounded-lg shadow-lg border-2 z-50 `,
+        `flex items-center justify-between p-4 rounded-lg shadow-lg border-2 z-50`,
         "w-[300px] h-[80px]", // Fixed dimensions
-        themeClasses[theme],
+        themeClasses[theme],  // Background gradient based on theme
         positionClasses[position],
         stack ? "static" : "fixed"
       )}
@@ -58,7 +45,9 @@ const Toast: React.FC<ToastProps> = ({
       <div className="text-xl mr-4">{icon}</div>
 
       {/* Message */}
-      <div className="flex-1 text-center text-base font-medium">{message}</div>
+      <div className={clsx("flex-1 text-center text-base font-medium", textColor[theme])}>
+        {message}
+      </div>
 
       {/* Action Button */}
       {actionButton && (
@@ -83,4 +72,4 @@ const Toast: React.FC<ToastProps> = ({
 };
 
 // Wrap the component with React.memo for memoization
-export default React.memo(Toast);
+export default React.memo(Toast_3);

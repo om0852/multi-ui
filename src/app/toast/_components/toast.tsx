@@ -9,8 +9,25 @@ type ToastType = {
   id: number;
   message: string | React.ReactNode;
   icon?: React.ReactNode;
-  position?: "top-right" | "top-left" | "bottom-right" | "bottom-left" | "center";
-  theme?: "light" | "dark" | "custom";
+  position?:
+    | "top-right"
+    | "top-left"
+    | "bottom-right"
+    | "bottom-left"
+    | "center";
+  theme?:
+    | "light"
+    | "dark"
+    | "custom"
+    | "success"
+    | "danger"
+    | "warning"
+    | "info"
+    | "neutral"
+    | "vibrant"
+    | "pink"
+    | "cyan"
+    | "teal"; // Extended themes
   duration?: number;
   animationType?: "slide" | "fade" | "zoom" | "bounce";
   autoDismiss?: boolean;
@@ -21,7 +38,12 @@ type ToastType = {
 type ToastProviderProps = {
   children: React.ReactNode;
   Toast: React.FC<ToastType & { close: () => void; stack: boolean }>;
-  position?: "top-right" | "top-left" | "bottom-right" | "bottom-left" | "center";
+  position?:
+    | "top-right"
+    | "top-left"
+    | "bottom-right"
+    | "bottom-left"
+    | "center";
   stack?: boolean;
 };
 
@@ -51,6 +73,7 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
         theme: "light",
         position,
         animationType: "slide",
+        autoDismiss:true,
         ...options,
       });
     },
@@ -62,8 +85,9 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
       openToast({
         message,
         icon: "❌",
-        theme: "dark",
+        theme: "danger",
         position,
+        autoDismiss:true,
         animationType: "fade",
         ...options,
       });
@@ -93,9 +117,9 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
     <ToastContext.Provider value={contextValue}>
       {children}
       <div
-        className={`fixed z-50 p-4 ${
-          stack ? "flex flex-col gap-4" : "block"
-        } ${positionClasses[position]}`}
+        className={`fixed z-50 p-4 ${stack ? "flex flex-col gap-4" : "block"} ${
+          positionClasses[position]
+        }`}
       >
         <AnimatePresence>
           {toasts.map((toast) => (
