@@ -8,6 +8,7 @@ import Toast_2 from "./toast/_components/Toast_2";
 import Toast_3 from "./toast/_components/Toast_3";
 import Toast_5 from "./toast/_components/Toast_5";
 import Toast_6 from "./toast/_components/Toast_6";
+import Toast_7 from "./toast/_components/Toast_7";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -35,7 +36,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <ToastProvider Toast={Toast_6} stack={false}>
+        <ToastProvider Toast={Toast_7} stack={false}>
           <>{children}</>
         </ToastProvider>
       </body>

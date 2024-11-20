@@ -91,6 +91,20 @@ export const gradientThemeClasses = {
   teal: "bg-gradient-to-br from-teal-400 via-teal-500 to-teal-600 text-white border-teal-500",
 };
 
+export const ThemeClassesBorder = {
+  light: "bg-white text-black border-l-[5px] border-gray-200",
+  dark: "bg-white text-white border-l-[5px] border-gray-600",
+  custom: "bg-white text-white border-l-[5px] border-blue-500",
+  success: "bg-white text-white border-l-[5px] border-green-500",
+  danger: "bg-white text-white border-l-[5px] border-red-500",
+  warning: "bg-white text-black border-l-[5px] border-yellow-500",
+  info: "bg-white text-white border-l-[5px] border-blue-400",
+  neutral: "bg-white text-gray-800 border-l-[5px] border-gray-300",
+  vibrant: "bg-white text-white border-l-[5px] border-purple-500",
+  pink: "bg-white text-white border-l-[5px] border-pink-500",
+  cyan: "bg-white text-black border-l-[5px] border-cyan-400",
+  teal: "bg-white text-white border-l-[5px] border-teal-500",
+};
 export const gradientProgressBarColors = {
   light: "bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500", // Contrasting vibrant colors
   dark: "bg-gradient-to-r from-teal-400 via-green-500 to-lime-400", // Bright, vivid greens for contrast

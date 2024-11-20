@@ -31,6 +31,7 @@ const Page = () => {
         onClick={() => {
           toast?.success("Operation successful!", {
             duration: 4000,
+            theme:"success",
             position: "top-right",
             animationType: "slide",
             autoDismiss:true,
