@@ -48,7 +48,7 @@ const Toast_4: React.FC<ToastProps> = ({
 
       {/* Message */}
       <div className="flex flex-col justify-center gap-1 p-4 z-10">
-        <h4 className={clsx("text-lg font-semibold", textColor[theme])}>{message}</h4>
+        <div className={clsx("text-lg font-semibold", textColor[theme])}>{message}</div>
       </div>
 
       {/* Close Button */}

@@ -24,7 +24,7 @@ export type ToastProps = {
     | "cyan"
     | "teal"; // Extended themes
   duration?: number;
-  animationType?: "slide" | "fade" | "zoom" | "bounce";
+  animationType?: "slide" | "fade" | "zoom" | "bounce"|"zoomflip"|"PopOutIn";
   autoDismiss?: boolean;
   stack: boolean;
   onHoverPause?: boolean;

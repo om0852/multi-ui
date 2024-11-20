@@ -29,7 +29,13 @@ type ToastType = {
     | "cyan"
     | "teal"; // Extended themes
   duration?: number;
-  animationType?: "slide" | "fade" | "zoom" | "bounce";
+  animationType?:
+    | "slide"
+    | "fade"
+    | "zoom"
+    | "bounce"
+    | "zoomflip"
+    | "PopOutIn";
   autoDismiss?: boolean;
   onHoverPause?: boolean;
   actionButton?: { label: string; onClick: () => void };

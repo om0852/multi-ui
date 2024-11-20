@@ -28,6 +28,81 @@ export const animationVariants: Record<
     visible: { y: 0, opacity: 1 },
     exit: { y: 50, opacity: 0 },
   },
+   zoomflip : {
+    hidden: {
+      opacity: 0,
+      scale: 0.5,
+      rotate: -15,
+      x: "-50%",
+      y: "-50%",
+    },
+    visible: {
+      opacity: 1,
+      scale: 1,
+      rotate: 0,
+      x: 0,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 200,
+        damping: 30,
+        duration: 0.6,
+      },
+    },
+    exit: {
+      opacity: 0,
+      scale: 0.5,
+      rotate: 15,
+      x: "50%",
+      y: "-50%",
+      transition: {
+        type: "spring",
+        stiffness: 200,
+        damping: 30,
+        duration: 0.5,
+      },
+    },
+  },
+  PopOutIn:{
+    hidden: {
+      width: "40px",
+      height: "40px",
+      borderRadius: "50%",
+      opacity: 0,
+      scale: 0.5,
+      y: -20,
+    },
+    visible: {
+      width: "320px",
+      height: "100px",
+      borderRadius: "16px",
+      opacity: 1,
+      scale: 1,
+      y: 0,
+      transition: {
+        type: "spring",
+        stiffness: 300,
+        damping: 20,
+        duration: 0.6,
+      },
+    },
+    exit: {
+      // Make exit animation same as hidden
+      width: "40px",
+      height: "40px",
+      borderRadius: "50%",
+      opacity: 0,
+      scale: 0.5,
+      y: -20,
+      transition: {
+        type: "spring",
+        stiffness: 300,
+        damping: 20,
+        duration: 0.6,
+      },
+    },
+  }
+
 };
 export const themeClasses = {
   light: "bg-white text-black border-gray-300",

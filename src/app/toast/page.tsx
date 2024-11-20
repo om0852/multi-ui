@@ -29,11 +29,15 @@ const Page = () => {
       <button
         className="w-[20vh] h-10 bg-green-600 text-white rounded hover:bg-green-700 transition"
         onClick={() => {
-          toast?.success("Operation successful!", {
+          toast?.success(<>
+          <h1>Welcom</h1>
+          <p className="text-blue-500">Welcome</p>
+          </>, {
             duration: 4000,
             theme:"dark",
             position: "top-right",
             animationType: "slide",
+            
             autoDismiss:true,
             
           });
