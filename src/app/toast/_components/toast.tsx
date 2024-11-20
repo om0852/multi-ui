@@ -73,7 +73,7 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
         theme: "light",
         position,
         animationType: "slide",
-        autoDismiss:true,
+        autoDismiss: true,
         ...options,
       });
     },
@@ -87,7 +87,7 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
         icon: "❌",
         theme: "danger",
         position,
-        autoDismiss:true,
+        autoDismiss: true,
         animationType: "fade",
         ...options,
       });
