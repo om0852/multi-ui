@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from "react";
+import React, { createContext, useContext } from "react";
 
 export type ToastProps = {
   message: string | React.ReactNode;
@@ -31,7 +31,6 @@ export type ToastProps = {
   actionButton?: { label: string; onClick: () => void };
 };
 
-type ToastType = ToastProps & { id: number };
 
 type ToastContextValue = {
   open?: (toast: ToastProps) => void;

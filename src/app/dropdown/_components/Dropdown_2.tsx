@@ -14,18 +14,6 @@ interface DropdownProps {
   options: DropdownOption[];
 }
 
-const Header = styled.header`
-  height: 5rem;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  background: #fffffa;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-`;
 
 const NavList = styled.ul`
   display: flex;
@@ -49,7 +37,7 @@ const DropdownButton = styled.button<{ isOpen: boolean }>`
   transition: background 0.3s, color 0.3s;
 `;
 
-const DropdownButtonWithProps = styled(DropdownButton).attrs((props: { isOpen: boolean }) => ({
+const DropdownButtonWithProps = styled(DropdownButton).attrs(() => ({
   isOpen: undefined, 
 }))``;
 
@@ -123,13 +111,6 @@ const DropdownMenuItem = styled.li`
   }
 `;
 
-const Main = styled.main`
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-`;
 
 const Dropdown_2: React.FC<DropdownProps> = ({ label, options }) => {
   const [openIndex, setOpenIndex] = useState<number | null>(null);

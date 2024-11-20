@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import styled from "styled-components";
+import { motion } from "framer-motion"; // Import framer motion for animations
 
 // Define types for Dropdown options
 interface Option {
@@ -15,93 +15,6 @@ interface DropdownProps {
   options: Option[]; // Array of options with custom properties
   onChange?: (value: string) => void; // Function to handle option selection
 }
-
-const DropdownWrapper = styled.div`
-  position: relative;
-  display: inline-block;
-`;
-
-const DropdownButton = styled.button`
-  display: inline-flex;
-  align-items: center;
-  column-gap: 0.5rem;
-  border-radius: 0.375rem;
-  background: #4f46e5;
-  padding: 0.625rem 0.875rem;
-  font-size: 0.875rem;
-  line-height: 1.25rem;
-  font-weight: 600;
-  color: #ffffff;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
-  border: none;
-  outline: 1px solid #4f46e5;
-  cursor: pointer;
-
-  &:hover {
-    background: #6366f1;
-  }
-`;
-
-const DropdownContent = styled.div`
-  position: absolute;
-  top: 3rem;
-  left: 0;
-  margin-top: 0.5rem;
-  width: 14rem;
-  opacity: 0;
-  visibility: hidden;
-  transform: scaleY(0);
-  transform-origin: top right;
-  border-radius: 0.375rem;
-  background: #ffffff;
-  box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1);
-  transition: all 0.3s ease;
-  z-index: 99;
-
-  &.active {
-    opacity: 1;
-    transform: scaleY(1);
-    visibility: visible;
-  }
-`;
-
-const DropdownLink = styled.button<{ disabled?: boolean }>`
-  display: block;
-  width: 100%;
-  padding: 0.5rem 1rem;
-  font-size: 0.875rem;
-  text-align: start;
-  line-height: 1.25rem;
-  color: ${(props) => (props.disabled ? "#d1d5db" : "#4a5568")};
-  cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
-  text-decoration: ${(props) => (props.disabled ? "none" : "none")};
-
-  &:hover {
-    color: ${(props) => (props.disabled ? "#d1d5db" : "#111827")};
-    background: ${(props) => (props.disabled ? "none" : "#f1f1f1")};
-  }
-`;
-
-// ChevronIcon component with forwardRef
-const ChevronIcon = styled(
-  React.forwardRef<SVGSVGElement, { isopen: boolean }>((props, ref) => (
-    <svg
-      ref={ref}
-      xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 24 24"
-      strokeWidth="1.5"
-      stroke="currentColor"
-      {...props}
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
-    </svg>
-  ))
-)`
-  width: 1rem;
-  height: 1rem;
-  transform: ${(props) => (props.isopen ? "rotate(-180deg)" : "rotate(0)")};
-  transition: transform 0.3s ease;
-`;
 
 const Dropdown_3: React.FC<DropdownProps> = ({ label, options, onChange }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -136,24 +49,48 @@ const Dropdown_3: React.FC<DropdownProps> = ({ label, options, onChange }) => {
   }, []);
 
   return (
-    <DropdownWrapper className="dropdown-wrapper">
-      <DropdownButton onClick={handleButtonClick}>
+    <div className="relative inline-block dropdown-wrapper">
+      <button
+        className="inline-flex items-center gap-2 rounded-md bg-indigo-600 px-4 py-2 text-white font-semibold text-sm shadow-md border-2 border-indigo-600 hover:bg-indigo-500 focus:outline-none"
+        onClick={handleButtonClick}
+      >
         {label}
-        <ChevronIcon isopen={isOpen} />
-      </DropdownButton>
-      <DropdownContent className={isOpen ? "active" : ""}>
+        <motion.svg
+          className="w-4 h-4 transform transition-transform"
+          style={{ rotate: isOpen ? -180 : 0 }}
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          strokeWidth="1.5"
+          stroke="currentColor"
+          initial={{ rotate: 0 }}
+          animate={{ rotate: isOpen ? -180 : 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" d="m19.5 8.25-7.5 7.5-7.5-7.5" />
+        </motion.svg>
+      </button>
+      <motion.div
+        className="absolute left-0 w-56 mt-2 bg-white shadow-lg rounded-md border border-gray-200 z-50"
+        initial={{ opacity: 0, scaleY: 0 }}
+        animate={{ opacity: isOpen ? 1 : 0, scaleY: isOpen ? 1 : 0 }}
+        transition={{ duration: 0.3 }}
+        style={{ transformOrigin: "top right" }}
+      >
         {options.map((option, index) => (
-          <DropdownLink
+          <button
             key={index}
+            className={`block w-full px-4 py-2 text-sm text-left ${option.disabled ? "text-gray-400 cursor-not-allowed" : "text-gray-700 hover:bg-gray-100"} focus:outline-none`}
             onClick={() => !option.disabled && handleOptionClick(option)}
             disabled={option.disabled}
           >
             {option.label}
-          </DropdownLink>
+          </button>
         ))}
-      </DropdownContent>
-    </DropdownWrapper>
+      </motion.div>
+    </div>
   );
 };
+
+Dropdown_3.displayName = 'Dropdown_3';
 
 export default Dropdown_3;

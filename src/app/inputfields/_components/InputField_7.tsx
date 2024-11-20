@@ -2,7 +2,6 @@ import React, { InputHTMLAttributes } from "react";
 import styled from "styled-components";
 
 // Color Variables
-const black = "#000000";
 const cornflowerLilac = "#ffaea9";
 const salmon = "#ff7b73";
 const white = "#ffffff";

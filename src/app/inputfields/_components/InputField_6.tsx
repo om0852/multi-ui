@@ -1,4 +1,4 @@
-import React, { FC, InputHTMLAttributes } from "react";
+import React, {  InputHTMLAttributes } from "react";
 import styled from "styled-components";
 
 // Styled Components

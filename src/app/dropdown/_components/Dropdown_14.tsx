@@ -116,6 +116,7 @@ const DropdownMenu: React.FC<DropdownMenuProps> = ({ options, onSelect, onClick,
                     if (!option.disabled) {
                       selectOption(option.value);
                       handleClick(option.value);
+                      handleSelect(option.value)
                     }
                   }}
                   onChange={() => handleChange(option.value)} // onChange

@@ -29,10 +29,9 @@ const Typewriter_7: React.FC<TypewriterProps> = ({
   useEffect(() => {
     const currentMessage = messages[messageIndex];
     let index = 0;
-    const typingDirection = reverse ? 'reverse' : 'forward';
 
     const type = () => {
-      setDisplayedText((prev) => {
+      setDisplayedText(() => {
         const nextText = currentMessage.slice(0, index);
         return nextText;
       });

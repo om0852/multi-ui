@@ -23,7 +23,6 @@ const Dropdown_10: React.FC<DropdownProps> = ({
   onChange,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedLabel, setSelectedLabel] = useState<string | undefined>();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const toggleDropdown = () => setIsOpen((prev) => !prev);
@@ -40,7 +39,6 @@ const Dropdown_10: React.FC<DropdownProps> = ({
     }
     if ("value" in option && onChange && typeof option.value === 'string') {
       onChange(option.value);
-      setSelectedLabel(option.label);
     }
     setIsOpen(false);
   };

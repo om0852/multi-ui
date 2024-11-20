@@ -25,7 +25,9 @@ const Dropdown_6: React.FC<DropdownProps> = ({ label, options, onChange }) => {
   const handleOptionClick = (option: Option) => {
     if (!option.disabled) {
       onChange(option.value);
-      option.onClick && option.onClick(option.value);
+      if (option.onClick) {
+        option.onClick(option.value);
+      }
       handleOptionChange(option.value);
     }
   };

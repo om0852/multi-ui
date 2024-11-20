@@ -2,9 +2,6 @@
 import React, { FC, InputHTMLAttributes } from "react";
 import styled from "styled-components";
 
-// Define a prop interface to accept all standard input attributes
-interface UrlInputProps extends InputHTMLAttributes<HTMLInputElement> {}
-
 const FormGroup = styled.div`
   position: relative;
   display: flex;
@@ -88,7 +85,7 @@ const RightSpan = styled(LeftSpan)`
 `;
 
 // Updated UrlInput to accept custom input props
-const UrlInput: FC<UrlInputProps> = (props) => (
+const UrlInput: FC<InputHTMLAttributes<HTMLInputElement>> = (props) => (
   <FormGroup className={props?.className}>
     <LeftSpan>https://</LeftSpan>
     <FormField type="text" placeholder="multiui.com" {...props} className={`${props.className} no-left-radius`} />

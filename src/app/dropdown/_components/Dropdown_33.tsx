@@ -10,6 +10,12 @@ interface DropdownProps {
   onSelect?: (country: string) => void; // Callback for when a country is selected
 }
 
+interface Country {
+  name: {
+    common: string; // Common name of the country
+  };
+}
+
 const Dropdown_33: React.FC<DropdownProps> = ({
   placeholder = "Select Country",
   label = "Country",
@@ -24,8 +30,8 @@ const Dropdown_33: React.FC<DropdownProps> = ({
     const loadCountries = async () => {
       try {
         const response = await fetch("https://restcountries.com/v3.1/all");
-        const data = await response.json();
-        const countryList = data.map((country: any) => country.name.common).sort();
+        const data:Country[] = await response.json();
+        const countryList = data.map((country: Country) => country.name.common).sort();
         setCountries(countryList);
       } catch (error) {
         console.error("Failed to fetch countries:", error);

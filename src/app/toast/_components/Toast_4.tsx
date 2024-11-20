@@ -51,6 +51,18 @@ const Toast_4: React.FC<ToastProps> = ({
         <div className={clsx("text-lg font-semibold", textColor[theme])}>{message}</div>
       </div>
 
+      {/* Action Button */}
+      {actionButton && (
+        <div className="p-4">
+          <button
+            onClick={actionButton.onClick}
+            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none"
+          >
+            {actionButton.label}
+          </button>
+        </div>
+      )}
+
       {/* Close Button */}
       <motion.button
         onClick={close}

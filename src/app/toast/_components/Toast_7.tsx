@@ -1,7 +1,7 @@
-import React, { useMemo } from "react";
+import React  from "react";
 import { motion } from "framer-motion";
 import clsx from "clsx";
-import { animationVariants, ThemeClassesBorder, positionClasses, textColor, useToastTimer } from "./utils";
+import { animationVariants, ThemeClassesBorder, positionClasses, useToastTimer } from "./utils";
 import { ToastProps } from "./toast-context";
 
 const Toast_7: React.FC<ToastProps> = ({

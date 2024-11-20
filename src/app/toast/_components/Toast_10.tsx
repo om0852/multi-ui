@@ -61,7 +61,7 @@ const Toast_10: React.FC<ToastProps> = ({
 
       {/* Message Section */}
       <motion.div
-        className={clsx("flex-1 text-lg font-semibold text-white")}
+        className={clsx("flex-1 text-lg font-semibold text-white",textColor[theme])}
         initial={{ opacity: 0, x: -10 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ delay: 0.3, duration: 0.3 }}

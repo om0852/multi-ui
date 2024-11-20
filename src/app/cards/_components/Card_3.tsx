@@ -54,9 +54,14 @@ const Title = styled.p`
   transition: color 0.3s ease-out;
 `;
 
+// Define the props interface for CardWrapper
+interface CardWrapperProps {
+  width?: string;
+  height?: string;
+}
 
-const CardWrapper = styled.div`
- width: ${(props) => props.width};
+const CardWrapper = styled.div<CardWrapperProps>`
+  width: ${(props) => props.width};
   height: ${(props) => props.height};
   background: #fff;
   border-top-right-radius: 10px;

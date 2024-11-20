@@ -34,7 +34,7 @@ const Icon = styled.img`
 const CreditCardInputField = () => {
   const [cardNumber, setCardNumber] = useState('');
 
-  const handleChange = (e:any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCardNumber(e.target.value);
   };
 

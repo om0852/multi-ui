@@ -7,17 +7,17 @@ type TypewriterProps = {
   fontSize?: string;
   cursorColor?: string;
   cursorWidth?: string;
-  reverse?: boolean;
   loop?: boolean;
-  speed?: number; // in seconds, default 1
+  reverse?: boolean; // Add reverse as part of the props
+  speed?: number; // Add speed as part of the props
 };
 
-const typingAnimation = (reverse: boolean, speed: number) => keyframes`
+const typingAnimation = () => keyframes`
   from { width: 0; }
   to { width: 100%; }
 `;
 
-const reverseAnimation = (speed: number) => keyframes`
+const reverseAnimation = () => keyframes`
   from { width: 100%; }
   to { width: 0; }
 `;
@@ -26,11 +26,21 @@ const Container = styled.div`
   display: inline-block;
 `;
 
-const TypedOut = styled.div<Omit<TypewriterProps, 'text'>>`
+const TypedOut = styled.div<{
+  fontSize?: string;
+  cursorColor?: string;
+  cursorWidth?: string;
+  loop?: boolean;
+  reverse?: boolean;
+  speed?: number;
+}>`
   overflow: hidden;
   border-right: ${({ cursorWidth }) => cursorWidth || '0.15em'} solid ${({ cursorColor }) => cursorColor || 'orange'};
   white-space: nowrap;
-  animation: ${({ reverse = false, speed = 1 }) => reverse ? css`${reverseAnimation(speed)} 1s forwards` : css`${typingAnimation(reverse, speed)} 1s forwards`};
+  animation: ${({ reverse = false }) =>
+    reverse
+      ? css`${reverseAnimation()} 1s forwards`
+      : css`${typingAnimation()} 1s forwards`};
   font-size: ${({ fontSize }) => fontSize || '1.6rem'};
   width: 0;
   animation-iteration-count: ${({ loop }) => loop ? 'infinite' : '1'};
@@ -41,21 +51,21 @@ const Typewriter_5: React.FC<TypewriterProps> = ({
   fontSize = '1.6rem',
   cursorColor = 'orange',
   cursorWidth = '0.15em',
-  reverse = false,
   loop = false,
-  speed = 1,
+  reverse = false,
+  speed = 1,  // Add default value for speed
 }) => {
   return (
     <div>
-      <h1>I'm Matt, I'm a</h1>
+      <h1>I&lsquo;m Matt, I&apos;m a</h1>
       <Container>
         <TypedOut
           fontSize={fontSize}
           cursorColor={cursorColor}
           cursorWidth={cursorWidth}
-          reverse={reverse}
           loop={loop}
-          speed={speed}
+          reverse={reverse}  // Pass reverse prop here
+          speed={speed}  // Pass speed prop here
         >
           {text}
         </TypedOut>
