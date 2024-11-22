@@ -28,7 +28,7 @@ export const animationVariants: Record<
     visible: { y: 0, opacity: 1 },
     exit: { y: 50, opacity: 0 },
   },
-   zoomflip : {
+  zoomflip: {
     hidden: {
       opacity: 0,
       scale: 0.5,
@@ -63,7 +63,7 @@ export const animationVariants: Record<
       },
     },
   },
-  PopOutIn:{
+  PopOutIn: {
     hidden: {
       width: "40px",
       height: "40px",
@@ -87,7 +87,6 @@ export const animationVariants: Record<
       },
     },
     exit: {
-      // Make exit animation same as hidden
       width: "40px",
       height: "40px",
       borderRadius: "50%",
@@ -101,9 +100,76 @@ export const animationVariants: Record<
         duration: 0.6,
       },
     },
-  }
-
+  },
+  rotate: {
+    hidden: { rotate: -180, opacity: 0 },
+    visible: { rotate: 0, opacity: 1 },
+    exit: { rotate: 180, opacity: 0 },
+  },
+  wobble: {
+    hidden: { scale: 0.5, opacity: 0 },
+    visible: {
+      scale: 1,
+      opacity: 1,
+      rotate: [0, 10, -10, 5, -5, 0],
+      transition: { duration: 0.8 },
+    },
+    exit: { scale: 0.5, opacity: 0 },
+  },
+  flip: {
+    hidden: { scaleY: 0, opacity: 0 },
+    visible: { scaleY: 1, opacity: 1 },
+    exit: { scaleY: 0, opacity: 0 },
+  },
+  staggeredZoom: {
+    hidden: { scale: 0.5, opacity: 0 },
+    visible: {
+      scale: [0.5, 1.2, 1],
+      opacity: 1,
+      transition: { duration: 0.6, ease: "easeInOut" },
+    },
+    exit: { scale: 0.5, opacity: 0 },
+  },
+  drop: {
+    hidden: { y: -100, opacity: 0 },
+    visible: { y: 0, opacity: 1, transition: { bounce: 0.5, duration: 0.6 } },
+    exit: { y: 100, opacity: 0 },
+  },
+  pulse: {
+    hidden: { scale: 0.9, opacity: 0 },
+    visible: {
+      scale: [1, 1.1, 1],
+      opacity: 1,
+      transition: { repeat: Infinity, repeatType: "mirror", duration: 0.8 },
+    },
+    exit: { scale: 0.9, opacity: 0 },
+  },
+  ripple: {
+    hidden: { scale: 0, opacity: 0 },
+    visible: {
+      scale: [0.8, 1.2, 1],
+      opacity: [0, 1, 1],
+      transition: { duration: 0.8 },
+    },
+    exit: { scale: 0.8, opacity: 0 },
+  },
+  roll: {
+    hidden: { rotate: -360, opacity: 0 },
+    visible: { rotate: 0, opacity: 1, transition: { duration: 0.8 } },
+    exit: { rotate: 360, opacity: 0 },
+  },
+  twist: {
+    hidden: { x: -50, rotate: -15, opacity: 0 },
+    visible: {
+      x: 0,
+      rotate: 0,
+      opacity: 1,
+      transition: { type: "spring", stiffness: 200, damping: 20 },
+    },
+    exit: { x: 50, rotate: 15, opacity: 0 },
+  },
 };
+
 export const themeClasses = {
   light: "bg-white text-black border-gray-300",
   dark: "bg-gray-800 text-white border-gray-700",

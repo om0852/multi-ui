@@ -35,7 +35,16 @@ type ToastType = {
     | "zoom"
     | "bounce"
     | "zoomflip"
-    | "PopOutIn";
+    | "PopOutIn"
+    | "rotate"
+    | "wobble"
+    | "flip"
+    | "staggeredZoom"
+    | "drop"
+    | "pulse"
+    | "ripple"
+    | "roll"
+    | "twist";
   autoDismiss?: boolean;
   onHoverPause?: boolean;
   actionButton?: { label: string; onClick: () => void };
