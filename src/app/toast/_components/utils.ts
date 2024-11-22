@@ -275,7 +275,7 @@ export const gradientProgressBarColors = {
   teal: "bg-gradient-to-r from-emerald-400 via-teal-500 to-cyan-600", // Harmonious green-teal-cyan
 };
 
-export const positionClasses = {
+export const positionClasses: Record<string, string> = {
   "top-right": "top-4 right-4",
   "top-left": "top-4 left-4",
   "bottom-right": "bottom-4 right-4",
