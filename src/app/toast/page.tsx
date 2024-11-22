@@ -34,7 +34,7 @@ const Page = () => {
           <p className="text-blue-500">Welcome</p>
           </>, {
             duration: 4000,
-            theme:"dark",
+            theme:"success",
             position: "top-right",
             animationType: "slide",
             
