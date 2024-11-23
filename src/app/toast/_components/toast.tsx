@@ -35,7 +35,16 @@ type ToastType = {
     | "zoom"
     | "bounce"
     | "zoomflip"
-    | "PopOutIn";
+    | "PopOutIn"
+    | "rotate"
+    | "wobble"
+    | "flip"
+    | "staggeredZoom"
+    | "drop"
+    | "pulse"
+    | "ripple"
+    | "roll"
+    | "twist";
   autoDismiss?: boolean;
   onHoverPause?: boolean;
   actionButton?: { label: string; onClick: () => void };
@@ -123,7 +132,7 @@ export const ToastProvider: React.FC<ToastProviderProps> = ({
     <ToastContext.Provider value={contextValue}>
       {children}
       <div
-        className={`fixed z-50 p-4 ${stack ? "flex flex-col gap-4" : "block"} ${
+        className={`fixed min-w-[300px] z-50 p-4 ${stack ? "flex flex-col gap-4" : "block"} ${
           positionClasses[position]
         }`}
       >
