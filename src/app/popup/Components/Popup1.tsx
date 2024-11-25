@@ -31,47 +31,18 @@ const PopMenu: React.FC = () => {
   };
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        width: '100%',
-        height: '100vh',
-        backgroundColor: '#333',
-      }}
-    >
-      <div
-        style={{
-          position: 'relative',
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}
-      >
+    <div className="flex items-center justify-center w-full h-screen bg-gray-800">
+      <div className="relative flex items-center justify-center">
         <input
           type="checkbox"
           id="checkbox"
           checked={isChecked}
           onChange={handleToggle}
-          style={{ display: 'none' }}
+          className="hidden"
         />
         <label
           htmlFor="checkbox"
-          style={{
-            background: '#4791FF',
-            width: '10em',
-            height: '10em',
-            borderRadius: '50%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            color: '#fff',
-            fontSize: '16px',
-            position: 'relative',
-            zIndex: 10,
-            cursor: 'pointer',
-          }}
+          className="bg-blue-500 w-40 h-40 rounded-full flex items-center justify-center text-white text-lg cursor-pointer relative z-10"
         >
           Click me
         </label>
@@ -80,21 +51,8 @@ const PopMenu: React.FC = () => {
             <a
               key={platform}
               href="#"
-              style={{
-                position: 'absolute',
-                background: '#FFB66F',
-                width: '70px',
-                height: '70px',
-                color: '#fff',
-                borderRadius: '50%',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                fontSize: '12px',
-                textDecoration: 'none',
-                transition: 'all 0.3s ease-in-out',
-                ...menuStyles(index),
-              }}
+              style={menuStyles(index)}
+              className="absolute bg-orange-400 w-16 h-16 text-white rounded-full flex items-center justify-center text-sm no-underline transition-all duration-300 ease-in-out"
             >
               {platform}
             </a>
