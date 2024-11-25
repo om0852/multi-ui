@@ -24,13 +24,27 @@ export type ToastProps = {
     | "cyan"
     | "teal"; // Extended themes
   duration?: number;
-  animationType?: "slide" | "fade" | "zoom" | "bounce"|"zoomflip"|"PopOutIn";
+  animationType?:
+    | "slide"
+    | "fade"
+    | "zoom"
+    | "bounce"
+    | "zoomflip"
+    | "PopOutIn"
+    | "rotate"
+    | "wobble"
+    | "flip"
+    | "staggeredZoom"
+    | "drop"
+    | "pulse"
+    | "ripple"
+    | "roll"
+    | "twist";
   autoDismiss?: boolean;
   stack: boolean;
   onHoverPause?: boolean;
   actionButton?: { label: string; onClick: () => void };
 };
-
 
 type ToastContextValue = {
   open?: (toast: ToastProps) => void;
