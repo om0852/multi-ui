@@ -1,6 +1,6 @@
 import React from "react";
 
-const PopMenu: React.FC = () => {
+const Popup2: React.FC = () => {
   const circleMenuItems = [
     { id: 1, rotation: 45, background: "bg-green-200" },
     { id: 2, rotation: 90, background: "bg-blue-200" },
@@ -57,4 +57,4 @@ const PopMenu: React.FC = () => {
   );
 };
 
-export default PopMenu;
+export default Popup2;

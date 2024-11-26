@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const PopMenu: React.FC = () => {
+const Popup1: React.FC = () => {
   const [isChecked, setIsChecked] = useState(false);
 
   const handleToggle = () => {
@@ -63,4 +63,4 @@ const PopMenu: React.FC = () => {
   );
 };
 
-export default PopMenu;
+export default Popup1;
