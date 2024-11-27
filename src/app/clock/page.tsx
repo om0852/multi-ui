@@ -16,7 +16,6 @@ const Page = () => (
          {/* <AnalogClock size={300} borderColor="border-blue-500" /> */}
          {/* <EnhancedAnalogClock/> */}
          {/* <EnhancedSquareClock/> */}
-         <EnhancedCircularClock/>
          </div>
 )
 
