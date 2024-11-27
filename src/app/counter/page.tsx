@@ -4,6 +4,9 @@ import React from "react";
 import AnimatedCounter from "./_components/Counter_2";
 import BouncyCounter from "./_components/Counter_3";
 import FlipCounter from "./_components/Counter_4";
+import FlipPageCounter from "./_components/Counter_5";
+import SlideCounter from "./_components/Counter_6";
+import UniqueSlideCounter from "./_components/Counter_7";
 
 const Page = () => {
   return (
@@ -29,7 +32,7 @@ const Page = () => {
         duration={3}
         // easing={easeOutBounce}
       /> */}
-<FlipCounter
+<UniqueSlideCounter
         from={0}
         to={30}
         duration={100}
