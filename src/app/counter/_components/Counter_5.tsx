@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export interface FlipPageCounterProps {
+export interface Counter_5Props {
   from?: number; // Starting value
   to: number; // Ending value
   duration?: number; // Total duration for the counter
@@ -13,7 +13,7 @@ export interface FlipPageCounterProps {
   onComplete?: (finalValue: number) => void; // Function called when counter completes
 }
 
-const FlipPageCounter: React.FC<FlipPageCounterProps> = ({
+const Counter_5: React.FC<Counter_5Props> = ({
   from = 0,
   to,
   duration = 5,
@@ -82,4 +82,4 @@ const FlipPageCounter: React.FC<FlipPageCounterProps> = ({
   );
 };
 
-export default FlipPageCounter;
+export default Counter_5;

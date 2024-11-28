@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { motion, animate, Easing } from "framer-motion";
 
-export interface BouncyCounterProps {
+export interface Counter_3Props {
   from?: number; // Starting value (default: 0)
   to: number; // Ending value (required)
   duration?: number; // Animation duration in seconds (default: 2)
@@ -15,7 +15,7 @@ export interface BouncyCounterProps {
   onComplete?: (finalValue: number, range: { from: number; to: number }) => void; // Callback with final value
 }
 
-const BouncyCounter: React.FC<BouncyCounterProps> = ({
+const Counter_3: React.FC<Counter_3Props> = ({
   from = 0,
   to,
   duration = 2.5,
@@ -65,4 +65,4 @@ const BouncyCounter: React.FC<BouncyCounterProps> = ({
   );
 };
 
-export default BouncyCounter;
+export default Counter_3;

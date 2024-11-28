@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export interface Counter_6Props {
+export interface Counter_9Props {
   from?: number; // Starting value
   to: number; // Ending value
   duration?: number; // Total duration for the counter
@@ -13,7 +13,7 @@ export interface Counter_6Props {
   onComplete?: (finalValue: number) => void; // Function called when counter completes
 }
 
-const Counter_6: React.FC<Counter_6Props> = ({
+const Counter_9: React.FC<Counter_9Props> = ({
   from = 0,
   to,
   duration = 5,
@@ -69,11 +69,14 @@ const Counter_6: React.FC<Counter_6Props> = ({
       <AnimatePresence mode="wait">
         <motion.div
           key={visibleValue}
-          initial={{ translateX: "100%", opacity: 0 }}
-          animate={{ translateX: "0%", opacity: 1 }}
-          exit={{ translateX: "-100%", opacity: 0 }}
-          transition={{ duration: 0.5, ease: "easeInOut" }}
-          className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-gradient-to-b from-blue-600 to-blue-400 text-4xl font-bold shadow-md rounded-lg"
+          initial={{ scale: 0.8, rotate: 0 }}
+          animate={{ scale: 1, rotate: 360 }}
+          exit={{ scale: 0.8, rotate: -360 }}
+          transition={{
+            duration: 0.4,
+            ease: "easeInOut",
+          }}
+          className="absolute top-0 left-0 w-full h-full flex items-center justify-center text-4xl font-bold"
         >
           {formatter(visibleValue)}
         </motion.div>
@@ -82,4 +85,4 @@ const Counter_6: React.FC<Counter_6Props> = ({
   );
 };
 
-export default Counter_6;
+export default Counter_9;

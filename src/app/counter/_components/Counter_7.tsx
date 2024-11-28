@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export interface UniqueSlideCounterProps {
+export interface Counter_7Props {
   from?: number; // Starting value
   to: number; // Ending value
   duration?: number; // Total duration for the counter
@@ -13,7 +13,7 @@ export interface UniqueSlideCounterProps {
   onComplete?: (finalValue: number) => void; // Function called when counter completes
 }
 
-const UniqueSlideCounter: React.FC<UniqueSlideCounterProps> = ({
+const Counter_7: React.FC<Counter_7Props> = ({
   from = 0,
   to,
   duration = 5,
@@ -97,4 +97,4 @@ const UniqueSlideCounter: React.FC<UniqueSlideCounterProps> = ({
   );
 };
 
-export default UniqueSlideCounter;
+export default Counter_7;

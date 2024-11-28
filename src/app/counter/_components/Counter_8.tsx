@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export interface Counter_6Props {
+export interface Counter_8Props {
   from?: number; // Starting value
   to: number; // Ending value
   duration?: number; // Total duration for the counter
@@ -13,7 +13,7 @@ export interface Counter_6Props {
   onComplete?: (finalValue: number) => void; // Function called when counter completes
 }
 
-const Counter_6: React.FC<Counter_6Props> = ({
+const Counter_8: React.FC<Counter_8Props> = ({
   from = 0,
   to,
   duration = 5,
@@ -56,24 +56,21 @@ const Counter_6: React.FC<Counter_6Props> = ({
     <div
       className={`relative flex flex-col items-center justify-center overflow-hidden ${className}`}
       style={{
-        fontFamily: "sans-serif",
-        color: "#fff",
-        borderRadius: "10px",
-        backgroundColor: "#1E3A8A",
-        padding: "10px 20px",
         width: "100px",
-        height: "150px",
-        perspective: 1000, // For 3D effect
+        height: "100px",
       }}
     >
       <AnimatePresence mode="wait">
         <motion.div
           key={visibleValue}
-          initial={{ translateX: "100%", opacity: 0 }}
-          animate={{ translateX: "0%", opacity: 1 }}
-          exit={{ translateX: "-100%", opacity: 0 }}
-          transition={{ duration: 0.5, ease: "easeInOut" }}
-          className="absolute top-0 left-0 w-full h-full flex items-center justify-center bg-gradient-to-b from-blue-600 to-blue-400 text-4xl font-bold shadow-md rounded-lg"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: 20 }}
+          transition={{
+            duration: 0.3,
+            ease: "easeInOut",
+          }}
+          className="absolute top-0 left-0 w-full h-full flex items-center justify-center text-3xl font-bold"
         >
           {formatter(visibleValue)}
         </motion.div>
@@ -82,4 +79,4 @@ const Counter_6: React.FC<Counter_6Props> = ({
   );
 };
 
-export default Counter_6;
+export default Counter_8;

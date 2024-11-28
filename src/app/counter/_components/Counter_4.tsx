@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
-export interface FlipCounterProps {
+export interface Counter_4Props {
   from?: number; // Starting value
   to: number; // Ending value
   duration?: number; // Total duration for the counter
@@ -13,7 +13,7 @@ export interface FlipCounterProps {
   onComplete?: (finalValue: number) => void; // Function called when counter completes
 }
 
-const FlipCounter: React.FC<FlipCounterProps> = ({
+const Counter_4: React.FC<Counter_4Props> = ({
   from = 0,
   to,
   duration = 5, // Total duration for the counter
@@ -82,4 +82,4 @@ const FlipCounter: React.FC<FlipCounterProps> = ({
   );
 };
 
-export default FlipCounter;
+export default Counter_4;

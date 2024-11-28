@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { motion, animate, Easing } from "framer-motion";
 
-export interface AnimatedCounterProps {
+export interface Counter_2Props {
   from?: number; // Starting value (default: 0)
   to: number; // Ending value (required)
   duration?: number; // Animation duration in seconds (default: 2)
@@ -13,7 +13,7 @@ export interface AnimatedCounterProps {
   onComplete?: (finalValue: number, range: { from: number; to: number }) => void; // Callback with details
 }
 
-const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
+const Counter_2: React.FC<Counter_2Props> = ({
   from = 0,
   to,
   duration = 2,
@@ -52,4 +52,4 @@ const AnimatedCounter: React.FC<AnimatedCounterProps> = ({
   );
 };
 
-export default AnimatedCounter;
+export default Counter_2;

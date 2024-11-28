@@ -6,7 +6,7 @@ import BouncyCounter from "./_components/Counter_3";
 import FlipCounter from "./_components/Counter_4";
 import FlipPageCounter from "./_components/Counter_5";
 import SlideCounter from "./_components/Counter_6";
-import UniqueSlideCounter from "./_components/Counter_7";
+import UniqueSlideCounter from "./_components/Counter_1";
 
 const Page = () => {
   return (
