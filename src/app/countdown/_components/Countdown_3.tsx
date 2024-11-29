@@ -11,7 +11,7 @@ export interface CountdownProps {
   onComplete?: () => void;
 }
 
-const Countdown_2: React.FC<CountdownProps> = ({
+const Countdown_3: React.FC<CountdownProps> = ({
   to,
   interval = 1,
   className = "",
@@ -68,4 +68,4 @@ const Countdown_2: React.FC<CountdownProps> = ({
   );
 };
 
-export default Countdown_2;
+export default Countdown_3;
