@@ -10,7 +10,7 @@ export interface CountdownProps {
   onComplete?: () => void;
 }
 
-const Countdown_13: React.FC<CountdownProps> = ({ to, interval = 1, className = "", onComplete }) => {
+const Countdown_15: React.FC<CountdownProps> = ({ to, interval = 1, className = "", onComplete }) => {
   const [days, setDays] = useState<number>(0);
   const [hours, setHours] = useState<number>(0);
   const [minutes, setMinutes] = useState<number>(0);
@@ -69,30 +69,50 @@ const Countdown_13: React.FC<CountdownProps> = ({ to, interval = 1, className = 
     <div
       className={`relative flex flex-col items-center justify-center ${className}`}
       style={{
-        background: "linear-gradient(to right, #ff7e5f, #feb47b)", // Gradient Background
-        borderRadius: "15px",
+        background: "linear-gradient(135deg, #667eea, #764ba2)", // Gradient background
+        borderRadius: "20px",
         padding: "20px",
-        fontFamily: "Arial, sans-serif",
+        fontFamily: "Verdana, sans-serif",
         color: "#fff",
-        fontSize: "18px",
+        fontSize: "20px",
         textAlign: "center",
+        boxShadow: "0 10px 20px rgba(0,0,0,0.2)", // Shadow effect
       }}
     >
       <motion.div
         key={`time-${days}-${hours}-${minutes}-${seconds}`}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
+        initial={{ opacity: 0, y: -20, rotateX: 90 }} // 3D rotate effect
+        animate={{ opacity: 1, y: 0, rotateX: 0 }}
+        exit={{ opacity: 0, y: 20, rotateX: 90 }}
         transition={{
-          duration: 0.5,
+          duration: 0.6,
           ease: "easeInOut",
         }}
         className="font-bold"
       >
         {formatRemainingTime()}
       </motion.div>
+
+      {/* Add additional bouncing indicator */}
+      <motion.div
+        initial={{ scale: 1 }}
+        animate={{ scale: 1.1 }}
+        transition={{
+          repeat: Infinity,
+          repeatType: "reverse",
+          duration: 1,
+        }}
+        style={{
+          marginTop: "10px",
+          color: "#fed330",
+          fontSize: "14px",
+          fontWeight: "bold",
+        }}
+      >
+        Counting down...
+      </motion.div>
     </div>
   );
 };
 
-export default Countdown_13;
+export default Countdown_15;
