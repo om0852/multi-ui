@@ -10,7 +10,7 @@ export interface CountdownProps {
   onComplete?: () => void;
 }
 
-const Countdown_13: React.FC<CountdownProps> = ({ to, interval = 1, className = "", onComplete }) => {
+const Countdown_14: React.FC<CountdownProps> = ({ to, interval = 1, className = "", onComplete }) => {
   const [days, setDays] = useState<number>(0);
   const [hours, setHours] = useState<number>(0);
   const [minutes, setMinutes] = useState<number>(0);
@@ -80,9 +80,9 @@ const Countdown_13: React.FC<CountdownProps> = ({ to, interval = 1, className = 
     >
       <motion.div
         key={`time-${days}-${hours}-${minutes}-${seconds}`}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
+        initial={{ opacity: 0, scale: 0.8 }}
+        animate={{ opacity: 1, scale: 1 }}
+        exit={{ opacity: 0, scale: 0.8 }}
         transition={{
           duration: 0.5,
           ease: "easeInOut",
@@ -95,4 +95,4 @@ const Countdown_13: React.FC<CountdownProps> = ({ to, interval = 1, className = 
   );
 };
 
-export default Countdown_13;
+export default Countdown_14;

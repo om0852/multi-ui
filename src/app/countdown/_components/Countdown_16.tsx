@@ -10,7 +10,7 @@ export interface CountdownProps {
   onComplete?: () => void;
 }
 
-const Countdown_13: React.FC<CountdownProps> = ({ to, interval = 1, className = "", onComplete }) => {
+const Countdown_14: React.FC<CountdownProps> = ({ to, interval = 1, className = "", onComplete }) => {
   const [days, setDays] = useState<number>(0);
   const [hours, setHours] = useState<number>(0);
   const [minutes, setMinutes] = useState<number>(0);
@@ -32,14 +32,10 @@ const Countdown_13: React.FC<CountdownProps> = ({ to, interval = 1, className = 
       const hoursRemaining = Math.floor(minutesRemaining / 60);
       const daysRemaining = Math.floor(hoursRemaining / 24);
 
-      const newSeconds = secondsRemaining % 60;
-      const newMinutes = minutesRemaining % 60;
-      const newHours = hoursRemaining % 24;
-
       setDays(daysRemaining);
-      setHours(newHours);
-      setMinutes(newMinutes);
-      setSeconds(newSeconds);
+      setHours(hoursRemaining % 24);
+      setMinutes(minutesRemaining % 60);
+      setSeconds(secondsRemaining % 60);
     };
 
     updateTimeStates(calculateRemainingTime());
@@ -69,30 +65,65 @@ const Countdown_13: React.FC<CountdownProps> = ({ to, interval = 1, className = 
     <div
       className={`relative flex flex-col items-center justify-center ${className}`}
       style={{
-        background: "linear-gradient(to right, #ff7e5f, #feb47b)", // Gradient Background
-        borderRadius: "15px",
-        padding: "20px",
-        fontFamily: "Arial, sans-serif",
-        color: "#fff",
-        fontSize: "18px",
+        background: "radial-gradient(circle, #ff9a9e, #fad0c4)", // Soft radial gradient
+        borderRadius: "25px",
+        padding: "25px",
+        fontFamily: "'Poppins', sans-serif",
+        color: "#2d3436",
+        fontSize: "22px",
         textAlign: "center",
+        boxShadow: "0 15px 30px rgba(0, 0, 0, 0.15)", // Softer shadow
       }}
     >
       <motion.div
         key={`time-${days}-${hours}-${minutes}-${seconds}`}
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        exit={{ opacity: 0 }}
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
         transition={{
-          duration: 0.5,
-          ease: "easeInOut",
+          duration: 0.7,
+          ease: [0.68, -0.55, 0.27, 1.55], // Custom easing (similar to back easing)
         }}
-        className="font-bold"
+        className="font-extrabold"
+        style={{ letterSpacing: "2px" }}
       >
         {formatRemainingTime()}
+      </motion.div>
+
+      {/* Rotating background effect */}
+      <motion.div
+        initial={{ opacity: 0, rotate: 0 }}
+        animate={{ opacity: 0.5, rotate: 360 }}
+        transition={{
+          repeat: Infinity,
+          duration: 20,
+          ease: "linear",
+        }}
+        style={{
+          position: "absolute",
+          width: "150%",
+          height: "150%",
+          background: "rgba(255, 255, 255, 0.2)",
+          borderRadius: "50%",
+          zIndex: -1,
+        }}
+      ></motion.div>
+
+      {/* Pulsing Text */}
+      <motion.div
+        initial={{ opacity: 0.7, scale: 1 }}
+        animate={{ opacity: 1, scale: 1.05 }}
+        transition={{
+          repeat: Infinity,
+          repeatType: "reverse",
+          duration: 1.5,
+        }}
+        style={{ marginTop: "10px", fontSize: "14px", color: "#636e72" }}
+      >
+        Stay tuned!
       </motion.div>
     </div>
   );
 };
 
-export default Countdown_13;
+export default Countdown_14;
