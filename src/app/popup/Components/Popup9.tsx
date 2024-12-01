@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 
-const Popup9: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+interface MenuItem {
+  id: number;
+  label: string;
+  icon: string;
+  link: string;
+}
 
-  const menuItems = [
-    { id: 1, label: "Gallery", icon: "🖼️" },
-    { id: 2, label: "Search", icon: "🔍" },
-    { id: 3, label: "Upload", icon: "📤" },
-    { id: 4, label: "Settings", icon: "⚙️" },
-    { id: 5, label: "Logout", icon: "🚪" },
-  ];
+interface Popup9Props {
+  menuItems: MenuItem[];
+}
+
+const Popup9: React.FC<Popup9Props> = ({ menuItems }) => {
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-800">
@@ -29,19 +32,22 @@ const Popup9: React.FC = () => {
           }`}
         >
           {menuItems.map((item, index) => {
-            const angle = (index * 45) - 45; // Spread items in an arc
+            const angle = index * 45 - 45; // Spread items in an arc
             const x = Math.cos((angle * Math.PI) / 180) * 100; // X position
             const y = Math.sin((angle * Math.PI) / 180) * 100; // Y position
 
             return (
-              <div
+              <a
                 key={item.id}
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
                 style={{ transform: `translate(${x}px, ${y}px)` }}
                 className={`absolute bg-gradient-to-r from-blue-400 to-purple-600 text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-transform duration-500 delay-${index * 100}`}
               >
                 <span>{item.icon}</span>
                 <span className="sr-only">{item.label}</span>
-              </div>
+              </a>
             );
           })}
         </div>
