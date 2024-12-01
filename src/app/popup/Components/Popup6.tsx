@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 
-const Popup6: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+interface MenuItem {
+  id: number;
+  label: string;
+  icon: string;
+  link: string;
+}
 
-  const menuItems = [
-    { id: 1, label: "Profile", icon: "👤" },
-    { id: 2, label: "Settings", icon: "⚙️" },
-    { id: 3, label: "Messages", icon: "✉️" },
-    { id: 4, label: "Notifications", icon: "🔔" },
-    { id: 5, label: "Logout", icon: "🚪" },
-  ];
+interface Popup6Props {
+  menuItems: MenuItem[];
+}
+
+const Popup6: React.FC<Popup6Props> = ({ menuItems }) => {
+  const [isOpen, setIsOpen] = useState(false);
 
   const circleRadius = 100; // Radius of the circular menu
 
@@ -40,8 +43,11 @@ const Popup6: React.FC = () => {
           const { x, y } = calculatePosition(index, menuItems.length);
 
           return (
-            <div
+            <a
               key={item.id}
+              href={item.link}
+              target="_blank"
+              rel="noopener noreferrer"
               className={`absolute w-12 h-12 bg-gradient-to-br from-green-400 to-blue-500 text-white rounded-full flex items-center justify-center shadow-md transition-transform duration-500`}
               style={{
                 transform: `translate(${x}px, ${y}px)`,
@@ -51,7 +57,7 @@ const Popup6: React.FC = () => {
             >
               <span className="text-xl">{item.icon}</span>
               <span className="sr-only">{item.label}</span>
-            </div>
+            </a>
           );
         })}
       </div>

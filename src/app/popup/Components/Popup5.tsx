@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 
-const Popup5: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+interface MenuItem {
+  id: number;
+  label: string;
+  icon: string;
+  link: string;
+}
 
-  const menuItems = [
-    { id: 1, label: "Home", icon: "🏠" },
-    { id: 2, label: "Search", icon: "🔍" },
-    { id: 3, label: "Notifications", icon: "🔔" },
-    { id: 4, label: "Messages", icon: "✉️" },
-    { id: 5, label: "Settings", icon: "⚙️" },
-  ];
+interface Popup5Props {
+  menuItems: MenuItem[];
+}
+
+const Popup5: React.FC<Popup5Props> = ({ menuItems }) => {
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-900">
@@ -29,8 +32,11 @@ const Popup5: React.FC = () => {
           }`}
         >
           {menuItems.map((item, index) => (
-            <li
+            <a
               key={item.id}
+              href={item.link}
+              target="_blank"
+              rel="noopener noreferrer"
               className={`w-12 h-12 bg-gradient-to-r from-blue-400 to-purple-500 text-white rounded-full flex items-center justify-center text-xl transform transition-transform duration-500 ${
                 isOpen
                   ? `scale-100 delay-${index * 100}`
@@ -44,7 +50,7 @@ const Popup5: React.FC = () => {
                 {item.label}
               </span>
               {item.icon}
-            </li>
+            </a>
           ))}
         </ul>
       </div>

@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 
-const Popup7: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+interface MenuItem {
+  id: number;
+  label: string;
+  icon: string;
+  link: string;
+}
 
-  const menuItems = [
-    { id: 1, label: "Dashboard", icon: "📊" },
-    { id: 2, label: "Profile", icon: "👤" },
-    { id: 3, label: "Messages", icon: "✉️" },
-    { id: 4, label: "Notifications", icon: "🔔" },
-    { id: 5, label: "Settings", icon: "⚙️" },
-    { id: 6, label: "Help", icon: "❓" },
-  ];
+interface Popup7Props {
+  menuItems: MenuItem[];
+}
+
+const Popup7: React.FC<Popup7Props> = ({ menuItems }) => {
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-900">
@@ -30,13 +32,16 @@ const Popup7: React.FC = () => {
           }`}
         >
           {menuItems.map((item, index) => (
-            <div
+            <a
               key={item.id}
+              href={item.link}
+              target="_blank"
+              rel="noopener noreferrer"
               className={`w-16 h-16 bg-gradient-to-r from-blue-400 to-purple-500 text-white rounded-lg flex items-center justify-center text-2xl shadow-lg transition-all duration-500 delay-${index * 100}`}
             >
               <span>{item.icon}</span>
               <span className="sr-only">{item.label}</span>
-            </div>
+            </a>
           ))}
         </div>
       </div>
