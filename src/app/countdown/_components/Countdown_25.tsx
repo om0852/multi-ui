@@ -10,7 +10,7 @@ export interface CountdownProps {
   onComplete?: () => void;
 }
 
-const ExplodingCountdown: React.FC<CountdownProps> = ({ to, interval = 1, className = "", onComplete }) => {
+const Countdown_25: React.FC<CountdownProps> = ({ to, interval = 1, className = "", onComplete }) => {
   const [timeLeft, setTimeLeft] = useState<number>(to.getTime() - Date.now());
   const [isMounted, setIsMounted] = useState(false); // To ensure client-side rendering
 
@@ -104,4 +104,4 @@ const ExplodingCountdown: React.FC<CountdownProps> = ({ to, interval = 1, classN
   );
 };
 
-export default ExplodingCountdown;
+export default Countdown_25;

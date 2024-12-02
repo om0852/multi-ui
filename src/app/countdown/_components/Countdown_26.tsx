@@ -10,7 +10,7 @@ export interface CountdownProps {
   onComplete?: () => void;
 }
 
-const MinimalCircularCountdown: React.FC<CountdownProps> = ({ to, interval = 1, className = "", onComplete }) => {
+const Countdown_26: React.FC<CountdownProps> = ({ to, interval = 1, className = "", onComplete }) => {
   const [timeLeft, setTimeLeft] = useState<number>(to.getTime() - Date.now());
   const [isMounted, setIsMounted] = useState(false); // To ensure client-side rendering
 
@@ -100,4 +100,4 @@ const MinimalCircularCountdown: React.FC<CountdownProps> = ({ to, interval = 1, 
   );
 };
 
-export default MinimalCircularCountdown;
+export default Countdown_26;

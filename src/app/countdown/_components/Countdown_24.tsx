@@ -10,7 +10,7 @@ export interface CountdownProps {
   onComplete?: () => void;
 }
 
-const FlipClockCountdown: React.FC<CountdownProps> = ({ to, interval = 1, className = "", onComplete }) => {
+const Countdown_24: React.FC<CountdownProps> = ({ to, interval = 1, className = "", onComplete }) => {
   const [timeLeft, setTimeLeft] = useState<number>(to.getTime() - Date.now());
   const [isMounted, setIsMounted] = useState(false);
 
@@ -119,4 +119,4 @@ const FlipClockCountdown: React.FC<CountdownProps> = ({ to, interval = 1, classN
   );
 };
 
-export default FlipClockCountdown;
+export default Countdown_24;
