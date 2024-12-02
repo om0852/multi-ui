@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 
-const Popup8: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+interface MenuItem {
+  id: number;
+  label: string;
+  icon: string;
+  link: string;
+}
 
-  const menuItems = [
-    { id: 1, label: "Home", icon: "🏠" },
-    { id: 2, label: "About", icon: "ℹ️" },
-    { id: 3, label: "Services", icon: "🛠️" },
-    { id: 4, label: "Contact", icon: "📞" },
-  ];
+interface Popup8Props {
+  menuItems: MenuItem[];
+}
+
+const Popup8: React.FC<Popup8Props> = ({ menuItems }) => {
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="relative h-screen bg-gray-700">
@@ -29,13 +33,16 @@ const Popup8: React.FC = () => {
       >
         <ul className="flex flex-col justify-center items-center h-full space-y-4">
           {menuItems.map((item, index) => (
-            <li
+            <a
               key={item.id}
+              href={item.link}
+              target="_blank"
+              rel="noopener noreferrer"
               className={`flex items-center justify-center w-40 h-12 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-lg shadow-lg text-xl transition-transform duration-500 delay-${index * 150}`}
             >
               <span className="mr-2">{item.icon}</span>
               <span>{item.label}</span>
-            </li>
+            </a>
           ))}
         </ul>
       </div>

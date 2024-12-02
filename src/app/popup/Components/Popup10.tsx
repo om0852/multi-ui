@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 
-const Popup10: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+interface MenuItem {
+  id: number;
+  label: string;
+  icon: string;
+  link: string;
+}
 
-  const menuItems = [
-    { id: 1, label: "Home", icon: "🏡" },
-    { id: 2, label: "Shop", icon: "🛒" },
-    { id: 3, label: "Offers", icon: "🎉" },
-    { id: 4, label: "Cart", icon: "🛍️" },
-    { id: 5, label: "Contact", icon: "☎️" },
-  ];
+interface Popup10Props {
+  menuItems: MenuItem[];
+}
+
+const Popup10: React.FC<Popup10Props> = ({ menuItems }) => {
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="relative h-screen bg-gray-900">
@@ -34,8 +37,15 @@ const Popup10: React.FC = () => {
               key={item.id}
               className={`w-48 h-12 bg-gradient-to-r from-green-400 to-blue-500 rounded-lg shadow-md flex items-center justify-center text-white text-xl transition-transform duration-500 delay-${index * 150}`}
             >
-              <span>{item.icon}</span>
-              <span className="ml-2">{item.label}</span>
+              <a
+                href={item.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center space-x-2"
+              >
+                <span>{item.icon}</span>
+                <span>{item.label}</span>
+              </a>
             </li>
           ))}
         </ul>
