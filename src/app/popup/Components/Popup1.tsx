@@ -1,14 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-const Popup1: React.FC = () => {
+interface MenuItem {
+  label: string;
+  href: string;
+}
+
+interface Popup1Props {
+  menuItems: MenuItem[];
+  distance?: number; // Optional: Distance of menu items from the center
+  label?: string; // Optional: Label for the central toggle button
+  centerColor?: string; // Optional: Background color for the central button
+  menuColor?: string; // Optional: Background color for menu items
+}
+
+const Popup1: React.FC<Popup1Props> = ({
+  menuItems,
+  distance = 192, // Default: 12em (192px)
+  label = "Click me",
+  centerColor = "bg-blue-500",
+  menuColor = "bg-orange-400",
+}) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const handleToggle = () => {
     setIsChecked(!isChecked);
   };
 
-  const distance = 12 * 16; // 12em in pixels
-  const angles = [0, 72, 144, 216, 288]; // Divide the circle into 5 parts (360/5)
+  const angles = Array.from({ length: menuItems.length }, (_, index) =>
+    (360 / menuItems.length) * index
+  );
 
   const menuStyles = (index: number) => {
     if (!isChecked) {
@@ -40,24 +60,24 @@ const Popup1: React.FC = () => {
           onChange={handleToggle}
           className="hidden"
         />
+        {/* Center Toggle Button */}
         <label
           htmlFor="checkbox"
-          className="bg-blue-500 w-40 h-40 rounded-full flex items-center justify-center text-white text-lg cursor-pointer relative z-10"
+          className={`${centerColor} w-40 h-40 rounded-full flex items-center justify-center text-white text-lg cursor-pointer relative z-10`}
         >
-          Click me
+          {label}
         </label>
-        {['GitHub', 'Facebook', 'Twitter', 'Link', 'WeChat'].map(
-          (platform, index) => (
-            <a
-              key={platform}
-              href="#"
-              style={menuStyles(index)}
-              className="absolute bg-orange-400 w-16 h-16 text-white rounded-full flex items-center justify-center text-sm no-underline transition-all duration-300 ease-in-out"
-            >
-              {platform}
-            </a>
-          )
-        )}
+        {/* Circular Menu Items */}
+        {menuItems.map((item, index) => (
+          <a
+            key={item.label}
+            href={item.href}
+            style={menuStyles(index)}
+            className={`absolute ${menuColor} w-16 h-16 text-white rounded-full flex items-center justify-center text-sm no-underline transition-all duration-300 ease-in-out`}
+          >
+            {item.label}
+          </a>
+        ))}
       </div>
     </div>
   );

@@ -1,13 +1,17 @@
 import React from "react";
 
-const Popup2: React.FC = () => {
-  const circleMenuItems = [
-    { id: 1, rotation: 45, background: "bg-green-200" },
-    { id: 2, rotation: 90, background: "bg-blue-200" },
-    { id: 3, rotation: 135, background: "bg-pink-200" },
-    { id: 4, rotation: 180, background: "bg-yellow-200" },
-  ];
+interface CircleMenuItem {
+  id: number;
+  rotation: number;
+  background: string;
+}
 
+interface Popup2Props {
+  circleMenuItems: CircleMenuItem[];
+  radius?: number; // Optional: Radius of the circle
+}
+
+const Popup2: React.FC<Popup2Props> = ({ circleMenuItems, radius = 150 }) => {
   return (
     <section
       role="pop"
@@ -40,14 +44,18 @@ const Popup2: React.FC = () => {
       {/* Circle Menu */}
       <ul
         role="circlemenu"
-        className="list-none fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-72 h-72"
+        className="list-none fixed left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2"
+        style={{
+          width: `${radius * 2}px`,
+          height: `${radius * 2}px`,
+        }}
       >
         {circleMenuItems.map((item) => (
           <li
             key={item.id}
             className={`w-20 h-20 rounded-full absolute animate-[popmenu_1s_ease_infinite] ${item.background}`}
             style={{
-              transformOrigin: "150px 150px",
+              transformOrigin: `${radius}px ${radius}px`,
               transform: `rotate(${item.rotation}deg)`,
             }}
           />

@@ -1,15 +1,18 @@
 import React, { useState } from "react";
 
-const Popup3: React.FC = () => {
-  const [isOpen, setIsOpen] = useState(false);
+interface MenuItem {
+  id: number;
+  label: string;
+  color: string;
+}
 
-  const menuItems = [
-    { id: 1, label: "Home", color: "bg-blue-400" },
-    { id: 2, label: "Profile", color: "bg-green-400" },
-    { id: 3, label: "Messages", color: "bg-red-400" },
-    { id: 4, label: "Settings", color: "bg-yellow-400" },
-    { id: 5, label: "Logout", color: "bg-purple-400" },
-  ];
+interface Popup3Props {
+  menuItems: MenuItem[];
+  radius?: number; // Optional: Radius of the radial menu
+}
+
+const Popup3: React.FC<Popup3Props> = ({ menuItems, radius = 120 }) => {
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div className="flex items-center justify-center w-full h-screen bg-gray-800">
@@ -23,25 +26,22 @@ const Popup3: React.FC = () => {
         </button>
 
         {/* Radial Menu Items */}
-        <ul className="list-none m-0 p-0">
+        <ul className="list-none m-0 p-0 relative">
           {menuItems.map((item, index) => {
             const angle = (index * 360) / menuItems.length; // Distribute evenly in a circle
-            const x = Math.cos((angle * Math.PI) / 180) * 120; // Adjust radius here
-            const y = Math.sin((angle * Math.PI) / 180) * 120;
+            const x = Math.cos((angle * Math.PI) / 180) * radius;
+            const y = Math.sin((angle * Math.PI) / 180) * radius;
 
             return (
               <li
                 key={item.id}
-                className={`absolute top-1/2 left-1/2 w-12 h-12 ${item.color} text-white rounded-full flex items-center justify-center text-sm transform transition-all duration-500 ${
-                  isOpen
-                    ? `translate-x-[${x}px] translate-y-[${y}px] opacity-100`
-                    : "translate-x-0 translate-y-0 opacity-0"
-                }`}
+                className={`absolute w-12 h-12 ${item.color} text-white rounded-full flex items-center justify-center text-sm transform transition-all duration-500`}
                 style={{
                   transform: isOpen
                     ? `translate(${x}px, ${y}px)`
-                    : `translate(0px, 0px)`,
+                    : "translate(0px, 0px)",
                   opacity: isOpen ? 1 : 0,
+                  transitionDelay: `${index * 0.1}s`,
                 }}
               >
                 {item.label}
