@@ -10,7 +10,7 @@ export interface CountdownProps {
   onComplete?: () => void;
 }
 
-const FlipCardCountdown: React.FC<CountdownProps> = ({ to, interval = 1, className = "", onComplete }) => {
+const Countdown_29: React.FC<CountdownProps> = ({ to, interval = 1, className = "", onComplete }) => {
   const [timeLeft, setTimeLeft] = useState<number>(to.getTime() - Date.now());
   const [isMounted, setIsMounted] = useState(false); // Prevent SSR mismatch
 
@@ -112,4 +112,4 @@ const FlipCardCountdown: React.FC<CountdownProps> = ({ to, interval = 1, classNa
   );
 };
 
-export default FlipCardCountdown;
+export default Countdown_29;

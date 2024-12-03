@@ -10,7 +10,7 @@ export interface CountdownProps {
   onComplete?: () => void;
 }
 
-const MeterStyleCountdown: React.FC<CountdownProps> = ({ to, interval = 1, className = "", onComplete }) => {
+const Countdown_28: React.FC<CountdownProps> = ({ to, interval = 1, className = "", onComplete }) => {
   const [timeLeft, setTimeLeft] = useState<number>(to.getTime() - Date.now());
   const [isMounted, setIsMounted] = useState(false); // To ensure client-side rendering
 
@@ -116,4 +116,4 @@ const MeterStyleCountdown: React.FC<CountdownProps> = ({ to, interval = 1, class
   );
 };
 
-export default MeterStyleCountdown;
+export default Countdown_28;
