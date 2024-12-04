@@ -1,6 +1,13 @@
 "use client";
 
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  ReactNode,
+  useRef,
+} from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 // Types for Accordion Context
@@ -13,12 +20,15 @@ interface AccordionProps {
   children: ReactNode;
   multiple?: boolean;
   className?: string;
+  persistState?: boolean; // Save state to localStorage
+  storageKey?: string; // Key for localStorage
 }
 
 interface AccordionItemProps {
   children: ReactNode;
   id: string;
   className?: string;
+  isCollapsible?: boolean; // If the item can be collapsed
 }
 
 interface AccordionTriggerProps {
@@ -31,11 +41,22 @@ interface AccordionTriggerProps {
 }
 
 interface AccordionContentProps {
-  children: ReactNode;
+  children?: ReactNode;
   id: string;
   className?: string;
-  animation?: "autoHeight";
+  animation?:
+    | "fadeIn"
+    | "slideIn"
+    | "zoomIn"
+    | "bounceIn"
+    | "fadeInUp"
+    | "fadeInDown"
+    | "slideFromLeft"
+    | "slideFromRight"
+    | "scaleUp"
+    | "rotateIn";
   duration?: number;
+  loadOnOpen?: () => Promise<ReactNode>; // Async loading
 }
 
 // Context for Accordion state
@@ -47,8 +68,25 @@ export function Accordion({
   children,
   multiple = false,
   className = "",
+  persistState = false,
+  storageKey = "accordionState",
 }: AccordionProps) {
   const [openItems, setOpenItems] = useState<string[]>([]);
+
+  // Load state from localStorage on mount
+  useEffect(() => {
+    if (persistState) {
+      const savedState = localStorage.getItem(storageKey);
+      if (savedState) setOpenItems(JSON.parse(savedState));
+    }
+  }, [persistState, storageKey]);
+
+  // Save state to localStorage on change
+  useEffect(() => {
+    if (persistState) {
+      localStorage.setItem(storageKey, JSON.stringify(openItems));
+    }
+  }, [openItems, persistState, storageKey]);
 
   const toggleItem = (id: string) => {
     setOpenItems((prev) =>
@@ -73,6 +111,7 @@ export function AccordionItem({
   children,
   id,
   className = "",
+  isCollapsible = true,
 }: AccordionItemProps) {
   const context = useContext(AccordionContext);
   if (!context) {
@@ -83,7 +122,12 @@ export function AccordionItem({
   const isOpen = openItems.includes(id);
 
   return (
-    <div className={`${className} ${isOpen ? "open" : ""}`}>{children}</div>
+    <div
+      className={`${className} ${isOpen ? "open" : ""}`}
+      aria-expanded={isOpen}
+    >
+      {children}
+    </div>
   );
 }
 
@@ -92,38 +136,8 @@ export function AccordionTrigger({
   id,
   className = "",
   onClick,
-  openIcon = (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth="1.5"
-      stroke="currentColor"
-      className="h-6 w-6"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="m19.5 8.25-7.5 7.5-7.5-7.5"
-      />
-    </svg>
-  ),
-  closeIcon = (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth="1.5"
-      stroke="currentColor"
-      className="h-6 w-6"
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="m4.5 15.75 7.5-7.5 7.5 7.5"
-      />
-    </svg>
-  ),
+  openIcon,
+  closeIcon,
 }: AccordionTriggerProps) {
   const context = useContext(AccordionContext);
   if (!context) {
@@ -140,40 +154,129 @@ export function AccordionTrigger({
         toggleItem(id);
         if (onClick) onClick();
       }}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          toggleItem(id);
+        }
+      }}
     >
       <span>{children}</span>
-      <span>{isOpen ? openIcon : closeIcon}</span>
+      <span>{isOpen ? closeIcon : openIcon}</span>
     </button>
   );
 }
+
 export function AccordionContent({
-    children,
-    id,
-    className = "",
-    animation = "autoHeight",
-    duration = 0.3,
-  }: AccordionContentProps) {
-    const context = useContext(AccordionContext);
-    if (!context) {
-      throw new Error("AccordionContent must be used within an Accordion");
-    }
-  
-    const { openItems } = context;
-    const isOpen = openItems.includes(id);
-  
-    return (
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            initial={{ height: "auto", opacity: 0 }}
-            animate={{ height: "auto", opacity: 1 }}
-            exit={{ height: "auto", opacity: 0 }}
-            className={`${className} overflow-hidden`}
-          >
-            <motion.div layout>{children}</motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    );
+  children,
+  id,
+  className = "",
+  animation = "fadeIn",
+  duration = 0.3,
+  loadOnOpen,
+}: AccordionContentProps) {
+  const context = useContext(AccordionContext);
+  if (!context) {
+    throw new Error("AccordionContent must be used within an Accordion");
   }
-  
+
+  const { openItems } = context;
+  const isOpen = openItems.includes(id);
+
+  const [loadedContent, setLoadedContent] = useState<ReactNode | null>(null);
+
+  useEffect(() => {
+    if (isOpen && loadOnOpen) {
+      loadOnOpen().then(setLoadedContent);
+    }
+  }, [isOpen, loadOnOpen]);
+
+  const getAnimation = (animation: string) => {
+    const animations = {
+      fadeIn: {
+        initial: { opacity: 0 },
+        animate: { opacity: 1 },
+        exit: { opacity: 0 },
+      },
+      slideIn: {
+        initial: { height: 0, opacity: 0 },
+        animate: { height: "auto", opacity: 1 },
+        exit: { height: 0, opacity: 0 },
+      },
+      zoomIn: {
+        initial: { scale: 0.8, opacity: 0 },
+        animate: { scale: 1, opacity: 1 },
+        exit: { scale: 0.8, opacity: 0 },
+      },
+      fadeInUp: {
+        initial: { opacity: 0, translateY: "20px" },
+        animate: { opacity: 1, translateY: "0px" },
+        exit: { opacity: 0, translateY: "20px" },
+      },
+      fadeInDown: {
+        initial: { opacity: 0, translateY: "-20px" },
+        animate: { opacity: 1, translateY: "0px" },
+        exit: { opacity: 0, translateY: "-20px" },
+      },
+      slideFromLeft: {
+        initial: { translateX: "-100%", opacity: 0 },
+        animate: { translateX: "0%", opacity: 1 },
+        exit: { translateX: "-100%", opacity: 0 },
+      },
+      slideFromRight: {
+        initial: { translateX: "100%", opacity: 0 },
+        animate: { translateX: "0%", opacity: 1 },
+        exit: { translateX: "100%", opacity: 0 },
+      },
+      scaleUp: {
+        initial: { scale: 0.5, opacity: 0 },
+        animate: { scale: 1, opacity: 1 },
+        exit: { scale: 0.5, opacity: 0 },
+      },
+      rotateIn: {
+        initial: { rotate: -90, opacity: 0 },
+        animate: { rotate: 0, opacity: 1 },
+        exit: { rotate: -90, opacity: 0 },
+      },
+    };
+
+    return animations[animation as keyof typeof animations] || animations.fadeIn;
+  };
+
+  return (
+    <AnimatePresence initial={false}>
+      {isOpen && (
+        <motion.div
+          {...getAnimation(animation)}
+          transition={{ duration }}
+          className={`${className} overflow-hidden block`}
+        >
+          <motion.div layout className="p-4">{loadedContent || children}</motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
+
+// Expand/Collapse All Controls
+export function AccordionControls({
+  items,
+}: {
+  items: string[];
+}) {
+  const context = useContext(AccordionContext);
+  if (!context) return null;
+
+  const { toggleItem, openItems } = context;
+  const allOpen = items.every((id) => openItems.includes(id));
+
+  return (
+    <div className="accordion-controls flex gap-4">
+      <button onClick={() => items.forEach((id) => !allOpen && toggleItem(id))}>
+        Expand All
+      </button>
+      <button onClick={() => items.forEach((id) => allOpen && toggleItem(id))}>
+        Collapse All
+      </button>
+    </div>
+  );
+}
