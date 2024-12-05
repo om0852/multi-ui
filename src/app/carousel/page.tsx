@@ -9,7 +9,7 @@ import {
   
   export default function App() {
     return (
-        <Carousel className="w-full h-64 bg-gray-100" interval={100}  loop={true} >
+        <Carousel className="w-full h-64 bg-gray-100" interval={1000}  loop={true} >
         <CarouselContent transitionEffect={0}>
           <CarouselItem className="bg-red-300">Slide 1lkjsdkl</CarouselItem>
           <CarouselItem className="bg-blue-300">Slide 2</CarouselItem>
