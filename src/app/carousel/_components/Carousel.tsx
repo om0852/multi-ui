@@ -1,34 +1,39 @@
 "use client";
 
-import React, { createContext, useContext, useState, ReactNode, useEffect, useCallback } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useEffect,
+  useCallback,
+  SetStateAction,
+} from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import clsx from "clsx";
 
 // Context
 interface CarouselContextProps {
   currentIndex: number;
   setIndex: (index: number, dir: number) => void;
   itemsCount: number;
-  loop?: boolean;
+  loop: boolean;
+  setItemsCount: React.Dispatch<React.SetStateAction<number>>; // SetStateAction for itemsCount
   transitioning: boolean;
   setTransitioning: (value: boolean) => void;
-  direction: number; // New: for determining slide direction
+  direction: number; // Determines slide direction
 }
 
-const CarouselContext = createContext<CarouselContextProps | undefined>(undefined);
+const CarouselContext = createContext<CarouselContextProps | undefined>(
+  undefined
+);
 
-// Carousel Props
+// Carousel Component
 interface CarouselProps {
   children: ReactNode;
   interval?: number;
   loop?: boolean;
   className?: string;
-}
-
-// Add this before the CarouselNext function
-interface CarouselControlProps {
-  onClick?: () => void;
-  className?: string;
-  children?: ReactNode;
 }
 
 export function Carousel({
@@ -39,44 +44,56 @@ export function Carousel({
 }: CarouselProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [transitioning, setTransitioning] = useState(false);
-  const [direction, setDirection] = useState(1); // Positive for next, negative for prev
-  const itemsCount = React.Children.count(children);
-
-  // Automatic slide transition with interval
+  const [direction, setDirection] = useState(1);
+  const [itemsCount, setItemsCount] = useState(React.Children.count(children));
+  // Positive for forward, negative for backward
+  // let itemsCount = ;
+  // Auto-slide interval
   useEffect(() => {
     if (interval && itemsCount > 1) {
       const timer = setInterval(() => {
         if (!transitioning) {
-          setCurrentIndex((prev) => {
-            const nextIndex = loop ? (prev + 1) % itemsCount : Math.min(prev + 1, itemsCount - 1);
-            setDirection(1); // Slide forward
-            return nextIndex;
-          });
+          setDirection(1);
+          setCurrentIndex((prev) =>
+            loop ? (prev + 1) % itemsCount : Math.min(prev + 1, itemsCount - 1)
+          );
         }
       }, interval);
       return () => clearInterval(timer);
     }
   }, [interval, itemsCount, loop, transitioning]);
 
-  const setIndex = (index: number, dir: number) => {
-    setDirection(dir);
-    if (loop) {
-      setCurrentIndex((index + itemsCount) % itemsCount);
-    } else {
-      setCurrentIndex(Math.max(0, Math.min(index, itemsCount - 1)));
-    }
-  };
+  const setIndex = useCallback(
+    (index: number, dir: number) => {
+      setDirection(dir);
+      setCurrentIndex(
+        loop
+          ? (index + itemsCount) % itemsCount
+          : Math.max(0, Math.min(index, itemsCount - 1))
+      );
+    },
+    [itemsCount, loop]
+  );
 
   return (
     <CarouselContext.Provider
-      value={{ currentIndex, setIndex, itemsCount, loop, transitioning, setTransitioning, direction }}
+      value={{
+        currentIndex,
+        setIndex,
+        itemsCount,
+        loop,
+        transitioning,
+        setItemsCount,
+        setTransitioning,
+        direction,
+      }}
     >
       <div className={`relative overflow-hidden ${className}`}>{children}</div>
     </CarouselContext.Provider>
   );
 }
 
-// CarouselContent
+// Carousel Content
 interface CarouselContentProps {
   children: ReactNode;
   className?: string;
@@ -86,16 +103,19 @@ interface CarouselContentProps {
 export function CarouselContent({
   children,
   className = "",
-  transitionEffect = 0, // Default to the first effect
+  transitionEffect = 0,
 }: CarouselContentProps) {
   const context = useContext(CarouselContext);
   if (!context) {
     throw new Error("CarouselContent must be used within a Carousel");
   }
 
-  const { currentIndex, direction } = context;
+  const { currentIndex, direction, setItemsCount } = context;
+  useEffect(() => {
+    setItemsCount(React.Children.count(children));
+  }, [children, setItemsCount]); // Re-run whenever children change
 
-  // Define 10 animation variants
+  // Define animation variants
   const slideVariants = [
     {
       enter: (dir: number) => ({ x: dir > 0 ? "100%" : "-100%" }),
@@ -107,58 +127,19 @@ export function CarouselContent({
       center: { opacity: 1, scale: 1 },
       exit: (dir: number) => ({ opacity: 0, scale: 0.8 }),
     },
-    {
-      enter: (dir: number) => ({ rotate: dir > 0 ? 90 : -90, opacity: 0 }),
-      center: { rotate: 0, opacity: 1 },
-      exit: (dir: number) => ({ rotate: dir > 0 ? -90 : 90, opacity: 0 }),
-    },
-    {
-      enter: (dir: number) => ({ y: dir > 0 ? "100%" : "-100%" }),
-      center: { y: 0 },
-      exit: (dir: number) => ({ y: dir > 0 ? "-100%" : "100%" }),
-    },
-    {
-      enter: (dir: number) => ({ x: "100%", opacity: 0 }),
-      center: { x: 0, opacity: 1 },
-      exit: (dir: number) => ({ x: "-100%", opacity: 0 }),
-    },
-    {
-      enter: (dir: number) => ({ x: dir > 0 ? "50%" : "-50%", scale: 0.5, opacity: 0 }),
-      center: { x: 0, scale: 1, opacity: 1 },
-      exit: (dir: number) => ({ x: dir > 0 ? "-50%" : "50%", scale: 0.5, opacity: 0 }),
-    },
-    {
-      enter: (dir: number) => ({ scaleX: 0 }),
-      center: { scaleX: 1 },
-      exit: (dir: number) => ({ scaleX: 0 }),
-    },
-    {
-      enter: (dir: number) => ({ y: "100%", rotate: 15 }),
-      center: { y: 0, rotate: 0 },
-      exit: (dir: number) => ({ y: "-100%", rotate: -15 }),
-    },
-    {
-      enter: (dir: number) => ({ x: "100%", y: "100%", opacity: 0 }),
-      center: { x: 0, y: 0, opacity: 1 },
-      exit: (dir: number) => ({ x: "-100%", y: "-100%", opacity: 0 }),
-    },
-    {
-      enter: (dir: number) => ({ opacity: 0, scale: 0.8, y: "50%" }),
-      center: { opacity: 1, scale: 1, y: 0 },
-      exit: (dir: number) => ({ opacity: 0, scale: 0.8, y: "-50%" }),
-    },
+    // Add more custom variants as needed
   ];
 
-  
-
-  // Clamp the selected effect index to a valid range
-  const selectedEffect = slideVariants[Math.max(0, Math.min(transitionEffect, slideVariants.length - 1))];
+  // const selectedEffect = slideVariants[Math.min(transitionEffect, slideVariants.length - 1)];
+  const selectedEffect =
+    slideVariants[Math.min(transitionEffect, slideVariants.length - 1)];
 
   return (
     <div className={`relative w-full h-full ${className}`}>
       <AnimatePresence initial={false} custom={direction}>
-        {React.Children.map(children, (child, index) =>
-          currentIndex === index ? (
+        {React.Children.map(children, (child, index) => {
+          // Render all slides with AnimatePresence and only hide those that are not in view
+          return (
             <motion.div
               key={index}
               className="absolute w-full h-full"
@@ -168,32 +149,35 @@ export function CarouselContent({
               exit="exit"
               custom={direction}
               transition={{ duration: 0.8 }}
+              style={{
+                display: currentIndex === index ? "block" : "none", // Only show the current slide
+              }}
             >
               {child}
             </motion.div>
-          ) : null
-        )}
+          );
+        })}
       </AnimatePresence>
     </div>
   );
 }
 
-// CarouselItem Props
+// Carousel Item
 interface CarouselItemProps {
   children: ReactNode;
   className?: string;
 }
 
 export function CarouselItem({ children, className = "" }: CarouselItemProps) {
-  return <div className={`h-full ${className}`}>{children}</div>;
+  return <div className={`w-full h-full ${className}`}>{children}</div>;
 }
 
+// Carousel Dots
 interface CarouselDotsProps {
   className?: string;
   dotClassName?: string;
   activeDotClassName?: string;
 }
-
 export function CarouselDots({
   className = "",
   dotClassName = "w-3 h-3 rounded-full bg-gray-300 mx-1",
@@ -204,25 +188,31 @@ export function CarouselDots({
     throw new Error("CarouselDots must be used within a Carousel");
   }
 
-  const { currentIndex, setIndex, itemsCount, transitioning, setTransitioning } = context;
+  const {
+    currentIndex,
+    setIndex,
+    itemsCount,
+    transitioning,
+    setTransitioning,
+  } = context;
 
-  const handleClick = (index: number) => {
+  const handleDotClick = (index: number) => {
     if (transitioning || currentIndex === index) return;
-
     setTransitioning(true);
-    const direction = index > currentIndex ? 1 : -1; // Determine direction based on index
-    setIndex(index, direction);
-
+    setIndex(index, index > currentIndex ? 1 : -1);
     setTimeout(() => setTransitioning(false), 800);
   };
 
   return (
-    <div className={`flex justify-center items-center mt-4 ${className}`}>
+    <div className={clsx("flex justify-center mt-4", className)}>
       {Array.from({ length: itemsCount }).map((_, index) => (
         <button
           key={index}
-          className={`${dotClassName} ${currentIndex === index ? activeDotClassName : ""}`}
-          onClick={() => handleClick(index)}
+          className={clsx(
+            dotClassName,
+            currentIndex === index && activeDotClassName // Conditionally add activeDotClassName
+          )}
+          onClick={() => handleDotClick(index)}
           aria-label={`Go to slide ${index + 1}`}
         />
       ))}
@@ -230,22 +220,40 @@ export function CarouselDots({
   );
 }
 
-// CarouselNext Button
-export function CarouselNext({ onClick, className = "", children }: CarouselControlProps) {
+// Carousel Navigation Buttons
+interface CarouselControlProps {
+  className?: string;
+  children?: ReactNode;
+}
+
+export function CarouselNext({
+  className = "",
+  children,
+}: CarouselControlProps) {
   const context = useContext(CarouselContext);
   if (!context) {
     throw new Error("CarouselNext must be used within a Carousel");
   }
 
-  const { currentIndex, setIndex, itemsCount, loop, transitioning, setTransitioning } = context;
-
+  const {
+    currentIndex,
+    setIndex,
+    itemsCount,
+    loop,
+    transitioning,
+    setTransitioning,
+  } = context;
+  console.log(itemsCount, "om");
   const handleClick = () => {
     if (transitioning) return;
-
     setTransitioning(true);
-    setIndex(loop ? (currentIndex + 1) % itemsCount : Math.min(currentIndex + 1, itemsCount - 1), 1); // Forward direction
-
-    setTimeout(() => setTransitioning(false), 800); // Reset transition state
+    setIndex(
+      loop
+        ? (currentIndex + 1) % itemsCount
+        : Math.min(currentIndex + 1, itemsCount - 1),
+      1
+    );
+    setTimeout(() => setTransitioning(false), 800);
   };
 
   return (
@@ -259,21 +267,33 @@ export function CarouselNext({ onClick, className = "", children }: CarouselCont
   );
 }
 
-// CarouselPrevious Button
-export function CarouselPrevious({ onClick, className = "", children }: CarouselControlProps) {
+export function CarouselPrevious({
+  className = "",
+  children,
+}: CarouselControlProps) {
   const context = useContext(CarouselContext);
   if (!context) {
     throw new Error("CarouselPrevious must be used within a Carousel");
   }
 
-  const { currentIndex, setIndex, itemsCount, loop, transitioning, setTransitioning } = context;
+  const {
+    currentIndex,
+    setIndex,
+    itemsCount,
+    loop,
+    transitioning,
+    setTransitioning,
+  } = context;
 
   const handleClick = () => {
     if (transitioning) return;
-
     setTransitioning(true);
-    setIndex(loop ? (currentIndex - 1 + itemsCount) % itemsCount : Math.max(currentIndex - 1, 0), -1); // Reverse direction
-
+    setIndex(
+      loop
+        ? (currentIndex - 1 + itemsCount) % itemsCount
+        : Math.max(currentIndex - 1, 0),
+      -1
+    );
     setTimeout(() => setTransitioning(false), 800);
   };
 
