@@ -127,9 +127,47 @@ export function CarouselContent({
       center: { opacity: 1, scale: 1 },
       exit: (dir: number) => ({ opacity: 0, scale: 0.8 }),
     },
-    // Add more custom variants as needed
+    {
+      enter: (dir: number) => ({ rotate: dir > 0 ? 90 : -90, opacity: 0 }),
+      center: { rotate: 0, opacity: 1 },
+      exit: (dir: number) => ({ rotate: dir > 0 ? -90 : 90, opacity: 0 }),
+    },
+    {
+      enter: (dir: number) => ({ y: dir > 0 ? "100%" : "-100%" }),
+      center: { y: 0 },
+      exit: (dir: number) => ({ y: dir > 0 ? "-100%" : "100%" }),
+    },
+    {
+      enter: (dir: number) => ({ x: "100%", opacity: 0 }),
+      center: { x: 0, opacity: 1 },
+      exit: (dir: number) => ({ x: "-100%", opacity: 0 }),
+    },
+    {
+      enter: (dir: number) => ({ x: dir > 0 ? "50%" : "-50%", scale: 0.5, opacity: 0 }),
+      center: { x: 0, scale: 1, opacity: 1 },
+      exit: (dir: number) => ({ x: dir > 0 ? "-50%" : "50%", scale: 0.5, opacity: 0 }),
+    },
+    {
+      enter: (dir: number) => ({ scaleX: 0 }),
+      center: { scaleX: 1 },
+      exit: (dir: number) => ({ scaleX: 0 }),
+    },
+    {
+      enter: (dir: number) => ({ y: "100%", rotate: 15 }),
+      center: { y: 0, rotate: 0 },
+      exit: (dir: number) => ({ y: "-100%", rotate: -15 }),
+    },
+    {
+      enter: (dir: number) => ({ x: "100%", y: "100%", opacity: 0 }),
+      center: { x: 0, y: 0, opacity: 1 },
+      exit: (dir: number) => ({ x: "-100%", y: "-100%", opacity: 0 }),
+    },
+    {
+      enter: (dir: number) => ({ opacity: 0, scale: 0.8, y: "50%" }),
+      center: { opacity: 1, scale: 1, y: 0 },
+      exit: (dir: number) => ({ opacity: 0, scale: 0.8, y: "-50%" }),
+    },
   ];
-
   // const selectedEffect = slideVariants[Math.min(transitionEffect, slideVariants.length - 1)];
   const selectedEffect =
     slideVariants[Math.min(transitionEffect, slideVariants.length - 1)];
