@@ -149,6 +149,8 @@ export function CarouselContent({
     },
   ];
 
+  
+
   // Clamp the selected effect index to a valid range
   const selectedEffect = slideVariants[Math.max(0, Math.min(transitionEffect, slideVariants.length - 1))];
 
@@ -184,6 +186,48 @@ interface CarouselItemProps {
 
 export function CarouselItem({ children, className = "" }: CarouselItemProps) {
   return <div className={`h-full ${className}`}>{children}</div>;
+}
+
+interface CarouselDotsProps {
+  className?: string;
+  dotClassName?: string;
+  activeDotClassName?: string;
+}
+
+export function CarouselDots({
+  className = "",
+  dotClassName = "w-3 h-3 rounded-full bg-gray-300 mx-1",
+  activeDotClassName = "bg-blue-500",
+}: CarouselDotsProps) {
+  const context = useContext(CarouselContext);
+  if (!context) {
+    throw new Error("CarouselDots must be used within a Carousel");
+  }
+
+  const { currentIndex, setIndex, itemsCount, transitioning, setTransitioning } = context;
+
+  const handleClick = (index: number) => {
+    if (transitioning || currentIndex === index) return;
+
+    setTransitioning(true);
+    const direction = index > currentIndex ? 1 : -1; // Determine direction based on index
+    setIndex(index, direction);
+
+    setTimeout(() => setTransitioning(false), 800);
+  };
+
+  return (
+    <div className={`flex justify-center items-center mt-4 ${className}`}>
+      {Array.from({ length: itemsCount }).map((_, index) => (
+        <button
+          key={index}
+          className={`${dotClassName} ${currentIndex === index ? activeDotClassName : ""}`}
+          onClick={() => handleClick(index)}
+          aria-label={`Go to slide ${index + 1}`}
+        />
+      ))}
+    </div>
+  );
 }
 
 // CarouselNext Button
