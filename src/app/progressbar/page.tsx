@@ -3,12 +3,6 @@ import React, { useEffect, useState } from "react";
 import ProgressBar from "./_components/ProgressBar";
 
 const page = () => {
-  //     const [Counter,setCounter]=useState(0)
-  // useEffect(()=>{
-  // setInterval(()=>{
-  // setCounter(prev=>prev+1);
-  // })
-  // },[])
   return (
     <div>
       <ProgressBar
