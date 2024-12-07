@@ -1,10 +1,17 @@
-import React from 'react'
+"use client"
+import React, { useEffect, useState } from 'react'
 import ProgressBar from './_components/ProgressBar'
 
 const page = () => {
+//     const [Counter,setCounter]=useState(0)
+// useEffect(()=>{
+// setInterval(()=>{
+// setCounter(prev=>prev+1);
+// })
+// },[])
   return (
     <div>
-      <ProgressBar progress={25} color="bg-red-500" animationDuration={1} />
+      <ProgressBar progress={Counter} color="bg-red-500" animationDuration={1} />
       <ProgressBar progress={50} color="bg-yellow-500" animationDuration={1.5} />
       <ProgressBar progress={75} color="bg-green-500" animationDuration={2} />
       <ProgressBar progress={100} color="bg-blue-600" animationDuration={2} showCounter />
