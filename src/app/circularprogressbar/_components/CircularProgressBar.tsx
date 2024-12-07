@@ -1,5 +1,6 @@
+"use client"
 import { motion } from "framer-motion";
-import React from "react";
+import React, { useState, useEffect } from "react";
 
 type CircularProgressBarProps = {
   progress: number; // Progress value (0 to 100)
@@ -27,6 +28,25 @@ const CircularProgressBar: React.FC<CircularProgressBarProps> = ({
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference - (progress / 100) * circumference;
+  const [currentProgress, setCurrentProgress] = useState(0);
+
+  useEffect(() => {
+    if (onStart) onStart();
+
+    const intervalDuration = (animationDuration * 1000) / progress;
+    let current = 0;
+
+    const interval = setInterval(() => {
+      current += 1;
+      setCurrentProgress(current);
+      if (current >= progress) {
+        clearInterval(interval);
+        if (onComplete) onComplete();
+      }
+    }, intervalDuration);
+
+    return () => clearInterval(interval);
+  }, [progress, animationDuration, onStart, onComplete]);
 
   return (
     <div style={{ width: size, height: size, position: "relative" }}>
@@ -71,13 +91,7 @@ const CircularProgressBar: React.FC<CircularProgressBarProps> = ({
             color,
           }}
         >
-          <motion.span
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: animationDuration }}
-          >
-            {Math.round(progress)}%
-          </motion.span>
+          {currentProgress}%
         </div>
       )}
     </div>
