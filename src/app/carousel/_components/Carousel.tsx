@@ -168,6 +168,8 @@ export function CarouselContent({
       exit: (dir: number) => ({ opacity: 0, scale: 0.8, y: "-50%" }),
     },
   ];
+
+  
   // const selectedEffect = slideVariants[Math.min(transitionEffect, slideVariants.length - 1)];
   const selectedEffect =
     slideVariants[Math.min(transitionEffect, slideVariants.length - 1)];
