@@ -10,7 +10,7 @@ export interface CountdownProps {
   onComplete?: () => void;
 }
 
-const RadialCountdown: React.FC<CountdownProps> = ({ to, interval = 1, className = "", onComplete }) => {
+const Countdown_23: React.FC<CountdownProps> = ({ to, interval = 1, className = "", onComplete }) => {
   const [timeLeft, setTimeLeft] = useState<number>(to.getTime() - Date.now());
   const [isMounted, setIsMounted] = useState(false); // Flag to check if mounted
 
@@ -94,4 +94,4 @@ const RadialCountdown: React.FC<CountdownProps> = ({ to, interval = 1, className
   );
 };
 
-export default RadialCountdown;
+export default Countdown_23;
