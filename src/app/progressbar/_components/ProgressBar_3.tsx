@@ -10,9 +10,11 @@ interface StateStep {
 
 interface StateBasedProgressBarProps {
   steps: StateStep[];
-  activeColor?: string;       // Custom active step color
-  completedColor?: string;    // Custom completed steps color
-  inactiveColor?: string;     // Custom inactive steps color
+  activeColor?: string; // Custom active step color
+  completedColor?: string; // Custom completed steps color
+  inactiveColor?: string; // Custom inactive steps color
+  onStart?: (stepIndex: number) => void; // Callback for animation start
+  onComplete?: (stepIndex: number) => void; // Callback for animation complete
 }
 
 const ProgressBar_3: React.FC<StateBasedProgressBarProps> = ({
@@ -20,10 +22,19 @@ const ProgressBar_3: React.FC<StateBasedProgressBarProps> = ({
   activeColor = "bg-blue-500",
   completedColor = "bg-green-500",
   inactiveColor = "bg-gray-300",
+  onStart,
+  onComplete,
 }) => {
   const [currentStep, setCurrentStep] = useState(0); // Track the current progress step
 
   const totalSteps = steps.length;
+
+  const handleStepChange = (index: number) => {
+    if (index !== currentStep) {
+      onStart?.(index); // Trigger onStart callback
+      setCurrentStep(index);
+    }
+  };
 
   return (
     <div className="w-full max-w-4xl mx-auto p-4">
@@ -36,6 +47,7 @@ const ProgressBar_3: React.FC<StateBasedProgressBarProps> = ({
             width: `${(currentStep / (totalSteps - 1)) * 100}%`, // Dynamic width calculation
           }}
           transition={{ duration: 0.3 }}
+          onAnimationComplete={() => onComplete?.(currentStep)} // Trigger onComplete callback
         />
       </div>
 
@@ -46,7 +58,7 @@ const ProgressBar_3: React.FC<StateBasedProgressBarProps> = ({
             key={index}
             className="flex flex-col items-center cursor-pointer"
             onClick={() => {
-              setCurrentStep(index);
+              handleStepChange(index);
               step.onClick?.(); // Call custom click handler if defined
             }}
           >
