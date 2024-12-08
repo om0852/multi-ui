@@ -3,9 +3,41 @@ import React, { useEffect, useState } from "react";
 import ProgressBar from "./_components/ProgressBar_1";
 import AnimatedProgressBar from "./_components/ProgressBar_2";
 import StateBasedProgressBar from "./_components/ProgressBar_3";
+import OverlayProgressBar from "./_components/ProgressBar_5";
+import CircularOverlayProgressBar from "./_components/ProgressBar_4";
 
 const page = () => {
   const [progress, setProgress] = useState(0);
+  const [showOverlay, setShowOverlay] = useState(true);
+  useEffect(() => {
+    if (progress < 100 && showOverlay) {
+      const timer = setTimeout(() => setProgress(progress + 10), 500);
+      return () => clearTimeout(timer);
+    }
+  }, [progress, showOverlay]);
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <button
+        className="px-4 py-2 bg-blue-600 text-white rounded-md"
+        onClick={() => {
+          setProgress(0); // Reset progress
+          setShowOverlay(true);
+        }}
+      >
+        Show Circular Progress
+      </button>
+
+      <CircularOverlayProgressBar
+        progress={progress}
+        show={showOverlay}
+        onClose={() => setShowOverlay(false)}
+        circleColor="stroke-green-500"
+        trackColor="stroke-gray-300"
+        overlayColor="bg-black bg-opacity-70"
+      />
+    </div>
+  );
 
   // Simulate progress updates
   React.useEffect(() => {
@@ -43,6 +75,35 @@ const page = () => {
       onClick: () => console.log("Step 4 Clicked"),
     },
   ];
+  // const [progress, setProgress] = useState(0);
+  // const [showOverlay, setShowOverlay] = useState(true);
+
+  // Simulate progress
+  React.useEffect(() => {
+    if (progress < 100) {
+      const timer = setTimeout(() => setProgress(progress + 10), 500);
+      return () => clearTimeout(timer);
+    }
+  }, [progress]);
+
+  return (
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <button
+        className="px-4 py-2 bg-blue-600 text-white rounded-md"
+        onClick={() => setShowOverlay(true)}
+      >
+        Show Progress
+      </button>
+
+      <OverlayProgressBar
+        progress={progress}
+        show={showOverlay}
+        onClose={() => setShowOverlay(false)}
+        barColor="bg-green-500"
+        overlayColor="bg-black bg-opacity-70"
+      />
+    </div>
+  );
 
   return (
     <div className="min-h-screen bg-gray-50 flex items-center justify-center">
