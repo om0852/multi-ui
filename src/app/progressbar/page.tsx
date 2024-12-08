@@ -5,7 +5,7 @@ import ProgressBar from "./_components/ProgressBar";
 const page = () => {
   return (
     <div>
-      <ProgressBar
+      {/* <ProgressBar
         progress={10}
         color="bg-red-500"
         animationDuration={1}
@@ -61,7 +61,8 @@ const page = () => {
         backgroundColor="bg-gray-300"
         animationDuration={1.5}
         showCounter
-      />
+      /> */}
+
     </div>
   );
 };
