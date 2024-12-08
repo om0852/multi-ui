@@ -1,8 +1,59 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import ProgressBar from "./_components/ProgressBar";
+import ProgressBar from "./_components/ProgressBar_1";
+import AnimatedProgressBar from "./_components/ProgressBar_2";
+import StateBasedProgressBar from "./_components/ProgressBar_3";
 
 const page = () => {
+  const [progress, setProgress] = useState(0);
+
+  // Simulate progress updates
+  React.useEffect(() => {
+    const interval = setInterval(() => {
+      setProgress((prev) => {
+        if (prev >= 100) {
+          clearInterval(interval);
+          return prev;
+        }
+        return prev + 1;
+      });
+    }, 100);
+
+    return () => clearInterval(interval);
+  }, []);
+  const steps = [
+    {
+      label: "Start",
+      value: 0,
+      onClick: () => console.log("Step 1 Clicked"),
+    },
+    {
+      label: "In Progress",
+      value: 1,
+      onClick: () => console.log("Step 2 Clicked"),
+    },
+    {
+      label: "Completed",
+      value: 2,
+      onClick: () => console.log("Step 3 Clicked"),
+    },
+    {
+      label: "Done",
+      value: 3,
+      onClick: () => console.log("Step 4 Clicked"),
+    },
+  ];
+
+  return (
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <StateBasedProgressBar
+        steps={steps}
+        activeColor="bg-blue-600"
+        completedColor="bg-green-400"
+        inactiveColor="bg-gray-300"
+      />
+    </div>
+  );
   return (
     <div>
       {/* <ProgressBar
@@ -62,6 +113,7 @@ const page = () => {
         animationDuration={1.5}
         showCounter
       /> */}
+      <AnimatedProgressBar progress={progress} />
 
     </div>
   );
