@@ -61,24 +61,24 @@ const Calendar: React.FC<CalendarProps> = ({ initialDate, onSelectDate }) => {
   };
 
   return (
-    <div className="p-6 w-full max-w-lg mx-auto bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 shadow-lg rounded-xl text-white">
+    <div className="p-6 w-full max-w-2xl mx-auto bg-gray-800 text-gray-100 shadow-xl rounded-2xl">
       {/* Header */}
       <motion.div 
-        className="flex justify-between items-center mb-6 border-b border-white pb-4"
+        className="flex justify-between items-center mb-8 pb-4 border-b border-gray-700"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
       >
         <button
           onClick={handlePrevMonth}
-          className="px-3 py-1 bg-white text-purple-700 rounded-full shadow-md hover:bg-purple-200"
+          className="px-4 py-2 bg-gray-700 text-gray-100 rounded-full shadow-md hover:bg-gray-600"
         >
-          &lt;
+          &#8592; Previous
         </button>
         <div className="text-center">
           <motion.h2 
-            className="text-2xl font-extrabold"
-            initial={{ scale: 0.9 }}
+            className="text-3xl font-bold"
+            initial={{ scale: 0.95 }}
             animate={{ scale: 1 }}
             transition={{ duration: 0.5 }}
           >
@@ -88,29 +88,34 @@ const Calendar: React.FC<CalendarProps> = ({ initialDate, onSelectDate }) => {
             type="number"
             value={currentDate.getFullYear()}
             onChange={(e) => handleYearChange(Number(e.target.value))}
-            className="mt-2 w-20 text-center text-purple-800 bg-white rounded-lg"
+            className="mt-2 w-24 text-center text-gray-100 bg-gray-700 rounded-lg border border-gray-600"
           />
         </div>
         <button
           onClick={handleNextMonth}
-          className="px-3 py-1 bg-white text-purple-700 rounded-full shadow-md hover:bg-purple-200"
+          className="px-4 py-2 bg-gray-700 text-gray-100 rounded-full shadow-md hover:bg-gray-600"
         >
-          &gt;
+          Next &#8594;
         </button>
       </motion.div>
 
       {/* Days of the Week */}
-      <div className="grid grid-cols-7 gap-3 text-center text-sm font-medium">
+      <div className="grid grid-cols-7 gap-3 text-center text-sm font-semibold text-gray-400">
         {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, index) => (
-          <div key={index} className="uppercase tracking-widest">
+          <motion.div 
+            key={index}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3, delay: index * 0.1 }}
+          >
             {day}
-          </div>
+          </motion.div>
         ))}
       </div>
 
       {/* Calendar Grid */}
       <motion.div 
-        className="grid grid-cols-7 gap-3 mt-4"
+        className="grid grid-cols-7 gap-2 mt-6"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.8 }}
@@ -119,11 +124,11 @@ const Calendar: React.FC<CalendarProps> = ({ initialDate, onSelectDate }) => {
           <motion.button
             key={index}
             onClick={() => handleDateSelect(date)}
-            className={`p-3 text-center rounded-lg text-sm font-semibold transition-all 
-              ${currentMonth ? 'bg-white text-purple-800' : 'bg-white/50 text-gray-400'} 
-              ${selectedDate?.toDateString() === date.toDateString() ? 'scale-110 shadow-xl bg-yellow-400 text-white' : 'hover:bg-purple-300'}`}
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
+            className={`p-4 text-center rounded-lg text-lg font-medium transition-all 
+              ${currentMonth ? 'bg-gray-700 text-gray-100' : 'bg-gray-600 text-gray-500'} 
+              ${selectedDate?.toDateString() === date.toDateString() ? 'scale-110 shadow-lg bg-green-500 text-gray-900' : 'hover:bg-gray-500'}`}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
           >
             {date.getDate()}
           </motion.button>
@@ -133,12 +138,12 @@ const Calendar: React.FC<CalendarProps> = ({ initialDate, onSelectDate }) => {
       {/* Selected Date Display */}
       {selectedDate && (
         <motion.div 
-          className="mt-6 text-center text-lg font-semibold"
+          className="mt-8 text-center text-lg font-medium"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.6 }}
         >
-          <span className="underline">Selected Date:</span> {selectedDate.toDateString()}
+          Selected Date: <span className="text-green-400">{selectedDate.toDateString()}</span>
         </motion.div>
       )}
     </div>
