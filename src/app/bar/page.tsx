@@ -1,5 +1,5 @@
 import React from 'react'
-import  {Component}  from './_components/Bar_7'
+import  {Component}  from './_components/Bar_9'
 
 const page = () => {
   return (
