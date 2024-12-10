@@ -12,9 +12,10 @@ type CalendarProps = {
   onSelectDate?: (date: Date | null) => void;
 };
 
-const Calendar_3: React.FC<CalendarProps> = ({ initialDate, onSelectDate }) => {
+const Calendar_4: React.FC<CalendarProps> = ({ initialDate, onSelectDate }) => {
   const [currentDate, setCurrentDate] = useState(initialDate || new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
+  const [showYearPicker, setShowYearPicker] = useState(false);
 
   const startOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth(), 1);
   const endOfMonth = new Date(currentDate.getFullYear(), currentDate.getMonth() + 1, 0);
@@ -53,6 +54,7 @@ const Calendar_3: React.FC<CalendarProps> = ({ initialDate, onSelectDate }) => {
 
   const handleYearChange = (year: number) => {
     setCurrentDate(new Date(year, currentDate.getMonth(), 1));
+    setShowYearPicker(false);
   };
 
   const handleDateSelect = (date: Date) => {
@@ -61,93 +63,95 @@ const Calendar_3: React.FC<CalendarProps> = ({ initialDate, onSelectDate }) => {
   };
 
   return (
-    <div className="p-6 w-full max-w-2xl mx-auto bg-gray-800 text-gray-100 shadow-xl rounded-2xl">
+    <div className="relative p-6 w-full max-w-xl mx-auto bg-white shadow-lg rounded-xl">
       {/* Header */}
-      <motion.div 
-        className="flex justify-between items-center mb-8 pb-4 border-b border-gray-700"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-      >
+      <div className="flex items-center justify-between mb-6">
         <button
           onClick={handlePrevMonth}
-          className="px-4 py-2 bg-gray-700 text-gray-100 rounded-full shadow-md hover:bg-gray-600"
+          className="px-4 py-2 bg-gray-200 rounded-lg text-gray-700 hover:bg-gray-300"
         >
-          &#8592; Previous
+          &#8592;
         </button>
-        <div className="text-center">
-          <motion.h2 
-            className="text-3xl font-bold"
-            initial={{ scale: 0.95 }}
-            animate={{ scale: 1 }}
-            transition={{ duration: 0.5 }}
+        <div className="flex flex-col items-center">
+          <h2
+            className="text-xl font-semibold text-gray-800 cursor-pointer hover:text-blue-500"
+            onClick={() => setShowYearPicker(!showYearPicker)}
           >
             {currentDate.toLocaleString('default', { month: 'long' })} {currentDate.getFullYear()}
-          </motion.h2>
-          <input
-            type="number"
-            value={currentDate.getFullYear()}
-            onChange={(e) => handleYearChange(Number(e.target.value))}
-            className="mt-2 w-24 text-center text-gray-100 bg-gray-700 rounded-lg border border-gray-600"
-          />
+          </h2>
         </div>
         <button
           onClick={handleNextMonth}
-          className="px-4 py-2 bg-gray-700 text-gray-100 rounded-full shadow-md hover:bg-gray-600"
+          className="px-4 py-2 bg-gray-200 rounded-lg text-gray-700 hover:bg-gray-300"
         >
-          Next &#8594;
+          &#8594;
         </button>
-      </motion.div>
+      </div>
+
+      {/* Year Picker */}
+      {showYearPicker && (
+        <motion.div
+          className="absolute top-20 left-1/2 transform -translate-x-1/2 bg-white shadow-lg rounded-lg p-4 z-10 overflow-y-auto max-h-60"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          <div className="grid grid-cols-4 gap-2">
+            {Array.from({ length: 40 }).map((_, i) => {
+              const year = currentDate.getFullYear() - 20 + i;
+              return (
+                <button
+                  key={year}
+                  onClick={() => handleYearChange(year)}
+                  className={`p-2 rounded-md text-sm font-medium transition-all 
+                    ${year === currentDate.getFullYear() ? 'bg-blue-500 text-white' : 'bg-gray-100 text-gray-800 hover:bg-blue-100'}`}
+                >
+                  {year}
+                </button>
+              );
+            })}
+          </div>
+        </motion.div>
+      )}
 
       {/* Days of the Week */}
-      <div className="grid grid-cols-7 gap-3 text-center text-sm font-semibold text-gray-400">
-        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day, index) => (
-          <motion.div 
-            key={index}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3, delay: index * 0.1 }}
-          >
-            {day}
-          </motion.div>
+      <div className="grid grid-cols-7 gap-1 text-center text-sm font-medium text-gray-500">
+        {['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'].map((day) => (
+          <div key={day}>{day}</div>
         ))}
       </div>
 
-      {/* Calendar_3 Grid */}
-      <motion.div 
-        className="grid grid-cols-7 gap-2 mt-6"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.8 }}
-      >
+      {/* Calendar_4 Grid */}
+      <div className="grid grid-cols-7 gap-1 mt-2">
         {days.map(({ date, currentMonth }, index) => (
           <motion.button
             key={index}
             onClick={() => handleDateSelect(date)}
-            className={`p-4 text-center rounded-lg text-lg font-medium transition-all 
-              ${currentMonth ? 'bg-gray-700 text-gray-100' : 'bg-gray-600 text-gray-500'} 
-              ${selectedDate?.toDateString() === date.toDateString() ? 'scale-110 shadow-lg bg-green-500 text-gray-900' : 'hover:bg-gray-500'}`}
+            className={`p-2 rounded-lg text-sm font-medium transition-all 
+                ${currentMonth ? 'text-gray-800 bg-gray-100' : 'text-gray-400 bg-gray-50'} 
+              ${selectedDate?.toDateString() === date.toDateString() ? 'bg-teal-600 text-white hover:text-white' : 'hover:bg-teal-100'}`}
+                
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             {date.getDate()}
           </motion.button>
         ))}
-      </motion.div>
+      </div>
 
       {/* Selected Date Display */}
       {selectedDate && (
-        <motion.div 
-          className="mt-8 text-center text-lg font-medium"
+        <motion.div
+          className="mt-4 text-center text-gray-700"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.3 }}
         >
-          Selected Date: <span className="text-green-400">{selectedDate.toDateString()}</span>
+          Selected Date: <span className="font-medium text-blue-500">{selectedDate.toDateString()}</span>
         </motion.div>
       )}
     </div>
   );
 };
 
-export default Calendar_3;
+export default Calendar_4;

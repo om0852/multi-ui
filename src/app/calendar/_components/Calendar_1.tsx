@@ -11,7 +11,7 @@ type CalendarProps = {
   onSelectDate?: (date: Date | null) => void;
 };
 
-const Calendar: React.FC<CalendarProps> = ({ initialDate, onSelectDate }) => {
+const Calendar_1: React.FC<CalendarProps> = ({ initialDate, onSelectDate }) => {
   const [currentDate, setCurrentDate] = useState(initialDate || new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
@@ -95,7 +95,7 @@ const Calendar: React.FC<CalendarProps> = ({ initialDate, onSelectDate }) => {
         ))}
       </div>
 
-      {/* Calendar Grid */}
+      {/* Calendar_1 Grid */}
       <div className="grid grid-cols-7 gap-1 mt-2">
         {days.map(({ date, currentMonth }, index) => (
           <button
@@ -120,4 +120,4 @@ const Calendar: React.FC<CalendarProps> = ({ initialDate, onSelectDate }) => {
   );
 };
 
-export default Calendar;
+export default Calendar_1;

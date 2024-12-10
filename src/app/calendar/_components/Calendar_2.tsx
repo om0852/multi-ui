@@ -12,7 +12,7 @@ type CalendarProps = {
   onSelectDate?: (date: Date | null) => void;
 };
 
-const Calendar: React.FC<CalendarProps> = ({ initialDate, onSelectDate }) => {
+const Calendar_2: React.FC<CalendarProps> = ({ initialDate, onSelectDate }) => {
   const [currentDate, setCurrentDate] = useState(initialDate || new Date());
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
 
@@ -108,7 +108,7 @@ const Calendar: React.FC<CalendarProps> = ({ initialDate, onSelectDate }) => {
         ))}
       </div>
 
-      {/* Calendar Grid */}
+      {/* Calendar_2 Grid */}
       <motion.div 
         className="grid grid-cols-7 gap-3 mt-4"
         initial={{ opacity: 0 }}
@@ -145,4 +145,4 @@ const Calendar: React.FC<CalendarProps> = ({ initialDate, onSelectDate }) => {
   );
 };
 
-export default Calendar;
+export default Calendar_2;
