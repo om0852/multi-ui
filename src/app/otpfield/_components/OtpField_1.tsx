@@ -134,30 +134,30 @@ const InputOTP: React.FC<InputOTPProps> = ({
 };
 
 // Example Usage
-export const Example = () => {
-  const handleOtpComplete = (otp: string) => {
-    console.log("Completed OTP:", otp);
-  };
+// export const Example = () => {
+//   const handleOtpComplete = (otp: string) => {
+//     console.log("Completed OTP:", otp);
+//   };
 
-  return (
-    <div className="p-8">
-      <InputOTP
-        maxLength={6}
-        onComplete={handleOtpComplete}
-        validationRegex={/^[0-9]*$/} // Only numeric values allowed
-      >
-        <InputOTPGroup>
-          <InputOTPSlot index={0} value="" onChange={() => {}} onKeyDown={() => {}} />
-          <InputOTPSlot index={1} value="" onChange={() => {}} onKeyDown={() => {}} />
-          <InputOTPSlot index={2} value="" onChange={() => {}} onKeyDown={() => {}} />
-        </InputOTPGroup>
-        <InputOTPSeparator />
-        <InputOTPGroup>
-          <InputOTPSlot index={3} value="" onChange={() => {}} onKeyDown={() => {}} />
-          <InputOTPSlot index={4} value="" onChange={() => {}} onKeyDown={() => {}} />
-          <InputOTPSlot index={5} value="" onChange={() => {}} onKeyDown={() => {}} />
-        </InputOTPGroup>
-      </InputOTP>
-    </div>
-  );
-};
+//   return (
+//     <div className="p-8">
+//       <InputOTP
+//         maxLength={6}
+//         onComplete={handleOtpComplete}
+//         validationRegex={/^[0-9]*$/} // Only numeric values allowed
+//       >
+//         <InputOTPGroup>
+//           <InputOTPSlot index={0} value="" onChange={() => {}} onKeyDown={() => {}} />
+//           <InputOTPSlot index={1} value="" onChange={() => {}} onKeyDown={() => {}} />
+//           <InputOTPSlot index={2} value="" onChange={() => {}} onKeyDown={() => {}} />
+//         </InputOTPGroup>
+//         <InputOTPSeparator />
+//         <InputOTPGroup>
+//           <InputOTPSlot index={3} value="" onChange={() => {}} onKeyDown={() => {}} />
+//           <InputOTPSlot index={4} value="" onChange={() => {}} onKeyDown={() => {}} />
+//           <InputOTPSlot index={5} value="" onChange={() => {}} onKeyDown={() => {}} />
+//         </InputOTPGroup>
+//       </InputOTP>
+//     </div>
+//   );
+// };
