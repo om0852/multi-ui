@@ -1,22 +1,54 @@
-"use client"
-import React, { useState, useEffect, useRef, forwardRef } from "react";
+"use client";
+import React, { useState, useEffect, useRef, forwardRef, ReactNode } from "react";
 import { motion } from "framer-motion";
-import type { ReactNode } from 'react';
 
-export const Menubar: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
-  return <div className="relative inline-block">{children}</div>;
+// Menubar Component
+export const Menubar: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [isVisible, setIsVisible] = useState(false);
+  const menubarRef = useRef<HTMLDivElement>(null);
+
+  const toggleMenu = () => setIsVisible((prev) => !prev);
+  const closeMenu = () => setIsVisible(false);
+
+  // Close the menu when clicking outside
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (menubarRef.current && !menubarRef.current.contains(event.target as Node)) {
+        closeMenu();
+      }
+    };
+
+    if (isVisible) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isVisible]);
+
+  return (
+    <div ref={menubarRef} className="relative inline-block">
+      {React.Children.map(children, (child) =>
+        React.cloneElement(child as React.ReactElement, {
+          toggleMenu, // Pass toggleMenu function directly
+          isVisible,  // Pass visibility status
+          closeMenu,  // Pass closeMenu function
+        })
+      )}
+    </div>
+  );
 };
 
+// MenubarTrigger Component
 export const MenubarTrigger = forwardRef<
   HTMLButtonElement,
-  { children: ReactNode; onClick?: () => void }
->(({ children, onClick }, ref) => {
+  { children: ReactNode; toggleMenu?: () => void }
+>(({ children, toggleMenu }, ref) => {
   return (
     <button
       ref={ref}
-      onClick={onClick}
+      onClick={toggleMenu}
       className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
     >
       {children}
@@ -24,29 +56,26 @@ export const MenubarTrigger = forwardRef<
   );
 });
 
-MenubarTrigger.displayName = 'MenubarTrigger';
+MenubarTrigger.displayName = "MenubarTrigger";
 
-export const MenubarContent: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
-  const [isVisible, setIsVisible] = useState(false);
-  const [dynamicPosition, setDynamicPosition] = useState<"top" | "bottom">(
-    "bottom"
-  );
-  const triggerRef = useRef<HTMLButtonElement>(null);
+// MenubarContent Component
+export const MenubarContent: React.FC<{
+  children: ReactNode;
+  isVisible?: boolean;
+  closeMenu?: () => void;
+  triggerRef?: React.RefObject<HTMLButtonElement>;
+}> = ({ children, isVisible = false, closeMenu, triggerRef }) => {
+  const [dynamicPosition, setDynamicPosition] = useState<"top" | "bottom">("bottom");
   const menuRef = useRef<HTMLDivElement>(null);
-
-  const toggleMenu = () => setIsVisible((prev) => !prev);
-  const closeMenu = () => setIsVisible(false);
 
   useEffect(() => {
     const updatePosition = () => {
-      if (triggerRef.current && menuRef.current) {
+      if (triggerRef?.current && menuRef.current) {
         const triggerRect = triggerRef.current.getBoundingClientRect();
         const menuHeight = menuRef.current.offsetHeight;
         const viewportHeight = window.innerHeight;
 
-        // Calculate whether there's enough space below the trigger
+        // Check if there's enough space below the button
         if (triggerRect.bottom + menuHeight > viewportHeight) {
           setDynamicPosition("top");
         } else {
@@ -65,13 +94,10 @@ export const MenubarContent: React.FC<{ children: React.ReactNode }> = ({
       window.removeEventListener("resize", updatePosition);
       window.removeEventListener("scroll", updatePosition);
     };
-  }, [isVisible]);
+  }, [isVisible, triggerRef]);
 
   return (
     <div className="relative">
-      <MenubarTrigger onClick={toggleMenu} ref={triggerRef}>
-        Trigger
-      </MenubarTrigger>
       {isVisible && (
         <motion.div
           ref={menuRef}
@@ -79,8 +105,8 @@ export const MenubarContent: React.FC<{ children: React.ReactNode }> = ({
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: dynamicPosition === "top" ? -10 : 10 }}
           className={`absolute ${
-            dynamicPosition === "top" ? "bottom-full" : "top-full"
-          } left-0 mt-2 w-48 bg-white shadow-lg rounded-lg`}
+            dynamicPosition === "top" ? "bottom-full mb-2" : "top-full mt-2"
+          } left-0 w-48 bg-white shadow-lg rounded-lg z-10`}
         >
           <ul className="py-2">
             {React.Children.map(children, (child) =>
@@ -94,10 +120,9 @@ export const MenubarContent: React.FC<{ children: React.ReactNode }> = ({
     </div>
   );
 };
-export const MenubarItem: React.FC<{
-  children: React.ReactNode;
-  onClick?: () => void;
-}> = ({ children, onClick }) => {
+
+// MenubarItem Component
+export const MenubarItem: React.FC<{ children: ReactNode; onClick?: () => void }> = ({ children, onClick }) => {
   return (
     <li
       onClick={onClick}
@@ -108,6 +133,7 @@ export const MenubarItem: React.FC<{
   );
 };
 
+// MenubarCheckboxItem Component
 export const MenubarCheckboxItem: React.FC<{
   label: string;
   checked: boolean;
@@ -127,13 +153,12 @@ export const MenubarCheckboxItem: React.FC<{
   </div>
 );
 
-export const MenubarRadioGroup: React.FC<{
-  name: string;
-  children: React.ReactNode;
-}> = ({ children }) => {
+// MenubarRadioGroup Component
+export const MenubarRadioGroup: React.FC<{ name: string; children: ReactNode }> = ({ children }) => {
   return <div>{children}</div>;
 };
 
+// MenubarRadioItem Component
 export const MenubarRadioItem: React.FC<{
   label: string;
   value: string;
@@ -154,33 +179,93 @@ export const MenubarRadioItem: React.FC<{
   </div>
 );
 
+// MenubarSeparator Component
 export const MenubarSeparator: React.FC = () => (
   <hr className="border-t border-gray-300 my-2" />
 );
 
-export const MenubarShortcut: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => <span className="text-gray-500 ml-auto">{children}</span>;
+// MenubarShortcut Component
+export const MenubarShortcut: React.FC<{ children: ReactNode }> = ({ children }) => (
+  <span className="text-gray-500 ml-auto">{children}</span>
+);
 
-export const MenubarSub: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
-  return <div className="relative">{children}</div>;
-};
+// MenubarSub Component
 
-export const MenubarSubTrigger: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+
+// MenubarSubTrigger Component
+export const MenubarSubTrigger: React.FC<{
+  children: ReactNode;
+  toggleSubmenu?: () => void;
+  isSubmenuVisible?: boolean;
+}> = ({ children, toggleSubmenu, isSubmenuVisible }) => {
   return (
-    <button className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300">
+    <li
+      onClick={toggleSubmenu}
+      className={`px-4 py-2 hover:bg-gray-100 cursor-pointer ${
+        isSubmenuVisible ? "bg-gray-100" : ""
+      }`}
+    >
       {children}
-    </button>
+    </li>
   );
 };
 
-export const MenubarSubContent: React.FC<{ children: React.ReactNode }> = ({
+// MenubarSub Component
+export const MenubarSub: React.FC<{ children: React.ReactNode }> = ({
   children,
 }) => {
+  const [isSubmenuVisible, setIsSubmenuVisible] = useState(false);
+
+  const toggleSubmenu = () => {
+    setIsSubmenuVisible((prev) => !prev);
+  };
+
+  const closeSubmenu = () => {
+    setIsSubmenuVisible(false);
+  };
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      // Close submenu if clicked outside of the menu
+      closeSubmenu();
+    };
+
+    if (isSubmenuVisible) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isSubmenuVisible]);
+
+  return (
+    <div className="relative">
+      {/* Passing down the toggle function and visibility status to MenubarSubTrigger */}
+      {React.Children.map(children, (child) =>
+        React.cloneElement(child as React.ReactElement, {
+          toggleSubmenu,
+          isSubmenuVisible,
+        })
+      )}
+
+      {/* Submenu Content */}
+      {isSubmenuVisible && (
+        <motion.div
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          exit={{ opacity: 0, x: -10 }}
+          className="absolute left-full top-0 mt-2 w-48 bg-white shadow-lg rounded-lg z-10"
+        >
+          <ul className="py-2">{children}</ul>
+        </motion.div>
+      )}
+    </div>
+  );
+};
+
+// MenubarSubContent Component
+export const MenubarSubContent: React.FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}

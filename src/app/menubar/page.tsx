@@ -1,53 +1,83 @@
-"use client"
-import React from "react";
+"use client";
+
+import React, { useState } from "react";
 import {
   Menubar,
+  MenubarTrigger,
   MenubarContent,
   MenubarItem,
   MenubarCheckboxItem,
   MenubarRadioGroup,
   MenubarRadioItem,
   MenubarSeparator,
-} from "./_components/Menubar_1";
+  MenubarSub,
+  MenubarSubTrigger,
+  MenubarSubContent,
+  MenubarShortcut,
+} from "./_components/Menubar_1"; // Adjust this import based on your file structure.
 
-const Page = () => {
-  const [checked, setChecked] = React.useState(false);
-  const [radioValue, setRadioValue] = React.useState("option1");
+export default function ExampleMenubar() {
+  const [isOptionChecked, setIsOptionChecked] = useState(false);
+  const [selectedRadio, setSelectedRadio] = useState("option1");
 
   return (
-    <div className="h-[300vh]">
-      <div className="h-[100vh]"></div>
-      <div className="p-8">
-        <Menubar>
-          <MenubarContent>
-            <MenubarItem>Profile</MenubarItem>
-            <MenubarItem >Settings</MenubarItem>
-            <MenubarSeparator />
-            <MenubarCheckboxItem
-              label="Enable Notifications"
-              checked={checked}
-              onChange={() => setChecked(!checked)}
+    <div className="flex justify-center mt-10">
+      <Menubar>
+        {/* Menubar Trigger */}
+        <MenubarTrigger>Open Menu</MenubarTrigger>
+
+        {/* Menubar Content */}
+        <MenubarContent>
+          {/* Simple Item */}
+          <MenubarItem onClick={() => alert("Clicked File!")}>File</MenubarItem>
+
+          {/* Checkbox Item */}
+          <MenubarCheckboxItem
+            label="Enable Notifications"
+            checked={isOptionChecked}
+            onChange={() => setIsOptionChecked((prev) => !prev)}
+          />
+
+          {/* Radio Group */}
+          <MenubarSeparator />
+          <MenubarRadioGroup name="Options">
+            <MenubarRadioItem
+              label="Option 1"
+              value="option1"
+              selectedValue={selectedRadio}
+              onChange={(value) => setSelectedRadio(value)}
             />
-            <MenubarSeparator />
-            <MenubarRadioGroup  name="options">
-              <MenubarRadioItem
-                label="Option 1"
-                value="option1"
-                selectedValue={radioValue}
-                onChange={setRadioValue}
-              />
-              <MenubarRadioItem
-                label="Option 2"
-                value="option2"
-                selectedValue={radioValue}
-                onChange={setRadioValue}
-              />
-            </MenubarRadioGroup>
-          </MenubarContent>
-        </Menubar>
-      </div>
+            <MenubarRadioItem
+              label="Option 2"
+              value="option2"
+              selectedValue={selectedRadio}
+              onChange={(value) => setSelectedRadio(value)}
+            />
+          </MenubarRadioGroup>
+
+          {/* Separator */}
+          <MenubarSeparator />
+
+          {/* Submenu */}
+          <MenubarSub>
+            <MenubarSubTrigger>More Options</MenubarSubTrigger>
+            <MenubarSubContent>
+              <MenubarItem onClick={() => alert("Submenu Item 1!")}>
+                Submenu Item 1
+              </MenubarItem>
+              <MenubarItem onClick={() => alert("Submenu Item 2!")}>
+                Submenu Item 2
+              </MenubarItem>
+            </MenubarSubContent>
+          </MenubarSub>
+          {/* Item with Shortcut */}
+          <MenubarSeparator />
+          <MenubarItem>
+            Save
+            <MenubarShortcut>Ctrl+S</MenubarShortcut>
+          </MenubarItem>
+        </MenubarContent>
+      </Menubar>
     </div>
   );
-};
-
-export default Page;
+}
