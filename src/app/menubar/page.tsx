@@ -1,5 +1,4 @@
 "use client";
-
 import React, { useState } from "react";
 import {
   Menubar,
@@ -11,10 +10,8 @@ import {
   MenubarRadioItem,
   MenubarSeparator,
   MenubarSub,
-  MenubarSubTrigger,
-  MenubarSubContent,
   MenubarShortcut,
-} from "./_components/Menubar_1"; // Adjust this import based on your file structure.
+} from "./_components/Menubar_3"; // Adjust this import based on your file structure.
 
 export default function ExampleMenubar() {
   const [isOptionChecked, setIsOptionChecked] = useState(false);
@@ -39,7 +36,7 @@ export default function ExampleMenubar() {
       <MenubarRadioItem onChange={() => console.log("Option 2 Selected")}>Option 2</MenubarRadioItem>
     </MenubarRadioGroup>
 
-    <MenubarSub>
+    <MenubarSub label="show" >
       <MenubarItem>Submenu Item 1</MenubarItem>
       <MenubarItem>Submenu Item 2</MenubarItem>
     </MenubarSub>

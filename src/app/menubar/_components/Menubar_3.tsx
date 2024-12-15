@@ -40,20 +40,19 @@ export const Menubar: React.FC<{ children: ReactNode }> = ({ children }) => {
 };
 
 // MenubarTrigger Component
-export const MenubarTrigger = forwardRef<
-  HTMLButtonElement,
-  { children: ReactNode; toggleMenu?: () => void }
->(({ children, toggleMenu }, ref) => {
-  return (
-    <button
-      ref={ref}
-      onClick={toggleMenu}
-      className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
-    >
-      {children}
-    </button>
-  );
-});
+export const MenubarTrigger = forwardRef<HTMLButtonElement, { children: ReactNode; toggleMenu?: () => void }>(
+  ({ children, toggleMenu }, ref) => {
+    return (
+      <button
+        ref={ref}
+        onClick={toggleMenu}
+        className="px-5 py-3 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-xl shadow-lg transform transition duration-300 hover:scale-105"
+      >
+        {children}
+      </button>
+    );
+  }
+);
 
 MenubarTrigger.displayName = "MenubarTrigger";
 
@@ -70,15 +69,9 @@ export const MenubarContent: React.FC<{ children: React.ReactNode; isVisible?: b
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 10 }}
-          className="absolute top-full left-0 mt-2 w-48 bg-white shadow-lg rounded-lg z-10"
+          className="absolute top-full left-0 mt-2 w-60 bg-gradient-to-r from-gray-800 to-gray-700 text-white shadow-lg rounded-xl z-10"
         >
-          <ul className="py-2">
-            {React.Children.map(children, (child) =>
-              React.cloneElement(child as React.ReactElement, {
-                onClick: closeMenu,
-              })
-            )}
-          </ul>
+          <ul className="py-2">{React.Children.map(children, (child) => React.cloneElement(child as React.ReactElement, { onClick: closeMenu }))}</ul>
         </motion.div>
       )}
     </div>
@@ -88,7 +81,7 @@ export const MenubarContent: React.FC<{ children: React.ReactNode; isVisible?: b
 // MenubarItem Component
 export const MenubarItem: React.FC<{ children: ReactNode; onClick?: () => void }> = ({ children, onClick }) => {
   return (
-    <li onClick={onClick} className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+    <li onClick={onClick} className="px-5 py-3 hover:bg-gray-600 cursor-pointer transform transition duration-300">
       {children}
     </li>
   );
@@ -99,10 +92,12 @@ export const MenubarSub: React.FC<{ label: ReactNode; children: React.ReactNode 
   const [isSubmenuVisible, setIsSubmenuVisible] = useState(false);
   const submenuRef = useRef<HTMLDivElement>(null);
 
-  const toggleSubmenu = () => setIsSubmenuVisible((prev) => !prev);
+  const toggleSubmenu = () => {
+    setIsSubmenuVisible((prev) => !prev);
+  };
+
   const closeSubmenu = () => setIsSubmenuVisible(false);
 
-  // Close the submenu when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (submenuRef.current && !submenuRef.current.contains(event.target as Node)) {
@@ -121,18 +116,14 @@ export const MenubarSub: React.FC<{ label: ReactNode; children: React.ReactNode 
 
   return (
     <div className="relative">
-      {/* User-defined label for the submenu */}
-      <MenubarItem onClick={toggleSubmenu}>
-        {label}
-      </MenubarItem>
+      <MenubarItem onClick={toggleSubmenu}>{label}</MenubarItem>
 
-      {/* Submenu Content */}
       {isSubmenuVisible && (
         <motion.div
-          initial={{ opacity: 0, x: -10 }}
+          initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -10 }}
-          className="absolute left-full top-0 mt-2 w-48 bg-white shadow-lg rounded-lg z-10"
+          exit={{ opacity: 0, x: 20 }}
+          className="absolute left-full top-0 mt-2 w-56 bg-gradient-to-l from-purple-500 to-blue-600 text-white shadow-lg rounded-xl z-10"
           ref={submenuRef}
         >
           <ul className="py-2">{children}</ul>
@@ -144,7 +135,7 @@ export const MenubarSub: React.FC<{ label: ReactNode; children: React.ReactNode 
 
 // MenubarSeparator Component
 export const MenubarSeparator: React.FC = () => {
-  return <hr className="my-2 border-gray-200" />;
+  return <hr className="my-2 border-gray-600" />;
 };
 
 // MenubarCheckboxItem Component
@@ -163,7 +154,7 @@ export const MenubarCheckboxItem: React.FC<{
   };
 
   return (
-    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+    <li className="px-5 py-3 hover:bg-gray-600 cursor-pointer transform transition duration-300">
       <label className="flex items-center">
         <input
           type="checkbox"
@@ -181,7 +172,7 @@ export const MenubarCheckboxItem: React.FC<{
 };
 
 // MenubarRadioGroup Component
-export const MenubarRadioGroup: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const MenubarRadioGroup: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return <ul>{children}</ul>;
 };
 
@@ -201,7 +192,7 @@ export const MenubarRadioItem: React.FC<{
   };
 
   return (
-    <li onClick={handleChange} className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+    <li onClick={handleChange} className="px-5 py-3 hover:bg-gray-600 cursor-pointer transform transition duration-300">
       <label className="flex items-center">
         <input
           type="radio"
@@ -220,5 +211,5 @@ export const MenubarRadioItem: React.FC<{
 
 // MenubarShortcut Component
 export const MenubarShortcut: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  return <span className="text-gray-500 text-sm ml-auto">{children}</span>;
+  return <span className="text-gray-400 text-sm ml-auto">{children}</span>;
 };

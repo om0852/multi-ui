@@ -48,7 +48,7 @@ export const MenubarTrigger = forwardRef<
     <button
       ref={ref}
       onClick={toggleMenu}
-      className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
+      className="px-6 py-3 bg-gradient-to-r from-indigo-600 to-blue-500 text-white rounded-lg transition duration-300 hover:scale-105 hover:from-indigo-500 hover:to-blue-400"
     >
       {children}
     </button>
@@ -67,10 +67,10 @@ export const MenubarContent: React.FC<{ children: React.ReactNode; isVisible?: b
     <div className="relative">
       {isVisible && (
         <motion.div
-          initial={{ opacity: 0, y: 10 }}
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 10 }}
-          className="absolute top-full left-0 mt-2 w-48 bg-white shadow-lg rounded-lg z-10"
+          exit={{ opacity: 0, y: 20 }}
+          className="absolute top-full left-0 mt-2 w-56 bg-white shadow-lg rounded-lg z-10 transition duration-300 transform scale-95 hover:scale-100"
         >
           <ul className="py-2">
             {React.Children.map(children, (child) =>
@@ -88,19 +88,36 @@ export const MenubarContent: React.FC<{ children: React.ReactNode; isVisible?: b
 // MenubarItem Component
 export const MenubarItem: React.FC<{ children: ReactNode; onClick?: () => void }> = ({ children, onClick }) => {
   return (
-    <li onClick={onClick} className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+    <li onClick={onClick} className="px-5 py-3 hover:bg-indigo-50 cursor-pointer transition-all duration-200 rounded-md">
       {children}
     </li>
   );
 };
 
 // MenubarSub Component (submenu handling)
+// MenubarSub Component (submenu handling)
 export const MenubarSub: React.FC<{ label: ReactNode; children: React.ReactNode }> = ({ label, children }) => {
   const [isSubmenuVisible, setIsSubmenuVisible] = useState(false);
   const submenuRef = useRef<HTMLDivElement>(null);
 
-  const toggleSubmenu = () => setIsSubmenuVisible((prev) => !prev);
-  const closeSubmenu = () => setIsSubmenuVisible(false);
+  const toggleSubmenu = () => {
+    // Only toggle visibility if it's not already transitioning
+    if (!isSubmenuVisible) {
+      setIsSubmenuVisible(true);
+    } else {
+      // Delay hiding submenu after animation to prevent flickering
+      setTimeout(() => {
+        setIsSubmenuVisible(false);
+      }, 300); // Match the exit animation duration
+    }
+  };
+
+  const closeSubmenu = () => {
+    // Prevent submenu from closing immediately during animation
+    setTimeout(() => {
+      setIsSubmenuVisible(false);
+    }, 300); // Match the exit animation duration
+  };
 
   // Close the submenu when clicking outside
   useEffect(() => {
@@ -129,10 +146,10 @@ export const MenubarSub: React.FC<{ label: ReactNode; children: React.ReactNode 
       {/* Submenu Content */}
       {isSubmenuVisible && (
         <motion.div
-          initial={{ opacity: 0, x: -10 }}
+          initial={{ opacity: 0, x: 0 }}
           animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -10 }}
-          className="absolute left-full top-0 mt-2 w-48 bg-white shadow-lg rounded-lg z-10"
+          exit={{ opacity: 0, x: 0 }}
+          className="absolute left-full top-0 mt-2 w-56 bg-white shadow-lg rounded-lg z-10 transition duration-300 transform scale-95 hover:scale-100"
           ref={submenuRef}
         >
           <ul className="py-2">{children}</ul>
@@ -142,9 +159,10 @@ export const MenubarSub: React.FC<{ label: ReactNode; children: React.ReactNode 
   );
 };
 
+
 // MenubarSeparator Component
 export const MenubarSeparator: React.FC = () => {
-  return <hr className="my-2 border-gray-200" />;
+  return <hr className="my-2 border-gray-300" />;
 };
 
 // MenubarCheckboxItem Component
@@ -163,7 +181,7 @@ export const MenubarCheckboxItem: React.FC<{
   };
 
   return (
-    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+    <li className="px-5 py-3 hover:bg-indigo-50 cursor-pointer transition-all duration-200 rounded-md">
       <label className="flex items-center">
         <input
           type="checkbox"
@@ -201,7 +219,7 @@ export const MenubarRadioItem: React.FC<{
   };
 
   return (
-    <li onClick={handleChange} className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+    <li onClick={handleChange} className="px-5 py-3 hover:bg-indigo-50 cursor-pointer transition-all duration-200 rounded-md">
       <label className="flex items-center">
         <input
           type="radio"
@@ -220,5 +238,5 @@ export const MenubarRadioItem: React.FC<{
 
 // MenubarShortcut Component
 export const MenubarShortcut: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  return <span className="text-gray-500 text-sm ml-auto">{children}</span>;
+  return <span className="text-indigo-500 text-sm ml-auto">{children}</span>;
 };
