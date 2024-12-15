@@ -1,4 +1,3 @@
-"use client";
 import React, { useState, useEffect, useRef, forwardRef, ReactNode } from "react";
 import { motion } from "framer-motion";
 
@@ -31,9 +30,9 @@ export const Menubar: React.FC<{ children: ReactNode }> = ({ children }) => {
     <div ref={menubarRef} className="relative inline-block">
       {React.Children.map(children, (child) =>
         React.cloneElement(child as React.ReactElement, {
-          toggleMenu, // Pass toggleMenu function directly
-          isVisible,  // Pass visibility status
-          closeMenu,  // Pass closeMenu function
+          toggleMenu,
+          isVisible,
+          closeMenu,
         })
       )}
     </div>
@@ -59,54 +58,19 @@ export const MenubarTrigger = forwardRef<
 MenubarTrigger.displayName = "MenubarTrigger";
 
 // MenubarContent Component
-export const MenubarContent: React.FC<{
-  children: ReactNode;
-  isVisible?: boolean;
-  closeMenu?: () => void;
-  triggerRef?: React.RefObject<HTMLButtonElement>;
-}> = ({ children, isVisible = false, closeMenu, triggerRef }) => {
-  const [dynamicPosition, setDynamicPosition] = useState<"top" | "bottom">("bottom");
-  const menuRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const updatePosition = () => {
-      if (triggerRef?.current && menuRef.current) {
-        const triggerRect = triggerRef.current.getBoundingClientRect();
-        const menuHeight = menuRef.current.offsetHeight;
-        const viewportHeight = window.innerHeight;
-
-        // Check if there's enough space below the button
-        if (triggerRect.bottom + menuHeight > viewportHeight) {
-          setDynamicPosition("top");
-        } else {
-          setDynamicPosition("bottom");
-        }
-      }
-    };
-
-    if (isVisible) {
-      updatePosition();
-      window.addEventListener("resize", updatePosition);
-      window.addEventListener("scroll", updatePosition);
-    }
-
-    return () => {
-      window.removeEventListener("resize", updatePosition);
-      window.removeEventListener("scroll", updatePosition);
-    };
-  }, [isVisible, triggerRef]);
-
+export const MenubarContent: React.FC<{ children: ReactNode; isVisible?: boolean; closeMenu?: () => void }> = ({
+  children,
+  isVisible = false,
+  closeMenu,
+}) => {
   return (
     <div className="relative">
       {isVisible && (
         <motion.div
-          ref={menuRef}
-          initial={{ opacity: 0, y: dynamicPosition === "top" ? -10 : 10 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: dynamicPosition === "top" ? -10 : 10 }}
-          className={`absolute ${
-            dynamicPosition === "top" ? "bottom-full mb-2" : "top-full mt-2"
-          } left-0 w-48 bg-white shadow-lg rounded-lg z-10`}
+          exit={{ opacity: 0, y: 10 }}
+          className="absolute top-full left-0 mt-2 w-48 bg-white shadow-lg rounded-lg z-10"
         >
           <ul className="py-2">
             {React.Children.map(children, (child) =>
@@ -124,96 +88,14 @@ export const MenubarContent: React.FC<{
 // MenubarItem Component
 export const MenubarItem: React.FC<{ children: ReactNode; onClick?: () => void }> = ({ children, onClick }) => {
   return (
-    <li
-      onClick={onClick}
-      className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-    >
+    <li onClick={onClick} className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
       {children}
     </li>
   );
 };
 
-// MenubarCheckboxItem Component
-export const MenubarCheckboxItem: React.FC<{
-  label: string;
-  checked: boolean;
-  onChange: () => void;
-}> = ({ label, checked, onChange }) => (
-  <div
-    onClick={onChange}
-    className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
-  >
-    <input
-      type="checkbox"
-      checked={checked}
-      readOnly
-      className="mr-2 cursor-pointer"
-    />
-    {label}
-  </div>
-);
-
-// MenubarRadioGroup Component
-export const MenubarRadioGroup: React.FC<{ name: string; children: ReactNode }> = ({ children }) => {
-  return <div>{children}</div>;
-};
-
-// MenubarRadioItem Component
-export const MenubarRadioItem: React.FC<{
-  label: string;
-  value: string;
-  selectedValue: string;
-  onChange: (value: string) => void;
-}> = ({ label, value, selectedValue, onChange }) => (
-  <div
-    onClick={() => onChange(value)}
-    className="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer"
-  >
-    <input
-      type="radio"
-      checked={selectedValue === value}
-      readOnly
-      className="mr-2 cursor-pointer"
-    />
-    {label}
-  </div>
-);
-
-// MenubarSeparator Component
-export const MenubarSeparator: React.FC = () => (
-  <hr className="border-t border-gray-300 my-2" />
-);
-
-// MenubarShortcut Component
-export const MenubarShortcut: React.FC<{ children: ReactNode }> = ({ children }) => (
-  <span className="text-gray-500 ml-auto">{children}</span>
-);
-
-// MenubarSub Component
-
-
-// MenubarSubTrigger Component
-export const MenubarSubTrigger: React.FC<{
-  children: ReactNode;
-  toggleSubmenu?: () => void;
-  isSubmenuVisible?: boolean;
-}> = ({ children, toggleSubmenu, isSubmenuVisible }) => {
-  return (
-    <li
-      onClick={toggleSubmenu}
-      className={`px-4 py-2 hover:bg-gray-100 cursor-pointer ${
-        isSubmenuVisible ? "bg-gray-100" : ""
-      }`}
-    >
-      {children}
-    </li>
-  );
-};
-
-// MenubarSub Component
-export const MenubarSub: React.FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+// MenubarSub Component (submenu handling)
+export const MenubarSub: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isSubmenuVisible, setIsSubmenuVisible] = useState(false);
 
   const toggleSubmenu = () => {
@@ -226,7 +108,6 @@ export const MenubarSub: React.FC<{ children: React.ReactNode }> = ({
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      // Close submenu if clicked outside of the menu
       closeSubmenu();
     };
 
@@ -241,13 +122,9 @@ export const MenubarSub: React.FC<{ children: React.ReactNode }> = ({
 
   return (
     <div className="relative">
-      {/* Passing down the toggle function and visibility status to MenubarSubTrigger */}
-      {React.Children.map(children, (child) =>
-        React.cloneElement(child as React.ReactElement, {
-          toggleSubmenu,
-          isSubmenuVisible,
-        })
-      )}
+      <MenubarSubTrigger onClick={toggleSubmenu}>
+        More Options
+      </MenubarSubTrigger>
 
       {/* Submenu Content */}
       {isSubmenuVisible && (
@@ -264,8 +141,23 @@ export const MenubarSub: React.FC<{ children: React.ReactNode }> = ({
   );
 };
 
+// MenubarSubTrigger Component
+export const MenubarSubTrigger: React.FC<{ children: React.ReactNode; onClick: () => void }> = ({
+  children,
+  onClick,
+}) => {
+  return (
+    <li
+      onClick={onClick}
+      className="px-4 py-2 hover:bg-gray-100 cursor-pointer"
+    >
+      {children}
+    </li>
+  );
+};
+
 // MenubarSubContent Component
-export const MenubarSubContent: React.FC<{ children: ReactNode }> = ({ children }) => {
+export const MenubarSubContent: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -275,4 +167,84 @@ export const MenubarSubContent: React.FC<{ children: ReactNode }> = ({ children 
       <ul className="py-2">{children}</ul>
     </motion.div>
   );
+};
+
+// MenubarSeparator Component
+export const MenubarSeparator: React.FC = () => {
+  return <hr className="my-2 border-gray-200" />;
+};
+
+// MenubarCheckboxItem Component
+export const MenubarCheckboxItem: React.FC<{
+  children: React.ReactNode;
+  checked?: boolean;
+  onChange?: (checked: boolean, value: string) => void;
+  value?: string;
+  id?: string;
+  disabled?: boolean;
+}> = ({ children, checked = false, onChange, value = "", id, disabled = false }) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (onChange) {
+      onChange(e.target.checked, value);
+    }
+  };
+
+  return (
+    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+      <label className="flex items-center">
+        <input
+          type="checkbox"
+          checked={checked}
+          onChange={handleChange}
+          value={value}
+          id={id}
+          disabled={disabled}
+          className="mr-2"
+        />
+        {children}
+      </label>
+    </li>
+  );
+};
+
+// MenubarRadioGroup Component
+export const MenubarRadioGroup: React.FC<{ children: ReactNode }> = ({ children }) => {
+  return <ul>{children}</ul>;
+};
+
+// MenubarRadioItem Component
+export const MenubarRadioItem: React.FC<{
+  children: React.ReactNode;
+  checked?: boolean;
+  onChange?: (value: string) => void;
+  value?: string;
+  id?: string;
+  disabled?: boolean;
+}> = ({ children, checked = false, onChange, value = "", id, disabled = false }) => {
+  const handleChange = () => {
+    if (onChange) {
+      onChange(value);
+    }
+  };
+
+  return (
+    <li onClick={handleChange} className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+      <label className="flex items-center">
+        <input
+          type="radio"
+          checked={checked}
+          onChange={handleChange}
+          value={value}
+          id={id}
+          disabled={disabled}
+          className="mr-2"
+        />
+        {children}
+      </label>
+    </li>
+  );
+};
+// MenubarShortcut Component
+export const MenubarShortcut: React.FC<{ children: ReactNode }> = ({ children }) => {
+  return <span className="text-gray-500 text-sm ml-auto">{children}</span>;
 };
