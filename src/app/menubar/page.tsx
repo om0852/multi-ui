@@ -10,7 +10,6 @@ import {
   MenubarRadioItem,
   MenubarSeparator,
   MenubarSub,
-  MenubarShortcut,
 } from "./_components/Menubar_3"; // Adjust this import based on your file structure.
 
 export default function ExampleMenubar() {
