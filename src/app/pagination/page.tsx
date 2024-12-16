@@ -1,14 +1,8 @@
 "use client"
 import React, { useState } from "react";
 import {
-  Pagination,
-  PaginationContent,
-  PaginationItem,
-  PaginationLink,
-  PaginationPrevious,
-  PaginationNext,
-  PaginationEllipsis,
-} from "./_components/Pagination_3";
+  Pagination_6,
+} from "./_components/Pagination_6";
 
 const PaginationExample = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -21,11 +15,12 @@ const PaginationExample = () => {
   return (
     <div className="p-4">
       <h1 className="text-xl font-bold mb-4">Pagination Example</h1>
-      <Pagination
-        totalPages={20}
-        currentPage={currentPage}
-        onPageChange={handlePageChange}
-        className="my-4"
+      <Pagination_6
+        totalPages={20} // Total pages to be paginated
+        currentPage={currentPage} // Current page to highlight
+        onPageChange={handlePageChange} // Function to handle page changes
+        visiblePageCount={5} // Number of pages to display at a time
+        className="my-pagination" // Optional custom class for styling
       />
     </div>
   );

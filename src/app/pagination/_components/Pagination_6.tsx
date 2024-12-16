@@ -1,6 +1,6 @@
 import * as React from "react";
 
-const Pagination_1 = ({
+const Pagination_6 = ({
   totalPages = 30,
   currentPage = 1,
   onPageChange,
@@ -69,7 +69,7 @@ const Pagination_1 = ({
 
 const PaginationContent = React.forwardRef<HTMLUListElement, React.ComponentProps<"ul">>(
   ({ className, ...props }, ref) => (
-    <ul ref={ref} className={`flex items-center gap-6 ${className || ""}`} {...props} />
+    <ul ref={ref} className={`flex items-center gap-4 ${className || ""}`} {...props} />
   )
 );
 
@@ -96,9 +96,9 @@ const PaginationLink = ({
     aria-current={isActive ? "page" : undefined}
     className={`${
       isActive
-        ? "bg-blue-600 text-white transform scale-110 shadow-xl"
-        : "bg-transparent text-blue-600 hover:bg-blue-100"
-    } px-6 py-3 rounded-full transition-all duration-300 ease-in-out hover:scale-105 hover:text-blue-700 ${className || ""}`}
+        ? "bg-gradient-to-r from-indigo-500 to-purple-600 text-white transform scale-110 shadow-lg"
+        : "bg-transparent text-indigo-600 hover:bg-indigo-100"
+    } px-6 py-3 rounded-full transition-all duration-300 ease-in-out transform hover:scale-105 hover:text-indigo-700 ${className || ""}`}
     {...props}
   >
     {children}
@@ -113,7 +113,9 @@ const PaginationPrevious = ({
   onClick?: () => void;
 }) => (
   <PaginationLink className={className} onClick={onClick}>
-    <span className="text-xl transform rotate-180">&larr;</span>
+    <span className="text-2xl transform rotate-180 transition-transform duration-300 ease-in-out">
+      &#8592;
+    </span>
   </PaginationLink>
 );
 
@@ -125,8 +127,10 @@ const PaginationNext = ({
   onClick?: () => void;
 }) => (
   <PaginationLink className={className} onClick={onClick}>
-    <span className="text-xl">&rarr;</span>
+    <span className="text-2xl transition-transform duration-300 ease-in-out">
+      &#8594;
+    </span>
   </PaginationLink>
 );
 
-export { Pagination_1, PaginationContent, PaginationLink, PaginationItem, PaginationPrevious, PaginationNext };
+export { Pagination_6, PaginationContent, PaginationLink, PaginationItem, PaginationPrevious, PaginationNext };

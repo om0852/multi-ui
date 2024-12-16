@@ -1,6 +1,6 @@
 import * as React from "react";
 
-const Pagination_1 = ({
+const Pagination_4 = ({
   totalPages = 30,
   currentPage = 1,
   onPageChange,
@@ -69,7 +69,7 @@ const Pagination_1 = ({
 
 const PaginationContent = React.forwardRef<HTMLUListElement, React.ComponentProps<"ul">>(
   ({ className, ...props }, ref) => (
-    <ul ref={ref} className={`flex items-center gap-6 ${className || ""}`} {...props} />
+    <ul ref={ref} className={`flex items-center gap-2 ${className || ""}`} {...props} />
   )
 );
 
@@ -95,38 +95,24 @@ const PaginationLink = ({
     onClick={onClick}
     aria-current={isActive ? "page" : undefined}
     className={`${
-      isActive
-        ? "bg-blue-600 text-white transform scale-110 shadow-xl"
-        : "bg-transparent text-blue-600 hover:bg-blue-100"
-    } px-6 py-3 rounded-full transition-all duration-300 ease-in-out hover:scale-105 hover:text-blue-700 ${className || ""}`}
+      isActive ? "bg-gray-300 text-white" : "bg-transparent text-gray-700"
+    } px-4 py-2 rounded-md hover:bg-gray-200 ${className || ''}`}
     {...props}
   >
     {children}
   </button>
 );
 
-const PaginationPrevious = ({
-  className,
-  onClick,
-}: {
-  className?: string;
-  onClick?: () => void;
-}) => (
+const PaginationPrevious = ({ className, onClick }: { className?: string; onClick?: () => void }) => (
   <PaginationLink className={className} onClick={onClick}>
-    <span className="text-xl transform rotate-180">&larr;</span>
+    <span>Previous</span>
   </PaginationLink>
 );
 
-const PaginationNext = ({
-  className,
-  onClick,
-}: {
-  className?: string;
-  onClick?: () => void;
-}) => (
+const PaginationNext = ({ className, onClick }: { className?: string; onClick?: () => void }) => (
   <PaginationLink className={className} onClick={onClick}>
-    <span className="text-xl">&rarr;</span>
+    <span>Next</span>
   </PaginationLink>
 );
 
-export { Pagination_1, PaginationContent, PaginationLink, PaginationItem, PaginationPrevious, PaginationNext };
+export { Pagination_4, PaginationContent, PaginationLink, PaginationItem, PaginationPrevious, PaginationNext };
