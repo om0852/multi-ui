@@ -22,7 +22,6 @@ const EnhancedAnalogClock: React.FC<EnhancedAnalogClockProps> = ({
   secondHandColor = "bg-red-500",
   backgroundColor = "bg-gray-900",
   numberColor = "text-white",
-  markerColor = "bg-gray-400",
   digitalTimeColor = "text-white",
 }) => {
   const [time, setTime] = useState(new Date());

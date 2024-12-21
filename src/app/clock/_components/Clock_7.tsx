@@ -16,8 +16,6 @@ const NumericClock: React.FC<NumericClockProps> = ({
   interval = 1000,
   formatter = (value) => value.toString().padStart(2, "0"), // Default: Pad single digits
   containerClassName = "flex justify-center items-center h-screen bg-black",
-  digitClassName =
-    "text-green-500 font-mono text-6xl font-bold mx-1 relative select-none",
   is12HourFormat = false,
 }) => {
   const [time, setTime] = useState<number[]>([]);
@@ -82,19 +80,20 @@ const NumericClock: React.FC<NumericClockProps> = ({
 
 // Function to render each digit in the form of 8-segment
 const renderSegment = (digit: string) => {
-    const segments: any = {
-        0: [true, true, true, true, true, true, false],   // Top, top-right, bottom-right, bottom, bottom-left, top-left
-        1: [false, true, true, false, false, false, false], // top-right, bottom-right
-        2: [true, true, false, true, true, false, true],   // top, top-right, bottom, bottom-left, middle
-        3: [true, true, true, true, false, false, true],   // top, top-right, bottom-right, bottom, middle
-        4: [false, true, true, false, false, true, true],   // top-right, bottom-right, bottom-left, middle
-        5: [true, false, true, true, false, true, true],   // top, bottom-right, bottom, bottom-left, middle
-        6: [true, false, true, true, true, true, true],    // top, bottom-right, bottom, bottom-left, middle
-        7: [true, true, true, false, false, false, false], // top, top-right, bottom-right
-        8: [true, true, true, true, true, true, true],     // all segments
-        9: [true, true, true, true, false, true, true],    // top, top-right, bottom-right, bottom, middle
-      };
-      
+  // Define the segments object with a proper type
+  const segments: Record<string, boolean[]> = {
+    "0": [true, true, true, true, true, true, false],
+    "1": [false, true, true, false, false, false, false],
+    "2": [true, true, false, true, true, false, true],
+    "3": [true, true, true, true, false, false, true],
+    "4": [false, true, true, false, false, true, true],
+    "5": [true, false, true, true, false, true, true],
+    "6": [true, false, true, true, true, true, true],
+    "7": [true, true, true, false, false, false, false],
+    "8": [true, true, true, true, true, true, true],
+    "9": [true, true, true, true, false, true, true],
+  };
+
   // Segments mapping: [top, top-right, bottom-right, bottom, bottom-left, top-left, middle]
   const segmentConfig = segments[digit];
 

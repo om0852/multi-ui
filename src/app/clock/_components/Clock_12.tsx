@@ -22,7 +22,6 @@ const EnhancedCircularClock: React.FC<EnhancedCircularClockProps> = ({
   minuteHandColor = "bg-blue-700",
   secondHandColor = "bg-red-500",
   backgroundColor = "bg-gray-900",
-  numberColor = "text-white",
   markerColor = "bg-gray-400",
   digitalTimeColor = "text-white",
   dateColor = "text-gray-400",

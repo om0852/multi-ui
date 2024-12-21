@@ -47,7 +47,6 @@ export function BoxPlot({
   const scaleX = (value: number) => padding + (value - minValue) * chartWidth / (maxValue - minValue);
 
   const boxHeight = chartHeight / 3;
-  const boxWidth = 50; // Width of the box
 
   return (
     <svg

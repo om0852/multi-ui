@@ -1,11 +1,11 @@
 import React from 'react'
-import NumericClock from './_components/Clock_7'
-import Clock3 from './_components/Clock_3'
-import DigitalClock from './_components/Clock_4'
-import AnalogClock from './_components/Clock_8'
-import EnhancedAnalogClock from './_components/Clock_10'
-import EnhancedSquareClock from './_components/Clock_11'
-import EnhancedCircularClock from './_components/Clock_12'
+// import NumericClock from './_components/Clock_7'
+// import Clock3 from './_components/Clock_3'
+// import DigitalClock from './_components/Clock_4'
+// import AnalogClock from './_components/Clock_8'
+// import EnhancedAnalogClock from './_components/Clock_10'
+// import EnhancedSquareClock from './_components/Clock_11'
+// import EnhancedCircularClock from './_components/Clock_12'
 
 const Page = () => (
     <div>

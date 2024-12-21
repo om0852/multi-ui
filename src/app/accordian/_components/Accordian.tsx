@@ -6,7 +6,6 @@ import React, {
   useState,
   useEffect,
   ReactNode,
-  useRef,
 } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -123,7 +122,7 @@ export function AccordionItem({
 
   return (
     <div
-      className={`${className} ${isOpen ? "open" : ""}`}
+      className={`${className} ${isOpen ? "open" : ""} ${isCollapsible && ""}`}
       aria-expanded={isOpen}
     >
       {children}

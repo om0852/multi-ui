@@ -77,7 +77,6 @@ export function OverlappingBarChart({ data }: OverlappingBarChartProps) {
 
         {/* Draw X-Axis Group Labels */}
         {data.map((item, index) => {
-          const xPositionGroupA = margin.left + index * 40;
           return (
             <text
               key={index}
