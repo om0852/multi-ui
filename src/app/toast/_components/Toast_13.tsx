@@ -21,7 +21,7 @@ const Toast_13: React.FC<ToastProps> = ({
   stack,
 }) => {
   // Play audio on toast mount
-  let audioUrl = "https://raw.githubusercontent.com/om0852/multi-ui/main/public/audio/toast_sound.mp3"; // Default audio URL
+  const audioUrl = "https://raw.githubusercontent.com/om0852/multi-ui/main/public/audio/toast_sound.mp3"; // Default audio URL
   useEffect(() => {
     const audio = new Audio(audioUrl);
     audio.play().catch((err) => console.error("Failed to play audio:", err));

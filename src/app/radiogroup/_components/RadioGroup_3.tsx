@@ -24,7 +24,7 @@ const RadioGroup: React.FC<RadioGroupProps> = ({
   return (
     <div className="relative w-full border rounded-lg shadow-md bg-gray-100 overflow-hidden">
       <div className="flex">
-        {options.map((option, index) => (
+        {options.map((option) => (
           <label
             key={option.value}
             className="flex-1 cursor-pointer relative z-10 text-center py-4"

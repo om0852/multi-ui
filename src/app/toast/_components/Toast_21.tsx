@@ -30,8 +30,7 @@ const Toast_21: React.FC<ToastProps> = ({
     const audio = new Audio(audioUrl);
 
     // Play the sound when the toast appears
-    audio.play().catch((err) => {
-    });
+    audio.play().catch((err) => {console.log(err)});
 
     // Optional: Cleanup on unmount to stop the sound if needed
     return () => {

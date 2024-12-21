@@ -2,7 +2,7 @@
 // import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { ToastProvider } from "./toast/_components/Toast";
+// import { ToastProvider } from "./toast/_components/Toast";
 // import Toast_1 from "./toast/_components/Toast_1";
 // import Toast_2 from "./toast/_components/Toast_2";
 // import Toast_3 from "./toast/_components/Toast_3";

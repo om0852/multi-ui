@@ -1,5 +1,5 @@
 import React from "react";
-import { motion } from "framer-motion";
+import { motion, TargetAndTransition } from "framer-motion";
 
 interface SteppedProgressBarProps {
   activeStep?: number;
@@ -7,7 +7,7 @@ interface SteppedProgressBarProps {
   activeColor?: string;
   completedColor?: string;
   inactiveColor?: string;
-  animation?: Record<string, any>; // Allow any type of animation configuration
+  animation?: TargetAndTransition;
 }
 
 const SteppedProgressBar_1: React.FC<SteppedProgressBarProps> = ({

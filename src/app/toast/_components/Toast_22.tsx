@@ -21,7 +21,6 @@ const Toast_22: React.FC<ToastProps> = ({
   animationType = "slide",
   autoDismiss = true,
   onHoverPause = true,
-  actionButton,
   stack,
 }) => {
   const { handleMouseEnter, handleMouseLeave } = useToastTimer(
@@ -36,7 +35,7 @@ const Toast_22: React.FC<ToastProps> = ({
     const audioUrl =
       "https://raw.githubusercontent.com/om0852/multi-ui/main/public/audio/toast_sound_8.mp3"; // Use your audio file URL
     const audio = new Audio(audioUrl);
-    audio.play().catch((err) => {});
+    audio.play().catch((err) => {console.log(err)});
   }, []);
 
   return (

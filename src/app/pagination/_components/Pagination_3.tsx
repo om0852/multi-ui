@@ -20,9 +20,6 @@ const Pagination = ({
     if (onPageChange) onPageChange(page);
     setShowPopup(false); // Close the popup when a page is selected
   };
-  const handleAnimationStart = (event: React.AnimationEvent<HTMLUListElement>) => {
-    // Your logic here
-  };
   
 
   const handleEllipsisClick = (leftPage: number, rightPage: number) => {
@@ -171,7 +168,6 @@ const PaginationLink = ({
   className,
   isActive,
   size = "default",
-  ...props
 }: PaginationLinkProps) => (
   <motion.a
     whileHover={{ scale: 1.05 }}
@@ -220,7 +216,6 @@ PaginationNext.displayName = "PaginationNext";
 const PaginationEllipsis = ({
   className,
   onClick,
-  ...props
 }: React.ComponentProps<"span"> & { onClick?: () => void }) => (
   <motion.span
     aria-hidden
