@@ -15,7 +15,6 @@ const Pagination = ({
 } & React.ComponentProps<"nav">) => {
   const [showPopup, setShowPopup] = React.useState(false);
   const [popupPages, setPopupPages] = React.useState<number[]>([]);
-  const [popupPosition, setPopupPosition] = React.useState<number>(0); // Track the position of the ellipsis
 
   const handlePageChange = (page: number) => {
     if (onPageChange) onPageChange(page);
@@ -29,8 +28,8 @@ const Pagination = ({
   const handleEllipsisClick = (leftPage: number, rightPage: number) => {
     // Show the next 5 pages between leftPage and rightPage
     const pagesToShow: number[] = [];
-    let startPage = leftPage ;
-    let endPage = rightPage - 1;
+    const startPage = leftPage;
+    const endPage = rightPage - 1;
 
     // Show 5 pages or less based on the available pages
     for (let i = startPage; i <= endPage && i < totalPages; i++) {
@@ -39,7 +38,6 @@ const Pagination = ({
 
     setPopupPages(pagesToShow);
     setShowPopup(true);
-    setPopupPosition(leftPage); // Track where the ellipsis was clicked
   };
 
   const renderPageLinks = () => {
@@ -140,7 +138,7 @@ const Pagination = ({
 };
 Pagination.displayName = "Pagination";
 const PaginationContent = React.forwardRef<HTMLUListElement, React.ComponentProps<"ul">>( 
-    ({ className, ...props }, ref) => (
+    ({ className }, ref) => (
       <motion.ul
         ref={ref}
         initial={{ opacity: 0, y: -10 }}
@@ -153,7 +151,7 @@ const PaginationContent = React.forwardRef<HTMLUListElement, React.ComponentProp
   PaginationContent.displayName = "PaginationContent";
   
 const PaginationItem = React.forwardRef<HTMLLIElement, React.ComponentProps<"li">>( 
-  ({ className, ...props }, ref) => (
+  ({ className }, ref) => (
     <motion.li
       ref={ref}
       whileHover={{ scale: 1.1 }}

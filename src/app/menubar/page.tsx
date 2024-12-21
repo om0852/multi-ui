@@ -13,8 +13,8 @@ import {
 } from "./_components/Menubar_3"; // Adjust this import based on your file structure.
 
 export default function ExampleMenubar() {
-  const [isOptionChecked, setIsOptionChecked] = useState(false);
-  const [selectedRadio, setSelectedRadio] = useState("option1");
+  // const [isOptionChecked, setIsOptionChecked] = useState(false);
+  // const [selectedRadio, setSelectedRadio] = useState("option1");
 
   return (
     <div className="flex justify-center mt-10">

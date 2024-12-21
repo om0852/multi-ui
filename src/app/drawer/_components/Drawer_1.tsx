@@ -20,9 +20,9 @@ type DrawerContentProps = {
   onClose: () => void;
   animationType?: AnimationType;
   customAnimation?: {
-    initial: Record<string, any>;
-    animate: Record<string, any>;
-    exit: Record<string, any>;
+    initial: Record<string, unknown>;
+    animate: Record<string, unknown>;
+    exit: Record<string, unknown>;
   };
   position?: "left" | "right" | "top" | "bottom";
 };

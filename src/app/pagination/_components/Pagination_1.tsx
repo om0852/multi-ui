@@ -72,12 +72,14 @@ const PaginationContent = React.forwardRef<HTMLUListElement, React.ComponentProp
     <ul ref={ref} className={`flex items-center gap-6 ${className || ""}`} {...props} />
   )
 );
+PaginationContent.displayName = "PaginationContent";
 
 const PaginationItem = React.forwardRef<HTMLLIElement, React.ComponentProps<"li">>(
   ({ className, ...props }, ref) => (
     <li ref={ref} className={className || ""} {...props} />
   )
 );
+PaginationItem.displayName = "PaginationItem";
 
 const PaginationLink = ({
   isActive,

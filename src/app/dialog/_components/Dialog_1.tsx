@@ -15,11 +15,11 @@ type DialogContentProps = {
   children: React.ReactNode;
   isOpen: boolean;
   onClose: () => void;
-  animationType?: string;
+  animationType?: AnimationType;
   customAnimation?: {
-    initial: Record<string, any>;
-    animate: Record<string, any>;
-    exit: Record<string, any>;
+    initial: Record<string, unknown>;
+    animate: Record<string, unknown>;
+    exit: Record<string, unknown>;
   };
 };
 

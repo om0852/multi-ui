@@ -36,7 +36,7 @@ const InputOTPGroup: React.FC<InputOTPGroupProps> = ({ children }) => {
 };
 
 // OTP Separator Component
-const InputOTPSeparator = () => <div className="mx-2 text-xl">-</div>;
+export const InputOTPSeparator = () => <div className="mx-2 text-xl">-</div>;
 
 // Main OTP Input Component
 type InputOTPProps = {
@@ -45,7 +45,7 @@ type InputOTPProps = {
   onComplete?: (otp: string) => void;
   validationRegex?: RegExp;
 };
-const InputOTP: React.FC<InputOTPProps> = ({
+export const InputOTP: React.FC<InputOTPProps> = ({
   maxLength,
   children,
   onComplete,
