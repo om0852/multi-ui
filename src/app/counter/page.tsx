@@ -1,12 +1,12 @@
 "use client"
 import React from "react";
 // import DigitalClock from './_components/Counter_1'
-import AnimatedCounter from "./_components/Counter_2";
-import BouncyCounter from "./_components/Counter_3";
-import FlipCounter from "./_components/Counter_4";
-import FlipPageCounter from "./_components/Counter_5";
-import SlideCounter from "./_components/Counter_6";
-import UniqueSlideCounter from "./_components/Counter_10";
+// import AnimatedCounter from "./_components/Counter_2";
+// import BouncyCounter from "./_components/Counter_3";
+// import FlipCounter from "./_components/Counter_4";
+// import FlipPageCounter from "./_components/Counter_5";
+// import SlideCounter from "./_components/Counter_6";
+// import UniqueSlideCounter from "./_components/Counter_10";
 
 const Page = () => {
   return (
@@ -32,13 +32,15 @@ const Page = () => {
         duration={3}
         // easing={easeOutBounce}
       /> */}
-<UniqueSlideCounter
+{/* <UniqueSlideCounter
         from={0}
         to={30}
         duration={100}
         interval={0.1}
         className="my-custom-counter"
-      />    </div>
+      />
+      */}
+          </div>
   );
 };
 

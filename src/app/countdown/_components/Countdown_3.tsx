@@ -18,8 +18,7 @@ const Countdown_3: React.FC<CountdownProps> = ({
   formatter = (value) => value,
   onComplete,
 }) => {
-  const [timeRemaining, setTimeRemaining] = useState<number>(0);
-  const [visibleTime, setVisibleTime] = useState<string>("");
+   const [visibleTime, setVisibleTime] = useState<string>("");
 
   useEffect(() => {
     const endTime = new Date(to).getTime();
@@ -27,8 +26,7 @@ const Countdown_3: React.FC<CountdownProps> = ({
 
     const updateTime = () => {
       const remainingTime = calculateRemainingTime();
-      setTimeRemaining(remainingTime);
-      setVisibleTime(formatTime(Math.floor(remainingTime / 1000)));
+       setVisibleTime(formatTime(Math.floor(remainingTime / 1000)));
       if (remainingTime <= 0) {
         if (onComplete) onComplete();
       }

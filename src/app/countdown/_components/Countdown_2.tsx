@@ -54,8 +54,7 @@
 
 //     let intervalId = setInterval(() => {
 //       const remainingTime = calculateRemainingTime();
-//       setTimeRemaining(remainingTime);
-
+//  
 //       const secondsRemaining = Math.floor(remainingTime / 1000); // Convert to seconds
 //       const minutesRemaining = Math.floor(secondsRemaining / 60); // Convert to minutes
 //       const hoursRemaining = Math.floor(minutesRemaining / 60); // Convert to hours
@@ -183,8 +182,7 @@ const Countdown_2: React.FC<CountdownProps> = ({
   formatter = (value) => value,
   onComplete,
 }) => {
-  const [timeRemaining, setTimeRemaining] = useState<number>(0);
-  const [visibleTime, setVisibleTime] = useState<string>("");
+   const [visibleTime, setVisibleTime] = useState<string>("");
 
   useEffect(() => {
     const endTime = new Date(to).getTime();
@@ -192,8 +190,7 @@ const Countdown_2: React.FC<CountdownProps> = ({
 
     const updateTime = () => {
       const remainingTime = calculateRemainingTime();
-      setTimeRemaining(remainingTime);
-      setVisibleTime(formatTime(Math.floor(remainingTime / 1000)));
+       setVisibleTime(formatTime(Math.floor(remainingTime / 1000)));
       if (remainingTime <= 0) {
         if (onComplete) onComplete();
       }

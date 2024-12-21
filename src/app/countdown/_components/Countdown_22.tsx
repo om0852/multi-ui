@@ -10,7 +10,7 @@ export interface CountdownProps {
   onComplete?: () => void;
 }
 
-const Countdown_22: React.FC<CountdownProps> = ({ to, interval = 1, className = "", onComplete }) => {
+const Countdown_22: React.FC<CountdownProps> = ({ to,  className = "", onComplete }) => {
   const [timeLeft, setTimeLeft] = useState<number>(to.getTime() - Date.now());
   const [isMounted, setIsMounted] = useState(false); // Flag to check if mounted
 

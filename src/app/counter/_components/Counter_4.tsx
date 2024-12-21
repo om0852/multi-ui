@@ -22,7 +22,6 @@ const Counter_4: React.FC<Counter_4Props> = ({
   formatter = (value) => value.toFixed(0), // Default to integer formatting
   onComplete, // Callback for when the counter completes
 }) => {
-  const [currentValue, setCurrentValue] = useState<number>(from);
   const [visibleValue, setVisibleValue] = useState<number>(from);
 
   useEffect(() => {
@@ -39,7 +38,6 @@ const Counter_4: React.FC<Counter_4Props> = ({
       setVisibleValue(roundedValue);
 
       if (stepCount >= totalIncrements) {
-        setCurrentValue(to);
         setVisibleValue(to);
         clearInterval(timer);
 

@@ -10,7 +10,7 @@ export interface CountdownProps {
   onComplete?: () => void;
 }
 
-const Countdown_24: React.FC<CountdownProps> = ({ to, interval = 1, className = "", onComplete }) => {
+const Countdown_24: React.FC<CountdownProps> = ({ to, className = "", onComplete }) => {
   const [timeLeft, setTimeLeft] = useState<number>(to.getTime() - Date.now());
   const [isMounted, setIsMounted] = useState(false);
 
@@ -69,7 +69,7 @@ const Countdown_24: React.FC<CountdownProps> = ({ to, interval = 1, className = 
           { label: "Hours", value: hours },
           { label: "Minutes", value: minutes },
           { label: "Seconds", value: seconds },
-        ].map((section, index) => (
+        ].map((section) => (
           <div
             key={section.label}
             className="flex flex-col items-center justify-center"

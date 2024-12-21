@@ -15,7 +15,6 @@ const Countdown: React.FC<CountdownProps> = ({
   to,
   interval = 1,
   className = "",
-  formatter = (value) => value, // Default formatter just returns the string
   onComplete,
 }) => {
   const [days, setDays] = useState<number>(0);
@@ -73,24 +72,24 @@ const Countdown: React.FC<CountdownProps> = ({
   }, [to, interval, onComplete]);
 
   // Format remaining time as "x days, y hours, z minutes"
-  const formatRemainingTime = () => {
-    let timeString = "";
+  // const formatRemainingTime = () => {
+  //   let timeString = "";
 
-    if (days > 0) {
-      timeString += `${days} day${days !== 1 ? "s" : ""}`;
-    }
-    if (hours > 0 || minutes > 0 || seconds > 0) {
-      timeString += `, ${hours} hour${hours !== 1 ? "s" : ""}`;
-    }
-    if (minutes > 0 || seconds > 0) {
-      timeString += `, ${minutes} minute${minutes !== 1 ? "s" : ""}`;
-    }
-    if (seconds >= 0) {
-      timeString += `, ${seconds} second${seconds !== 1 ? "s" : ""}`;
-    }
+  //   if (days > 0) {
+  //     timeString += `${days} day${days !== 1 ? "s" : ""}`;
+  //   }
+  //   if (hours > 0 || minutes > 0 || seconds > 0) {
+  //     timeString += `, ${hours} hour${hours !== 1 ? "s" : ""}`;
+  //   }
+  //   if (minutes > 0 || seconds > 0) {
+  //     timeString += `, ${minutes} minute${minutes !== 1 ? "s" : ""}`;
+  //   }
+  //   if (seconds >= 0) {
+  //     timeString += `, ${seconds} second${seconds !== 1 ? "s" : ""}`;
+  //   }
 
-    return timeString;
-  };
+  //   return timeString;
+  // };
 
   return (
     <div

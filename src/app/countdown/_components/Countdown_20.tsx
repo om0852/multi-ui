@@ -10,7 +10,7 @@ export interface CountdownProps {
   onComplete?: () => void;
 }
 
-const Countdown_20: React.FC<CountdownProps> = ({ to, interval = 1, className = "", onComplete }) => {
+const Countdown_20: React.FC<CountdownProps> = ({ to, className = "", onComplete }) => {
   const [timeLeft, setTimeLeft] = useState<number>(to.getTime() - Date.now());
   const [isMounted, setIsMounted] = useState(false); // Client-side mounting flag
 
