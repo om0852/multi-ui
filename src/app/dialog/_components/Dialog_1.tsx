@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import { motion } from "framer-motion";
+import { motion, TargetAndTransition } from "framer-motion";
 
 type DialogProps = {
   children: React.ReactNode;
@@ -16,11 +16,7 @@ type DialogContentProps = {
   isOpen: boolean;
   onClose: () => void;
   animationType?: AnimationType;
-  customAnimation?: {
-    initial: Record<string, unknown>;
-    animate: Record<string, unknown>;
-    exit: Record<string, unknown>;
-  };
+  customAnimation?: TargetAndTransition;
 };
 
 type DialogHeaderProps = {
@@ -134,10 +130,20 @@ export function DialogTrigger({ children, onClick }: DialogTriggerProps) {
   );
 }
 
-export function DialogContent({ children, isOpen, onClose, animationType = "fade", customAnimation }: DialogContentProps & { animationType?: AnimationType }) {
+export function DialogContent({
+  children,
+  isOpen,
+  onClose,
+  animationType = "fade",
+}: DialogContentProps) {
   if (!isOpen) return null;
 
-  const animation = customAnimation || animations[animationType] || animations.fade;
+  const defaultAnimation = animations[animationType] || animations.fade;
+  const animation = {
+    initial:  defaultAnimation.initial,
+    animate: defaultAnimation.animate,
+    exit: defaultAnimation.exit,
+  };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">

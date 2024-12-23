@@ -118,12 +118,11 @@ export function DrawerContent({
   isOpen,
   onClose,
   animationType = "slideLeft",
-  customAnimation,
   position = "right",
 }: DrawerContentProps) {
   if (!isOpen) return null;
 
-  const animation = customAnimation || animations[animationType] || animations.slideRight;
+  const animation = animations[animationType] || animations.slideRight;
 
   // Position classes based on the position prop
   const positionClasses = {
