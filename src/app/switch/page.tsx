@@ -1,6 +1,6 @@
 "use client"
 import React,{useState} from 'react'
-import SmoothSwitch from './_components/Switch_9'
+import SmoothSwitch from './_components/Switch_11'
 
 const Page = () => {
     const [isSwitchOn, setIsSwitchOn] = useState(false);
