@@ -1,6 +1,6 @@
 "use client"
 import React,{useState} from 'react'
-import SmoothSwitch from './_components/Switch_11'
+import SwitchThree from './_components/Switch_35'
 
 const Page = () => {
     const [isSwitchOn, setIsSwitchOn] = useState(false);
@@ -15,7 +15,7 @@ const Page = () => {
         <h1 className="mb-4 text-2xl font-bold">Smooth Switch Example</h1>
         
         {/* Enabled Switch */}
-        <SmoothSwitch value={isSwitchOn} onChange={handleSwitchChange} />
+        <SwitchThree value={isSwitchOn} onChange={handleSwitchChange} />
   
         <p className="mt-4 text-lg">
           Switch is: <span className="font-bold">{isSwitchOn ? "ON" : "OFF"}</span>
@@ -24,7 +24,7 @@ const Page = () => {
         {/* Disabled Switch */}
         <div className="mt-8">
           <h2 className="mb-2 text-xl">Disabled Switch</h2>
-          <SmoothSwitch value={false} onChange={() => {}} disabled />
+          <SwitchThree value={false} onChange={() => {}} disabled />
         </div>
       </div>
     );
