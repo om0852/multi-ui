@@ -1,6 +1,6 @@
 "use client"
 import React,{useState} from 'react'
-import SwitchThree from './_components/Switch_35'
+import SwitchThree from './_components/Switch_50'
 
 const Page = () => {
     const [isSwitchOn, setIsSwitchOn] = useState(false);
