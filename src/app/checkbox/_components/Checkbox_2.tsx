@@ -1,14 +1,17 @@
-<<<<<<< HEAD
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
-// Define the Card component as a functional React component with TypeScript
-type Checkboxprops = {}; // You can add props here if needed in the future
+type CheckboxProps = {
+  value?: boolean; // Allow passing a checked value from the parent
+  onChange?: (checked: boolean) => void; // Allow the parent to handle the change
+  disabled?: boolean; // Allow disabling the checkbox
+};
 
-const Checkbox: React.FC<Checkboxprops> = () => {
+const Checkbox: React.FC<CheckboxProps> = ({ value = false, onChange, disabled = false }) => {
   const [mounted, setMounted] = useState(false);
+  const [checked, setChecked] = useState(value);
 
   // Set mounted to true after the component is rendered on the client
   useEffect(() => {
@@ -17,273 +20,66 @@ const Checkbox: React.FC<Checkboxprops> = () => {
 
   // Don't render on the server during hydration
   if (!mounted) return null;
+
+  // Use the value prop if it's provided, otherwise use the internal state
+  const currentChecked = value !== undefined ? value : checked;
+
+  // Handle the checkbox change and pass it to the parent if an onChange is provided
+  const handleChange = () => {
+    if (disabled) return; // If disabled, do not change the state
+    const newChecked = !currentChecked;
+    if (onChange) {
+      onChange(newChecked); // Notify the parent of the change
+    } else {
+      setChecked(newChecked); // If no onChange is passed, update the internal state
+    }
+  };
+
   return (
-    <StyledWrapper>
-      <div className="checkbox-wrapper">
-        <input id="_checkbox-26" type="checkbox" />
-        <label htmlFor="_checkbox-26">
-          <div className="tick_mark" />
+    <div className="flex items-center justify-center min-h-screen">
+      <motion.div
+        className="relative w-12 h-12"
+        whileTap={{ scale: 0.9 }}
+        onClick={handleChange}
+      >
+        <input
+          type="checkbox"
+          id="checkbox"
+          className="hidden"
+          checked={currentChecked}
+          onChange={handleChange}
+          disabled={disabled}
+        />
+        <label
+          htmlFor="checkbox"
+          className={`relative flex items-center justify-center w-full h-full rounded-full cursor-pointer transition-all duration-200 shadow-lg ${
+            currentChecked
+              ? "bg-gradient-to-r from-blue-500 via-purple-500 to-yellow-400"
+              : "bg-gray-300"
+          } ${disabled ? "cursor-not-allowed opacity-50" : ""}`}
+        >
+          <motion.div
+            initial={{ width: "70%", height: "70%" }}
+            animate={currentChecked ? { width: "0", height: "0" } : { width: "70%", height: "70%" }}
+            transition={{ duration: 0.3 }}
+            className="absolute bg-white rounded-full"
+          />
+          <motion.div
+            className="absolute w-6 h-6 rotate-[-40deg]"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={
+              currentChecked
+                ? { opacity: 1, scale: 1, transition: { delay: 0.2 } }
+                : { opacity: 0, scale: 0 }
+            }
+          >
+            <div className="absolute w-1 h-3 bg-white rounded left-0 bottom-0 shadow-md" />
+            <div className="absolute w-5 h-1 bg-white rounded left-0 bottom-0 shadow-md translate-x-8" />
+          </motion.div>
         </label>
-      </div>
-    </StyledWrapper>
+      </motion.div>
+    </div>
   );
-}
-
-const StyledWrapper = styled.div`
-  .checkbox-wrapper * {
-    -webkit-tap-highlight-color: transparent;
-    outline: none;
-  }
-
-  .checkbox-wrapper input[type="checkbox"] {
-    display: none;
-  }
-
-  .checkbox-wrapper label {
-    --size: 50px;
-    --shadow: calc(var(--size) * .07) calc(var(--size) * .1);
-    position: relative;
-    display: block;
-    width: var(--size);
-    height: var(--size);
-    margin: 0 auto;
-    background-color: #4158D0;
-    background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
-    border-radius: 50%;
-    box-shadow: 0 var(--shadow) #ffbeb8;
-    cursor: pointer;
-    transition: 0.2s ease transform, 0.2s ease background-color,
-        0.2s ease box-shadow;
-    overflow: hidden;
-    z-index: 1;
-  }
-
-  .checkbox-wrapper label:before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    right: 0;
-    left: 0;
-    width: calc(var(--size) * .7);
-    height: calc(var(--size) * .7);
-    margin: 0 auto;
-    background-color: #fff;
-    transform: translateY(-50%);
-    border-radius: 50%;
-    box-shadow: inset 0 var(--shadow) #ffbeb8;
-    transition: 0.2s ease width, 0.2s ease height;
-  }
-
-  .checkbox-wrapper label:hover:before {
-    width: calc(var(--size) * .55);
-    height: calc(var(--size) * .55);
-    box-shadow: inset 0 var(--shadow) #ff9d96;
-  }
-
-  .checkbox-wrapper label:active {
-    transform: scale(0.9);
-  }
-
-  .checkbox-wrapper .tick_mark {
-    position: absolute;
-    top: -1px;
-    right: 0;
-    left: calc(var(--size) * -.05);
-    width: calc(var(--size) * .6);
-    height: calc(var(--size) * .6);
-    margin: 0 auto;
-    margin-left: calc(var(--size) * .14);
-    transform: rotateZ(-40deg);
-  }
-
-  .checkbox-wrapper .tick_mark:before,
-    .checkbox-wrapper .tick_mark:after {
-    content: "";
-    position: absolute;
-    background-color: #fff;
-    border-radius: 2px;
-    opacity: 0;
-    transition: 0.2s ease transform, 0.2s ease opacity;
-  }
-
-  .checkbox-wrapper .tick_mark:before {
-    left: 0;
-    bottom: 0;
-    width: calc(var(--size) * .1);
-    height: calc(var(--size) * .3);
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.23);
-    transform: translateY(calc(var(--size) * -.68));
-  }
-
-  .checkbox-wrapper .tick_mark:after {
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: calc(var(--size) * .1);
-    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.23);
-    transform: translateX(calc(var(--size) * .78));
-  }
-
-  .checkbox-wrapper input[type="checkbox"]:checked + label {
-    background-color: #4158D0;
-    background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
-  }
-
-  .checkbox-wrapper input[type="checkbox"]:checked + label:before {
-    width: 0;
-    height: 0;
-  }
-
-  .checkbox-wrapper input[type="checkbox"]:checked + label .tick_mark:before,
-    .checkbox-wrapper input[type="checkbox"]:checked + label .tick_mark:after {
-    transform: translate(0);
-    opacity: 1;
-  }`;
+};
 
 export default Checkbox;
-=======
-"use client";
-
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-
-// Define the Card component as a functional React component with TypeScript
-type Checkboxprops = {}; // You can add props here if needed in the future
-
-const Checkbox: React.FC<Checkboxprops> = () => {
-  const [mounted, setMounted] = useState(false);
-
-  // Set mounted to true after the component is rendered on the client
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Don't render on the server during hydration
-  if (!mounted) return null;
-  return (
-    <StyledWrapper>
-      <div className="checkbox-wrapper">
-        <input id="_checkbox-26" type="checkbox" />
-        <label htmlFor="_checkbox-26">
-          <div className="tick_mark" />
-        </label>
-      </div>
-    </StyledWrapper>
-  );
-}
-
-const StyledWrapper = styled.div`
-  .checkbox-wrapper * {
-    -webkit-tap-highlight-color: transparent;
-    outline: none;
-  }
-
-  .checkbox-wrapper input[type="checkbox"] {
-    display: none;
-  }
-
-  .checkbox-wrapper label {
-    --size: 50px;
-    --shadow: calc(var(--size) * .07) calc(var(--size) * .1);
-    position: relative;
-    display: block;
-    width: var(--size);
-    height: var(--size);
-    margin: 0 auto;
-    background-color: #4158D0;
-    background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
-    border-radius: 50%;
-    box-shadow: 0 var(--shadow) #ffbeb8;
-    cursor: pointer;
-    transition: 0.2s ease transform, 0.2s ease background-color,
-        0.2s ease box-shadow;
-    overflow: hidden;
-    z-index: 1;
-  }
-
-  .checkbox-wrapper label:before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    right: 0;
-    left: 0;
-    width: calc(var(--size) * .7);
-    height: calc(var(--size) * .7);
-    margin: 0 auto;
-    background-color: #fff;
-    transform: translateY(-50%);
-    border-radius: 50%;
-    box-shadow: inset 0 var(--shadow) #ffbeb8;
-    transition: 0.2s ease width, 0.2s ease height;
-  }
-
-  .checkbox-wrapper label:hover:before {
-    width: calc(var(--size) * .55);
-    height: calc(var(--size) * .55);
-    box-shadow: inset 0 var(--shadow) #ff9d96;
-  }
-
-  .checkbox-wrapper label:active {
-    transform: scale(0.9);
-  }
-
-  .checkbox-wrapper .tick_mark {
-    position: absolute;
-    top: -1px;
-    right: 0;
-    left: calc(var(--size) * -.05);
-    width: calc(var(--size) * .6);
-    height: calc(var(--size) * .6);
-    margin: 0 auto;
-    margin-left: calc(var(--size) * .14);
-    transform: rotateZ(-40deg);
-  }
-
-  .checkbox-wrapper .tick_mark:before,
-    .checkbox-wrapper .tick_mark:after {
-    content: "";
-    position: absolute;
-    background-color: #fff;
-    border-radius: 2px;
-    opacity: 0;
-    transition: 0.2s ease transform, 0.2s ease opacity;
-  }
-
-  .checkbox-wrapper .tick_mark:before {
-    left: 0;
-    bottom: 0;
-    width: calc(var(--size) * .1);
-    height: calc(var(--size) * .3);
-    box-shadow: -2px 0 5px rgba(0, 0, 0, 0.23);
-    transform: translateY(calc(var(--size) * -.68));
-  }
-
-  .checkbox-wrapper .tick_mark:after {
-    left: 0;
-    bottom: 0;
-    width: 100%;
-    height: calc(var(--size) * .1);
-    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.23);
-    transform: translateX(calc(var(--size) * .78));
-  }
-
-  .checkbox-wrapper input[type="checkbox"]:checked + label {
-    background-color: #4158D0;
-    background-image: linear-gradient(43deg, #4158D0 0%, #C850C0 46%, #FFCC70 100%);
-    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
-  }
-
-  .checkbox-wrapper input[type="checkbox"]:checked + label:before {
-    width: 0;
-    height: 0;
-  }
-
-  .checkbox-wrapper input[type="checkbox"]:checked + label .tick_mark:before,
-    .checkbox-wrapper input[type="checkbox"]:checked + label .tick_mark:after {
-    transform: translate(0);
-    opacity: 1;
-  }`;
-
-export default Checkbox;
->>>>>>> 7927750ba26b50dd1a0ece376cf45ab44c37e8dc

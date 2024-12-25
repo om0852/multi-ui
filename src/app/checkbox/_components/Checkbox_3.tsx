@@ -1,13 +1,16 @@
-<<<<<<< HEAD
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
-// Define the Card component as a functional React component with TypeScript
-type Checkboxprops = {}; // You can add props here if needed in the future
+// Define the CheckboxProps interface with value, onChange, and disabled props
+type CheckboxProps = {
+  value?: boolean; // Optional controlled value
+  onChange?: (checked: boolean) => void; // Callback for value changes
+  disabled?: boolean; // Optional disabled state
+};
 
-const Checkbox: React.FC<Checkboxprops> = () => {
+const Checkbox: React.FC<CheckboxProps> = ({ value=false, onChange, disabled = false }) => {
   const [mounted, setMounted] = useState(false);
 
   // Set mounted to true after the component is rendered on the client
@@ -17,213 +20,52 @@ const Checkbox: React.FC<Checkboxprops> = () => {
 
   // Don't render on the server during hydration
   if (!mounted) return null;
+
+  // Controlled or uncontrolled checkbox
+  const [checked, setChecked] = useState<boolean>(value);
+
+  const handleChange = () => {
+    if (disabled) return; // Prevent changes if disabled
+    const newChecked = !checked;
+    setChecked(newChecked);
+    if (onChange) {
+      onChange(newChecked); // Notify parent component about the change
+    }
+  };
+
   return (
-    <StyledWrapper>
-      <div className="cntr">
-        <input defaultChecked type="checkbox" id="cbx" className="hidden-xs-up" />
-        <label htmlFor="cbx" className="cbx" />
-      </div>
-    </StyledWrapper>
+    <div className="flex items-center justify-center min-h-screen">
+      <motion.div
+        className="relative w-7 h-7 border border-gray-300 rounded-sm transition-all duration-200 cursor-pointer"
+        whileTap={{ scale: 0.9 }}
+        onClick={handleChange}
+        animate={{
+          backgroundColor: checked ? "#6871f1" : "transparent",
+        }}
+      >
+        <input
+          type="checkbox"
+          id="cbx"
+          className="hidden"
+          checked={checked}
+          onChange={handleChange}
+          disabled={disabled} // Add the disabled property here
+        />
+        <motion.label
+          htmlFor="cbx"
+          className="relative flex items-center justify-center w-full h-full cursor-pointer"
+        >
+          {/* Animated checkmark */}
+          <motion.div
+            className="absolute top-2 left-2 w-2 h-4 bg-white border-r-2 border-b-2 rotate-45"
+            initial={{ opacity: 0, scale: 0 }}
+            animate={checked ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
+            transition={{ duration: 0.3, delay: 0.15 }}
+          />
+        </motion.label>
+      </motion.div>
+    </div>
   );
-}
-
-const StyledWrapper = styled.div`
-  .cbx {
-   position: relative;
-   top: 1px;
-   width: 27px;
-   height: 27px;
-   border: 1px solid #c8ccd4;
-   border-radius: 3px;
-   vertical-align: middle;
-   transition: background 0.1s ease;
-   cursor: pointer;
-   display: block;
-  }
-
-  .cbx:after {
-   content: '';
-   position: absolute;
-   top: 2px;
-   left: 8px;
-   width: 7px;
-   height: 14px;
-   opacity: 0;
-   transform: rotate(45deg) scale(0);
-   border-right: 2px solid #fff;
-   border-bottom: 2px solid #fff;
-   transition: all 0.3s ease;
-   transition-delay: 0.15s;
-  }
-
-  .lbl {
-   margin-left: 5px;
-   vertical-align: middle;
-   cursor: pointer;
-  }
-
-  #cbx:checked ~ .cbx {
-   border-color: transparent;
-   background: #6871f1;
-   animation: jelly 0.6s ease;
-  }
-
-  #cbx:checked ~ .cbx:after {
-   opacity: 1;
-   transform: rotate(45deg) scale(1);
-  }
-
-  .cntr {
-   position: relative;
-  }
-
-  @keyframes jelly {
-   from {
-    transform: scale(1, 1);
-   }
-
-   30% {
-    transform: scale(1.25, 0.75);
-   }
-
-   40% {
-    transform: scale(0.75, 1.25);
-   }
-
-   50% {
-    transform: scale(1.15, 0.85);
-   }
-
-   65% {
-    transform: scale(0.95, 1.05);
-   }
-
-   75% {
-    transform: scale(1.05, 0.95);
-   }
-
-   to {
-    transform: scale(1, 1);
-   }
-  }
-
-  .hidden-xs-up {
-   display: none!important;
-  }`;
+};
 
 export default Checkbox;
-=======
-"use client";
-
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-
-// Define the Card component as a functional React component with TypeScript
-type Checkboxprops = {}; // You can add props here if needed in the future
-
-const Checkbox: React.FC<Checkboxprops> = () => {
-  const [mounted, setMounted] = useState(false);
-
-  // Set mounted to true after the component is rendered on the client
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Don't render on the server during hydration
-  if (!mounted) return null;
-  return (
-    <StyledWrapper>
-      <div className="cntr">
-        <input defaultChecked type="checkbox" id="cbx" className="hidden-xs-up" />
-        <label htmlFor="cbx" className="cbx" />
-      </div>
-    </StyledWrapper>
-  );
-}
-
-const StyledWrapper = styled.div`
-  .cbx {
-   position: relative;
-   top: 1px;
-   width: 27px;
-   height: 27px;
-   border: 1px solid #c8ccd4;
-   border-radius: 3px;
-   vertical-align: middle;
-   transition: background 0.1s ease;
-   cursor: pointer;
-   display: block;
-  }
-
-  .cbx:after {
-   content: '';
-   position: absolute;
-   top: 2px;
-   left: 8px;
-   width: 7px;
-   height: 14px;
-   opacity: 0;
-   transform: rotate(45deg) scale(0);
-   border-right: 2px solid #fff;
-   border-bottom: 2px solid #fff;
-   transition: all 0.3s ease;
-   transition-delay: 0.15s;
-  }
-
-  .lbl {
-   margin-left: 5px;
-   vertical-align: middle;
-   cursor: pointer;
-  }
-
-  #cbx:checked ~ .cbx {
-   border-color: transparent;
-   background: #6871f1;
-   animation: jelly 0.6s ease;
-  }
-
-  #cbx:checked ~ .cbx:after {
-   opacity: 1;
-   transform: rotate(45deg) scale(1);
-  }
-
-  .cntr {
-   position: relative;
-  }
-
-  @keyframes jelly {
-   from {
-    transform: scale(1, 1);
-   }
-
-   30% {
-    transform: scale(1.25, 0.75);
-   }
-
-   40% {
-    transform: scale(0.75, 1.25);
-   }
-
-   50% {
-    transform: scale(1.15, 0.85);
-   }
-
-   65% {
-    transform: scale(0.95, 1.05);
-   }
-
-   75% {
-    transform: scale(1.05, 0.95);
-   }
-
-   to {
-    transform: scale(1, 1);
-   }
-  }
-
-  .hidden-xs-up {
-   display: none!important;
-  }`;
-
-export default Checkbox;
->>>>>>> 7927750ba26b50dd1a0ece376cf45ab44c37e8dc

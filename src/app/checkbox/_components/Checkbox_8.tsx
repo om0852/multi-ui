@@ -1,357 +1,94 @@
-<<<<<<< HEAD
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
-// Define the Card component as a functional React component with TypeScript
-type Checkboxprops = {}; // You can add props here if needed in the future
+type CheckboxProps = {
+  value: boolean;
+  onChange: (checked: boolean) => void;
+  disabled?: boolean;
+};
 
-const Checkbox: React.FC<Checkboxprops> = () => {
+const Checkbox: React.FC<CheckboxProps> = ({ value, onChange, disabled = false }) => {
   const [mounted, setMounted] = useState(false);
 
-  // Set mounted to true after the component is rendered on the client
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Don't render on the server during hydration
   if (!mounted) return null;
+
   return (
-    <StyledWrapper>
-      <div className="checkbox-wrapper-12">
-        <div className="cbx">
-          <input defaultChecked type="checkbox" id="cbx-12" />
-          <label htmlFor="cbx-12" />
-          <svg fill="none" viewBox="0 0 15 14" height={14} width={15}>
-            <path d="M2 8.36364L6.23077 12L13 2" />
-          </svg>
-        </div>
-        <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <filter id="goo-12">
-              <feGaussianBlur result="blur" stdDeviation={4} in="SourceGraphic" />
-              <feColorMatrix result="goo-12" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -7" mode="matrix" in="blur" />
-              <feBlend in2="goo-12" in="SourceGraphic" />
-            </filter>
-          </defs>
-        </svg>
+    <label
+      className={`checkbox-container w-3 h-3 relative inline-flex items-center cursor-pointer transition-all duration-300 ${
+        disabled ? "opacity-50 cursor-not-allowed" : ""
+      }`}
+    >
+      <input
+        type="checkbox"
+        className="hidden"
+        checked={value}
+        onChange={(e) => onChange(e.target.checked)}
+        disabled={disabled}
+      />
+      <div
+        className="checkbox-background relative w-full h-full bg-gray-200 border-2 border-gray-600 rounded-md overflow-hidden"
+        style={{ aspectRatio: "1 / 1" }} // Ensures the checkbox remains square
+      >
+        {/* Gradient Fill */}
+        <motion.div
+          className="gradient-fill absolute inset-0 bg-gradient-to-br from-green-400 to-green-600"
+          initial={{ scaleY: 0 }}
+          animate={{ scaleY: value ? 1 : 0 }}
+          transition={{ duration: 0.4, ease: "easeInOut" }}
+          style={{
+            transformOrigin: "bottom",
+          }}
+        ></motion.div>
+
+        {/* Checkmark Container */}
+        <motion.div
+          className="checkmark-container absolute w-full h-full flex items-center justify-center"
+          animate={{
+            scale: value ? 1 : 0,
+          }}
+          transition={{ duration: 0.3 }}
+        >
+          {/* Pop-Out Checkmark */}
+          <motion.svg
+            viewBox="0 0 24 24"
+            className="checkmark"
+            style={{
+              width: "60%", // Scales based on the container
+              height: "60%", // Maintains aspect ratio
+            }}
+            initial={{ scale: 0, opacity: 0 }}
+            animate={{
+              scale: value ? [0, 1.2, 1] : 0,
+              opacity: value ? 1 : 0,
+            }}
+            transition={{
+              duration: 0.5,
+              ease: "easeOut",
+              bounce: 0.3,
+            }}
+          >
+            <motion.path
+              d="M5 12l4 4L19 7"
+              fill="none"
+              stroke="white"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: value ? 1 : 0 }}
+              transition={{ duration: 0.4 }}
+            />
+          </motion.svg>
+        </motion.div>
       </div>
-    </StyledWrapper>
+    </label>
   );
-}
-
-const StyledWrapper = styled.div`
-  .checkbox-wrapper-12 {
-    position: relative;
-  }
-
-  .checkbox-wrapper-12 > svg {
-    position: absolute;
-    top: -130%;
-    left: -170%;
-    width: 110px;
-    pointer-events: none;
-  }
-
-  .checkbox-wrapper-12 * {
-    box-sizing: border-box;
-  }
-
-  .checkbox-wrapper-12 input[type="checkbox"] {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    -webkit-tap-highlight-color: transparent;
-    cursor: pointer;
-    margin: 0;
-  }
-
-  .checkbox-wrapper-12 input[type="checkbox"]:focus {
-    outline: 0;
-  }
-
-  .checkbox-wrapper-12 .cbx {
-    width: 24px;
-    height: 24px;
-    top: calc(100px - 12px);
-    left: calc(100px - 12px);
-  }
-
-  .checkbox-wrapper-12 .cbx input {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 24px;
-    height: 24px;
-    border: 2px solid #bfbfc0;
-    border-radius: 50%;
-  }
-
-  .checkbox-wrapper-12 .cbx label {
-    width: 24px;
-    height: 24px;
-    background: none;
-    border-radius: 50%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    transform: trasnlate3d(0, 0, 0);
-    pointer-events: none;
-  }
-
-  .checkbox-wrapper-12 .cbx svg {
-    position: absolute;
-    top: 5px;
-    left: 4px;
-    z-index: 1;
-    pointer-events: none;
-  }
-
-  .checkbox-wrapper-12 .cbx svg path {
-    stroke: #fff;
-    stroke-width: 3;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-dasharray: 19;
-    stroke-dashoffset: 19;
-    transition: stroke-dashoffset 0.3s ease;
-    transition-delay: 0.2s;
-  }
-
-  .checkbox-wrapper-12 .cbx input:checked + label {
-    animation: splash-12 0.6s ease forwards;
-  }
-
-  .checkbox-wrapper-12 .cbx input:checked + label + svg path {
-    stroke-dashoffset: 0;
-  }
-
-  @-moz-keyframes splash-12 {
-    40% {
-      background: #866efb;
-      box-shadow: 0 -18px 0 -8px #866efb, 16px -8px 0 -8px #866efb, 16px 8px 0 -8px #866efb, 0 18px 0 -8px #866efb, -16px 8px 0 -8px #866efb, -16px -8px 0 -8px #866efb;
-    }
-
-    100% {
-      background: #866efb;
-      box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
-    }
-  }
-
-  @-webkit-keyframes splash-12 {
-    40% {
-      background: #866efb;
-      box-shadow: 0 -18px 0 -8px #866efb, 16px -8px 0 -8px #866efb, 16px 8px 0 -8px #866efb, 0 18px 0 -8px #866efb, -16px 8px 0 -8px #866efb, -16px -8px 0 -8px #866efb;
-    }
-
-    100% {
-      background: #866efb;
-      box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
-    }
-  }
-
-  @-o-keyframes splash-12 {
-    40% {
-      background: #866efb;
-      box-shadow: 0 -18px 0 -8px #866efb, 16px -8px 0 -8px #866efb, 16px 8px 0 -8px #866efb, 0 18px 0 -8px #866efb, -16px 8px 0 -8px #866efb, -16px -8px 0 -8px #866efb;
-    }
-
-    100% {
-      background: #866efb;
-      box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
-    }
-  }
-
-  @keyframes splash-12 {
-    40% {
-      background: #866efb;
-      box-shadow: 0 -18px 0 -8px #866efb, 16px -8px 0 -8px #866efb, 16px 8px 0 -8px #866efb, 0 18px 0 -8px #866efb, -16px 8px 0 -8px #866efb, -16px -8px 0 -8px #866efb;
-    }
-
-    100% {
-      background: #866efb;
-      box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
-    }
-  }`;
+};
 
 export default Checkbox;
-=======
-"use client";
-
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-
-// Define the Card component as a functional React component with TypeScript
-type Checkboxprops = {}; // You can add props here if needed in the future
-
-const Checkbox: React.FC<Checkboxprops> = () => {
-  const [mounted, setMounted] = useState(false);
-
-  // Set mounted to true after the component is rendered on the client
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Don't render on the server during hydration
-  if (!mounted) return null;
-  return (
-    <StyledWrapper>
-      <div className="checkbox-wrapper-12">
-        <div className="cbx">
-          <input defaultChecked type="checkbox" id="cbx-12" />
-          <label htmlFor="cbx-12" />
-          <svg fill="none" viewBox="0 0 15 14" height={14} width={15}>
-            <path d="M2 8.36364L6.23077 12L13 2" />
-          </svg>
-        </div>
-        <svg version="1.1" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <filter id="goo-12">
-              <feGaussianBlur result="blur" stdDeviation={4} in="SourceGraphic" />
-              <feColorMatrix result="goo-12" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 22 -7" mode="matrix" in="blur" />
-              <feBlend in2="goo-12" in="SourceGraphic" />
-            </filter>
-          </defs>
-        </svg>
-      </div>
-    </StyledWrapper>
-  );
-}
-
-const StyledWrapper = styled.div`
-  .checkbox-wrapper-12 {
-    position: relative;
-  }
-
-  .checkbox-wrapper-12 > svg {
-    position: absolute;
-    top: -130%;
-    left: -170%;
-    width: 110px;
-    pointer-events: none;
-  }
-
-  .checkbox-wrapper-12 * {
-    box-sizing: border-box;
-  }
-
-  .checkbox-wrapper-12 input[type="checkbox"] {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    -webkit-tap-highlight-color: transparent;
-    cursor: pointer;
-    margin: 0;
-  }
-
-  .checkbox-wrapper-12 input[type="checkbox"]:focus {
-    outline: 0;
-  }
-
-  .checkbox-wrapper-12 .cbx {
-    width: 24px;
-    height: 24px;
-    top: calc(100px - 12px);
-    left: calc(100px - 12px);
-  }
-
-  .checkbox-wrapper-12 .cbx input {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 24px;
-    height: 24px;
-    border: 2px solid #bfbfc0;
-    border-radius: 50%;
-  }
-
-  .checkbox-wrapper-12 .cbx label {
-    width: 24px;
-    height: 24px;
-    background: none;
-    border-radius: 50%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    transform: trasnlate3d(0, 0, 0);
-    pointer-events: none;
-  }
-
-  .checkbox-wrapper-12 .cbx svg {
-    position: absolute;
-    top: 5px;
-    left: 4px;
-    z-index: 1;
-    pointer-events: none;
-  }
-
-  .checkbox-wrapper-12 .cbx svg path {
-    stroke: #fff;
-    stroke-width: 3;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-dasharray: 19;
-    stroke-dashoffset: 19;
-    transition: stroke-dashoffset 0.3s ease;
-    transition-delay: 0.2s;
-  }
-
-  .checkbox-wrapper-12 .cbx input:checked + label {
-    animation: splash-12 0.6s ease forwards;
-  }
-
-  .checkbox-wrapper-12 .cbx input:checked + label + svg path {
-    stroke-dashoffset: 0;
-  }
-
-  @-moz-keyframes splash-12 {
-    40% {
-      background: #866efb;
-      box-shadow: 0 -18px 0 -8px #866efb, 16px -8px 0 -8px #866efb, 16px 8px 0 -8px #866efb, 0 18px 0 -8px #866efb, -16px 8px 0 -8px #866efb, -16px -8px 0 -8px #866efb;
-    }
-
-    100% {
-      background: #866efb;
-      box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
-    }
-  }
-
-  @-webkit-keyframes splash-12 {
-    40% {
-      background: #866efb;
-      box-shadow: 0 -18px 0 -8px #866efb, 16px -8px 0 -8px #866efb, 16px 8px 0 -8px #866efb, 0 18px 0 -8px #866efb, -16px 8px 0 -8px #866efb, -16px -8px 0 -8px #866efb;
-    }
-
-    100% {
-      background: #866efb;
-      box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
-    }
-  }
-
-  @-o-keyframes splash-12 {
-    40% {
-      background: #866efb;
-      box-shadow: 0 -18px 0 -8px #866efb, 16px -8px 0 -8px #866efb, 16px 8px 0 -8px #866efb, 0 18px 0 -8px #866efb, -16px 8px 0 -8px #866efb, -16px -8px 0 -8px #866efb;
-    }
-
-    100% {
-      background: #866efb;
-      box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
-    }
-  }
-
-  @keyframes splash-12 {
-    40% {
-      background: #866efb;
-      box-shadow: 0 -18px 0 -8px #866efb, 16px -8px 0 -8px #866efb, 16px 8px 0 -8px #866efb, 0 18px 0 -8px #866efb, -16px 8px 0 -8px #866efb, -16px -8px 0 -8px #866efb;
-    }
-
-    100% {
-      background: #866efb;
-      box-shadow: 0 -36px 0 -10px transparent, 32px -16px 0 -10px transparent, 32px 16px 0 -10px transparent, 0 36px 0 -10px transparent, -32px 16px 0 -10px transparent, -32px -16px 0 -10px transparent;
-    }
-  }`;
-
-export default Checkbox;
->>>>>>> 7927750ba26b50dd1a0ece376cf45ab44c37e8dc

@@ -1,177 +1,78 @@
-<<<<<<< HEAD
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
-// Define the Card component as a functional React component with TypeScript
-type Checkboxprops = {}; // You can add props here if needed in the future
+type CheckboxProps = {
+  value: boolean;
+  onChange: (checked: boolean) => void;
+  disabled?: boolean;
+};
 
-const Checkbox: React.FC<Checkboxprops> = () => {
+const Checkbox: React.FC<CheckboxProps> = ({ value, onChange, disabled = false }) => {
   const [mounted, setMounted] = useState(false);
 
-  // Set mounted to true after the component is rendered on the client
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Don't render on the server during hydration
   if (!mounted) return null;
+
   return (
-    <StyledWrapper>
-      <label className="container">
-        <input defaultChecked={true} type="checkbox" />
-        <div className="checkmark" />
-      </label>
-    </StyledWrapper>
+    <label
+      className={`checkbox-container relative inline-flex items-center cursor-pointer transition-all duration-300 ${
+        disabled ? "opacity-50 cursor-not-allowed" : ""
+      }`}
+    >
+      <input
+        type="checkbox"
+        className="hidden"
+        checked={value}
+        onChange={(e) => onChange(e.target.checked)}
+        disabled={disabled}
+      />
+      <div className="checkbox-background relative w-10 h-10 bg-gray-300 border-2 border-gray-600 rounded-md overflow-hidden transition-colors duration-300">
+        {/* Ripple Effect */}
+        <motion.div
+          className="ripple absolute inset-0 rounded-md bg-green-500 opacity-0"
+          animate={value ? { opacity: [0, 0.2, 0], scale: [1, 1.5, 2.5] } : { opacity: 0 }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        ></motion.div>
+
+        {/* Glowing Background */}
+        <motion.div
+          className="glow absolute inset-[-4px] rounded-md bg-green-400 blur-md opacity-0"
+          animate={{ opacity: value ? 0.4 : 0 }}
+          transition={{ duration: 0.3 }}
+        ></motion.div>
+
+        {/* Checkmark Container */}
+        <motion.div
+          className="checkmark-container absolute w-full h-full flex items-center justify-center"
+          animate={{
+            scale: value ? 1 : 0,
+          }}
+          transition={{ duration: 0.3 }}
+        >
+          {/* Checkmark */}
+          <motion.svg
+            viewBox="0 0 24 24"
+            className="checkmark w-6 h-6 stroke-white stroke-2"
+            initial={{ pathLength: 0 }}
+            animate={{ pathLength: value ? 1 : 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            <motion.path
+              d="M5 12l4 4L19 7"
+              fill="none"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </motion.svg>
+        </motion.div>
+      </div>
+    </label>
   );
-}
-
-const StyledWrapper = styled.div`
-  .container input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-  }
-
-  .container {
-    display: block;
-    position: relative;
-    cursor: pointer;
-    font-size: 30px;
-    user-select: none;
-  }
-
-  .checkmark {
-    position: relative;
-    top: 0;
-    left: 0;
-    height: 1.6em;
-    width: 1.6em;
-    border-radius: 50%;
-    background: #ffeded38;
-    transition: all 0.2s ease;
-  }
-
-  .checkmark {
-    opacity: 0.4;
-  }
-
-  .container input:checked ~ .checkmark {
-    background: linear-gradient(144deg,#af40ff,#5b42f3 50%,#00ddeb);
-    opacity: 0.9;
-    transition: all 0.2s ease;
-  }
-
-  .checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-  }
-
-  .container input:checked ~ .checkmark:after {
-    display: block;
-  }
-
-  .container .checkmark:after {
-    left: 0.61em;
-    top: 0.43em;
-    width: 0.25em;
-    height: 0.5em;
-    border: solid rgb(255, 255, 255);
-    border-width: 0 0.15em 0.15em 0;
-    transform: rotate(45deg);
-  }`;
+};
 
 export default Checkbox;
-=======
-"use client";
-
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-
-// Define the Card component as a functional React component with TypeScript
-type Checkboxprops = {}; // You can add props here if needed in the future
-
-const Checkbox: React.FC<Checkboxprops> = () => {
-  const [mounted, setMounted] = useState(false);
-
-  // Set mounted to true after the component is rendered on the client
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Don't render on the server during hydration
-  if (!mounted) return null;
-  return (
-    <StyledWrapper>
-      <label className="container">
-        <input defaultChecked={true} type="checkbox" />
-        <div className="checkmark" />
-      </label>
-    </StyledWrapper>
-  );
-}
-
-const StyledWrapper = styled.div`
-  .container input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-  }
-
-  .container {
-    display: block;
-    position: relative;
-    cursor: pointer;
-    font-size: 30px;
-    user-select: none;
-  }
-
-  .checkmark {
-    position: relative;
-    top: 0;
-    left: 0;
-    height: 1.6em;
-    width: 1.6em;
-    border-radius: 50%;
-    background: #ffeded38;
-    transition: all 0.2s ease;
-  }
-
-  .checkmark {
-    opacity: 0.4;
-  }
-
-  .container input:checked ~ .checkmark {
-    background: linear-gradient(144deg,#af40ff,#5b42f3 50%,#00ddeb);
-    opacity: 0.9;
-    transition: all 0.2s ease;
-  }
-
-  .checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-  }
-
-  .container input:checked ~ .checkmark:after {
-    display: block;
-  }
-
-  .container .checkmark:after {
-    left: 0.61em;
-    top: 0.43em;
-    width: 0.25em;
-    height: 0.5em;
-    border: solid rgb(255, 255, 255);
-    border-width: 0 0.15em 0.15em 0;
-    transform: rotate(45deg);
-  }`;
-
-export default Checkbox;
->>>>>>> 7927750ba26b50dd1a0ece376cf45ab44c37e8dc

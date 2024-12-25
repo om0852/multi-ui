@@ -1,14 +1,18 @@
-<<<<<<< HEAD
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
-// Define the Card component as a functional React component with TypeScript
-type Checkboxprops = {}; // You can add props here if needed in the future
+// Define the Checkbox component props type
+type CheckboxProps = {
+  value?: boolean;
+  onChange?: (checked: boolean) => void;
+  disabled?: boolean;
+};
 
-const Checkbox: React.FC<Checkboxprops> = () => {
+const Checkbox: React.FC<CheckboxProps> = ({ value, onChange, disabled = false }) => {
   const [mounted, setMounted] = useState(false);
+  const [checked, setChecked] = useState<boolean>(value || false); // Local state for checkbox
 
   // Set mounted to true after the component is rendered on the client
   useEffect(() => {
@@ -17,185 +21,79 @@ const Checkbox: React.FC<Checkboxprops> = () => {
 
   // Don't render on the server during hydration
   if (!mounted) return null;
+
+  const handleChange = () => {
+    if (disabled) return; // Prevent changes if disabled
+    const newChecked = !checked;
+    setChecked(newChecked);
+    if (onChange) {
+      onChange(newChecked); // Notify parent component about the change
+    }
+  };
+
   return (
-    <StyledWrapper>
-      <label className="container">
-        <input type="checkbox" defaultChecked={true} />
-        <div className="checkmark" />
-      </label>
-    </StyledWrapper>
+    <motion.label
+      className={`relative inline-block cursor-pointer ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.3 }}
+    >
+      <input
+        type="checkbox"
+        className="absolute opacity-0 w-0 h-0"
+        checked={checked}
+        onChange={handleChange}
+        disabled={disabled}
+      />
+      
+      {/* Background Circle */}
+      <motion.div
+        className="w-12 h-6 bg-gray-300 rounded-full transition-all duration-300"
+        animate={{
+          backgroundColor: checked ? '#4CAF50' : '#ccc', // Green when checked, gray when unchecked
+          scaleX: checked ? 1 : 1.05, // Slight scaling effect when checked
+        }}
+        transition={{
+          type: 'spring',
+          stiffness: 500,
+          damping: 30,
+        }}
+      >
+        {/* Slider */}
+        <motion.div
+          className="w-6 h-6 bg-white rounded-full shadow-md"
+          animate={{
+            x: checked ? '100%' : '0%', // Moves to the right when checked
+          }}
+          transition={{
+            type: 'spring',
+            stiffness: 500,
+            damping: 30,
+          }}
+        />
+      </motion.div>
+
+      {/* Checkmark */}
+      {checked && (
+        <motion.div
+          className="absolute inset-0 flex justify-center items-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: checked ? 1 : 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <motion.div
+            className="w-2.5 h-2.5 border-t-2 border-r-2 border-white rotate-45"
+            animate={{
+              scale: checked ? 1 : 0, // Scale in checkmark when checked
+            }}
+            transition={{
+              scale: { duration: 0.2 },
+            }}
+          />
+        </motion.div>
+      )}
+    </motion.label>
   );
-}
-
-const StyledWrapper = styled.div`
-  /* Hide the default checkbox */
-  .container input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-  }
-
-  .container {
-    display: block;
-    position: relative;
-    cursor: pointer;
-    font-size: 20px;
-    user-select: none;
-  }
-
-  /* Create a custom checkbox */
-  .checkmark {
-    position: relative;
-    top: 0;
-    left: 0;
-    height: 2.3em;
-    width: 2.3em;
-    background-color: #ccc;
-    border-radius: 50%;
-    transition: .4s;
-  }
-
-  .checkmark:hover {
-    box-shadow: inset 17px 17px 16px #b3b3b3,
-              inset -17px -17px 16px #ffffff;
-  }
-
-  /* When the checkbox is checked, add a blue background */
-  .container input:checked ~ .checkmark {
-    box-shadow: none;
-    background-color: limegreen;
-    transform: rotateX(360deg);
-  }
-
-  .container input:checked ~ .checkmark:hover {
-    box-shadow: 3px 3px 3px rgba(0,0,0,0.2);
-  }
-
-  /* Create the checkmark/indicator (hidden when not checked) */
-  .checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-  }
-
-  /* Show the checkmark when checked */
-  .container input:checked ~ .checkmark:after {
-    display: block;
-  }
-
-  /* Style the checkmark/indicator */
-  .container .checkmark:after {
-    left: 0.96em;
-    top: 0.7em;
-    width: 0.25em;
-    height: 0.5em;
-    border: solid white;
-    border-width: 0 0.15em 0.15em 0;
-    box-shadow: 0.1em 0.1em 0em 0 rgba(0,0,0,0.3);
-    transform: rotate(45deg);
-  }`;
+};
 
 export default Checkbox;
-=======
-"use client";
-
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-
-// Define the Card component as a functional React component with TypeScript
-type Checkboxprops = {}; // You can add props here if needed in the future
-
-const Checkbox: React.FC<Checkboxprops> = () => {
-  const [mounted, setMounted] = useState(false);
-
-  // Set mounted to true after the component is rendered on the client
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Don't render on the server during hydration
-  if (!mounted) return null;
-  return (
-    <StyledWrapper>
-      <label className="container">
-        <input type="checkbox" defaultChecked={true} />
-        <div className="checkmark" />
-      </label>
-    </StyledWrapper>
-  );
-}
-
-const StyledWrapper = styled.div`
-  /* Hide the default checkbox */
-  .container input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-  }
-
-  .container {
-    display: block;
-    position: relative;
-    cursor: pointer;
-    font-size: 20px;
-    user-select: none;
-  }
-
-  /* Create a custom checkbox */
-  .checkmark {
-    position: relative;
-    top: 0;
-    left: 0;
-    height: 2.3em;
-    width: 2.3em;
-    background-color: #ccc;
-    border-radius: 50%;
-    transition: .4s;
-  }
-
-  .checkmark:hover {
-    box-shadow: inset 17px 17px 16px #b3b3b3,
-              inset -17px -17px 16px #ffffff;
-  }
-
-  /* When the checkbox is checked, add a blue background */
-  .container input:checked ~ .checkmark {
-    box-shadow: none;
-    background-color: limegreen;
-    transform: rotateX(360deg);
-  }
-
-  .container input:checked ~ .checkmark:hover {
-    box-shadow: 3px 3px 3px rgba(0,0,0,0.2);
-  }
-
-  /* Create the checkmark/indicator (hidden when not checked) */
-  .checkmark:after {
-    content: "";
-    position: absolute;
-    display: none;
-  }
-
-  /* Show the checkmark when checked */
-  .container input:checked ~ .checkmark:after {
-    display: block;
-  }
-
-  /* Style the checkmark/indicator */
-  .container .checkmark:after {
-    left: 0.96em;
-    top: 0.7em;
-    width: 0.25em;
-    height: 0.5em;
-    border: solid white;
-    border-width: 0 0.15em 0.15em 0;
-    box-shadow: 0.1em 0.1em 0em 0 rgba(0,0,0,0.3);
-    transform: rotate(45deg);
-  }`;
-
-export default Checkbox;
->>>>>>> 7927750ba26b50dd1a0ece376cf45ab44c37e8dc

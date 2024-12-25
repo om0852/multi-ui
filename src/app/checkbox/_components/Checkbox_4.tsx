@@ -1,14 +1,18 @@
-<<<<<<< HEAD
 "use client";
 
 import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import { motion } from 'framer-motion';
 
-// Define the Card component as a functional React component with TypeScript
-type Checkboxprops = {}; // You can add props here if needed in the future
+// Define the CheckboxProps type to handle value, onChange, and disabled props
+type CheckboxProps = {
+  value?: boolean; // Optional controlled value
+  onChange?: (checked: boolean) => void; // Callback when the checkbox is clicked
+  disabled?: boolean; // Optional disabled state
+};
 
-const Checkbox: React.FC<Checkboxprops> = () => {
+const Checkbox: React.FC<CheckboxProps> = ({ value, onChange, disabled = false }) => {
   const [mounted, setMounted] = useState(false);
+  const [checked, setChecked] = useState<boolean>(value || false); // Local state for checkbox
 
   // Set mounted to true after the component is rendered on the client
   useEffect(() => {
@@ -17,107 +21,49 @@ const Checkbox: React.FC<Checkboxprops> = () => {
 
   // Don't render on the server during hydration
   if (!mounted) return null;
+
+  const handleChange = () => {
+    if (disabled) return; // Prevent changes if disabled
+    const newChecked = !checked;
+    setChecked(newChecked);
+    if (onChange) {
+      onChange(newChecked); // Notify parent component about the change
+    }
+  };
+
+
   return (
-    <StyledWrapper>
-      <label className="container">
-        <input type="checkbox" />
-        <svg viewBox="0 0 64 64" height="2em" width="2em">
-          <path d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16" pathLength="575.0541381835938" className="path" />
-        </svg>
-      </label>
-    </StyledWrapper>
+    <motion.label
+      className={`relative inline-block cursor-pointer ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
+      initial={{ scale: 0.9 }}
+      animate={{ scale: 1 }}
+      transition={{ type: 'spring', stiffness: 300 }}
+    >
+      <input
+        type="checkbox"
+        className="absolute opacity-0 w-0 h-0"
+        checked={checked}
+        onChange={handleChange}
+        disabled={disabled}
+      />
+      <motion.div
+        className="w-9 h-9 bg-gray-400 rounded-full transition-all"
+        animate={{
+          backgroundColor: checked ? 'limegreen' : '#ccc',
+          scale: checked ? 1.1 : 1,
+        }}
+        transition={{ type: 'spring', stiffness: 300 }}
+      >
+        {checked && (
+          <motion.div
+            className="absolute top-1 left-1 w-3 h-3 bg-white rounded-full"
+            animate={{ opacity: checked ? 1 : 0 }}
+            transition={{ opacity: { duration: 0.3 } }}
+          />
+        )}
+      </motion.div>
+    </motion.label>
   );
-}
-
-const StyledWrapper = styled.div`
-  .container {
-    cursor: pointer;
-  }
-
-  .container input {
-    display: none;
-  }
-
-  .container svg {
-    overflow: visible;
-  }
-
-  .path {
-    fill: none;
-    stroke: white;
-    stroke-width: 6;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    transition: stroke-dasharray 0.5s ease, stroke-dashoffset 0.5s ease;
-    stroke-dasharray: 241 9999999;
-    stroke-dashoffset: 0;
-  }
-
-  .container input:checked ~ svg .path {
-    stroke-dasharray: 70.5096664428711 9999999;
-    stroke-dashoffset: -262.2723388671875;
-  }`;
+};
 
 export default Checkbox;
-=======
-"use client";
-
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-
-// Define the Card component as a functional React component with TypeScript
-type Checkboxprops = {}; // You can add props here if needed in the future
-
-const Checkbox: React.FC<Checkboxprops> = () => {
-  const [mounted, setMounted] = useState(false);
-
-  // Set mounted to true after the component is rendered on the client
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Don't render on the server during hydration
-  if (!mounted) return null;
-  return (
-    <StyledWrapper>
-      <label className="container">
-        <input type="checkbox" />
-        <svg viewBox="0 0 64 64" height="2em" width="2em">
-          <path d="M 0 16 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 16 L 32 48 L 64 16 V 8 A 8 8 90 0 0 56 0 H 8 A 8 8 90 0 0 0 8 V 56 A 8 8 90 0 0 8 64 H 56 A 8 8 90 0 0 64 56 V 16" pathLength="575.0541381835938" className="path" />
-        </svg>
-      </label>
-    </StyledWrapper>
-  );
-}
-
-const StyledWrapper = styled.div`
-  .container {
-    cursor: pointer;
-  }
-
-  .container input {
-    display: none;
-  }
-
-  .container svg {
-    overflow: visible;
-  }
-
-  .path {
-    fill: none;
-    stroke: white;
-    stroke-width: 6;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    transition: stroke-dasharray 0.5s ease, stroke-dashoffset 0.5s ease;
-    stroke-dasharray: 241 9999999;
-    stroke-dashoffset: 0;
-  }
-
-  .container input:checked ~ svg .path {
-    stroke-dasharray: 70.5096664428711 9999999;
-    stroke-dashoffset: -262.2723388671875;
-  }`;
-
-export default Checkbox;
->>>>>>> 7927750ba26b50dd1a0ece376cf45ab44c37e8dc

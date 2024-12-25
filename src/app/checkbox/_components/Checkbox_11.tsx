@@ -7,10 +7,19 @@ type CheckboxProps = {
   value: boolean;
   onChange: (checked: boolean) => void;
   disabled?: boolean;
+  color?: "blue" | "red" | "green";
 };
 
-const Checkbox: React.FC<CheckboxProps> = ({ value, onChange, disabled = false }) => {
+const Checkbox: React.FC<CheckboxProps> = ({ value, onChange, disabled = false, color = "blue" }) => {
   const [mounted, setMounted] = useState(false);
+
+  const colorClasses = {
+    blue: "border-blue-700 bg-blue-500",
+    red: "border-red-700 bg-red-500",
+    green: "border-green-700 bg-green-500",
+  };
+
+  const selectedColorClass = colorClasses[color];
 
   // Set mounted to true after the component is rendered on the client
   useEffect(() => {
@@ -33,8 +42,8 @@ const Checkbox: React.FC<CheckboxProps> = ({ value, onChange, disabled = false }
       />
       <div className="neon-checkbox__frame relative w-full h-full">
         <motion.div
-          className="neon-checkbox__box absolute inset-0 bg-black/80 border-2 border-green-700 rounded-md transition-transform duration-300"
-          whileHover={!disabled ? { scale: 1.05 } : undefined}
+          className={`neon-checkbox__box absolute inset-0 bg-black/80 border-2 ${selectedColorClass} rounded-md transition-transform duration-300`}
+          whileHover={!disabled ? { scale: 1.1 } : undefined}
         />
 
         <motion.div
@@ -42,46 +51,29 @@ const Checkbox: React.FC<CheckboxProps> = ({ value, onChange, disabled = false }
         >
           <svg
             viewBox="0 0 32 32"
-            className="neon-checkbox__check w-4/5 h-4/5 fill-none stroke-green-500 stroke-[3] stroke-linecap-round stroke-linejoin-round"
+            className={`neon-checkbox__check w-4/5 h-4/5 fill-none stroke-${color}-500 stroke-[3] stroke-linecap-round stroke-linejoin-round`}
           >
             <motion.path
               d="M3,12.5l7,7L21,5"
               initial={{ pathLength: 0 }}
               animate={{ pathLength: value ? 1 : 0 }}
-              transition={{ duration: 0.4 }}
+              transition={{ duration: 0.5, ease: "easeInOut" }}
             />
           </svg>
         </motion.div>
 
         <motion.div
-          className="neon-checkbox__glow absolute inset-[-2px] rounded-md bg-green-500 opacity-0 blur-sm scale-110"
-          animate={{ opacity: value ? 0.2 : 0 }}
+          className={`neon-checkbox__glow absolute inset-[-2px] rounded-md ${selectedColorClass} opacity-0 blur-md scale-110`}
+          animate={{ opacity: value ? 0.3 : 0 }}
         />
-
-        <div className="neon-checkbox__borders absolute inset-0 rounded-md overflow-hidden">
-          {Array.from({ length: 4 }).map((_, i) => (
-            <span
-              key={i}
-              className={`absolute bg-green-500 opacity-0 transition-opacity duration-300 ${
-                i === 0
-                  ? "top-0 left-[-100%] w-10 h-[1px]"
-                  : i === 1
-                  ? "top-[-100%] right-0 w-[1px] h-10"
-                  : i === 2
-                  ? "bottom-0 right-[-100%] w-10 h-[1px]"
-                  : "bottom-[-100%] left-0 w-[1px] h-10"
-              }`}
-            ></span>
-          ))}
-        </div>
 
         <div className="neon-checkbox__effects">
           <div className="neon-checkbox__particles absolute top-1/2 left-1/2">
-            {Array.from({ length: 12 }).map((_, i) => (
+            {Array.from({ length: 8 }).map((_, i) => (
               <motion.span
                 key={i}
-                className="absolute w-1 h-1 bg-green-500 rounded-full shadow-lg opacity-0"
-                animate={value ? { opacity: 1, scale: 0 } : { opacity: 0 }}
+                className={`absolute w-1.5 h-1.5 ${selectedColorClass} rounded-full shadow-lg opacity-0`}
+                animate={value ? { opacity: 1, scale: 1.5, x: (i - 4) * 10, y: (i % 4) * 10 } : { opacity: 0 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
               ></motion.span>
             ))}
@@ -91,9 +83,9 @@ const Checkbox: React.FC<CheckboxProps> = ({ value, onChange, disabled = false }
             {Array.from({ length: 3 }).map((_, i) => (
               <motion.div
                 key={i}
-                className="absolute inset-0 rounded-full border border-green-500 opacity-0"
-                animate={value ? { opacity: [0, 1, 0], scale: [0, 1, 2] } : { opacity: 0 }}
-                transition={{ delay: i * 0.1, duration: 0.6, ease: "easeOut" }}
+                className={`absolute inset-0 rounded-full border ${selectedColorClass} opacity-0`}
+                animate={value ? { opacity: [0, 0.5, 0], scale: [0.5, 1, 1.5] } : { opacity: 0 }}
+                transition={{ delay: i * 0.1, duration: 0.7, ease: "easeOut" }}
               ></motion.div>
             ))}
           </div>
@@ -102,9 +94,9 @@ const Checkbox: React.FC<CheckboxProps> = ({ value, onChange, disabled = false }
             {Array.from({ length: 4 }).map((_, i) => (
               <motion.span
                 key={i}
-                className="absolute w-5 h-[1px] bg-gradient-to-r from-green-500 to-transparent opacity-0"
-                animate={value ? { opacity: [1, 0], x: [0, 30], scale: [1, 0] } : { opacity: 0 }}
-                transition={{ duration: 0.6, ease: "easeOut" }}
+                className={`absolute w-5 h-[1px] bg-gradient-to-r from-${color}-500 to-transparent opacity-0`}
+                animate={value ? { opacity: [1, 0], x: [0, 40], scale: [1, 0.5] } : { opacity: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut" }}
               ></motion.span>
             ))}
           </div>
