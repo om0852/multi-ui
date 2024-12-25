@@ -1,181 +1,82 @@
-<<<<<<< HEAD
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
-// Define the Card component as a functional React component with TypeScript
-type Checkboxprops = {}; // You can add props here if needed in the future
+type CheckboxProps = {
+  value: boolean;
+  onChange: (checked: boolean) => void;
+  disabled?: boolean;
+};
 
-const Checkbox: React.FC<Checkboxprops> = () => {
+const Checkbox: React.FC<CheckboxProps> = ({ value, onChange, disabled = false }) => {
   const [mounted, setMounted] = useState(false);
 
-  // Set mounted to true after the component is rendered on the client
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Don't render on the server during hydration
   if (!mounted) return null;
+
   return (
-    <StyledWrapper>
-      <label className="container">
-        <input defaultChecked={true} type="checkbox" />
-        <div className="checkmark" />
-      </label>
-    </StyledWrapper>
+    <label
+      className={`checkbox-container w-6 h-6 relative inline-flex items-center cursor-pointer transition-all duration-300 ${
+        disabled ? "opacity-50 cursor-not-allowed" : "hover:scale-105"
+      }`}
+    >
+      <input
+        type="checkbox"
+        className="hidden"
+        checked={value}
+        onChange={(e) => onChange(e.target.checked)}
+        disabled={disabled}
+      />
+      <div
+        className={`checkbox-background relative w-full h-full bg-transparent border-2 rounded-full overflow-hidden shadow-sm transition-all duration-300 ${
+          value ? "bg-blue-500 border-blue-500" : "bg-gray-100 border-gray-400"
+        }`}
+        style={{ aspectRatio: "1 / 1" }}
+      >
+        {/* Pulse Effect */}
+        {value && (
+          <motion.div
+            className="pulse absolute inset-0 bg-blue-400 rounded-full"
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: [0.4, 0], scale: [1, 1.5] }}
+            transition={{ duration: 0.8, repeat: Infinity, repeatType: "loop" }}
+          />
+        )}
+
+        {/* Icon Animation */}
+        <motion.div
+          className="icon-container absolute w-full h-full flex items-center justify-center"
+          animate={{ scale: value ? 1 : 0 }}
+          transition={{ duration: 0.3, ease: "easeInOut" }}
+        >
+          <motion.svg
+            viewBox="0 0 24 24"
+            className="icon"
+            style={{ width: "50%", height: "50%" }}
+            initial={{ rotate: 0 }}
+            animate={{ rotate: value ? 360 : 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+          >
+            <motion.path
+              d="M5 12l4 4L19 7"
+              fill="none"
+              stroke="white"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              initial={{ pathLength: 0 }}
+              animate={{ pathLength: value ? 1 : 0 }}
+              transition={{ duration: 0.4, ease: "easeInOut" }}
+            />
+          </motion.svg>
+        </motion.div>
+      </div>
+    </label>
   );
-}
-
-const StyledWrapper = styled.div`
-  /* Hide the default checkbox */
-  .container input {
-   position: absolute;
-   opacity: 0;
-   cursor: pointer;
-   height: 0;
-   width: 0;
-  }
-
-  .container {
-   display: block;
-   position: relative;
-   cursor: pointer;
-   font-size: 25px;
-   user-select: none;
-  }
-
-  /* Create a custom checkbox */
-  .checkmark {
-   position: relative;
-   top: 0;
-   left: 0;
-   height: 1.3em;
-   width: 1.3em;
-   background: black;
-   border-radius: 50px;
-   transition: all 0.7s;
-   --spread: 20px;
-  }
-
-  /* When the checkbox is checked, add a blue background */
-  .container input:checked ~ .checkmark {
-   background: black;
-   box-shadow: -10px -10px var(--spread) 0px #5B51D8, 0 -10px var(--spread) 0px #833AB4, 10px -10px var(--spread) 0px #E1306C, 10px 0 var(--spread) 0px #FD1D1D, 10px 10px var(--spread) 0px #F77737, 0 10px var(--spread) 0px #FCAF45, -10px 10px var(--spread) 0px #FFDC80;
-  }
-
-  /* Create the checkmark/indicator (hidden when not checked) */
-  .checkmark:after {
-   content: "";
-   position: absolute;
-   display: none;
-  }
-
-  /* Show the checkmark when checked */
-  .container input:checked ~ .checkmark:after {
-   display: block;
-  }
-
-  /* Style the checkmark/indicator */
-  .container .checkmark:after {
-   left: 0.45em;
-   top: 0.25em;
-   width: 0.25em;
-   height: 0.5em;
-   border: solid #f0f0f0;
-   border-width: 0 0.15em 0.15em 0;
-   transform: rotate(45deg);
-  }`;
+};
 
 export default Checkbox;
-=======
-"use client";
-
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-
-// Define the Card component as a functional React component with TypeScript
-type Checkboxprops = {}; // You can add props here if needed in the future
-
-const Checkbox: React.FC<Checkboxprops> = () => {
-  const [mounted, setMounted] = useState(false);
-
-  // Set mounted to true after the component is rendered on the client
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Don't render on the server during hydration
-  if (!mounted) return null;
-  return (
-    <StyledWrapper>
-      <label className="container">
-        <input defaultChecked={true} type="checkbox" />
-        <div className="checkmark" />
-      </label>
-    </StyledWrapper>
-  );
-}
-
-const StyledWrapper = styled.div`
-  /* Hide the default checkbox */
-  .container input {
-   position: absolute;
-   opacity: 0;
-   cursor: pointer;
-   height: 0;
-   width: 0;
-  }
-
-  .container {
-   display: block;
-   position: relative;
-   cursor: pointer;
-   font-size: 25px;
-   user-select: none;
-  }
-
-  /* Create a custom checkbox */
-  .checkmark {
-   position: relative;
-   top: 0;
-   left: 0;
-   height: 1.3em;
-   width: 1.3em;
-   background: black;
-   border-radius: 50px;
-   transition: all 0.7s;
-   --spread: 20px;
-  }
-
-  /* When the checkbox is checked, add a blue background */
-  .container input:checked ~ .checkmark {
-   background: black;
-   box-shadow: -10px -10px var(--spread) 0px #5B51D8, 0 -10px var(--spread) 0px #833AB4, 10px -10px var(--spread) 0px #E1306C, 10px 0 var(--spread) 0px #FD1D1D, 10px 10px var(--spread) 0px #F77737, 0 10px var(--spread) 0px #FCAF45, -10px 10px var(--spread) 0px #FFDC80;
-  }
-
-  /* Create the checkmark/indicator (hidden when not checked) */
-  .checkmark:after {
-   content: "";
-   position: absolute;
-   display: none;
-  }
-
-  /* Show the checkmark when checked */
-  .container input:checked ~ .checkmark:after {
-   display: block;
-  }
-
-  /* Style the checkmark/indicator */
-  .container .checkmark:after {
-   left: 0.45em;
-   top: 0.25em;
-   width: 0.25em;
-   height: 0.5em;
-   border: solid #f0f0f0;
-   border-width: 0 0.15em 0.15em 0;
-   transform: rotate(45deg);
-  }`;
-
-export default Checkbox;
->>>>>>> 7927750ba26b50dd1a0ece376cf45ab44c37e8dc
