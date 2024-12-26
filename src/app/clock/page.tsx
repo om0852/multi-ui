@@ -3,14 +3,14 @@ import React from 'react'
 // import Clock3 from './_components/Clock_3'
 import DigitalClock from './_components/Clock_13'
 import FlipClock from './_components/Clock_14'
-import AnalogClock from './_components/Clock_15'
+import AnalogClock from './_components/Clock_19'
 // import AnalogClock from './_components/Clock_8'
 // import EnhancedAnalogClock from './_components/Clock_10'
 // import EnhancedSquareClock from './_components/Clock_11'
 // import EnhancedCircularClock from './_components/Clock_12'
 
 const Page = () => (
-    <div>
+    <div className='h-[10vh]'>
         {/* <NumericClock /> */}
         {/* <Clock3/>
          */}
@@ -24,8 +24,8 @@ const Page = () => (
         digitClassName="text-yellow-400"
         labelClassName="text-red-500"
       />         */}
-      <AnalogClock size={300} />
-<AnalogClock size={100}  />
+      <AnalogClock  />
+<AnalogClock   />
 
        {/* <AnalogClock size={300} borderColor="border-blue-500" /> */}
          {/* <EnhancedAnalogClock/> */}
