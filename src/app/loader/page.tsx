@@ -1,6 +1,6 @@
 "use client"
 import React from 'react';
-import Loader_1 from './_components/Loader_30';
+import Loader_1 from './_components/Loader_39';
 // import Loader_2 from './_components/Loader_2';
 // import Loader_3 from './_components/Loader_3';
 // import Loader_4 from './_components/Loader_4';
