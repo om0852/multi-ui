@@ -1,6 +1,6 @@
 "use client"
 import React from "react";
-// import DigitalClock from './_components/Counter_1'
+import DigitalClock from './_components/Counter_20'
 // import AnimatedCounter from "./_components/Counter_2";
 // import BouncyCounter from "./_components/Counter_3";
 // import FlipCounter from "./_components/Counter_4";
@@ -11,13 +11,11 @@ import React from "react";
 const Page = () => {
   return (
     <div>
-      {/* <DigitalClock
-  timeFormat={{ hour: "numeric", minute: "2-digit", second: "2-digit", hour12: false }}   digitAnimation={{
-    initial: { opacity: 0, scale: 0.5 },
-    animate: { opacity: 1, scale: 1 },
-    exit: { opacity: 0, scale: 0.5 },
-    transition: { duration: 0.5 },
-  }} */}
+      <DigitalClock
+      from={0} to={100}
+      interval={1000}
+      duration={100}
+  />
       {/* <AnimatedCounter
   from={0}
   to={1500}

@@ -1,13 +1,11 @@
-<<<<<<< HEAD
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
-// Define the Card component as a functional React component with TypeScript
-type Loaderprops = {}; // You can add props here if needed in the future
+type LoaderProps = {}; // Props can be extended in the future if needed
 
-const Loader: React.FC<Loaderprops> = () => {
+const Loader: React.FC<LoaderProps> = () => {
   const [mounted, setMounted] = useState(false);
 
   // Set mounted to true after the component is rendered on the client
@@ -15,117 +13,25 @@ const Loader: React.FC<Loaderprops> = () => {
     setMounted(true);
   }, []);
 
-  // Don't render on the server during hydration
+  // Avoid rendering on the server during hydration
   if (!mounted) return null;
 
   return (
-    <StyledWrapper>
-      <div className="loader" />
-    </StyledWrapper>
+    <div className="flex items-center justify-center h-screen bg-gray-100">
+      <div className="relative w-32 h-1 rounded-full bg-gray-300 overflow-hidden">
+        <motion.div
+          className="absolute top-0 left-0 h-full bg-blue-500 rounded-full"
+          initial={{ width: "0%" }}
+          animate={{ width: ["0%", "100%", "0%"] }}
+          transition={{
+            duration: 1,
+            ease: "easeInOut",
+            repeat: Infinity,
+          }}
+        />
+      </div>
+    </div>
   );
-}
-
-const StyledWrapper = styled.div`
-  .loader {
-    display: block;
-    --height-of-loader: 4px;
-    --loader-color: #0071e2;
-    width: 130px;
-    height: var(--height-of-loader);
-    border-radius: 30px;
-    background-color: rgba(0,0,0,0.2);
-    position: relative;
-  }
-
-  .loader::before {
-    content: "";
-    position: absolute;
-    background: var(--loader-color);
-    top: 0;
-    left: 0;
-    width: 0%;
-    height: 100%;
-    border-radius: 30px;
-    animation: moving 1s ease-in-out infinite;
-    ;
-  }
-
-  @keyframes moving {
-    50% {
-      width: 100%;
-    }
-
-    100% {
-      width: 0;
-      right: 0;
-      left: unset;
-    }
-  }`;
+};
 
 export default Loader;
-=======
-"use client";
-
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-
-// Define the Card component as a functional React component with TypeScript
-type Loaderprops = {}; // You can add props here if needed in the future
-
-const Loader: React.FC<Loaderprops> = () => {
-  const [mounted, setMounted] = useState(false);
-
-  // Set mounted to true after the component is rendered on the client
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Don't render on the server during hydration
-  if (!mounted) return null;
-
-  return (
-    <StyledWrapper>
-      <div className="loader" />
-    </StyledWrapper>
-  );
-}
-
-const StyledWrapper = styled.div`
-  .loader {
-    display: block;
-    --height-of-loader: 4px;
-    --loader-color: #0071e2;
-    width: 130px;
-    height: var(--height-of-loader);
-    border-radius: 30px;
-    background-color: rgba(0,0,0,0.2);
-    position: relative;
-  }
-
-  .loader::before {
-    content: "";
-    position: absolute;
-    background: var(--loader-color);
-    top: 0;
-    left: 0;
-    width: 0%;
-    height: 100%;
-    border-radius: 30px;
-    animation: moving 1s ease-in-out infinite;
-    ;
-  }
-
-  @keyframes moving {
-    50% {
-      width: 100%;
-    }
-
-    100% {
-      width: 0;
-      right: 0;
-      left: unset;
-    }
-  }`;
-
-export default Loader;
->>>>>>> 7927750ba26b50dd1a0ece376cf45ab44c37e8dc

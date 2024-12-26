@@ -1,405 +1,128 @@
-<<<<<<< HEAD
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 
-// Define the Card component as a functional React component with TypeScript
-type Loaderprops = {}; // You can add props here if needed in the future
+// Define the LoaderProps type
+interface LoaderProps {}
 
-const Loader: React.FC<Loaderprops> = () => {
+const Loader: React.FC<LoaderProps> = () => {
   const [mounted, setMounted] = useState(false);
 
-  // Set mounted to true after the component is rendered on the client
+  // Ensure the component only renders after hydration
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  // Don't render on the server during hydration
   if (!mounted) return null;
+
+  const circleAnimation = {
+    animate: {
+      strokeDasharray: "150 50",
+      strokeDashoffset: 75,
+      transition: {
+        duration: 3,
+        ease: [0.785, 0.135, 0.15, 0.86],
+        repeat: Infinity,
+      },
+    },
+  };
+
+  const rectAnimation = {
+    animate: {
+      strokeDasharray: "192 64",
+      strokeDashoffset: 64,
+      transition: {
+        duration: 3,
+        ease: [0.785, 0.135, 0.15, 0.86],
+        repeat: Infinity,
+      },
+    },
+  };
+
+  const triangleAnimation = {
+    animate: {
+      strokeDasharray: "145 76",
+      strokeDashoffset: 0,
+      transition: {
+        duration: 3,
+        ease: [0.785, 0.135, 0.15, 0.86],
+        repeat: Infinity,
+      },
+    },
+  };
+
   return (
-    <StyledWrapper>
-      <div>
-        <div className="loader">
-          <svg viewBox="0 0 80 80">
-            <circle r={32} cy={40} cx={40} id="test" />
-          </svg>
-        </div>
-        <div className="loader triangle">
-          <svg viewBox="0 0 86 80">
-            <polygon points="43 8 79 72 7 72" />
-          </svg>
-        </div>
-        <div className="loader">
-          <svg viewBox="0 0 80 80">
-            <rect height={64} width={64} y={8} x={8} />
-          </svg>
-        </div>
+    <div className="flex justify-center items-center space-x-6">
+      {/* Circle Loader */}
+      <div className="relative w-12 h-12">
+        <motion.svg viewBox="0 0 80 80" className="w-full h-full">
+          <motion.circle
+            r="32"
+            cx="40"
+            cy="40"
+            fill="none"
+            stroke="#2f3545"
+            strokeWidth="10"
+            strokeLinecap="round"
+            {...circleAnimation.animate}
+          />
+        </motion.svg>
+        <motion.div
+          className="absolute top-[37px] left-[19px] w-[6px] h-[6px] bg-[#5628ee] rounded-full"
+          animate={{
+            x: [0, 18, 0, -18],
+            y: [0, -18, -36, -18],
+          }}
+          transition={{ duration: 3, ease: [0.785, 0.135, 0.15, 0.86], repeat: Infinity }}
+        ></motion.div>
       </div>
-    </StyledWrapper>
+
+      {/* Triangle Loader */}
+      <div className="relative w-12 h-12">
+        <motion.svg viewBox="0 0 86 80" className="w-full h-full">
+          <motion.polygon
+            points="43 8 79 72 7 72"
+            fill="none"
+            stroke="#2f3545"
+            strokeWidth="10"
+            strokeLinejoin="round"
+            {...triangleAnimation.animate}
+          />
+        </motion.svg>
+        <motion.div
+          className="absolute top-[37px] left-[21px] w-[6px] h-[6px] bg-[#5628ee] rounded-full"
+          animate={{ x: [0, 10, -10], y: [0, -18, -18] }}
+          transition={{ duration: 3, ease: [0.785, 0.135, 0.15, 0.86], repeat: Infinity }}
+        ></motion.div>
+      </div>
+
+      {/* Rectangle Loader */}
+      <div className="relative w-12 h-12">
+        <motion.svg viewBox="0 0 80 80" className="w-full h-full">
+          <motion.rect
+            x="8"
+            y="8"
+            width="64"
+            height="64"
+            fill="none"
+            stroke="#2f3545"
+            strokeWidth="10"
+            strokeLinejoin="round"
+            {...rectAnimation.animate}
+          />
+        </motion.svg>
+        <motion.div
+          className="absolute top-[37px] left-[19px] w-[6px] h-[6px] bg-[#5628ee] rounded-full"
+          animate={{
+            x: [0, 18, 0, -18],
+            y: [0, -18, -36, -18],
+          }}
+          transition={{ duration: 3, ease: [0.785, 0.135, 0.15, 0.86], repeat: Infinity }}
+        ></motion.div>
+      </div>
+    </div>
   );
-}
-
-const StyledWrapper = styled.div`
-  .loader {
-    --path: #2f3545;
-    --dot: #5628ee;
-    --duration: 3s;
-    width: 44px;
-    height: 44px;
-    position: relative;
-  }
-
-  .loader:before {
-    content: "";
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    position: absolute;
-    display: block;
-    background: var(--dot);
-    top: 37px;
-    left: 19px;
-    transform: translate(-18px, -18px);
-    animation: dotRect var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86)
-      infinite;
-  }
-
-  .loader svg {
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
-
-  .loader svg rect,
-  .loader svg polygon,
-  .loader svg circle {
-    fill: none;
-    stroke: var(--path);
-    stroke-width: 10px;
-    stroke-linejoin: round;
-    stroke-linecap: round;
-  }
-
-  .loader svg polygon {
-    stroke-dasharray: 145 76 145 76;
-    stroke-dashoffset: 0;
-    animation: pathTriangle var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86)
-      infinite;
-  }
-
-  .loader svg rect {
-    stroke-dasharray: 192 64 192 64;
-    stroke-dashoffset: 0;
-    animation: pathRect 3s cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
-  }
-
-  .loader svg circle {
-    stroke-dasharray: 150 50 150 50;
-    stroke-dashoffset: 75;
-    animation: pathCircle var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86)
-      infinite;
-  }
-
-  .loader.triangle {
-    width: 48px;
-  }
-
-  .loader.triangle:before {
-    left: 21px;
-    transform: translate(-10px, -18px);
-    animation: dotTriangle var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86)
-      infinite;
-  }
-
-  @keyframes pathTriangle {
-    33% {
-      stroke-dashoffset: 74;
-    }
-
-    66% {
-      stroke-dashoffset: 147;
-    }
-
-    100% {
-      stroke-dashoffset: 221;
-    }
-  }
-
-  @keyframes dotTriangle {
-    33% {
-      transform: translate(0, 0);
-    }
-
-    66% {
-      transform: translate(10px, -18px);
-    }
-
-    100% {
-      transform: translate(-10px, -18px);
-    }
-  }
-
-  @keyframes pathRect {
-    25% {
-      stroke-dashoffset: 64;
-    }
-
-    50% {
-      stroke-dashoffset: 128;
-    }
-
-    75% {
-      stroke-dashoffset: 192;
-    }
-
-    100% {
-      stroke-dashoffset: 256;
-    }
-  }
-
-  @keyframes dotRect {
-    25% {
-      transform: translate(0, 0);
-    }
-
-    50% {
-      transform: translate(18px, -18px);
-    }
-
-    75% {
-      transform: translate(0, -36px);
-    }
-
-    100% {
-      transform: translate(-18px, -18px);
-    }
-  }
-
-  @keyframes pathCircle {
-    25% {
-      stroke-dashoffset: 125;
-    }
-
-    50% {
-      stroke-dashoffset: 175;
-    }
-
-    75% {
-      stroke-dashoffset: 225;
-    }
-
-    100% {
-      stroke-dashoffset: 275;
-    }
-  }
-
-  .loader {
-    display: inline-block;
-    margin: 0 16px;
-  }`;
+};
 
 export default Loader;
-=======
-"use client";
-
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
-
-// Define the Card component as a functional React component with TypeScript
-type Loaderprops = {}; // You can add props here if needed in the future
-
-const Loader: React.FC<Loaderprops> = () => {
-  const [mounted, setMounted] = useState(false);
-
-  // Set mounted to true after the component is rendered on the client
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Don't render on the server during hydration
-  if (!mounted) return null;
-  return (
-    <StyledWrapper>
-      <div>
-        <div className="loader">
-          <svg viewBox="0 0 80 80">
-            <circle r={32} cy={40} cx={40} id="test" />
-          </svg>
-        </div>
-        <div className="loader triangle">
-          <svg viewBox="0 0 86 80">
-            <polygon points="43 8 79 72 7 72" />
-          </svg>
-        </div>
-        <div className="loader">
-          <svg viewBox="0 0 80 80">
-            <rect height={64} width={64} y={8} x={8} />
-          </svg>
-        </div>
-      </div>
-    </StyledWrapper>
-  );
-}
-
-const StyledWrapper = styled.div`
-  .loader {
-    --path: #2f3545;
-    --dot: #5628ee;
-    --duration: 3s;
-    width: 44px;
-    height: 44px;
-    position: relative;
-  }
-
-  .loader:before {
-    content: "";
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    position: absolute;
-    display: block;
-    background: var(--dot);
-    top: 37px;
-    left: 19px;
-    transform: translate(-18px, -18px);
-    animation: dotRect var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86)
-      infinite;
-  }
-
-  .loader svg {
-    display: block;
-    width: 100%;
-    height: 100%;
-  }
-
-  .loader svg rect,
-  .loader svg polygon,
-  .loader svg circle {
-    fill: none;
-    stroke: var(--path);
-    stroke-width: 10px;
-    stroke-linejoin: round;
-    stroke-linecap: round;
-  }
-
-  .loader svg polygon {
-    stroke-dasharray: 145 76 145 76;
-    stroke-dashoffset: 0;
-    animation: pathTriangle var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86)
-      infinite;
-  }
-
-  .loader svg rect {
-    stroke-dasharray: 192 64 192 64;
-    stroke-dashoffset: 0;
-    animation: pathRect 3s cubic-bezier(0.785, 0.135, 0.15, 0.86) infinite;
-  }
-
-  .loader svg circle {
-    stroke-dasharray: 150 50 150 50;
-    stroke-dashoffset: 75;
-    animation: pathCircle var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86)
-      infinite;
-  }
-
-  .loader.triangle {
-    width: 48px;
-  }
-
-  .loader.triangle:before {
-    left: 21px;
-    transform: translate(-10px, -18px);
-    animation: dotTriangle var(--duration) cubic-bezier(0.785, 0.135, 0.15, 0.86)
-      infinite;
-  }
-
-  @keyframes pathTriangle {
-    33% {
-      stroke-dashoffset: 74;
-    }
-
-    66% {
-      stroke-dashoffset: 147;
-    }
-
-    100% {
-      stroke-dashoffset: 221;
-    }
-  }
-
-  @keyframes dotTriangle {
-    33% {
-      transform: translate(0, 0);
-    }
-
-    66% {
-      transform: translate(10px, -18px);
-    }
-
-    100% {
-      transform: translate(-10px, -18px);
-    }
-  }
-
-  @keyframes pathRect {
-    25% {
-      stroke-dashoffset: 64;
-    }
-
-    50% {
-      stroke-dashoffset: 128;
-    }
-
-    75% {
-      stroke-dashoffset: 192;
-    }
-
-    100% {
-      stroke-dashoffset: 256;
-    }
-  }
-
-  @keyframes dotRect {
-    25% {
-      transform: translate(0, 0);
-    }
-
-    50% {
-      transform: translate(18px, -18px);
-    }
-
-    75% {
-      transform: translate(0, -36px);
-    }
-
-    100% {
-      transform: translate(-18px, -18px);
-    }
-  }
-
-  @keyframes pathCircle {
-    25% {
-      stroke-dashoffset: 125;
-    }
-
-    50% {
-      stroke-dashoffset: 175;
-    }
-
-    75% {
-      stroke-dashoffset: 225;
-    }
-
-    100% {
-      stroke-dashoffset: 275;
-    }
-  }
-
-  .loader {
-    display: inline-block;
-    margin: 0 16px;
-  }`;
-
-export default Loader;
->>>>>>> 7927750ba26b50dd1a0ece376cf45ab44c37e8dc
