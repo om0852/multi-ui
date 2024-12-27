@@ -10,7 +10,7 @@ import {
   MenubarRadioItem,
   MenubarSeparator,
   MenubarSub,
-} from "./_components/Menubar_3"; // Adjust this import based on your file structure.
+} from "./_components/Menubar_2"; // Adjust this import based on your file structure.
 
 export default function ExampleMenubar() {
   // const [isOptionChecked, setIsOptionChecked] = useState(false);
