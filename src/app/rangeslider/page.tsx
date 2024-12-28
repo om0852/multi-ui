@@ -1,5 +1,5 @@
 import React from 'react'
-import RangeSlider from './_components/rangeSlider_5'
+import RangeSlider from './_components/RangeSlider_5'
 
 const page = () => {
   return (
