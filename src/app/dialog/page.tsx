@@ -1,10 +1,10 @@
 import React from 'react'
-import { Example } from './_components/Dialog_1'
+import { NeonExample } from './_components/Dialog_5'
 
 const page = () => {
   return (
     <div>
-      <Example/>
+      <NeonExample/>
     </div>
   )
 }
