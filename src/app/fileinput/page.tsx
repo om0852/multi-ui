@@ -1,7 +1,7 @@
 
 "use client"
 
-import FileUpload from "./_components/FileInput_5";
+import FileUpload from "./_components/FileInput_10";
 
 const App: React.FC = () => {
   const handleFiles = (files: FileList | null) => {
