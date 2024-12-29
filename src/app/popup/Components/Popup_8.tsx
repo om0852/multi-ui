@@ -1,28 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, ReactNode } from "react";
 
 interface MenuItem {
-  label: string;
+  label: ReactNode; // Flexible content for menu items (text, icons, etc.)
   onClick?: () => void; // Optional onClick for menu items
 }
 
-interface Popup6Props {
-  menuItems: MenuItem[];
+interface Popup8Props {
+  menuItems: MenuItem[]; // Array of menu items
   distance?: number; // Optional: Distance of menu items from the center
-  label?: string; // Optional: Label for the central toggle button
+  label?: ReactNode; // Optional: Content for the central toggle button
   centerColor?: string; // Optional: Background color for the central button
   menuColor?: string; // Optional: Background color for menu items
   centerRadius?: string; // Optional: Custom radius for the central button
   menuItemRadius?: string; // Optional: Custom radius for menu items
-  onCenterClick?: () => void; // Optional: onClick handler for the center button
+  onCenterClick?: () => void; // Optional: onClick handler for center button
 }
 
-const Popup6: React.FC<Popup6Props> = ({
+const Popup_8: React.FC<Popup8Props> = ({
   menuItems,
-  distance = 120, // Default distance for menu items
-  label = "Click Me",
-  centerColor = "bg-red-500",
-  menuColor = "bg-teal-500",
-  centerRadius = "w-20 h-20", // Default radius for center button
+  distance = 150, // Default distance for menu items
+  label = "Click Me", // Default central button content
+  centerColor = "bg-blue-500",
+  menuColor = "bg-purple-500",
+  centerRadius = "w-16 h-16", // Default radius for center button
   menuItemRadius = "w-12 h-12", // Default radius for menu items
   onCenterClick, // Optional: onClick handler for center button
 }) => {
@@ -43,16 +43,16 @@ const Popup6: React.FC<Popup6Props> = ({
 
     if (!isChecked) {
       return {
-        transform: `translate(0px, 0px) scale(0)`,
+        transform: `translate(0px, 0px) rotate(360deg)`,
         opacity: 0,
-        transition: "transform 0.3s ease-out, opacity 0.3s ease-out",
+        transition: "transform 0.4s ease-out, opacity 0.4s ease-out",
       };
     }
 
     return {
-      transform: `translate(${x}px, ${y}px) scale(1)`,
+      transform: `translate(${x}px, ${y}px) rotate(${angles[index]}deg)`,
       opacity: 1,
-      transition: "transform 0.4s ease-out, opacity 0.4s ease-out, transform 0.3s ease-in-out",
+      transition: `transform 0.4s ease-out ${0.1 * index}s, opacity 0.4s ease-out ${0.1 * index}s`, // Staggered effect
     };
   };
 
@@ -77,15 +77,15 @@ const Popup6: React.FC<Popup6Props> = ({
           onClick={onCenterClick} // Execute onCenterClick if passed
           className={`${centerColor} ${centerRadius} rounded-full flex items-center justify-center text-white text-lg cursor-pointer relative z-10 transition-all duration-300 ease-in-out`}
           style={{
-            transform: isChecked ? "scale(1.2)" : "scale(1)",
+            animation: isChecked ? "bounce 0.6s infinite" : "none", // Bounce effect on click
           }}
         >
           {label}
         </label>
-        {/* Circular Menu Items */}
+        {/* Fly-out Menu Items */}
         {menuItems.map((item, index) => (
           <div
-            key={item.label}
+            key={item.label as string} // Assumes label is unique, if not, use `item.id` instead
             onClick={() => handleMenuItemClick(item)}
             style={menuStyles(index)}
             className={`absolute ${menuColor} ${menuItemRadius} text-white rounded-full flex items-center justify-center text-sm no-underline transition-all duration-300 ease-in-out cursor-pointer`}
@@ -98,4 +98,4 @@ const Popup6: React.FC<Popup6Props> = ({
   );
 };
 
-export default Popup6;
+export default Popup_8;

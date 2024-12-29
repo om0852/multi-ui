@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, ReactNode } from "react";
 
 interface MenuItem {
-  label: string;
-  href: string;
+  id: string; // Unique identifier for the menu item
+  content: ReactNode; // Flexible content for menu items (e.g., text, icons)
   onClick?: () => void; // Optional onClick for menu items
 }
 
-interface Popup3Props {
+interface Popup6Props {
   menuItems: MenuItem[];
   distance?: number; // Optional: Distance of menu items from the center
-  label?: string; // Optional: Label for the central toggle button
+  centralContent?: ReactNode; // Optional: Content for the central toggle button
   centerColor?: string; // Optional: Background color for the central button
   menuColor?: string; // Optional: Background color for menu items
   centerRadius?: string; // Optional: Custom radius for the central button
@@ -17,15 +17,15 @@ interface Popup3Props {
   onCenterClick?: () => void; // Optional: onClick handler for the center button
 }
 
-const Popup3: React.FC<Popup3Props> = ({
+const Popup_6: React.FC<Popup6Props> = ({
   menuItems,
-  distance = 180, // Default: 180px distance for menu items
-  label = "Menu",
-  centerColor = "bg-green-500",
-  menuColor = "bg-purple-400",
-  centerRadius = "w-36 h-36", // Default center button radius
-  menuItemRadius = "w-14 h-14", // Default menu item radius
-  onCenterClick, // onClick handler for the center button
+  distance = 120, // Default distance for menu items
+  centralContent = "Click Me", // Default central button content
+  centerColor = "bg-red-500",
+  menuColor = "bg-teal-500",
+  centerRadius = "w-20 h-20", // Default radius for center button
+  menuItemRadius = "w-12 h-12", // Default radius for menu items
+  onCenterClick, // Optional: onClick handler for center button
 }) => {
   const [isChecked, setIsChecked] = useState(false);
 
@@ -38,22 +38,22 @@ const Popup3: React.FC<Popup3Props> = ({
   );
 
   const menuStyles = (index: number) => {
-    if (!isChecked) {
-      return {
-        transform: `scale(0) rotate(0deg)`,
-        opacity: 0,
-        transitionDelay: `${0.1 * index}s`,
-      };
-    }
-
     const angle = (angles[index] * Math.PI) / 180; // Convert to radians
     const x = Math.cos(angle) * distance;
     const y = Math.sin(angle) * distance;
 
+    if (!isChecked) {
+      return {
+        transform: `translate(0px, 0px) scale(0)`,
+        opacity: 0,
+        transition: "transform 0.3s ease-out, opacity 0.3s ease-out",
+      };
+    }
+
     return {
       transform: `translate(${x}px, ${y}px) scale(1)`,
       opacity: 1,
-      transitionDelay: `${0.1 * index}s`,
+      transition: "transform 0.4s ease-out, opacity 0.4s ease-out, transform 0.3s ease-in-out",
     };
   };
 
@@ -76,31 +76,27 @@ const Popup3: React.FC<Popup3Props> = ({
         <label
           htmlFor="checkbox"
           onClick={onCenterClick} // Execute onCenterClick if passed
-          className={`${centerColor} ${centerRadius} rounded-full flex items-center justify-center text-white text-lg cursor-pointer relative z-10 transition-all duration-300 transform`}
+          className={`${centerColor} ${centerRadius} rounded-full flex items-center justify-center text-white text-lg cursor-pointer relative z-10 transition-all duration-300 ease-in-out`}
           style={{
-            transform: isChecked ? "rotate(45deg) scale(1.1)" : "rotate(0deg)",
+            transform: isChecked ? "scale(1.2)" : "scale(1)",
           }}
         >
-          {label}
+          {centralContent}
         </label>
         {/* Circular Menu Items */}
         {menuItems.map((item, index) => (
-          <a
-            key={item.label}
-            href={item.href}
-            onClick={(e) => {
-              e.preventDefault();
-              handleMenuItemClick(item);
-            }}
+          <div
+            key={item.id}
+            onClick={() => handleMenuItemClick(item)}
             style={menuStyles(index)}
-            className={`absolute ${menuColor} ${menuItemRadius} text-white rounded-full flex items-center justify-center text-sm no-underline transition-all duration-300 ease-in-out`}
+            className={`absolute ${menuColor} ${menuItemRadius} text-white rounded-full flex items-center justify-center text-sm no-underline transition-all duration-300 ease-in-out cursor-pointer`}
           >
-            {item.label}
-          </a>
+            {item.content}
+          </div>
         ))}
       </div>
     </div>
   );
 };
 
-export default Popup3;
+export default Popup_6;

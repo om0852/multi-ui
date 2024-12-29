@@ -1,26 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, ReactNode } from "react";
 
 interface MenuItem {
-  label: string;
+  label: ReactNode; // Flexible content for menu items (e.g., text, icons)
   onClick?: () => void; // Optional onClick handler for menu items
 }
 
-interface Popup11Props {
-  menuItems: MenuItem[];
+interface Popup10Props {
+  menuItems: MenuItem[]; // Array of menu items
   distance?: number; // Optional: Distance of menu items from the center
-  label?: string; // Optional: Label for the central toggle button
+  label?: ReactNode; // Optional: Content for the central toggle button
   centerColor?: string; // Optional: Background color for the central button
   menuColor?: string; // Optional: Background color for menu items
   centerRadius?: string; // Optional: Custom radius for the central button
   menuItemRadius?: string; // Optional: Custom radius for menu items
 }
 
-const Popup11: React.FC<Popup11Props> = ({
+const Popup_10: React.FC<Popup10Props> = ({
   menuItems,
   distance = 150, // Default distance for menu items
-  label = "Menu",
-  centerColor = "bg-green-500",
-  menuColor = "bg-pink-500",
+  label = "Menu", // Default central button content
+  centerColor = "bg-purple-500",
+  menuColor = "bg-yellow-400",
   centerRadius = "w-16 h-16", // Default radius for center button
   menuItemRadius = "w-12 h-12", // Default radius for menu items
 }) => {
@@ -41,14 +41,14 @@ const Popup11: React.FC<Popup11Props> = ({
 
     if (!isChecked) {
       return {
-        transform: `translate(0px, 0px) scale(0)`,
+        transform: `translate(0px, 0px) rotate(-360deg)`,
         opacity: 0,
         transition: `transform 0.5s ease-out, opacity 0.5s ease-out`,
       };
     }
 
     return {
-      transform: `translate(${x}px, ${y}px) scale(1)`,
+      transform: `translate(${x}px, ${y}px) rotate(0deg)`,
       opacity: 1,
       transition: `transform 0.5s ease-out ${0.1 * index}s, opacity 0.5s ease-out ${0.1 * index}s`,
     };
@@ -60,19 +60,22 @@ const Popup11: React.FC<Popup11Props> = ({
   };
 
   return (
-    <div className="flex items-center justify-center w-full h-screen bg-gray-800">
+    <div className="flex items-center justify-center w-full h-screen bg-gray-900">
       <div className="relative flex items-center justify-center">
         {/* Center Toggle Button */}
         <button
           onClick={handleToggle}
           className={`${centerColor} ${centerRadius} rounded-full flex items-center justify-center text-white text-lg cursor-pointer relative z-10`}
+          style={{
+            animation: isChecked ? "rotate-scale 1s infinite" : "none",
+          }}
         >
           {label}
         </button>
-        {/* Ripple Menu Items */}
+        {/* Spinning Menu Items */}
         {menuItems.map((item, index) => (
           <div
-            key={item.label}
+            key={item.label as string} // Assumes label is unique, if not, use `item.id` instead
             onClick={() => handleMenuItemClick(item)}
             style={menuStyles(index)}
             className={`absolute ${menuColor} ${menuItemRadius} text-white rounded-full flex items-center justify-center text-sm no-underline transition-all duration-300 ease-in-out cursor-pointer`}
@@ -85,4 +88,4 @@ const Popup11: React.FC<Popup11Props> = ({
   );
 };
 
-export default Popup11;
+export default Popup_10;

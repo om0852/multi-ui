@@ -1,15 +1,16 @@
-"use client"
-import React, { useState } from "react";
+"use client";
+import React, { ReactNode, useState } from "react";
 
 interface MenuItem {
-  label: string;
+  id: string; // Unique identifier for the menu item
+  label: ReactNode; // Accept ReactNode for flexible content (e.g., text, icons, etc.)
   href: string;
 }
 
 interface Popup1Props {
   menuItems: MenuItem[];
   distance?: number; // Optional: Distance of menu items from the center
-  label?: string; // Optional: Label for the central toggle button
+  centralContent?: ReactNode; // Optional: Content for the central toggle button
   centerColor?: string; // Optional: Background color for the central button
   menuColor?: string; // Optional: Background color for menu items
 }
@@ -17,7 +18,7 @@ interface Popup1Props {
 const Popup1: React.FC<Popup1Props> = ({
   menuItems,
   distance = 192, // Default: 12em (192px)
-  label = "Click me",
+  centralContent = "Click me", // Default: Text content for the central button
   centerColor = "bg-blue-500",
   menuColor = "bg-orange-400",
 }) => {
@@ -66,12 +67,12 @@ const Popup1: React.FC<Popup1Props> = ({
           htmlFor="checkbox"
           className={`${centerColor} w-40 h-40 rounded-full flex items-center justify-center text-white text-lg cursor-pointer relative z-10`}
         >
-          {label}
+          {centralContent}
         </label>
         {/* Circular Menu Items */}
         {menuItems.map((item, index) => (
           <a
-            key={item.label}
+            key={item.id}
             href={item.href}
             style={menuStyles(index)}
             className={`absolute ${menuColor} w-16 h-16 text-white rounded-full flex items-center justify-center text-sm no-underline transition-all duration-300 ease-in-out`}

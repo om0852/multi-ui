@@ -1,30 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, ReactNode } from "react";
 
 interface MenuItem {
-  label: string;
-  onClick?: () => void; // Optional onClick for menu items
+  label: ReactNode; // Allow ReactNode content (e.g., JSX elements, icons, etc.)
+  onClick?: () => void; // Optional onClick handler for menu items
 }
 
-interface Popup7Props {
-  menuItems: MenuItem[];
+interface Popup11Props {
+  menuItems: MenuItem[]; // Array of menu items
   distance?: number; // Optional: Distance of menu items from the center
-  label?: string; // Optional: Label for the central toggle button
+  label?: ReactNode; // Optional: Content for the central toggle button
   centerColor?: string; // Optional: Background color for the central button
   menuColor?: string; // Optional: Background color for menu items
   centerRadius?: string; // Optional: Custom radius for the central button
   menuItemRadius?: string; // Optional: Custom radius for menu items
-  onCenterClick?: () => void; // Optional: onClick handler for the center button
 }
 
-const Popup7: React.FC<Popup7Props> = ({
+const Popup_11: React.FC<Popup11Props> = ({
   menuItems,
   distance = 150, // Default distance for menu items
-  label = "Click Me",
+  label = "Menu", // Default central button content
   centerColor = "bg-green-500",
-  menuColor = "bg-indigo-500",
+  menuColor = "bg-pink-500",
   centerRadius = "w-16 h-16", // Default radius for center button
-  menuItemRadius = "w-10 h-10", // Default radius for menu items
-  onCenterClick, // Optional: onClick handler for center button
+  menuItemRadius = "w-12 h-12", // Default radius for menu items
 }) => {
   const [isChecked, setIsChecked] = useState(false);
 
@@ -43,16 +41,16 @@ const Popup7: React.FC<Popup7Props> = ({
 
     if (!isChecked) {
       return {
-        transform: `translate(0px, 0px) rotate(360deg)`,
+        transform: `translate(0px, 0px) scale(0)`,
         opacity: 0,
-        transition: "transform 0.3s ease-out, opacity 0.3s ease-out",
+        transition: `transform 0.5s ease-out, opacity 0.5s ease-out`,
       };
     }
 
     return {
-      transform: `translate(${x}px, ${y}px) rotate(${angles[index]}deg)`,
+      transform: `translate(${x}px, ${y}px) scale(1)`,
       opacity: 1,
-      transition: "transform 0.4s ease-out, opacity 0.4s ease-out",
+      transition: `transform 0.5s ease-out ${0.1 * index}s, opacity 0.5s ease-out ${0.1 * index}s`,
     };
   };
 
@@ -64,29 +62,17 @@ const Popup7: React.FC<Popup7Props> = ({
   return (
     <div className="flex items-center justify-center w-full h-screen bg-gray-800">
       <div className="relative flex items-center justify-center">
-        <input
-          type="checkbox"
-          id="checkbox"
-          checked={isChecked}
-          onChange={handleToggle}
-          className="hidden"
-        />
         {/* Center Toggle Button */}
-        <label
-          htmlFor="checkbox"
-          onClick={onCenterClick} // Execute onCenterClick if passed
-          className={`${centerColor} ${centerRadius} rounded-full flex items-center justify-center text-white text-lg cursor-pointer relative z-10 transition-all duration-300 ease-in-out`}
-          style={{
-            transform: isChecked ? "scale(1.1)" : "scale(1)",
-            animation: isChecked ? "pulse 1s infinite" : "none",
-          }}
+        <button
+          onClick={handleToggle}
+          className={`${centerColor} ${centerRadius} rounded-full flex items-center justify-center text-white text-lg cursor-pointer relative z-10`}
         >
           {label}
-        </label>
-        {/* Circular Menu Items */}
+        </button>
+        {/* Ripple Menu Items */}
         {menuItems.map((item, index) => (
           <div
-            key={item.label}
+            key={item.label as string} // Assumes label is unique, if not, use `item.id` instead
             onClick={() => handleMenuItemClick(item)}
             style={menuStyles(index)}
             className={`absolute ${menuColor} ${menuItemRadius} text-white rounded-full flex items-center justify-center text-sm no-underline transition-all duration-300 ease-in-out cursor-pointer`}
@@ -99,4 +85,4 @@ const Popup7: React.FC<Popup7Props> = ({
   );
 };
 
-export default Popup7;
+export default Popup_11;
