@@ -1,54 +1,88 @@
 import React, { useState } from "react";
 
 interface MenuItem {
-  id: number;
   label: string;
-  icon: string;
-  link: string;
+  onClick?: () => void; // Optional onClick handler for menu items
 }
 
 interface Popup10Props {
   menuItems: MenuItem[];
+  distance?: number; // Optional: Distance of menu items from the center
+  label?: string; // Optional: Label for the central toggle button
+  centerColor?: string; // Optional: Background color for the central button
+  menuColor?: string; // Optional: Background color for menu items
+  centerRadius?: string; // Optional: Custom radius for the central button
+  menuItemRadius?: string; // Optional: Custom radius for menu items
 }
 
-const Popup10: React.FC<Popup10Props> = ({ menuItems }) => {
-  const [isOpen, setIsOpen] = useState(false);
+const Popup10: React.FC<Popup10Props> = ({
+  menuItems,
+  distance = 150, // Default distance for menu items
+  label = "Menu",
+  centerColor = "bg-purple-500",
+  menuColor = "bg-yellow-400",
+  centerRadius = "w-16 h-16", // Default radius for center button
+  menuItemRadius = "w-12 h-12", // Default radius for menu items
+}) => {
+  const [isChecked, setIsChecked] = useState(false);
+
+  const handleToggle = () => {
+    setIsChecked(!isChecked);
+  };
+
+  const angles = Array.from({ length: menuItems.length }, (_, index) =>
+    (360 / menuItems.length) * index
+  );
+
+  const menuStyles = (index: number) => {
+    const angle = (angles[index] * Math.PI) / 180; // Convert to radians
+    const x = Math.cos(angle) * distance;
+    const y = Math.sin(angle) * distance;
+
+    if (!isChecked) {
+      return {
+        transform: `translate(0px, 0px) rotate(-360deg)`,
+        opacity: 0,
+        transition: `transform 0.5s ease-out, opacity 0.5s ease-out`,
+      };
+    }
+
+    return {
+      transform: `translate(${x}px, ${y}px) rotate(0deg)`,
+      opacity: 1,
+      transition: `transform 0.5s ease-out ${0.1 * index}s, opacity 0.5s ease-out ${0.1 * index}s`,
+    };
+  };
+
+  const handleMenuItemClick = (item: MenuItem) => {
+    item.onClick && item.onClick(); // Call the item's onClick handler if it exists
+    setIsChecked(false); // Close the menu after clicking an item
+  };
 
   return (
-    <div className="relative h-screen bg-gray-900">
-      {/* Toggle Button */}
-      <button
-        onClick={() => setIsOpen((prev) => !prev)}
-        className="absolute top-4 left-4 w-12 h-12 bg-pink-600 text-white rounded-full flex items-center justify-center shadow-md hover:bg-pink-700 transition-all duration-300"
-      >
-        {isOpen ? "×" : "☰"}
-      </button>
-
-      {/* Carousel Menu */}
-      <div
-        className={`fixed top-0 left-0 h-full bg-gray-800 shadow-lg transform transition-transform duration-500 ${
-          isOpen ? "translate-x-0" : "-translate-x-full"
-        }`}
-        style={{ width: "80%" }}
-      >
-        <ul className="flex flex-col items-center justify-center space-y-6 h-full">
-          {menuItems.map((item, index) => (
-            <li
-              key={item.id}
-              className={`w-48 h-12 bg-gradient-to-r from-green-400 to-blue-500 rounded-lg shadow-md flex items-center justify-center text-white text-xl transition-transform duration-500 delay-${index * 150}`}
-            >
-              <a
-                href={item.link}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex items-center space-x-2"
-              >
-                <span>{item.icon}</span>
-                <span>{item.label}</span>
-              </a>
-            </li>
-          ))}
-        </ul>
+    <div className="flex items-center justify-center w-full h-screen bg-gray-900">
+      <div className="relative flex items-center justify-center">
+        {/* Center Toggle Button */}
+        <button
+          onClick={handleToggle}
+          className={`${centerColor} ${centerRadius} rounded-full flex items-center justify-center text-white text-lg cursor-pointer relative z-10`}
+          style={{
+            animation: isChecked ? "rotate-scale 1s infinite" : "none",
+          }}
+        >
+          {label}
+        </button>
+        {/* Spinning Menu Items */}
+        {menuItems.map((item, index) => (
+          <div
+            key={item.label}
+            onClick={() => handleMenuItemClick(item)}
+            style={menuStyles(index)}
+            className={`absolute ${menuColor} ${menuItemRadius} text-white rounded-full flex items-center justify-center text-sm no-underline transition-all duration-300 ease-in-out cursor-pointer`}
+          >
+            {item.label}
+          </div>
+        ))}
       </div>
     </div>
   );
