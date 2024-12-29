@@ -1,5 +1,5 @@
 import React from "react";
-import { Example } from "./_components/OtpField_5";
+import { Example } from "./_components/OtpField_10";
 
 const page = () => {
   return (
