@@ -48,7 +48,7 @@ export const MenubarTrigger = forwardRef<
     <button
       ref={ref}
       onClick={toggleMenu}
-      className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300"
+      className="px-4 py-2 bg-gray-200 rounded hover:bg-gray-300 dark:bg-gray-700 dark:hover:bg-gray-600"
     >
       {children}
     </button>
@@ -70,7 +70,7 @@ export const MenubarContent: React.FC<{ children: React.ReactNode; isVisible?: b
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 10 }}
-          className="absolute top-full left-0 mt-2 w-48 bg-white shadow-lg rounded-lg z-10"
+          className="absolute top-full left-0 mt-2 w-48 bg-white shadow-lg rounded-lg z-10 dark:bg-gray-800 dark:shadow-gray-900"
         >
           <ul className="py-2">
             {React.Children.map(children, (child) =>
@@ -88,7 +88,10 @@ export const MenubarContent: React.FC<{ children: React.ReactNode; isVisible?: b
 // MenubarItem Component
 export const MenubarItem: React.FC<{ children: ReactNode; onClick?: () => void }> = ({ children, onClick }) => {
   return (
-    <li onClick={onClick} className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+    <li
+      onClick={onClick}
+      className="px-4 py-2 hover:bg-gray-100 cursor-pointer dark:hover:bg-gray-700"
+    >
       {children}
     </li>
   );
@@ -122,9 +125,7 @@ export const MenubarSub: React.FC<{ label: ReactNode; children: React.ReactNode 
   return (
     <div className="relative">
       {/* User-defined label for the submenu */}
-      <MenubarItem onClick={toggleSubmenu}>
-        {label}
-      </MenubarItem>
+      <MenubarItem onClick={toggleSubmenu}>{label}</MenubarItem>
 
       {/* Submenu Content */}
       {isSubmenuVisible && (
@@ -132,7 +133,7 @@ export const MenubarSub: React.FC<{ label: ReactNode; children: React.ReactNode 
           initial={{ opacity: 0, x: -10 }}
           animate={{ opacity: 1, x: 0 }}
           exit={{ opacity: 0, x: -10 }}
-          className="absolute left-full top-0 mt-2 w-48 bg-white shadow-lg rounded-lg z-10"
+          className="absolute left-full top-0 mt-2 w-48 bg-white shadow-lg rounded-lg z-10 dark:bg-gray-800 dark:shadow-gray-900"
           ref={submenuRef}
         >
           <ul className="py-2">{children}</ul>
@@ -144,7 +145,7 @@ export const MenubarSub: React.FC<{ label: ReactNode; children: React.ReactNode 
 
 // MenubarSeparator Component
 export const MenubarSeparator: React.FC = () => {
-  return <hr className="my-2 border-gray-200" />;
+  return <hr className="my-2 border-gray-200 dark:border-gray-700" />;
 };
 
 // MenubarCheckboxItem Component
@@ -163,7 +164,7 @@ export const MenubarCheckboxItem: React.FC<{
   };
 
   return (
-    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+    <li className="px-4 py-2 hover:bg-gray-100 cursor-pointer dark:hover:bg-gray-700">
       <label className="flex items-center">
         <input
           type="checkbox"
@@ -201,7 +202,7 @@ export const MenubarRadioItem: React.FC<{
   };
 
   return (
-    <li onClick={handleChange} className="px-4 py-2 hover:bg-gray-100 cursor-pointer">
+    <li onClick={handleChange} className="px-4 py-2 hover:bg-gray-100 cursor-pointer dark:hover:bg-gray-700">
       <label className="flex items-center">
         <input
           type="radio"
@@ -220,5 +221,5 @@ export const MenubarRadioItem: React.FC<{
 
 // MenubarShortcut Component
 export const MenubarShortcut: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  return <span className="text-gray-500 text-sm ml-auto">{children}</span>;
+  return <span className="text-gray-500 text-sm ml-auto dark:text-gray-400">{children}</span>;
 };

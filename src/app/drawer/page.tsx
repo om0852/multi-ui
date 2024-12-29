@@ -1,5 +1,5 @@
 import React from 'react'
-import { Example } from './_components/Drawer_1'
+import { Example } from './_components/Drawer_2'
 
 const page = () => {
   return (
