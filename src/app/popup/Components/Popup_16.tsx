@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, ReactNode } from "react";
 
 interface MenuItem {
-  label: string;
-  onClick?: () => void;
+  label: ReactNode; // Allow ReactNode content (e.g., JSX, icons, etc.)
+  onClick?: () => void; // Optional onClick handler for menu items
 }
 
 interface DirectionalMenuProps {
-  menuItems: MenuItem[];
+  menuItems: MenuItem[]; // Array of menu items
   distance?: number; // Distance between menu items
-  direction?:
+  direction?: 
     | "top"
     | "left"
     | "right"
@@ -16,8 +16,8 @@ interface DirectionalMenuProps {
     | "top-left"
     | "top-right"
     | "bottom-left"
-    | "bottom-right"; // Menu direction
-  label?: string; // Label for central button
+    | "bottom-right"; // Direction of the menu
+  label?: ReactNode; // Content for the central toggle button
   centerColor?: string; // Central button background color
   menuColor?: string; // Menu item background color
   centerRadius?: string; // Central button size
@@ -28,7 +28,7 @@ const DirectionalMenu: React.FC<DirectionalMenuProps> = ({
   menuItems,
   distance = 80,
   direction = "top",
-  label = "☰",
+  label = "☰", // Default label for central button
   centerColor = "bg-purple-500",
   menuColor = "bg-yellow-400",
   centerRadius = "w-16 h-16",
@@ -82,7 +82,7 @@ const DirectionalMenu: React.FC<DirectionalMenuProps> = ({
 
   const handleMenuItemClick = (item: MenuItem) => {
     item.onClick?.();
-    setIsOpen(false);
+    setIsOpen(false); // Close the menu after clicking an item
   };
 
   return (
@@ -100,7 +100,7 @@ const DirectionalMenu: React.FC<DirectionalMenuProps> = ({
         {/* Directional Menu Items */}
         {menuItems.map((item, index) => (
           <div
-            key={item.label}
+            key={item.label as string} // Use item.label as key, or another unique identifier
             onClick={() => handleMenuItemClick(item)}
             style={menuStyles(index)}
             className={`absolute ${menuColor} ${menuItemRadius} rounded-full flex items-center justify-center text-sm text-black shadow-lg transition-all ease-in-out transform hover:scale-110`}

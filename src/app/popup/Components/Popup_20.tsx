@@ -1,15 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, ReactNode } from "react";
 
 interface MenuItem {
-  label: string;
-  onClick?: () => void;
+  label: ReactNode; // Allow ReactNode content (e.g., JSX, icons, etc.)
+  onClick?: () => void; // Optional onClick handler for menu items
 }
 
 interface SwirlMenuProps {
-  menuItems: MenuItem[];
+  menuItems: MenuItem[]; // Array of menu items
   distance?: number; // Distance between menu items
   direction?: "top" | "left" | "right" | "bottom"; // Menu direction
-  label?: string; // Label for central button
+  label?: ReactNode; // Content for central button
   centerColor?: string; // Custom color for central button
   menuColor?: string; // Custom color for menu items
 }
@@ -18,7 +18,7 @@ const SwirlMenu: React.FC<SwirlMenuProps> = ({
   menuItems,
   distance = 120,
   direction = "top",
-  label = "🌟",
+  label = "🌟", // Default label for central button
   centerColor = "bg-indigo-600", // Default center button color
   menuColor = "bg-purple-500", // Default menu item color
 }) => {
@@ -73,7 +73,7 @@ const SwirlMenu: React.FC<SwirlMenuProps> = ({
         {/* Circular Menu Items with Swirling Effect */}
         {menuItems.map((item, index) => (
           <div
-            key={item.label}
+            key={item.label as string} // Use item.label as key or another unique identifier
             onClick={() => handleMenuItemClick(item)}
             style={menuStyles(index)}
             className={`absolute w-12 h-12 rounded-full flex items-center justify-center text-sm font-semibold ${menuColor} text-white shadow-md transition-all duration-300 ease-in-out cursor-pointer`}

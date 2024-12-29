@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, ReactNode } from "react";
 
 interface MenuItem {
-  label: string;
-  onClick?: () => void;
+  label: ReactNode; // Allow ReactNode content (e.g., JSX, icons, etc.)
+  onClick?: () => void; // Optional onClick handler for menu items
 }
 
 interface GlowingMenuProps {
-  menuItems: MenuItem[];
+  menuItems: MenuItem[]; // Array of menu items
   distance?: number; // Distance between menu items
   direction?:
     | "top"
@@ -17,7 +17,7 @@ interface GlowingMenuProps {
     | "top-right"
     | "bottom-left"
     | "bottom-right"; // Direction of menu expansion
-  label?: string; // Label for central button
+  label?: ReactNode; // Content for central button
   centerColor?: string; // Optional: Custom color for the central button
   menuColor?: string; // Optional: Custom color for the menu items
 }
@@ -26,7 +26,7 @@ const GlowingMenu: React.FC<GlowingMenuProps> = ({
   menuItems,
   distance = 100,
   direction = "top",
-  label = "✨",
+  label = "✨", // Default label for central button
   centerColor = "bg-blue-500", // Default center button color
   menuColor = "bg-pink-500", // Default menu item color
 }) => {
@@ -95,7 +95,7 @@ const GlowingMenu: React.FC<GlowingMenuProps> = ({
         {/* Directional Menu Items */}
         {menuItems.map((item, index) => (
           <div
-            key={item.label}
+            key={item.label as string} // Use item.label as key, or another unique identifier
             onClick={() => handleMenuItemClick(item)}
             style={menuStyles(index)}
             className={`absolute w-12 h-12 rounded-full flex items-center justify-center text-sm font-semibold ${menuColor} text-white shadow-[0_0_10px_rgba(236,72,153,1)] hover:shadow-[0_0_20px_rgba(236,72,153,1)] transition-transform transform scale-100 hover:scale-110 cursor-pointer`}

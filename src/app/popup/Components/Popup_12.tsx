@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, ReactNode } from "react";
 
 interface MenuItem {
-  label: string;
+  label: ReactNode; // Allow ReactNode content (e.g., JSX elements, icons, etc.)
   onClick?: () => void; // Optional onClick handler for menu items
 }
 
 interface RadialMenuProps {
-  menuItems: MenuItem[];
+  menuItems: MenuItem[]; // Array of menu items
   distance?: number; // Optional: Distance of menu items from the center
-  label?: string; // Optional: Label for the central toggle button
+  label?: ReactNode; // Optional: Content for the central toggle button
   centerColor?: string; // Optional: Background color for the central button
   menuColor?: string; // Optional: Background color for menu items
   centerRadius?: string; // Optional: Custom radius for the central button
@@ -18,7 +18,7 @@ interface RadialMenuProps {
 const RadialMenu: React.FC<RadialMenuProps> = ({
   menuItems,
   distance = 120, // Default distance for menu items
-  label = "☰",
+  label = "☰", // Default central button content
   centerColor = "bg-blue-600",
   menuColor = "bg-yellow-500",
   centerRadius = "w-14 h-14", // Default radius for center button
@@ -74,7 +74,7 @@ const RadialMenu: React.FC<RadialMenuProps> = ({
         {/* Radial Menu Items */}
         {menuItems.map((item, index) => (
           <div
-            key={item.label}
+            key={item.label as string} // Assumes label is unique, if not, use `item.id` instead
             onClick={() => handleMenuItemClick(item)}
             style={menuStyles(index)}
             className={`absolute ${menuColor} ${menuItemRadius} text-white rounded-full flex items-center justify-center text-sm shadow-lg transition-all duration-300 ease-in-out cursor-pointer`}

@@ -1,28 +1,28 @@
-import React, { useState } from "react";
+import React, { useState, ReactNode } from "react";
 
 interface MenuItem {
-  label: string;
-  onClick?: () => void;
+  label: ReactNode; // Allow ReactNode content (e.g., JSX, icons, etc.)
+  onClick?: () => void; // Optional onClick handler for menu items
 }
 
 interface FanMenuProps {
-  menuItems: MenuItem[];
-  distance?: number;
-  label?: string;
-  centerColor?: string;
-  menuColor?: string;
-  centerRadius?: string;
-  menuItemRadius?: string;
+  menuItems: MenuItem[]; // Array of menu items
+  distance?: number; // Optional: Distance of menu items from the center
+  label?: ReactNode; // Optional: Content for the central toggle button
+  centerColor?: string; // Optional: Background color for the central button
+  menuColor?: string; // Optional: Background color for menu items
+  centerRadius?: string; // Optional: Custom radius for the central button
+  menuItemRadius?: string; // Optional: Custom radius for menu items
 }
 
 const FanMenu: React.FC<FanMenuProps> = ({
   menuItems,
-  distance = 120,
-  label = "☰",
+  distance = 120, // Default distance for menu items
+  label = "☰", // Default central button label
   centerColor = "bg-blue-500",
   menuColor = "bg-yellow-400",
-  centerRadius = "w-16 h-16",
-  menuItemRadius = "w-10 h-10",
+  centerRadius = "w-16 h-16", // Default radius for center button
+  menuItemRadius = "w-10 h-10", // Default radius for menu items
 }) => {
   const [isOpen, setIsOpen] = useState(false);
 
@@ -51,7 +51,7 @@ const FanMenu: React.FC<FanMenuProps> = ({
 
   const handleMenuItemClick = (item: MenuItem) => {
     item.onClick?.();
-    setIsOpen(false);
+    setIsOpen(false); // Close the menu after clicking an item
   };
 
   return (
@@ -70,7 +70,7 @@ const FanMenu: React.FC<FanMenuProps> = ({
         {/* Rotating Menu Items */}
         {menuItems.map((item, index) => (
           <div
-            key={item.label}
+            key={item.label as string} // Use item.label as key, or another unique identifier
             onClick={() => handleMenuItemClick(item)}
             style={menuStyles(index)}
             className={`absolute ${menuColor} ${menuItemRadius} rounded-full flex items-center justify-center text-xs text-black shadow-md transition-all ease-in-out transform hover:scale-110`}
