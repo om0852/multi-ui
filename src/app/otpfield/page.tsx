@@ -1,5 +1,5 @@
 import React from "react";
-import { Example } from "./_components/OtpField_10";
+import { Example } from "./_components/OtpField_14";
 
 const page = () => {
   return (
@@ -13,7 +13,7 @@ export default page;
 // import React from 'react'
 
 // const page = () => {
-//   return (
+//   return 
 //     <div>
       
 //     </div>
