@@ -8,12 +8,14 @@ type InputOTPSlotProps = {
   value: string;
   onChange: (value: string, index: number) => void;
   onKeyDown: (e: React.KeyboardEvent) => void;
+  invalid: boolean;
 };
 const InputOTPSlot: React.FC<InputOTPSlotProps> = ({
   index,
   value,
   onChange,
   onKeyDown,
+  invalid,
 }) => {
   return (
     <motion.input
@@ -22,7 +24,13 @@ const InputOTPSlot: React.FC<InputOTPSlotProps> = ({
       value={value}
       onChange={(e) => onChange(e.target.value, index)}
       onKeyDown={onKeyDown}
-      className="w-12 h-12 text-center text-xl border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:focus:ring-blue-300"
+      className={`w-16 h-16 text-center text-3xl font-bold rounded-lg shadow-md ${
+        invalid
+          ? "border-2 border-red-400 bg-red-100 dark:bg-red-800 dark:border-red-600"
+          : "border-2 border-pink-400 bg-pink-100 dark:bg-pink-800 dark:border-pink-600"
+      } focus:ring-4 focus:ring-teal-300 dark:focus:ring-teal-500 focus:outline-none`}
+      animate={invalid ? { x: [-10, 10, -8, 8, 0] } : {}}
+      transition={{ duration: 0.3 }}
     />
   );
 };
@@ -37,7 +45,7 @@ const InputOTPGroup: React.FC<InputOTPGroupProps> = ({ children }) => {
 
 // OTP Separator Component
 export const InputOTPSeparator = () => (
-  <div className="mx-2 text-xl text-gray-800 dark:text-gray-200">-</div>
+  <div className="mx-2 text-3xl font-semibold text-purple-500 dark:text-purple-300">•</div>
 );
 
 // Main OTP Input Component
@@ -51,20 +59,25 @@ export const InputOTP: React.FC<InputOTPProps> = ({
   maxLength,
   children,
   onComplete,
-  validationRegex = /^[A-Za-z0-9]*$/,
+  validationRegex = /^[0-9]*$/,
 }) => {
   const [otp, setOtp] = useState<string[]>(new Array(maxLength).fill(""));
   const [focusedIndex, setFocusedIndex] = useState<number | null>(0);
+  const [invalidIndexes, setInvalidIndexes] = useState<number[]>([]);
 
   // Handle OTP Slot Change
   const handleChange = (value: string, index: number) => {
     if (value.match(validationRegex)) {
       const newOtp = [...otp];
-      newOtp[index] = value.toUpperCase(); // Convert to uppercase for letters
+      newOtp[index] = value;
       setOtp(newOtp);
+      setInvalidIndexes((prev) => prev.filter((i) => i !== index)); // Clear invalid state
       if (value && index < maxLength - 1) {
         focusNextSlot(index); // Automatically focus next slot after typing
       }
+    } else {
+      // Mark the index as invalid
+      setInvalidIndexes((prev) => (prev.includes(index) ? prev : [...prev, index]));
     }
   };
 
@@ -123,6 +136,7 @@ export const InputOTP: React.FC<InputOTPProps> = ({
             value: otp[slot.props.index],
             onChange: handleChange,
             onKeyDown: (e: React.KeyboardEvent) => handleKeyDown(e, slot.props.index),
+            invalid: invalidIndexes.includes(slot.props.index),
           });
         }
         return slot;
@@ -144,19 +158,18 @@ export const Example = () => {
   return (
     <div className="p-8">
       <InputOTP
-        maxLength={7}
+        maxLength={6}
         onComplete={handleOtpComplete}
         validationRegex={/^[0-9]*$/} // Only numeric values allowed
       >
         <InputOTPGroup>
-          <InputOTPSlot index={0} value="" onChange={() => {}} onKeyDown={() => {}} />
-          <InputOTPSlot index={1} value="" onChange={() => {}} onKeyDown={() => {}} />
-          <InputOTPSlot index={2} value="" onChange={() => {}} onKeyDown={() => {}} />
+          <InputOTPSlot index={0} value="" onChange={() => {}} onKeyDown={() => {}} invalid={false} />
+          <InputOTPSlot index={1} value="" onChange={() => {}} onKeyDown={() => {}} invalid={false} />
+          <InputOTPSlot index={2} value="" onChange={() => {}} onKeyDown={() => {}} invalid={false} />
           <InputOTPSeparator />
-          <InputOTPSlot index={3} value="" onChange={() => {}} onKeyDown={() => {}} />
-          <InputOTPSlot index={4} value="" onChange={() => {}} onKeyDown={() => {}} />
-          <InputOTPSlot index={5} value="" onChange={() => {}} onKeyDown={() => {}} />
-          <InputOTPSlot index={6} value="" onChange={() => {}} onKeyDown={() => {}} />
+          <InputOTPSlot index={3} value="" onChange={() => {}} onKeyDown={() => {}} invalid={false} />
+          <InputOTPSlot index={4} value="" onChange={() => {}} onKeyDown={() => {}} invalid={false} />
+          <InputOTPSlot index={5} value="" onChange={() => {}} onKeyDown={() => {}} invalid={false} />
         </InputOTPGroup>
       </InputOTP>
     </div>
