@@ -1,6 +1,6 @@
 "use client"
 import React from "react";
-import PopupMenu from "./Components/Popup7";
+import PopupMenu from "./Components/Popup_15";
 
 const App = () => {
     const menuItems = [
@@ -24,9 +24,7 @@ const App = () => {
             label=" Menu"
             centerColor="bg-teal-500"
             menuColor="bg-yellow-400"
-            centerRadius="w-20 h-20" // Custom radius for the center button
-            menuItemRadius="w-10 h-10" // Custom radius for the menu items
-            onCenterClick={handleCenterClick} // Handle click on the center button
+            
           />
         </div>
       );
