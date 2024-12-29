@@ -81,7 +81,7 @@ export const MenubarItem: React.FC<{ children: ReactNode; onClick?: () => void }
   return (
     <li
       onClick={onClick}
-      className="px-4 py-2 text-gray-800 font-medium bg-gray-100 hover:bg-gray-200 rounded-lg cursor-pointer transition duration-200 ease-in-out"
+      className="px-4 py-2 mb-1 text-gray-800 font-medium bg-gray-100 hover:bg-gray-200 rounded-lg cursor-pointer transition duration-200 ease-in-out"
     >
       {children}
     </li>
