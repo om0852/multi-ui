@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 
@@ -14,22 +14,18 @@ interface RadioGroupProps {
   onChange: (value: string) => void;
 }
 
-export const RadioGroup: React.FC<RadioGroupProps> = ({
+export const FillRadioGroup: React.FC<RadioGroupProps> = ({
   options,
   name,
   selectedValue,
   onChange,
 }) => {
-  // Define initial colors and selected colors
-  const initialColors = ["bg-purple-300", "bg-teal-300", "bg-yellow-300"];
-  const selectedColors = ["bg-purple-500", "bg-teal-500", "bg-yellow-500"];
-
   return (
-    <div className="space-y-4">
-      {options.map((option, index) => (
+    <div className="space-y-2">
+      {options.map((option) => (
         <label
           key={option.value}
-          className="flex items-center space-x-4 cursor-pointer"
+          className="flex items-center space-x-3 cursor-pointer"
         >
           <input
             type="radio"
@@ -40,36 +36,34 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
             className="hidden"
           />
           <motion.div
-            className={`w-10 h-10 rounded-full flex items-center justify-center ${
+            className={`w-5 h-5 rounded-full border-2 ${
               selectedValue === option.value
-                ? selectedColors[index]
-                : initialColors[index]
-            }`}
-            whileHover={{ scale: 1.1 }}
+                ? "border-teal-500"
+                : "border-gray-400"
+            } flex items-center justify-center relative`}
+            initial={{ scale: 0.9 }}
             animate={{
-              backgroundColor:
-                selectedValue === option.value
-                  ? selectedColors[index]
-                  : initialColors[index],
+              scale: selectedValue === option.value ? 1.2 : 1,
+              borderColor:
+                selectedValue === option.value ? "#14b8a6" : "#d1d5db",
             }}
             transition={{ duration: 0.3 }}
           >
             {selectedValue === option.value && (
               <motion.div
-                className="w-5 h-5 bg-white rounded-full"
-                layoutId="innerCircle"
+                className="w-5 h-5 bg-teal-500 rounded-full absolute top-0 left-0"
+                initial={{ width: 0, height: 0 }}
+                animate={{ width: "100%", height: "100%" }}
+                transition={{
+                  duration: 0.4,
+                  type: "spring",
+                  stiffness: 400,
+                  damping: 30,
+                }}
               />
             )}
           </motion.div>
-          <span
-            className={`font-medium ${
-              selectedValue === option.value
-                ? "text-gray-900"
-                : "text-gray-600"
-            }`}
-          >
-            {option.label}
-          </span>
+          <span className="text-gray-800">{option.label}</span>
         </label>
       ))}
     </div>
@@ -86,13 +80,11 @@ const App: React.FC = () => {
   ];
 
   return (
-    <div className="p-6 max-w-md mx-auto text-center">
-      <h1 className="text-2xl font-bold mb-6 text-gray-800">
-        Select an Option:
-      </h1>
-      <RadioGroup
+    <div className="p-6">
+      <h1 className="text-xl font-semibold mb-4">Select an Option:</h1>
+      <FillRadioGroup
         options={options}
-        name="example"
+        name="fillEffectExample"
         selectedValue={selected}
         onChange={setSelected}
       />

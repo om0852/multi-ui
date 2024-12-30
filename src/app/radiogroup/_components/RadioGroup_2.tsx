@@ -15,7 +15,7 @@ interface RadioGroupProps {
   onChange: (value: string) => void;
 }
 
-const RadioGroup: React.FC<RadioGroupProps> = ({
+export const RadioGroup: React.FC<RadioGroupProps> = ({
   options,
   name,
   selectedValue,

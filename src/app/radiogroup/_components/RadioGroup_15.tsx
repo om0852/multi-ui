@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 
@@ -14,16 +14,19 @@ interface RadioGroupProps {
   onChange: (value: string) => void;
 }
 
-export const RadioGroup: React.FC<RadioGroupProps> = ({
+export const PulseRadioGroup: React.FC<RadioGroupProps> = ({
   options,
   name,
   selectedValue,
   onChange,
 }) => {
   return (
-    <div className="flex space-x-6 justify-center">
+    <div className="space-y-2">
       {options.map((option) => (
-        <label key={option.value} className="relative cursor-pointer">
+        <label
+          key={option.value}
+          className="flex items-center space-x-3 cursor-pointer"
+        >
           <input
             type="radio"
             name={name}
@@ -33,32 +36,33 @@ export const RadioGroup: React.FC<RadioGroupProps> = ({
             className="hidden"
           />
           <motion.div
-            className={`w-10 h-10 rounded-full border-2 flex items-center justify-center ${
+            className={`w-5 h-5 rounded-full border-2 ${
               selectedValue === option.value
                 ? "border-green-500"
-                : "border-gray-300"
-            }`}
-            whileHover={{ scale: 1.1 }}
-            transition={{ duration: 0.3 }}
+                : "border-gray-400"
+            } flex items-center justify-center`}
+            initial={{ scale: 1 }}
+            animate={{
+              scale: selectedValue === option.value ? 1.4 : 1,
+              borderColor:
+                selectedValue === option.value ? "#10b981" : "#d1d5db",
+              opacity: selectedValue === option.value ? 1 : 0.7,
+            }}
+            transition={{
+              duration: 0.4,
+              type: "spring",
+              stiffness: 300,
+              damping: 20,
+            }}
           >
             {selectedValue === option.value && (
-              <motion.svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth={2}
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                className="w-6 h-6 text-green-500"
-                initial={{ scale: 0 }}
-                animate={{ scale: 1 }}
-                transition={{ duration: 0.3 }}
-              >
-                <polyline points="20 6 9 17 4 12" />
-              </motion.svg>
+              <motion.div
+                className="w-2.5 h-2.5 bg-green-500 rounded-full"
+                layoutId="radioSelected"
+              />
             )}
           </motion.div>
+          <span className="text-gray-800">{option.label}</span>
         </label>
       ))}
     </div>
@@ -75,13 +79,11 @@ const App: React.FC = () => {
   ];
 
   return (
-    <div className="p-6 max-w-md mx-auto text-center">
-      <h1 className="text-2xl font-bold mb-6 text-gray-800">
-        Select an Option:
-      </h1>
-      <RadioGroup
+    <div className="p-6">
+      <h1 className="text-xl font-semibold mb-4">Select an Option:</h1>
+      <PulseRadioGroup
         options={options}
-        name="example"
+        name="pulseExample"
         selectedValue={selected}
         onChange={setSelected}
       />

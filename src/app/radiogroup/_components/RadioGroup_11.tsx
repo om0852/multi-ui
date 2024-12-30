@@ -1,4 +1,4 @@
-"use client";
+"use client"
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 
@@ -14,18 +14,18 @@ interface RadioGroupProps {
   onChange: (value: string) => void;
 }
 
-const RadioGroup: React.FC<RadioGroupProps> = ({
+export const BorderFillRadioGroup: React.FC<RadioGroupProps> = ({
   options,
   name,
   selectedValue,
   onChange,
 }) => {
   return (
-    <div className="flex space-x-4 justify-center">
+    <div className="space-y-2">
       {options.map((option) => (
         <label
           key={option.value}
-          className="relative cursor-pointer group"
+          className="flex items-center space-x-3 cursor-pointer"
         >
           <input
             type="radio"
@@ -36,34 +36,34 @@ const RadioGroup: React.FC<RadioGroupProps> = ({
             className="hidden"
           />
           <motion.div
-            className={`flex items-center justify-center w-24 h-12 rounded-lg text-white font-semibold transition-all duration-300 ${
+            className={`w-5 h-5 rounded-full border-2 ${
               selectedValue === option.value
-                ? "bg-gradient-to-r from-purple-500 to-blue-500"
-                : "bg-gray-800"
-            }`}
-            whileHover={{
-              scale: 1.1,
-              boxShadow: "0px 0px 20px rgba(255, 255, 255, 0.5)",
+                ? "border-indigo-500"
+                : "border-gray-400"
+            } flex items-center justify-center relative`}
+            initial={{ scale: 0.9 }}
+            animate={{
+              scale: selectedValue === option.value ? 1.2 : 1,
+              borderColor:
+                selectedValue === option.value ? "#6366f1" : "#d1d5db",
             }}
             transition={{ duration: 0.3 }}
           >
-            {option.label}
+            {selectedValue === option.value && (
+              <motion.div
+                className="w-5 h-5 bg-indigo-500 rounded-full absolute top-0 left-0"
+                initial={{ width: 0, height: 0 }}
+                animate={{ width: "100%", height: "100%" }}
+                transition={{
+                  duration: 0.2,
+                  type: "spring",
+                  stiffness: 300,
+                  damping: 30,
+                }}
+              />
+            )}
           </motion.div>
-          {selectedValue === option.value && (
-            <motion.div
-              className="absolute inset-0 rounded-lg bg-gradient-to-r from-purple-500 to-blue-500 opacity-50"
-              initial={{ scale: 1 }}
-              animate={{
-                scale: 1.2,
-                opacity: [0.5, 0.2, 0.5],
-              }}
-              transition={{
-                repeat: Infinity,
-                repeatType: "loop",
-                duration: 1.5,
-              }}
-            />
-          )}
+          <span className="text-gray-800">{option.label}</span>
         </label>
       ))}
     </div>
@@ -80,13 +80,11 @@ const App: React.FC = () => {
   ];
 
   return (
-    <div className="p-6 max-w-md mx-auto text-center">
-      <h1 className="text-2xl font-bold mb-6 text-gray-200">
-        Choose an Option:
-      </h1>
-      <RadioGroup
+    <div className="p-6">
+      <h1 className="text-xl font-semibold mb-4">Select an Option:</h1>
+      <BorderFillRadioGroup
         options={options}
-        name="example"
+        name="borderFillExample"
         selectedValue={selected}
         onChange={setSelected}
       />
