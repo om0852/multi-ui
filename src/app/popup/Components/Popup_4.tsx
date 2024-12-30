@@ -43,6 +43,8 @@ const Popup_4: React.FC<Popup4Props> = ({
       return {
         transform: `translate(0px, 0px)`,
         opacity: 0,
+        Visibility:"hidden",
+
         transitionDelay: `${0.1 * index}s`,
       };
     }
@@ -54,6 +56,8 @@ const Popup_4: React.FC<Popup4Props> = ({
     return {
       transform: `translate(${x}px, ${y}px)`,
       opacity: 1,
+      Visibility:"visible",
+
       transitionDelay: `${0.1 * index}s`,
     };
   };

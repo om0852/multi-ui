@@ -40,6 +40,7 @@ const RadialMenu: React.FC<RadialMenuProps> = ({
       return {
         transform: `translate(0, 0) scale(0)`,
         opacity: 0,
+        Visiblity: "hidden",
         transition: `transform 0.4s ease-in, opacity 0.2s`,
       };
     }
@@ -47,7 +48,10 @@ const RadialMenu: React.FC<RadialMenuProps> = ({
     return {
       transform: `translate(${position.x}px, ${position.y}px) scale(1)`,
       opacity: 1,
-      transition: `transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55) ${index * 0.05}s, opacity 0.5s ease-out ${index * 0.05}s`,
+      Visiblity: "visible",
+      transition: `transform 0.6s cubic-bezier(0.68, -0.55, 0.27, 1.55) ${
+        index * 0.05
+      }s, opacity 0.5s ease-out ${index * 0.05}s`,
     };
   };
 

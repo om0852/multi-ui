@@ -45,6 +45,8 @@ const Popup_9: React.FC<Popup9Props> = ({
       return {
         transform: `translate(0px, 0px) scale(0)`,
         opacity: 0,
+        Visibility:"hidden",
+
         transition: "transform 0.4s ease-out, opacity 0.4s ease-out",
       };
     }
@@ -52,6 +54,8 @@ const Popup_9: React.FC<Popup9Props> = ({
     return {
       transform: `translate(${x}px, ${y}px) scale(1)`,
       opacity: 1,
+      Visibility:"visible",
+
       transition: `transform 0.4s ease-out ${0.1 * index}s, opacity 0.4s ease-out ${0.1 * index}s`, // Staggered effect
     };
   };

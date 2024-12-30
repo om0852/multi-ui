@@ -43,6 +43,7 @@ const Popup_3: React.FC<Popup3Props> = ({
       return {
         transform: `scale(0) rotate(0deg)`,
         opacity: 0,
+        Visibility:"hidden",
         transitionDelay: `${0.1 * index}s`,
       };
     }
@@ -54,6 +55,7 @@ const Popup_3: React.FC<Popup3Props> = ({
     return {
       transform: `translate(${x}px, ${y}px) scale(1)`,
       opacity: 1,
+      Visibility:"visible",
       transitionDelay: `${0.1 * index}s`,
     };
   };

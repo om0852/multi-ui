@@ -42,6 +42,8 @@ const SwirlMenu: React.FC<SwirlMenuProps> = ({
       return {
         transform: `translate(0, 0) scale(0.5)`,
         opacity: 0,
+        Visiblity: "hidden",
+
         transition: `transform 0.5s ease-out, opacity 0.3s`,
       };
     }
@@ -49,7 +51,10 @@ const SwirlMenu: React.FC<SwirlMenuProps> = ({
     return {
       transform: `translate(${position.x}px, ${position.y}px) scale(1)`,
       opacity: 1,
-      transition: `transform 0.5s ease-out ${index * 0.1}s, opacity 0.5s ease-out ${index * 0.1}s`,
+      Visiblity: "visible",
+      transition: `transform 0.5s ease-out ${
+        index * 0.1
+      }s, opacity 0.5s ease-out ${index * 0.1}s`,
       animation: `bounce 0.6s ease-in-out ${index * 0.1}s`,
     };
   };

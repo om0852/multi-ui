@@ -38,6 +38,7 @@ const FanMenu: React.FC<FanMenuProps> = ({
       return {
         transform: `translate(0, 0) scale(0)`,
         opacity: 0,
+     Visibility:"hidden",
         transition: `transform 0.4s cubic-bezier(0.17, 0.67, 0.83, 0.67), opacity 0.3s`,
       };
     }
@@ -45,6 +46,8 @@ const FanMenu: React.FC<FanMenuProps> = ({
     return {
       transform: `translate(${x}px, ${y}px) scale(1)`,
       opacity: 1,
+      Visibility:"visible",
+
       transition: `transform 0.6s ease-out ${index * 0.1}s, opacity 0.4s ease-out ${index * 0.1}s`,
     };
   };

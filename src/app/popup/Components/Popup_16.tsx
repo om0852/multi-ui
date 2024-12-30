@@ -69,13 +69,16 @@ const DirectionalMenu: React.FC<DirectionalMenuProps> = ({
       return {
         transform: `translate(0, 0) scale(0.5)`,
         opacity: 0,
+        Visibility:"hidden",
+
         transition: `transform 0.5s ease-in, opacity 0.3s`,
       };
     }
 
-    return {
+return {
       transform: `translate(${position.x}px, ${position.y}px) scale(1)`,
       opacity: 1,
+      Visibility:"visible",    
       transition: `transform 0.7s ease-out ${index * 0.1}s, opacity 0.5s ease-out`,
     };
   };

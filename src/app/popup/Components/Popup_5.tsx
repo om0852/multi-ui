@@ -46,6 +46,8 @@ const Popup_5: React.FC<Popup5Props> = ({
       return {
         transform: `translate(0px, 0px)`,
         opacity: 0,
+        Visibility:"hidden",
+
         transition: "transform 0.3s ease-out, opacity 0.3s ease-out",
       };
     }
@@ -53,6 +55,8 @@ const Popup_5: React.FC<Popup5Props> = ({
     return {
       transform: `translate(${x}px, ${y}px)`,
       opacity: 1,
+      Visibility:"visible",
+
       transition: "transform 0.3s ease-out, opacity 0.3s ease-out",
     };
   };

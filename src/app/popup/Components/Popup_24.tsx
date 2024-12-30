@@ -54,6 +54,7 @@ const CircularMenu: React.FC<CircularMenuProps> = ({
               key={index}
               initial={{ x: 0, y: 0, opacity: 0, scale: 0.5 }}
               animate={{
+                visibility:isOpen?"visible":"hidden",
                 x: isOpen ? position.x : 0,
                 y: isOpen ? position.y : 0,
                 opacity: isOpen ? 1 : 0,

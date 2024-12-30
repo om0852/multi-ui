@@ -46,6 +46,8 @@ const Popup_6: React.FC<Popup6Props> = ({
       return {
         transform: `translate(0px, 0px) scale(0)`,
         opacity: 0,
+        Visibility:"hidden",
+
         transition: "transform 0.3s ease-out, opacity 0.3s ease-out",
       };
     }
@@ -53,6 +55,8 @@ const Popup_6: React.FC<Popup6Props> = ({
     return {
       transform: `translate(${x}px, ${y}px) scale(1)`,
       opacity: 1,
+      Visibility:"visible",
+
       transition: "transform 0.4s ease-out, opacity 0.4s ease-out, transform 0.3s ease-in-out",
     };
   };

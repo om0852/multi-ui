@@ -65,14 +65,16 @@ const ZoomMenu: React.FC<ZoomMenuProps> = ({
       return {
         transform: `translate(0, 0) scale(0.5)`,
         opacity: 0,
+        Visibility:"hidden",
+
         transition: `transform 0.4s ease-out, opacity 0.3s`,
       };
     }
 
-    return {
+return {
       transform: `translate(${position.x}px, ${position.y}px) scale(1)`,
       opacity: 1,
-      transition: `transform 0.5s ease-out ${index * 0.1}s, opacity 0.4s ease-out`,
+      Visibility:"visible",      transition: `transform 0.5s ease-out ${index * 0.1}s, opacity 0.4s ease-out`,
     };
   };
 
