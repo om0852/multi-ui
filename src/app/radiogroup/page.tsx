@@ -1,5 +1,5 @@
 import React from 'react'
-import App from './_components/RadioGroup_15'
+import App from './_components/RadioGroup_25'
 
 const page = () => {
   return (
