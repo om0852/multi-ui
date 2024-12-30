@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import PopupMenu from "./Components/Popup_25";
+import PopupMenu from "./Components/Popup_30";
 
 const App = () => {
   const menuItems = [
@@ -30,7 +30,7 @@ const App = () => {
       </h1>
       <PopupMenu
         menuItems={menuItems}
-        radius={130}
+        distance={90}
         label="✨"
         centerColor="bg-green-500" // Pass a custom color for the center button
         // menuColor="bg-yellow-500" // Pass a custom color for the menu items
