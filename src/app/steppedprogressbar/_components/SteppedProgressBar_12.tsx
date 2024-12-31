@@ -65,18 +65,18 @@ export const StepsItem: React.FC<{ isActive: boolean; isCompleted: boolean; chil
   return (
     <motion.li
       className={clsx(
-        "w-24 h-24 flex items-center justify-center rounded-full font-semibold text-white cursor-pointer transition-all",
+        "w-24 h-24 flex items-center justify-center rounded-full font-semibold text-white cursor-pointer transition-all relative",
         isCompleted
           ? "bg-gradient-to-br from-green-600 to-blue-700 border-4 border-white shadow-xl"
           : isActive
           ? "bg-gradient-to-br from-yellow-500 to-orange-500 border-4 border-white shadow-lg scale-125"
           : "bg-gray-300 border-4 border-gray-400"
       )}
-      animate={{ scale: isActive ? 1.2 : 1 }}
+      animate={{ rotate: isActive ? 360 : 0, scale: isActive ? 1.2 : 1 }}
       transition={{ duration: 0.4 }}
       whileHover={{
         scale: 1.3,
-        rotate: 10,
+        rotate: 15,
         boxShadow: "0 6px 24px rgba(0,0,0,0.3)",
         backgroundColor: isActive ? "rgb(253, 157, 26)" : undefined,
       }}
@@ -88,7 +88,7 @@ export const StepsItem: React.FC<{ isActive: boolean; isCompleted: boolean; chil
       {isCompleted ? (
         <motion.svg
           xmlns="http://www.w3.org/2000/svg"
-          className="w-10 h-10 text-white"
+          className="w-10 h-10 text-white absolute"
           fill="none"
           viewBox="0 0 24 24"
           stroke="currentColor"

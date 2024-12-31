@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import SteppedProgressBar, { Example } from "../steppedprogressbar/_components/SteppedProgressBar_10";
+import SteppedProgressBar, { Example } from "../steppedprogressbar/_components/SteppedProgressBar_15";
 
 const page = () => {
   const [count, setCOunt] = useState(0);
