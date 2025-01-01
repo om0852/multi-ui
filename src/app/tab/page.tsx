@@ -1,11 +1,11 @@
 "use client";
 import React from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "./_components/Tab_6";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "./_components/Tab_10";
 
 const page = () => {
   return (
     <div>
-      <Tabs defaultValue="account" className="w-[400px] flex">
+      <Tabs defaultValue="account" className="w-full flex">
         <TabsList activeTab="account" setActiveTab={() => {}}>
           <TabsTrigger value="account">Account</TabsTrigger>
           <TabsTrigger value="password">Password</TabsTrigger>
