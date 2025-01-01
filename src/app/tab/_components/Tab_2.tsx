@@ -70,7 +70,7 @@ const TabsTrigger: React.FC<TabsTriggerProps> = ({
 
   return (
     <button
-      className={`relative flex-1 px-4 py-2 text-sm font-medium transition-all rounded-lg ${
+      className={`relative w-full  flex-1 px-4 py-2 text-sm font-medium transition-all rounded-lg ${
         isActive
           ? "bg-blue-600 text-white shadow-lg"
           : "bg-white text-gray-600 hover:bg-gray-200"

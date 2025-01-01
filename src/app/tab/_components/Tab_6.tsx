@@ -70,7 +70,7 @@ const TabsTrigger: React.FC<TabsTriggerProps> = ({
 
   return (
     <motion.button
-      className={`relative px-5 py-2 text-sm font-semibold rounded-full transition-all ${
+      className={`relative w-full px-5 py-2 text-sm font-semibold rounded-full transition-all ${
         isActive
           ? "bg-purple-500 text-white shadow-md"
           : "bg-gray-200 text-gray-600 hover:bg-gray-300"

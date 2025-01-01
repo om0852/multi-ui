@@ -26,6 +26,7 @@ interface TabsContentProps {
   value: string;
   children: React.ReactNode;
   activeTab?: string;
+  backgroundColor?: "dark" | "light"; // Optional background color
 }
 
 const Tabs: React.FC<TabsProps> = ({ defaultValue, className, children }) => {
@@ -47,7 +48,7 @@ const Tabs: React.FC<TabsProps> = ({ defaultValue, className, children }) => {
 
 const TabsList: React.FC<TabsListProps> = ({ children, activeTab, setActiveTab }) => {
   return (
-    <div className="flex items-center gap-6 p-2 bg-gradient-to-r w-full from-cyan-500 to-purple-500 rounded-lg shadow-xl">
+    <div className="flex items-center gap-4 p-2 bg-gradient-to-r from-pink-500 to-purple-600 rounded-t-lg shadow-xl w-full">
       {React.Children.map(children, (child) =>
         React.isValidElement(child)
           ? React.cloneElement(child as React.ReactElement<any>, {
@@ -70,40 +71,43 @@ const TabsTrigger: React.FC<TabsTriggerProps> = ({
 
   return (
     <button
-      className={`relative w-full px-6 py-3 text-lg font-semibold transition-all rounded-lg ${
+      className={`relative w-full px-6 py-3 text-lg font-medium transition-all rounded-lg transform hover:scale-105 ${
         isActive
-          ? "bg-white text-blue-600 shadow-2xl transform scale-110"
-          : "bg-transparent text-white hover:text-blue-500 hover:scale-105 hover:shadow-lg"
+          ? "bg-white text-purple-800 shadow-lg scale-110"
+          : "bg-transparent text-white hover:bg-pink-500"
       }`}
       onClick={() => setActiveTab?.(value)}
     >
       {children}
-      {isActive && (
-        <motion.div
-          className="absolute bottom-0 left-0 right-0 h-2 bg-gradient-to-r from-blue-400 to-indigo-600"
-          layoutId="tabs-indicator"
-        />
-      )}
     </button>
   );
 };
 
-const TabsContent: React.FC<TabsContentProps> = ({ value, children, activeTab }) => {
+const TabsContent: React.FC<TabsContentProps> = ({
+  value,
+  children,
+  activeTab,
+  backgroundColor = "light", // Default to light if no background color is provided
+}) => {
   return (
-    <AnimatePresence mode="wait">
+    <AnimatePresence>
       {activeTab === value && (
         <motion.div
           key={value}
-          initial={{ opacity: 0, x: 100 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -100 }}
+          initial={{ opacity: 0, rotateY: 90 }}
+          animate={{ opacity: 1, rotateY: 0 }}
+          exit={{ opacity: 0, rotateY: -90 }}
           transition={{
             type: "spring",
             stiffness: 300,
-            damping: 30,
-            duration: 0.5,
+            damping: 25,
+            duration: 0.6,
           }}
-          className="mt-6 p-6 bg-white rounded-lg shadow-lg"
+          className={`mt-6 p-6 rounded-lg shadow-xl transition-all ${
+            backgroundColor === "dark"
+              ? "bg-gray-900 text-white"
+              : "bg-white text-gray-800"
+          }`}
         >
           {children}
         </motion.div>
