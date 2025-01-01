@@ -1,6 +1,5 @@
 import React from "react";
-import Avatar from "./_components/Avatar_2";
-import RotatingRingAvatar from "./_components/Avatar_5";
+import RotatingRingAvatar from "./_components/Avatar_10";
 
 const App: React.FC = () => {
   return (
