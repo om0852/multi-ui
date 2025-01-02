@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Confetti from "./_components/Confetti_7";
+import Confetti from "./_components/Confetti_2";
 
 const page = () => {
   return (
