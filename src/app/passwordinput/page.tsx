@@ -1,44 +1,47 @@
-"use client";
+"use client"
+import React, { useState } from 'react'
+import { ModernPasswordInput } from './_components/PasswordInput_19'
 
-import { useState } from "react";
-import PlayfulPasswordInput from "./_components/PasswordInput_10";
+const App: React.FC = () => {
+  const [password, setPassword] = useState('')
+  const [isSubmitted, setIsSubmitted] = useState(false)
 
-export default function Page() {
-  const [isPasswordValid, setIsPasswordValid] = useState(false);
-  const [shake, setShake] = useState(false);
+  const handlePasswordChange = (value: string) => {
+    setPassword(value)
+  }
 
-  const handleSignUpClick = () => {
-    if (!isPasswordValid) {
-      setShake(true);
-      setTimeout(() => setShake(false), 500);
+  const handlePasswordSubmit = (isValid: boolean) => {
+    if (isValid) {
+      setIsSubmitted(true)
     } else {
-      console.log("Sign-up successful!");
+      setIsSubmitted(false)
+      alert('Password is too weak!')
     }
-  };
+  }
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div
-        className="w-full max-w-md p-8 space-y-8 bg-white rounded-xl shadow-md"
-      >
-        <h1 className="text-2xl font-bold text-center text-gray-900">Sign Up</h1>
-        <PlayfulPasswordInput
-          onChange={(value) => {
-            const isValid =
-              value.length > 6 &&
-              /[A-Z]/.test(value) &&
-              /[0-9]/.test(value) &&
-              /[^A-Za-z0-9]/.test(value);
-            setIsPasswordValid(isValid);
-          }}
+    <div className="min-h-screen flex items-center justify-center bg-gray-100 dark:bg-gray-900">
+      <div className="max-w-sm w-full p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+        <h1 className="text-2xl font-bold text-center text-gray-800 dark:text-white mb-6">
+          Create an Account
+        </h1>
+
+        <ModernPasswordInput
+          value={password}
+          onChange={handlePasswordChange}
+          onSubmit={handlePasswordSubmit}
+          label="Create Password"
+          className="mb-6"
         />
-        <button
-          className="w-full py-2 px-4 bg-blue-600 hover:bg-blue-700 text-white font-semibold rounded-lg shadow-md focus:outline-none focus:ring-2 focus:ring-blue-400 focus:ring-opacity-75 transition-colors duration-200"
-          onClick={handleSignUpClick}
-        >
-          Sign Up
-        </button>
+
+        {isSubmitted && (
+          <div className="text-center text-green-600 dark:text-green-400 mt-4">
+            <p>Password is strong! Account created successfully.</p>
+          </div>
+        )}
       </div>
     </div>
-  );
+  )
 }
+
+export default App
