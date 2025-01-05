@@ -4,7 +4,7 @@ import  Carousel  from './_components/Carousel_5'
 const ExampleCarousel = () => {
   return (
     <div className="w-full max-w-lg mx-auto mt-10">
-      <Carousel autoPlay={true} interval={4000}>
+      <Carousel autoPlay={true}  interval={4000}>
         <div className="w-full h-64 bg-red-500 flex items-center justify-center text-white font-bold text-xl">
           Slide 1
         </div>
