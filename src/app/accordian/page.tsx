@@ -1,6 +1,6 @@
 'use client';
 
-import Accordion from "./_components/Accordian_5";
+import Accordion from "./_components/Accordian_10";
 
 
 export default function App() {
