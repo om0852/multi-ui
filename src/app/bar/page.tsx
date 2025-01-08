@@ -1,22 +1,12 @@
-'use client'
+import Histogram from "./_components/Bar_21"
 
-import PieChart from "./_components/Bar_16"
+const data = [1, 2, 2, 3, 3, 3, 4, 4, 5, 5, 6, 7, 7, 8, 9, 10]
 
-
-export default function App() {
-  const data = [
-    { id: '1', label: 'Food', value: 120, color: '#f39c12' },
-    { id: '2', label: 'Rent', value: 200, color: '#3498db' },
-    { id: '3', label: 'Transport', value: 80, color: '#e74c3c' },
-    { id: '4', label: 'Entertainment', value: 60, color: '#2ecc71' },
-  ]
-
+export default function Example() {
   return (
-    <div className="min-h-screen bg-gray-100 flex items-center justify-center p-6">
-      <div className="w-full max-w-lg">
-        <h1 className="text-2xl font-bold text-gray-800 text-center mb-6">Expense Breakdown</h1>
-        <PieChart data={data} />
-      </div>
+    <div className="p-4">
+      <h1 className="text-lg font-bold mb-4">Histogram Example</h1>
+      <Histogram data={data} bins={5} />
     </div>
   )
 }
