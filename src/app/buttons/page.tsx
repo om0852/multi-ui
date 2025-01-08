@@ -1,5 +1,5 @@
 import React from "react";
-import HoverAnimatedButton from "./button50";
+import HoverAnimatedButton from "./button60";
 
 const page = () => {
   return (
