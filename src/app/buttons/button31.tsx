@@ -1,47 +1,52 @@
-import React from "react";
+'use client'
 
-type OrbitButtonProps = {
-  text: string;
-  size: string;
-  color: string;
-};
+import React from 'react'
+import { motion } from 'framer-motion'
+import clsx from 'clsx'
 
-const Button31: React.FC<OrbitButtonProps> = ({ text, size, color }) => {
+interface HoverAnimatedButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  variant?: 'default' | 'outline' | 'ghost'
+  size?: 'sm' | 'md' | 'lg'
+  hoverEffect?: 'grow' | 'lift' | 'glow'
+}
+
+const HoverAnimatedButton: React.FC<HoverAnimatedButtonProps> = ({
+  children,
+  className,
+  variant = 'default',
+  size = 'md',
+  hoverEffect = 'grow',
+}) => {
+  const baseStyles =
+    'inline-flex items-center justify-center rounded-md font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none ring-offset-background'
+
+  const variants = {
+    default: 'bg-primary text-primary-foreground hover:bg-primary/90',
+    outline: 'border border-input hover:bg-accent hover:text-accent-foreground',
+    ghost: 'hover:bg-accent hover:text-accent-foreground'
+  }
+
+  const sizes = {
+    sm: 'h-9 px-3 text-xs',
+    md: 'h-10 py-2 px-4',
+    lg: 'h-11 px-8 text-lg'
+  }
+
+  const hoverAnimations = {
+    grow: { scale: 1.05 },
+    lift: { y: -5 },
+    glow: { boxShadow: '0 0 15px rgba(0,0,0,0.3)' }
+  }
+
   return (
-    <button
-      className={`relative ${color} ${size} text-white font-medium px-8 py-3 rounded-full`}
+    <motion.button
+      className={clsx(baseStyles, variants[variant], sizes[size], className)}
+      whileHover={hoverAnimations[hoverEffect]}
+      transition={{ type: 'spring', stiffness: 400, damping: 10 }}
     >
-      {text}
-      <span className="absolute inset-0 flex items-center justify-center orbit-container pointer-events-none">
-        {[...Array(8)].map((_, index) => (
-          <span
-            key={index}
-            className="absolute w-2 h-2 bg-white rounded-full orbit-dot"
-          />
-        ))}
-      </span>
-      <style>
-        {`
-          .orbit-container .orbit-dot {
-            animation: orbit-animation 2s linear infinite;
-          }
-          .orbit-dot:nth-child(1) { animation-delay: 0s; transform: rotate(0deg) translate(40px); }
-          .orbit-dot:nth-child(2) { animation-delay: 0.25s; transform: rotate(45deg) translate(40px); }
-          .orbit-dot:nth-child(3) { animation-delay: 0.5s; transform: rotate(90deg) translate(40px); }
-          .orbit-dot:nth-child(4) { animation-delay: 0.75s; transform: rotate(135deg) translate(40px); }
-          .orbit-dot:nth-child(5) { animation-delay: 1s; transform: rotate(180deg) translate(40px); }
-          .orbit-dot:nth-child(6) { animation-delay: 1.25s; transform: rotate(225deg) translate(40px); }
-          .orbit-dot:nth-child(7) { animation-delay: 1.5s; transform: rotate(270deg) translate(40px); }
-          .orbit-dot:nth-child(8) { animation-delay: 1.75s; transform: rotate(315deg) translate(40px); }
+      {children}
+    </motion.button>
+  )
+}
 
-          @keyframes orbit-animation {
-            0% { transform: rotate(0deg) translate(40px); }
-            100% { transform: rotate(360deg) translate(40px); }
-          }
-        `}
-      </style>
-    </button>
-  );
-};
-
-export default Button31;
+export default HoverAnimatedButton
