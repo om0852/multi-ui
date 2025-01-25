@@ -14,11 +14,11 @@ import Card_12 from './_components/Card_12';
 import Card_13 from './_components/Card_13';
 import Card_14 from './_components/Card_14';
 import Card_15 from './_components/Card_15';
-import Card_16 from './_components/Card_21';
-import Card_17 from './_components/Card_22';
-import Card_18 from './_components/Card_23';
-import Card_19 from './_components/Card_24';
-import Card_20 from './_components/Card_25';
+import Card_16 from './_components/Card_26';
+import Card_17 from './_components/Card_27';
+import Card_18 from './_components/Card_28';
+import Card_19 from './_components/Card_29';
+import Card_20 from './_components/Card_30';
 
 
 
@@ -55,8 +55,8 @@ const App = () => {
       <Card_12/>
     <Card_13 />
     <Card_14 />
-    <Card_15 />
-    <Card_16 /> */}
+    <Card_15 />*/}
+    <Card_16 /> 
     <Card_17 />
     <Card_18 />
     <Card_19 />
