@@ -1,10 +1,11 @@
+"use client"
 import React from "react";
-import { Example } from "./_components/OtpField_20";
+import  Example  from "./_components/OtpField_21";
 
 const page = () => {
   return (
     <div>
-      <Example />
+      <Example  />
     </div>
   );
 };
