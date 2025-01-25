@@ -1,3 +1,4 @@
+"use client"
 import React from 'react';
 import Card_1 from './_components/Card_1';
 import Card_2 from './_components/Card_2';
@@ -9,6 +10,16 @@ import Card_7 from './_components/Card_7';
 import Card_8 from './_components/Card_8';
 import Card_9 from './_components/Card_9';
 import Card_10 from './_components/Card_10';
+import Card_12 from './_components/Card_12';
+import Card_13 from './_components/Card_13';
+import Card_14 from './_components/Card_14';
+import Card_15 from './_components/Card_15';
+import Card_16 from './_components/Card_21';
+import Card_17 from './_components/Card_22';
+import Card_18 from './_components/Card_23';
+import Card_19 from './_components/Card_24';
+import Card_20 from './_components/Card_25';
+
 
 
 const App = () => {
@@ -21,7 +32,7 @@ const App = () => {
 
   return (
     <div className='flex flex-col justify-center items-center gap-8'>
-      <Card_1
+      {/* <Card_1
         title="Helllo "
         btnText="Link"
         description="Collaborative effort of a group to achieve a common goal the most effective and efficient way!"
@@ -41,6 +52,15 @@ const App = () => {
       <Card_8 />
       <Card_9 />
       <Card_10 />
+      <Card_12/>
+    <Card_13 />
+    <Card_14 />
+    <Card_15 />
+    <Card_16 /> */}
+    <Card_17 />
+    <Card_18 />
+    <Card_19 />
+    <Card_20 />
     </div>
   );
 };
