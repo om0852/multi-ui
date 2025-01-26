@@ -14,11 +14,11 @@ import Card_12 from './_components/Card_12';
 import Card_13 from './_components/Card_13';
 import Card_14 from './_components/Card_14';
 import Card_15 from './_components/Card_15';
-import Card_16 from './_components/Card_26';
-import Card_17 from './_components/Card_27';
-import Card_18 from './_components/Card_28';
-import Card_19 from './_components/Card_29';
-import Card_20 from './_components/Card_30';
+import Card_16 from './_components/Card_94';
+import Card_17 from './_components/Card_95';
+import Card_18 from './_components/Card_96';
+import Card_19 from './_components/Card_99';
+import Card_20 from './_components/Card_100';
 
 
 
@@ -45,10 +45,6 @@ const App = () => {
         imageUrl="https://images.unsplash.com/photo-1506187334569-7596f62cf93f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=3149&q=80"
       />
       <Card_3 />
-      <Card_4 />
-      <Card_5 />
-      <Card_6 />
-      <Card_7 />
       <Card_8 />
       <Card_9 />
       <Card_10 />
@@ -61,6 +57,11 @@ const App = () => {
     <Card_18 />
     <Card_19 />
     <Card_20 />
+    
+    <Card_4 />
+      <Card_5 />
+      <Card_6 />
+      <Card_7 />
     </div>
   );
 };
