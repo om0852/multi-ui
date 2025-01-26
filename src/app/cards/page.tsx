@@ -14,11 +14,11 @@ import Card_12 from './_components/Card_12';
 import Card_13 from './_components/Card_13';
 import Card_14 from './_components/Card_14';
 import Card_15 from './_components/Card_15';
-import Card_16 from './_components/Card_94';
-import Card_17 from './_components/Card_95';
-import Card_18 from './_components/Card_96';
-import Card_19 from './_components/Card_99';
-import Card_20 from './_components/Card_100';
+import Card_16 from './_components/Card_111';
+import Card_17 from './_components/Card_112';
+import Card_18 from './_components/Card_113';
+import Card_19 from './_components/Card_114';
+import Card_20 from './_components/Card_115';
 
 
 
