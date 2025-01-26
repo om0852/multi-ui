@@ -2,13 +2,13 @@
 import React,{useState} from 'react'
 import Switch_56 from './_components/Switch_56'
 import Switch_89 from './_components/Switch_89'
-import Switch_90 from './_components/Switch_90'
+import Switch_90 from './_components/Switch_107'
 import Switch_91 from './_components/Switch_91'
-import Switch_92 from './_components/Switch_92'
-import Switch_93 from './_components/Switch_97'
-import Switch_94 from './_components/Switch_98'
-import Switch_95 from './_components/Switch_99'
-import Switch_96 from './_components/Switch_100'
+import Switch_92 from './_components/Switch_126'
+import Switch_93 from './_components/Switch_127'
+import Switch_94 from './_components/Switch_128'
+import Switch_95 from './_components/Switch_129'
+import Switch_96 from './_components/Switch_130'
 
 const Page = () => {
     const [switches, setSwitches] = useState({
