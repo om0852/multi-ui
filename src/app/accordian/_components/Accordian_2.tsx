@@ -2,6 +2,57 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import styled from 'styled-components'
+
+const Container = styled.div`
+  padding: 1rem;
+  background: #e0e0e0;
+  min-height: 100%;
+`
+
+const NeumorphicButton = styled(motion.button)`
+  width: 100%;
+  background: #e0e0e0;
+  border-radius: 1rem;
+  padding: 1rem;
+  border: none;
+  box-shadow: 
+    5px 5px 10px #bebebe,
+    -5px -5px 10px #ffffff;
+  color: #666;
+  position: relative;
+  
+  &:hover {
+    box-shadow: 
+      7px 7px 15px #bebebe,
+      -7px -7px 15px #ffffff;
+  }
+`
+
+const ContentWrapper = styled(motion.div)`
+  overflow: hidden;
+  margin-top: 0.5rem;
+`
+
+const Content = styled.div`
+  background: #e0e0e0;
+  border-radius: 1rem;
+  padding: 1rem;
+  color: #666;
+  box-shadow: inset 
+    3px 3px 7px #bebebe,
+    inset -3px -3px 7px #ffffff;
+`
+
+const Title = styled.span`
+  font-size: 1.125rem;
+  font-weight: 500;
+`
+
+const IconWrapper = styled(motion.div)`
+  color: #666;
+  font-size: 1.25rem;
+`
 
 interface AccordionItemProps {
   title: string
@@ -12,33 +63,37 @@ interface AccordionItemProps {
 
 function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) {
   return (
-    <div className="border-b">
-      <button
-        className="flex w-full items-center justify-between py-4 px-6 hover:bg-gray-50"
+    <div className="mb-4">
+      <NeumorphicButton
         onClick={onClick}
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.98 }}
       >
-        <span className="text-left font-medium">{title}</span>
-        <motion.img
-          src="https://img.icons8.com/ios-glyphs/30/000000/chevron-down.png"
-          alt="Chevron Down"
-          className="h-5 w-5"
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.2 }}
-        />
-      </button>
-      <AnimatePresence initial={false}>
+        <div className="flex justify-between items-center">
+          <Title>{title}</Title>
+          <IconWrapper
+            animate={{ 
+              rotate: isOpen ? 180 : 0,
+              scale: isOpen ? 1.1 : 1
+            }}
+            transition={{ type: "spring", stiffness: 200 }}
+          >
+            ▼
+          </IconWrapper>
+        </div>
+      </NeumorphicButton>
+      <AnimatePresence>
         {isOpen && (
-          <motion.div
+          <ContentWrapper
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            className="overflow-hidden"
+            transition={{ duration: 0.3 }}
           >
-            <div className="px-6 py-4 text-gray-700">
+            <Content>
               {content}
-            </div>
-          </motion.div>
+            </Content>
+          </ContentWrapper>
         )}
       </AnimatePresence>
     </div>
@@ -65,7 +120,7 @@ export default function Accordion({ items, allowMultiple = false }: AccordionPro
   }
 
   return (
-    <div className="divide-y rounded-lg border">
+    <Container>
       {items.map((item, index) => (
         <AccordionItem
           key={index}
@@ -75,6 +130,12 @@ export default function Accordion({ items, allowMultiple = false }: AccordionPro
           onClick={() => handleClick(index)}
         />
       ))}
-    </div>
+    </Container>
   )
 }
+
+// Export individual components
+export { Container as NeumorphicContainer }
+export { NeumorphicButton }
+export { Content as NeumorphicContent }
+export { AccordionItem as NeumorphicAccordionItem }

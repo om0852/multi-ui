@@ -4,37 +4,35 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styled, { keyframes } from 'styled-components';
 
-const gradientFlow = keyframes`
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+const float = keyframes`
+  0%, 100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-20px) scale(1.1); }
 `;
 
-const ripple = keyframes`
-  0% { transform: scale(0); opacity: 1; }
-  100% { transform: scale(4); opacity: 0; }
+const glow = keyframes`
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
 `;
 
 const Container = styled.div`
   padding: 1rem;
-  background: linear-gradient(-45deg, #ff3d00, #ff1744, #d500f9, #651fff);
-  background-size: 400% 400%;
-  animation: ${gradientFlow} 15s ease infinite;
+  background: linear-gradient(135deg, #1a2980 0%, #26d0ce 100%);
   min-height: 100%;
   position: relative;
   overflow: hidden;
 `;
 
-const GradientButton = styled(motion.button)`
+const BubbleButton = styled(motion.button)`
   width: 100%;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  border: none;
-  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
   padding: 1rem;
   color: white;
   position: relative;
   overflow: hidden;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   
   &::before {
     content: '';
@@ -61,44 +59,21 @@ const ContentWrapper = styled(motion.div)`
 `;
 
 const Content = styled.div`
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
   padding: 1rem;
   color: rgba(255, 255, 255, 0.9);
   position: relative;
-  overflow: hidden;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      45deg,
-      transparent,
-      rgba(255, 255, 255, 0.1),
-      transparent
-    );
-    background-size: 200% 200%;
-    animation: ${gradientFlow} 10s linear infinite;
-  }
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 `;
 
 const Title = styled.span`
   font-size: 1.125rem;
   font-weight: 500;
   color: white;
-  background: linear-gradient(
-    90deg,
-    #fff,
-    #ff1744,
-    #d500f9,
-    #fff
-  );
-  background-size: 300% 100%;
-  animation: ${gradientFlow} 6s linear infinite;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   position: relative;
   z-index: 1;
 `;
@@ -108,19 +83,20 @@ const IconWrapper = styled(motion.div)`
   font-size: 1.25rem;
   position: relative;
   z-index: 1;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 `;
 
-const RippleEffect = styled.div<{ x: number; y: number }>`
+const Bubble = styled.div<{ size: number; delay: number }>`
   position: absolute;
-  width: 10px;
-  height: 10px;
-  background: rgba(255, 255, 255, 0.4);
+  width: ${props => props.size}px;
+  height: ${props => props.size}px;
+  background: rgba(255, 255, 255, 0.1);
   border-radius: 50%;
-  pointer-events: none;
-  left: ${props => props.x}px;
-  top: ${props => props.y}px;
-  animation: ${ripple} 1s linear forwards;
+  backdrop-filter: blur(2px);
+  animation: 
+    ${float} ${props => 3 + props.delay}s ease-in-out infinite,
+    ${glow} ${props => 2 + props.delay}s ease-in-out infinite;
+  animation-delay: ${props => props.delay}s;
 `;
 
 interface AccordionItemProps {
@@ -131,31 +107,13 @@ interface AccordionItemProps {
 }
 
 function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) {
-  const [ripples, setRipples] = useState<Array<{ x: number; y: number; id: number }>>([]);
-
-  const handleClick = (e: React.MouseEvent) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    setRipples(prev => [...prev, { x, y, id: Date.now() }]);
-    setTimeout(() => {
-      setRipples(prev => prev.filter(ripple => ripple.id !== Date.now()));
-    }, 1000);
-    
-    onClick();
-  };
-
   return (
     <div className="mb-4">
-      <GradientButton
-        onClick={handleClick}
+      <BubbleButton
+        onClick={onClick}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
       >
-        {ripples.map(ripple => (
-          <RippleEffect key={ripple.id} x={ripple.x} y={ripple.y} />
-        ))}
         <div className="flex justify-between items-center">
           <Title>{title}</Title>
           <IconWrapper
@@ -168,7 +126,7 @@ function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) 
             ▼
           </IconWrapper>
         </div>
-      </GradientButton>
+      </BubbleButton>
       <AnimatePresence>
         {isOpen && (
           <ContentWrapper
@@ -208,6 +166,11 @@ export default function Accordion({ items, allowMultiple = false }: AccordionPro
 
   return (
     <Container>
+      <Bubble size={80} delay={0} style={{ top: '10%', left: '10%' }} />
+      <Bubble size={60} delay={1} style={{ top: '30%', right: '20%' }} />
+      <Bubble size={100} delay={2} style={{ bottom: '20%', left: '15%' }} />
+      <Bubble size={70} delay={3} style={{ bottom: '40%', right: '25%' }} />
+      <Bubble size={50} delay={4} style={{ top: '50%', left: '40%' }} />
       {items.map((item, index) => (
         <AccordionItem
           key={index}
@@ -222,8 +185,8 @@ export default function Accordion({ items, allowMultiple = false }: AccordionPro
 }
 
 // Export individual components
-export { Container as GradientContainer };
-export { GradientButton };
-export { Content as GradientContent };
-export { AccordionItem as GradientAccordionItem };
-export { RippleEffect };
+export { Container as BubbleContainer };
+export { BubbleButton };
+export { Content as BubbleContent };
+export { AccordionItem as BubbleAccordionItem };
+export { Bubble }; 

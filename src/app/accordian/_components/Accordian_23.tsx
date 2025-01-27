@@ -4,35 +4,30 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styled, { keyframes } from 'styled-components';
 
-const gradientFlow = keyframes`
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+const pulse = keyframes`
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
 `;
 
-const ripple = keyframes`
-  0% { transform: scale(0); opacity: 1; }
-  100% { transform: scale(4); opacity: 0; }
+const flow = keyframes`
+  0% { stroke-dashoffset: 1000; }
+  100% { stroke-dashoffset: 0; }
 `;
 
 const Container = styled.div`
   padding: 1rem;
-  background: linear-gradient(-45deg, #ff3d00, #ff1744, #d500f9, #651fff);
-  background-size: 400% 400%;
-  animation: ${gradientFlow} 15s ease infinite;
+  background: #1a1a1a;
   min-height: 100%;
   position: relative;
   overflow: hidden;
 `;
 
-const GradientButton = styled(motion.button)`
+const CircuitButton = styled(motion.button)`
   width: 100%;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  border: none;
-  border-radius: 8px;
+  background: #222;
+  border: 1px solid #333;
   padding: 1rem;
-  color: white;
+  color: #00ff00;
   position: relative;
   overflow: hidden;
   
@@ -40,17 +35,27 @@ const GradientButton = styled(motion.button)`
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.2),
-      transparent
-    );
+    background: 
+      linear-gradient(90deg, #222 21px, transparent 1%) center,
+      linear-gradient(#222 21px, transparent 1%) center,
+      #333;
+    background-size: 22px 22px;
+    opacity: 0.2;
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0, 255, 0, 0.1), transparent);
     transform: translateX(-100%);
     transition: transform 0.5s ease;
   }
   
-  &:hover::before {
+  &:hover::after {
     transform: translateX(100%);
   }
 `;
@@ -61,66 +66,68 @@ const ContentWrapper = styled(motion.div)`
 `;
 
 const Content = styled.div`
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  border-radius: 8px;
+  background: #222;
+  border: 1px solid #333;
   padding: 1rem;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(0, 255, 0, 0.8);
   position: relative;
-  overflow: hidden;
   
   &::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-      45deg,
-      transparent,
-      rgba(255, 255, 255, 0.1),
-      transparent
-    );
-    background-size: 200% 200%;
-    animation: ${gradientFlow} 10s linear infinite;
+    background: 
+      linear-gradient(90deg, #222 21px, transparent 1%) center,
+      linear-gradient(#222 21px, transparent 1%) center,
+      #333;
+    background-size: 22px 22px;
+    opacity: 0.2;
   }
 `;
 
 const Title = styled.span`
   font-size: 1.125rem;
   font-weight: 500;
-  color: white;
-  background: linear-gradient(
-    90deg,
-    #fff,
-    #ff1744,
-    #d500f9,
-    #fff
-  );
-  background-size: 300% 100%;
-  animation: ${gradientFlow} 6s linear infinite;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #00ff00;
+  text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
   position: relative;
   z-index: 1;
+  font-family: 'Courier New', monospace;
 `;
 
 const IconWrapper = styled(motion.div)`
-  color: white;
+  color: #00ff00;
   font-size: 1.25rem;
   position: relative;
   z-index: 1;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  text-shadow: 0 0 5px rgba(0, 255, 0, 0.5);
 `;
 
-const RippleEffect = styled.div<{ x: number; y: number }>`
+const Circuit = styled.svg`
   position: absolute;
-  width: 10px;
-  height: 10px;
-  background: rgba(255, 255, 255, 0.4);
-  border-radius: 50%;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
   pointer-events: none;
-  left: ${props => props.x}px;
-  top: ${props => props.y}px;
-  animation: ${ripple} 1s linear forwards;
+`;
+
+const CircuitPath = styled.path`
+  stroke: #00ff00;
+  stroke-width: 1;
+  fill: none;
+  opacity: 0.3;
+  stroke-dasharray: 1000;
+  animation: ${flow} 20s linear infinite;
+`;
+
+const CircuitDot = styled.div<{ size: number }>`
+  position: absolute;
+  width: ${props => props.size}px;
+  height: ${props => props.size}px;
+  background: #00ff00;
+  border-radius: 50%;
+  animation: ${pulse} 2s ease-in-out infinite;
 `;
 
 interface AccordionItemProps {
@@ -131,31 +138,13 @@ interface AccordionItemProps {
 }
 
 function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) {
-  const [ripples, setRipples] = useState<Array<{ x: number; y: number; id: number }>>([]);
-
-  const handleClick = (e: React.MouseEvent) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    setRipples(prev => [...prev, { x, y, id: Date.now() }]);
-    setTimeout(() => {
-      setRipples(prev => prev.filter(ripple => ripple.id !== Date.now()));
-    }, 1000);
-    
-    onClick();
-  };
-
   return (
     <div className="mb-4">
-      <GradientButton
-        onClick={handleClick}
+      <CircuitButton
+        onClick={onClick}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
       >
-        {ripples.map(ripple => (
-          <RippleEffect key={ripple.id} x={ripple.x} y={ripple.y} />
-        ))}
         <div className="flex justify-between items-center">
           <Title>{title}</Title>
           <IconWrapper
@@ -168,7 +157,7 @@ function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) 
             ▼
           </IconWrapper>
         </div>
-      </GradientButton>
+      </CircuitButton>
       <AnimatePresence>
         {isOpen && (
           <ContentWrapper
@@ -208,6 +197,15 @@ export default function Accordion({ items, allowMultiple = false }: AccordionPro
 
   return (
     <Container>
+      <Circuit>
+        <CircuitPath d="M10,30 Q50,10 90,50 T200,90" />
+        <CircuitPath d="M50,100 Q90,150 150,120 T250,150" />
+        <CircuitPath d="M150,20 Q190,50 250,40 T350,60" />
+      </Circuit>
+      <CircuitDot size={4} style={{ top: '20%', left: '30%' }} />
+      <CircuitDot size={6} style={{ top: '40%', right: '20%' }} />
+      <CircuitDot size={4} style={{ bottom: '30%', left: '40%' }} />
+      <CircuitDot size={6} style={{ bottom: '20%', right: '35%' }} />
       {items.map((item, index) => (
         <AccordionItem
           key={index}
@@ -222,8 +220,8 @@ export default function Accordion({ items, allowMultiple = false }: AccordionPro
 }
 
 // Export individual components
-export { Container as GradientContainer };
-export { GradientButton };
-export { Content as GradientContent };
-export { AccordionItem as GradientAccordionItem };
-export { RippleEffect };
+export { Container as CircuitContainer };
+export { CircuitButton };
+export { Content as CircuitContent };
+export { AccordionItem as CircuitAccordionItem };
+export { Circuit, CircuitPath, CircuitDot }; 

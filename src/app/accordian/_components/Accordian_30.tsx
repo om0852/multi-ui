@@ -4,37 +4,66 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styled, { keyframes } from 'styled-components';
 
-const gradientFlow = keyframes`
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+const pixelate = keyframes`
+  0%, 100% { 
+    box-shadow: 
+      2px 2px 0 #000,
+      -2px -2px 0 #000,
+      2px -2px 0 #000,
+      -2px 2px 0 #000;
+  }
+  50% { 
+    box-shadow: 
+      3px 3px 0 #000,
+      -3px -3px 0 #000,
+      3px -3px 0 #000,
+      -3px 3px 0 #000;
+  }
 `;
 
-const ripple = keyframes`
-  0% { transform: scale(0); opacity: 1; }
-  100% { transform: scale(4); opacity: 0; }
+const blink = keyframes`
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+`;
+
+const scanline = keyframes`
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
 `;
 
 const Container = styled.div`
   padding: 1rem;
-  background: linear-gradient(-45deg, #ff3d00, #ff1744, #d500f9, #651fff);
-  background-size: 400% 400%;
-  animation: ${gradientFlow} 15s ease infinite;
+  background: #2a2a2a;
   min-height: 100%;
   position: relative;
   overflow: hidden;
+  font-family: 'Press Start 2P', monospace;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: repeating-linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.1),
+      rgba(0, 0, 0, 0.1) 2px,
+      transparent 2px,
+      transparent 4px
+    );
+    pointer-events: none;
+  }
 `;
 
-const GradientButton = styled(motion.button)`
+const RetroButton = styled(motion.button)`
   width: 100%;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  border: none;
-  border-radius: 8px;
+  background: #4a4a4a;
+  border: 4px solid #000;
   padding: 1rem;
-  color: white;
+  color: #00ff00;
   position: relative;
   overflow: hidden;
+  animation: ${pixelate} 2s infinite;
+  image-rendering: pixelated;
   
   &::before {
     content: '';
@@ -43,15 +72,26 @@ const GradientButton = styled(motion.button)`
     background: linear-gradient(
       90deg,
       transparent,
-      rgba(255, 255, 255, 0.2),
+      rgba(0, 255, 0, 0.1),
       transparent
     );
     transform: translateX(-100%);
-    transition: transform 0.5s ease;
+    transition: transform 0.3s;
   }
   
   &:hover::before {
     transform: translateX(100%);
+  }
+  
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 2px;
+    background: rgba(0, 255, 0, 0.5);
+    animation: ${scanline} 2s linear infinite;
   }
 `;
 
@@ -61,66 +101,52 @@ const ContentWrapper = styled(motion.div)`
 `;
 
 const Content = styled.div`
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  border-radius: 8px;
+  background: #3a3a3a;
+  border: 4px solid #000;
   padding: 1rem;
-  color: rgba(255, 255, 255, 0.9);
+  color: #00ff00;
   position: relative;
-  overflow: hidden;
+  image-rendering: pixelated;
   
   &::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(
+    background: repeating-linear-gradient(
       45deg,
       transparent,
-      rgba(255, 255, 255, 0.1),
-      transparent
+      transparent 10px,
+      rgba(0, 255, 0, 0.1) 10px,
+      rgba(0, 255, 0, 0.1) 20px
     );
-    background-size: 200% 200%;
-    animation: ${gradientFlow} 10s linear infinite;
   }
 `;
 
 const Title = styled.span`
-  font-size: 1.125rem;
-  font-weight: 500;
-  color: white;
-  background: linear-gradient(
-    90deg,
-    #fff,
-    #ff1744,
-    #d500f9,
-    #fff
-  );
-  background-size: 300% 100%;
-  animation: ${gradientFlow} 6s linear infinite;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  font-size: 1rem;
+  color: #00ff00;
+  text-shadow: 2px 2px #000;
   position: relative;
   z-index: 1;
+  letter-spacing: 1px;
 `;
 
 const IconWrapper = styled(motion.div)`
-  color: white;
-  font-size: 1.25rem;
+  color: #00ff00;
+  font-size: 1rem;
   position: relative;
   z-index: 1;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  text-shadow: 2px 2px #000;
 `;
 
-const RippleEffect = styled.div<{ x: number; y: number }>`
+const Pixel = styled.div<{ color: string; size: number; delay: number }>`
   position: absolute;
-  width: 10px;
-  height: 10px;
-  background: rgba(255, 255, 255, 0.4);
-  border-radius: 50%;
-  pointer-events: none;
-  left: ${props => props.x}px;
-  top: ${props => props.y}px;
-  animation: ${ripple} 1s linear forwards;
+  width: ${props => props.size}px;
+  height: ${props => props.size}px;
+  background: ${props => props.color};
+  animation: ${blink} ${props => 1 + props.delay}s steps(2) infinite;
+  animation-delay: ${props => props.delay}s;
+  box-shadow: 2px 2px 0 #000;
 `;
 
 interface AccordionItemProps {
@@ -131,31 +157,13 @@ interface AccordionItemProps {
 }
 
 function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) {
-  const [ripples, setRipples] = useState<Array<{ x: number; y: number; id: number }>>([]);
-
-  const handleClick = (e: React.MouseEvent) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    setRipples(prev => [...prev, { x, y, id: Date.now() }]);
-    setTimeout(() => {
-      setRipples(prev => prev.filter(ripple => ripple.id !== Date.now()));
-    }, 1000);
-    
-    onClick();
-  };
-
   return (
     <div className="mb-4">
-      <GradientButton
-        onClick={handleClick}
+      <RetroButton
+        onClick={onClick}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
       >
-        {ripples.map(ripple => (
-          <RippleEffect key={ripple.id} x={ripple.x} y={ripple.y} />
-        ))}
         <div className="flex justify-between items-center">
           <Title>{title}</Title>
           <IconWrapper
@@ -168,7 +176,7 @@ function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) 
             ▼
           </IconWrapper>
         </div>
-      </GradientButton>
+      </RetroButton>
       <AnimatePresence>
         {isOpen && (
           <ContentWrapper
@@ -208,6 +216,10 @@ export default function Accordion({ items, allowMultiple = false }: AccordionPro
 
   return (
     <Container>
+      <Pixel color="#00ff00" size={8} delay={0} style={{ top: '10%', left: '10%' }} />
+      <Pixel color="#00ff00" size={12} delay={0.5} style={{ top: '30%', right: '20%' }} />
+      <Pixel color="#00ff00" size={10} delay={1} style={{ bottom: '20%', left: '15%' }} />
+      <Pixel color="#00ff00" size={14} delay={1.5} style={{ bottom: '40%', right: '25%' }} />
       {items.map((item, index) => (
         <AccordionItem
           key={index}
@@ -222,8 +234,8 @@ export default function Accordion({ items, allowMultiple = false }: AccordionPro
 }
 
 // Export individual components
-export { Container as GradientContainer };
-export { GradientButton };
-export { Content as GradientContent };
-export { AccordionItem as GradientAccordionItem };
-export { RippleEffect };
+export { Container as RetroContainer };
+export { RetroButton };
+export { Content as RetroContent };
+export { AccordionItem as RetroAccordionItem };
+export { Pixel }; 

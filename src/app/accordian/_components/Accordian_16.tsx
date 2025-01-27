@@ -2,6 +2,124 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import styled, { keyframes } from 'styled-components';
+
+const borderFlow = keyframes`
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+`;
+
+const neonPulse = keyframes`
+  0%, 100% { filter: drop-shadow(0 0 2px #ff00ff) drop-shadow(0 0 4px #00ffff); }
+  50% { filter: drop-shadow(0 0 6px #ff00ff) drop-shadow(0 0 12px #00ffff); }
+`;
+
+const Container = styled.div`
+  padding: 1rem;
+  background: #0a0a0a;
+  min-height: 100%;
+  position: relative;
+  overflow: hidden;
+`;
+
+const NeonButton = styled(motion.button)`
+  width: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 1rem;
+  color: white;
+  position: relative;
+  border: none;
+  border-radius: 4px;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    border-radius: 4px;
+    background: linear-gradient(
+      90deg,
+      #ff00ff,
+      #00ffff,
+      #ff00ff,
+      #00ffff
+    );
+    background-size: 300% 100%;
+    animation: ${borderFlow} 4s linear infinite;
+    -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask: 
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+  
+  &:hover {
+    animation: ${neonPulse} 2s ease-in-out infinite;
+  }
+`;
+
+const ContentWrapper = styled(motion.div)`
+  overflow: hidden;
+  margin-top: 0.5rem;
+`;
+
+const Content = styled.div`
+  background: rgba(0, 0, 0, 0.8);
+  padding: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  position: relative;
+  border-radius: 4px;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 2px;
+    border-radius: 4px;
+    background: linear-gradient(
+      90deg,
+      #00ffff,
+      #ff00ff,
+      #00ffff,
+      #ff00ff
+    );
+    background-size: 300% 100%;
+    animation: ${borderFlow} 4s linear infinite;
+    -webkit-mask: 
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask: 
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+`;
+
+const Title = styled.span`
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: white;
+  text-shadow: 
+    0 0 5px #ff00ff,
+    0 0 10px #00ffff;
+  position: relative;
+  z-index: 1;
+`;
+
+const IconWrapper = styled(motion.div)`
+  color: white;
+  font-size: 1.25rem;
+  text-shadow: 
+    0 0 5px #ff00ff,
+    0 0 10px #00ffff;
+  position: relative;
+  z-index: 1;
+`;
 
 interface AccordionItemProps {
   title: string;
@@ -12,41 +130,39 @@ interface AccordionItemProps {
 
 function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) {
   return (
-    <div className="relative mb-4 w-full">
-      <button
-        className="relative w-full py-6 px-8 rounded-lg bg-white border border-gray-300 shadow-md overflow-hidden focus:outline-none group"
+    <div className="mb-4">
+      <NeonButton
         onClick={onClick}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
       >
-        {/* Hover effect for title */}
-        <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 opacity-0 pointer-events-none group-hover:opacity-25 transition-opacity duration-300"
-          initial={{ scale: 0 }}
-          animate={{ scale: 4 }}
-          exit={{ scale: 0 }}
-          transition={{ duration: 0.6 }}
-        />
-        <motion.div
-          className="flex justify-between items-center relative z-10"
-          animate={{ opacity: isOpen ? 0 : 1 }}
-          initial={{ opacity: 1 }}
-          transition={{ duration: 0.3 }}
-        >
-          <h3 className="text-lg font-semibold text-gray-800">{title}</h3>
-        </motion.div>
-        <AnimatePresence>
-          {isOpen && (
-            <motion.div
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 20 }}
-              transition={{ duration: 0.4 }}
-              className="overflow-hidden mt-4"
-            >
-              <p className="text-base text-gray-700">{content}</p>
-            </motion.div>
-          )}
-        </AnimatePresence>
-      </button>
+        <div className="flex justify-between items-center">
+          <Title>{title}</Title>
+          <IconWrapper
+            animate={{ 
+              rotate: isOpen ? 180 : 0,
+              scale: isOpen ? 1.2 : 1
+            }}
+            transition={{ type: "spring", stiffness: 200 }}
+          >
+            ▼
+          </IconWrapper>
+        </div>
+      </NeonButton>
+      <AnimatePresence>
+        {isOpen && (
+          <ContentWrapper
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Content>
+              {content}
+            </Content>
+          </ContentWrapper>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
@@ -61,10 +177,9 @@ export default function Accordion({ items, allowMultiple = false }: AccordionPro
 
   const handleClick = (index: number) => {
     if (allowMultiple) {
-      setOpenIndexes(
-        openIndexes.includes(index)
-          ? openIndexes.filter((i) => i !== index)
-          : [...openIndexes, index]
+      setOpenIndexes(openIndexes.includes(index)
+        ? openIndexes.filter(i => i !== index)
+        : [...openIndexes, index]
       );
     } else {
       setOpenIndexes(openIndexes.includes(index) ? [] : [index]);
@@ -72,7 +187,7 @@ export default function Accordion({ items, allowMultiple = false }: AccordionPro
   };
 
   return (
-    <div className="space-y-6">
+    <Container>
       {items.map((item, index) => (
         <AccordionItem
           key={index}
@@ -82,6 +197,12 @@ export default function Accordion({ items, allowMultiple = false }: AccordionPro
           onClick={() => handleClick(index)}
         />
       ))}
-    </div>
+    </Container>
   );
 }
+
+// Export individual components
+export { Container as NeonContainer };
+export { NeonButton };
+export { Content as NeonContent };
+export { AccordionItem as NeonAccordionItem };

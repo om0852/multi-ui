@@ -4,10 +4,9 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styled, { keyframes } from 'styled-components';
 
-const gradientFlow = keyframes`
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+const shimmer = keyframes`
+  0% { background-position: -1000px 0; }
+  100% { background-position: 1000px 0; }
 `;
 
 const ripple = keyframes`
@@ -17,24 +16,24 @@ const ripple = keyframes`
 
 const Container = styled.div`
   padding: 1rem;
-  background: linear-gradient(-45deg, #ff3d00, #ff1744, #d500f9, #651fff);
-  background-size: 400% 400%;
-  animation: ${gradientFlow} 15s ease infinite;
+  background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
   min-height: 100%;
   position: relative;
   overflow: hidden;
 `;
 
-const GradientButton = styled(motion.button)`
+const MetalButton = styled(motion.button)`
   width: 100%;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  border: none;
-  border-radius: 8px;
+  background: linear-gradient(145deg, #3d3d3d, #2a2a2a);
   padding: 1rem;
-  color: white;
+  color: #e0e0e0;
   position: relative;
   overflow: hidden;
+  border: none;
+  border-radius: 8px;
+  box-shadow: 
+    inset -4px -4px 8px rgba(0, 0, 0, 0.5),
+    inset 4px 4px 8px rgba(255, 255, 255, 0.1);
   
   &::before {
     content: '';
@@ -46,12 +45,25 @@ const GradientButton = styled(motion.button)`
       rgba(255, 255, 255, 0.2),
       transparent
     );
-    transform: translateX(-100%);
-    transition: transform 0.5s ease;
+    background-size: 2000px 100%;
+    animation: ${shimmer} 5s linear infinite;
   }
   
-  &:hover::before {
-    transform: translateX(100%);
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at var(--x, 50%) var(--y, 50%),
+      rgba(255, 255, 255, 0.2),
+      transparent 40%
+    );
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  &:hover::after {
+    opacity: 1;
   }
 `;
 
@@ -61,66 +73,53 @@ const ContentWrapper = styled(motion.div)`
 `;
 
 const Content = styled.div`
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  border-radius: 8px;
+  background: linear-gradient(145deg, #2a2a2a, #1e1e1e);
   padding: 1rem;
-  color: rgba(255, 255, 255, 0.9);
+  color: #e0e0e0;
   position: relative;
-  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 
+    inset -4px -4px 8px rgba(0, 0, 0, 0.5),
+    inset 4px 4px 8px rgba(255, 255, 255, 0.1);
   
   &::before {
     content: '';
     position: absolute;
     inset: 0;
     background: linear-gradient(
-      45deg,
+      90deg,
       transparent,
       rgba(255, 255, 255, 0.1),
       transparent
     );
-    background-size: 200% 200%;
-    animation: ${gradientFlow} 10s linear infinite;
+    background-size: 2000px 100%;
+    animation: ${shimmer} 8s linear infinite;
   }
 `;
 
 const Title = styled.span`
   font-size: 1.125rem;
   font-weight: 500;
-  color: white;
-  background: linear-gradient(
-    90deg,
-    #fff,
-    #ff1744,
-    #d500f9,
-    #fff
-  );
-  background-size: 300% 100%;
-  animation: ${gradientFlow} 6s linear infinite;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #e0e0e0;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
   position: relative;
   z-index: 1;
 `;
 
 const IconWrapper = styled(motion.div)`
-  color: white;
+  color: #e0e0e0;
   font-size: 1.25rem;
   position: relative;
   z-index: 1;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 `;
 
-const RippleEffect = styled.div<{ x: number; y: number }>`
+const RippleEffect = styled.div`
   position: absolute;
-  width: 10px;
-  height: 10px;
-  background: rgba(255, 255, 255, 0.4);
   border-radius: 50%;
-  pointer-events: none;
-  left: ${props => props.x}px;
-  top: ${props => props.y}px;
+  background: rgba(255, 255, 255, 0.3);
   animation: ${ripple} 1s linear forwards;
+  pointer-events: none;
 `;
 
 interface AccordionItemProps {
@@ -140,7 +139,7 @@ function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) 
     
     setRipples(prev => [...prev, { x, y, id: Date.now() }]);
     setTimeout(() => {
-      setRipples(prev => prev.filter(ripple => ripple.id !== Date.now()));
+      setRipples(prev => prev.slice(1));
     }, 1000);
     
     onClick();
@@ -148,14 +147,11 @@ function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) 
 
   return (
     <div className="mb-4">
-      <GradientButton
+      <MetalButton
         onClick={handleClick}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
       >
-        {ripples.map(ripple => (
-          <RippleEffect key={ripple.id} x={ripple.x} y={ripple.y} />
-        ))}
         <div className="flex justify-between items-center">
           <Title>{title}</Title>
           <IconWrapper
@@ -168,7 +164,17 @@ function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) 
             ▼
           </IconWrapper>
         </div>
-      </GradientButton>
+        {ripples.map(ripple => (
+          <RippleEffect
+            key={ripple.id}
+            style={{
+              left: ripple.x,
+              top: ripple.y,
+              transform: 'translate(-50%, -50%)'
+            }}
+          />
+        ))}
+      </MetalButton>
       <AnimatePresence>
         {isOpen && (
           <ContentWrapper
@@ -222,8 +228,8 @@ export default function Accordion({ items, allowMultiple = false }: AccordionPro
 }
 
 // Export individual components
-export { Container as GradientContainer };
-export { GradientButton };
-export { Content as GradientContent };
-export { AccordionItem as GradientAccordionItem };
-export { RippleEffect };
+export { Container as MetalContainer };
+export { MetalButton };
+export { Content as MetalContent };
+export { AccordionItem as MetalAccordionItem };
+export { RippleEffect }; 

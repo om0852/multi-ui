@@ -4,54 +4,54 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styled, { keyframes } from 'styled-components';
 
-const gradientFlow = keyframes`
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+const frost = keyframes`
+  0% { opacity: 0.3; transform: scale(0.95); filter: blur(3px); }
+  50% { opacity: 0.7; transform: scale(1); filter: blur(5px); }
+  100% { opacity: 0.3; transform: scale(0.95); filter: blur(3px); }
 `;
 
-const ripple = keyframes`
-  0% { transform: scale(0); opacity: 1; }
-  100% { transform: scale(4); opacity: 0; }
+const snowfall = keyframes`
+  0% { transform: translateY(-10px) rotate(0deg); opacity: 0; }
+  50% { transform: translateY(20px) rotate(180deg); opacity: 1; }
+  100% { transform: translateY(50px) rotate(360deg); opacity: 0; }
 `;
 
 const Container = styled.div`
   padding: 1rem;
-  background: linear-gradient(-45deg, #ff3d00, #ff1744, #d500f9, #651fff);
-  background-size: 400% 400%;
-  animation: ${gradientFlow} 15s ease infinite;
+  background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
   min-height: 100%;
   position: relative;
   overflow: hidden;
 `;
 
-const GradientButton = styled(motion.button)`
+const FrostButton = styled(motion.button)`
   width: 100%;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(10px);
-  border: none;
-  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
   padding: 1rem;
-  color: white;
+  color: #2d3748;
   position: relative;
   overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   
   &::before {
     content: '';
     position: absolute;
     inset: 0;
     background: linear-gradient(
-      90deg,
+      120deg,
       transparent,
-      rgba(255, 255, 255, 0.2),
+      rgba(255, 255, 255, 0.3),
       transparent
     );
-    transform: translateX(-100%);
-    transition: transform 0.5s ease;
+    opacity: 0;
+    transition: opacity 0.3s;
   }
   
   &:hover::before {
-    transform: translateX(100%);
+    opacity: 1;
   }
 `;
 
@@ -61,66 +61,53 @@ const ContentWrapper = styled(motion.div)`
 `;
 
 const Content = styled.div`
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(10px);
-  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 1rem;
-  color: rgba(255, 255, 255, 0.9);
+  color: #2d3748;
   position: relative;
-  overflow: hidden;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      45deg,
-      transparent,
-      rgba(255, 255, 255, 0.1),
-      transparent
-    );
-    background-size: 200% 200%;
-    animation: ${gradientFlow} 10s linear infinite;
-  }
+  border-radius: 12px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 `;
 
 const Title = styled.span`
   font-size: 1.125rem;
   font-weight: 500;
-  color: white;
-  background: linear-gradient(
-    90deg,
-    #fff,
-    #ff1744,
-    #d500f9,
-    #fff
-  );
-  background-size: 300% 100%;
-  animation: ${gradientFlow} 6s linear infinite;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #2d3748;
+  text-shadow: 0 2px 4px rgba(255, 255, 255, 0.3);
   position: relative;
   z-index: 1;
 `;
 
 const IconWrapper = styled(motion.div)`
-  color: white;
+  color: #2d3748;
   font-size: 1.25rem;
   position: relative;
   z-index: 1;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  text-shadow: 0 2px 4px rgba(255, 255, 255, 0.3);
 `;
 
-const RippleEffect = styled.div<{ x: number; y: number }>`
+const FrostEffect = styled.div<{ size: number; delay: number }>`
   position: absolute;
-  width: 10px;
-  height: 10px;
-  background: rgba(255, 255, 255, 0.4);
+  width: ${props => props.size}px;
+  height: ${props => props.size}px;
+  background: rgba(255, 255, 255, 0.3);
   border-radius: 50%;
-  pointer-events: none;
-  left: ${props => props.x}px;
-  top: ${props => props.y}px;
-  animation: ${ripple} 1s linear forwards;
+  filter: blur(3px);
+  animation: ${frost} ${props => 3 + props.delay}s ease-in-out infinite;
+  animation-delay: ${props => props.delay}s;
+`;
+
+const Snowflake = styled.div<{ size: number; delay: number }>`
+  position: absolute;
+  width: ${props => props.size}px;
+  height: ${props => props.size}px;
+  background: white;
+  border-radius: 50%;
+  animation: ${snowfall} ${props => 3 + props.delay}s linear infinite;
+  animation-delay: ${props => props.delay}s;
+  opacity: 0.6;
 `;
 
 interface AccordionItemProps {
@@ -131,31 +118,13 @@ interface AccordionItemProps {
 }
 
 function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) {
-  const [ripples, setRipples] = useState<Array<{ x: number; y: number; id: number }>>([]);
-
-  const handleClick = (e: React.MouseEvent) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    setRipples(prev => [...prev, { x, y, id: Date.now() }]);
-    setTimeout(() => {
-      setRipples(prev => prev.filter(ripple => ripple.id !== Date.now()));
-    }, 1000);
-    
-    onClick();
-  };
-
   return (
     <div className="mb-4">
-      <GradientButton
-        onClick={handleClick}
+      <FrostButton
+        onClick={onClick}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
       >
-        {ripples.map(ripple => (
-          <RippleEffect key={ripple.id} x={ripple.x} y={ripple.y} />
-        ))}
         <div className="flex justify-between items-center">
           <Title>{title}</Title>
           <IconWrapper
@@ -168,7 +137,7 @@ function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) 
             ▼
           </IconWrapper>
         </div>
-      </GradientButton>
+      </FrostButton>
       <AnimatePresence>
         {isOpen && (
           <ContentWrapper
@@ -208,6 +177,13 @@ export default function Accordion({ items, allowMultiple = false }: AccordionPro
 
   return (
     <Container>
+      <FrostEffect size={100} delay={0} style={{ top: '10%', left: '10%' }} />
+      <FrostEffect size={80} delay={1} style={{ top: '30%', right: '20%' }} />
+      <FrostEffect size={120} delay={2} style={{ bottom: '20%', left: '15%' }} />
+      <Snowflake size={4} delay={0} style={{ left: '20%' }} />
+      <Snowflake size={6} delay={1} style={{ left: '40%' }} />
+      <Snowflake size={4} delay={2} style={{ left: '60%' }} />
+      <Snowflake size={6} delay={3} style={{ left: '80%' }} />
       {items.map((item, index) => (
         <AccordionItem
           key={index}
@@ -222,8 +198,8 @@ export default function Accordion({ items, allowMultiple = false }: AccordionPro
 }
 
 // Export individual components
-export { Container as GradientContainer };
-export { GradientButton };
-export { Content as GradientContent };
-export { AccordionItem as GradientAccordionItem };
-export { RippleEffect };
+export { Container as FrostContainer };
+export { FrostButton };
+export { Content as FrostContent };
+export { AccordionItem as FrostAccordionItem };
+export { FrostEffect, Snowflake }; 

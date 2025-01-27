@@ -4,37 +4,39 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styled, { keyframes } from 'styled-components';
 
-const gradientFlow = keyframes`
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+const pulse = keyframes`
+  0%, 100% { box-shadow: 0 0 5px #ff00cc, 0 0 10px #ff00cc, 0 0 20px #ff00cc; }
+  50% { box-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 40px #00ffff; }
 `;
 
-const ripple = keyframes`
-  0% { transform: scale(0); opacity: 1; }
-  100% { transform: scale(4); opacity: 0; }
+const textGlow = keyframes`
+  0%, 100% { text-shadow: 0 0 5px #ff00cc, 0 0 10px #ff00cc; }
+  50% { text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff; }
+`;
+
+const borderPulse = keyframes`
+  0%, 100% { border-color: #ff00cc; }
+  50% { border-color: #00ffff; }
 `;
 
 const Container = styled.div`
   padding: 1rem;
-  background: linear-gradient(-45deg, #ff3d00, #ff1744, #d500f9, #651fff);
-  background-size: 400% 400%;
-  animation: ${gradientFlow} 15s ease infinite;
+  background: #0a0a0a;
   min-height: 100%;
   position: relative;
   overflow: hidden;
 `;
 
-const GradientButton = styled(motion.button)`
+const NeonButton = styled(motion.button)`
   width: 100%;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  border: none;
-  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 2px solid #ff00cc;
   padding: 1rem;
   color: white;
   position: relative;
   overflow: hidden;
+  border-radius: 8px;
+  animation: ${borderPulse} 4s infinite;
   
   &::before {
     content: '';
@@ -43,7 +45,7 @@ const GradientButton = styled(motion.button)`
     background: linear-gradient(
       90deg,
       transparent,
-      rgba(255, 255, 255, 0.2),
+      rgba(255, 255, 255, 0.1),
       transparent
     );
     transform: translateX(-100%);
@@ -53,6 +55,10 @@ const GradientButton = styled(motion.button)`
   &:hover::before {
     transform: translateX(100%);
   }
+  
+  &:hover {
+    animation: ${pulse} 2s infinite;
+  }
 `;
 
 const ContentWrapper = styled(motion.div)`
@@ -61,13 +67,12 @@ const ContentWrapper = styled(motion.div)`
 `;
 
 const Content = styled.div`
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid #ff00cc;
   padding: 1rem;
-  color: rgba(255, 255, 255, 0.9);
+  color: white;
   position: relative;
-  overflow: hidden;
+  border-radius: 8px;
   
   &::before {
     content: '';
@@ -76,11 +81,9 @@ const Content = styled.div`
     background: linear-gradient(
       45deg,
       transparent,
-      rgba(255, 255, 255, 0.1),
+      rgba(255, 0, 204, 0.1),
       transparent
     );
-    background-size: 200% 200%;
-    animation: ${gradientFlow} 10s linear infinite;
   }
 `;
 
@@ -88,17 +91,7 @@ const Title = styled.span`
   font-size: 1.125rem;
   font-weight: 500;
   color: white;
-  background: linear-gradient(
-    90deg,
-    #fff,
-    #ff1744,
-    #d500f9,
-    #fff
-  );
-  background-size: 300% 100%;
-  animation: ${gradientFlow} 6s linear infinite;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  animation: ${textGlow} 4s infinite;
   position: relative;
   z-index: 1;
 `;
@@ -108,19 +101,18 @@ const IconWrapper = styled(motion.div)`
   font-size: 1.25rem;
   position: relative;
   z-index: 1;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  animation: ${textGlow} 4s infinite;
 `;
 
-const RippleEffect = styled.div<{ x: number; y: number }>`
+const NeonLine = styled.div<{ color: string; delay: number }>`
   position: absolute;
-  width: 10px;
-  height: 10px;
-  background: rgba(255, 255, 255, 0.4);
-  border-radius: 50%;
-  pointer-events: none;
-  left: ${props => props.x}px;
-  top: ${props => props.y}px;
-  animation: ${ripple} 1s linear forwards;
+  width: 100px;
+  height: 2px;
+  background: ${props => props.color};
+  filter: blur(2px);
+  opacity: 0.5;
+  animation: ${pulse} ${props => 4 + props.delay}s infinite;
+  animation-delay: ${props => props.delay}s;
 `;
 
 interface AccordionItemProps {
@@ -131,31 +123,13 @@ interface AccordionItemProps {
 }
 
 function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) {
-  const [ripples, setRipples] = useState<Array<{ x: number; y: number; id: number }>>([]);
-
-  const handleClick = (e: React.MouseEvent) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    setRipples(prev => [...prev, { x, y, id: Date.now() }]);
-    setTimeout(() => {
-      setRipples(prev => prev.filter(ripple => ripple.id !== Date.now()));
-    }, 1000);
-    
-    onClick();
-  };
-
   return (
     <div className="mb-4">
-      <GradientButton
-        onClick={handleClick}
+      <NeonButton
+        onClick={onClick}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
       >
-        {ripples.map(ripple => (
-          <RippleEffect key={ripple.id} x={ripple.x} y={ripple.y} />
-        ))}
         <div className="flex justify-between items-center">
           <Title>{title}</Title>
           <IconWrapper
@@ -168,7 +142,7 @@ function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) 
             ▼
           </IconWrapper>
         </div>
-      </GradientButton>
+      </NeonButton>
       <AnimatePresence>
         {isOpen && (
           <ContentWrapper
@@ -208,6 +182,10 @@ export default function Accordion({ items, allowMultiple = false }: AccordionPro
 
   return (
     <Container>
+      <NeonLine color="#ff00cc" delay={0} style={{ top: '10%', left: '10%', transform: 'rotate(45deg)' }} />
+      <NeonLine color="#00ffff" delay={1} style={{ top: '30%', right: '20%', transform: 'rotate(-45deg)' }} />
+      <NeonLine color="#ff00cc" delay={2} style={{ bottom: '20%', left: '15%', transform: 'rotate(-30deg)' }} />
+      <NeonLine color="#00ffff" delay={3} style={{ bottom: '40%', right: '25%', transform: 'rotate(30deg)' }} />
       {items.map((item, index) => (
         <AccordionItem
           key={index}
@@ -222,8 +200,8 @@ export default function Accordion({ items, allowMultiple = false }: AccordionPro
 }
 
 // Export individual components
-export { Container as GradientContainer };
-export { GradientButton };
-export { Content as GradientContent };
-export { AccordionItem as GradientAccordionItem };
-export { RippleEffect };
+export { Container as NeonContainer };
+export { NeonButton };
+export { Content as NeonContent };
+export { AccordionItem as NeonAccordionItem };
+export { NeonLine }; 

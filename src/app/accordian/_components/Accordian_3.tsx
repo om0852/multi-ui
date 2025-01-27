@@ -2,6 +2,68 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import styled from 'styled-components';
+
+const Container = styled.div`
+  padding: 1rem;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
+  min-height: 100%;
+`;
+
+const GradientButton = styled(motion.button)`
+  width: 100%;
+  background: linear-gradient(145deg, #2a2a2a, #1a1a1a);
+  border-radius: 1rem;
+  padding: 1rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  position: relative;
+  overflow: hidden;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(90deg, 
+      transparent,
+      rgba(255, 255, 255, 0.1),
+      transparent
+    );
+    transform: translateX(-100%);
+    transition: transform 0.5s ease;
+  }
+  
+  &:hover::before {
+    transform: translateX(100%);
+  }
+`;
+
+const ContentWrapper = styled(motion.div)`
+  overflow: hidden;
+  margin-top: 0.5rem;
+`;
+
+const Content = styled.div`
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 1rem;
+  padding: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+`;
+
+const Title = styled.span`
+  font-size: 1.125rem;
+  font-weight: 500;
+  background: linear-gradient(90deg, #fff, #ccc);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+`;
+
+const IconWrapper = styled(motion.div)`
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 1.25rem;
+`;
 
 interface AccordionItemProps {
   title: string;
@@ -13,31 +75,36 @@ interface AccordionItemProps {
 function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) {
   return (
     <div className="mb-4">
-      <button
-        className="flex w-full items-center justify-between rounded-lg bg-white shadow-md py-4 px-6 hover:bg-gray-100 transition-all"
+      <GradientButton
         onClick={onClick}
+        whileHover={{ scale: 1.01 }}
+        whileTap={{ scale: 0.98 }}
       >
-        <span className="text-left font-medium text-gray-800">{title}</span>
-        <motion.img
-          src="https://img.icons8.com/ios-glyphs/30/000000/chevron-down.png"
-          alt="Chevron Down"
-          className="h-5 w-5"
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.3, ease: 'easeInOut' }}
-        />
-      </button>
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            initial={{ scaleY: 0, opacity: 0 }}
-            animate={{ scaleY: 1, opacity: 1 }}
-            exit={{ scaleY: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: 'easeInOut' }}
-            style={{ transformOrigin: 'top' }}
-            className="overflow-hidden rounded-lg bg-gray-50 shadow-inner"
+        <div className="flex justify-between items-center">
+          <Title>{title}</Title>
+          <IconWrapper
+            animate={{ 
+              rotate: isOpen ? 180 : 0,
+              scale: isOpen ? 1.1 : 1
+            }}
+            transition={{ type: "spring", stiffness: 200 }}
           >
-            <div className="px-6 py-4 text-gray-700">{content}</div>
-          </motion.div>
+            ▼
+          </IconWrapper>
+        </div>
+      </GradientButton>
+      <AnimatePresence>
+        {isOpen && (
+          <ContentWrapper
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Content>
+              {content}
+            </Content>
+          </ContentWrapper>
         )}
       </AnimatePresence>
     </div>
@@ -54,10 +121,9 @@ export default function Accordion({ items, allowMultiple = false }: AccordionPro
 
   const handleClick = (index: number) => {
     if (allowMultiple) {
-      setOpenIndexes(
-        openIndexes.includes(index)
-          ? openIndexes.filter((i) => i !== index)
-          : [...openIndexes, index]
+      setOpenIndexes(openIndexes.includes(index)
+        ? openIndexes.filter(i => i !== index)
+        : [...openIndexes, index]
       );
     } else {
       setOpenIndexes(openIndexes.includes(index) ? [] : [index]);
@@ -65,7 +131,7 @@ export default function Accordion({ items, allowMultiple = false }: AccordionPro
   };
 
   return (
-    <div className="p-4">
+    <Container>
       {items.map((item, index) => (
         <AccordionItem
           key={index}
@@ -75,6 +141,12 @@ export default function Accordion({ items, allowMultiple = false }: AccordionPro
           onClick={() => handleClick(index)}
         />
       ))}
-    </div>
+    </Container>
   );
 }
+
+// Export individual components
+export { Container as GradientContainer };
+export { GradientButton };
+export { Content as GradientContent };
+export { AccordionItem as GradientAccordionItem };

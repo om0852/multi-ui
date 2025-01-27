@@ -2,6 +2,113 @@
 
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import styled, { keyframes } from 'styled-components';
+
+const matrixRain = keyframes`
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+`;
+
+const Container = styled.div`
+  padding: 1rem;
+  background: #000;
+  min-height: 100%;
+  position: relative;
+  overflow: hidden;
+`;
+
+const MatrixButton = styled(motion.button)`
+  width: 100%;
+  background: rgba(0, 255, 0, 0.1);
+  border: 1px solid rgba(0, 255, 0, 0.3);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  color: #0f0;
+  position: relative;
+  overflow: hidden;
+  text-shadow: 0 0 5px #0f0;
+  
+  &::before {
+    content: '01001010101110101010';
+    position: absolute;
+    font-family: monospace;
+    font-size: 12px;
+    white-space: nowrap;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0.3;
+    animation: ${matrixRain} 2s linear infinite;
+  }
+  
+  &:hover {
+    background: rgba(0, 255, 0, 0.2);
+    border-color: rgba(0, 255, 0, 0.5);
+    text-shadow: 0 0 10px #0f0;
+  }
+`;
+
+const ContentWrapper = styled(motion.div)`
+  overflow: hidden;
+  margin-top: 0.5rem;
+`;
+
+const Content = styled.div`
+  background: rgba(0, 255, 0, 0.05);
+  border: 1px solid rgba(0, 255, 0, 0.2);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  color: #0f0;
+  position: relative;
+  overflow: hidden;
+  text-shadow: 0 0 3px #0f0;
+  
+  &::before {
+    content: '10101010101010101010';
+    position: absolute;
+    font-family: monospace;
+    font-size: 12px;
+    white-space: nowrap;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0.2;
+    animation: ${matrixRain} 3s linear infinite;
+  }
+`;
+
+const Title = styled.span`
+  font-size: 1.125rem;
+  font-weight: 500;
+  font-family: monospace;
+  position: relative;
+  z-index: 1;
+`;
+
+const IconWrapper = styled(motion.div)`
+  color: #0f0;
+  font-size: 1.25rem;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 0 5px #0f0;
+`;
+
+const RainColumn = styled.div<{ delay: number; duration: number }>`
+  position: absolute;
+  top: 0;
+  font-family: monospace;
+  color: #0f0;
+  font-size: 14px;
+  line-height: 1;
+  opacity: 0.3;
+  animation: ${matrixRain} ${props => props.duration}s linear infinite;
+  animation-delay: ${props => props.delay}s;
+  white-space: pre;
+`;
+
+const generateRandomBinary = (length: number) => {
+  return Array.from({ length }, () => Math.round(Math.random())).join('');
+};
 
 interface AccordionItemProps {
   title: string;
@@ -12,35 +119,37 @@ interface AccordionItemProps {
 
 function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) {
   return (
-    <div className="relative mb-4">
-      <button
-        className={`flex items-center justify-between w-full px-6 py-4 rounded-lg transition-all ${
-          isOpen
-            ? 'bg-gradient-to-r from-purple-500 via-pink-500 to-red-500 text-white shadow-lg'
-            : 'bg-gray-100 hover:bg-gray-200 text-gray-800'
-        }`}
+    <div className="mb-4">
+      <MatrixButton
         onClick={onClick}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
       >
-        <span className="text-lg font-medium">{title}</span>
-        <motion.div
-          className="h-6 w-6 flex items-center justify-center bg-white rounded-full shadow-md"
-          animate={{ rotate: isOpen ? 180 : 0 }}
-          transition={{ duration: 0.4, ease: 'easeInOut' }}
-        >
-          <span className="block h-3 w-3 bg-gray-800" />
-        </motion.div>
-      </button>
-      <AnimatePresence initial={false}>
-        {isOpen && (
-          <motion.div
-            initial={{ y: -10, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -10, opacity: 0 }}
-            transition={{ duration: 0.4, ease: 'easeOut' }}
-            className="overflow-hidden rounded-b-lg p-6 bg-gray-50 text-gray-700"
+        <div className="flex justify-between items-center">
+          <Title>{title}</Title>
+          <IconWrapper
+            animate={{ 
+              rotate: isOpen ? 180 : 0,
+              scale: isOpen ? 1.2 : 1
+            }}
+            transition={{ type: "spring", stiffness: 200 }}
           >
-            {content}
-          </motion.div>
+            ▼
+          </IconWrapper>
+        </div>
+      </MatrixButton>
+      <AnimatePresence>
+        {isOpen && (
+          <ContentWrapper
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            transition={{ duration: 0.3 }}
+          >
+            <Content>
+              {content}
+            </Content>
+          </ContentWrapper>
         )}
       </AnimatePresence>
     </div>
@@ -57,10 +166,9 @@ export default function Accordion({ items, allowMultiple = false }: AccordionPro
 
   const handleClick = (index: number) => {
     if (allowMultiple) {
-      setOpenIndexes(
-        openIndexes.includes(index)
-          ? openIndexes.filter((i) => i !== index)
-          : [...openIndexes, index]
+      setOpenIndexes(openIndexes.includes(index)
+        ? openIndexes.filter(i => i !== index)
+        : [...openIndexes, index]
       );
     } else {
       setOpenIndexes(openIndexes.includes(index) ? [] : [index]);
@@ -68,7 +176,17 @@ export default function Accordion({ items, allowMultiple = false }: AccordionPro
   };
 
   return (
-    <div className="space-y-4">
+    <Container>
+      {Array.from({ length: 10 }).map((_, i) => (
+        <RainColumn
+          key={i}
+          delay={i * 0.5}
+          duration={2 + Math.random() * 2}
+          style={{ left: `${i * 10}%` }}
+        >
+          {generateRandomBinary(20)}
+        </RainColumn>
+      ))}
       {items.map((item, index) => (
         <AccordionItem
           key={index}
@@ -78,6 +196,13 @@ export default function Accordion({ items, allowMultiple = false }: AccordionPro
           onClick={() => handleClick(index)}
         />
       ))}
-    </div>
+    </Container>
   );
 }
+
+// Export individual components
+export { Container as MatrixContainer };
+export { MatrixButton };
+export { Content as MatrixContent };
+export { AccordionItem as MatrixAccordionItem };
+export { RainColumn };

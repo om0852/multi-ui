@@ -4,54 +4,49 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styled, { keyframes } from 'styled-components';
 
-const gradientFlow = keyframes`
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-`;
-
-const ripple = keyframes`
-  0% { transform: scale(0); opacity: 1; }
-  100% { transform: scale(4); opacity: 0; }
+const shadowShift = keyframes`
+  0%, 100% { filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2)); }
+  50% { filter: drop-shadow(4px 4px 4px rgba(0, 0, 0, 0.3)); }
 `;
 
 const Container = styled.div`
   padding: 1rem;
-  background: linear-gradient(-45deg, #ff3d00, #ff1744, #d500f9, #651fff);
-  background-size: 400% 400%;
-  animation: ${gradientFlow} 15s ease infinite;
+  background: #f5f5f5;
   min-height: 100%;
   position: relative;
   overflow: hidden;
 `;
 
-const GradientButton = styled(motion.button)`
+const PaperButton = styled(motion.button)`
   width: 100%;
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  border: none;
-  border-radius: 8px;
+  background: white;
   padding: 1rem;
-  color: white;
+  color: #333;
   position: relative;
   overflow: hidden;
+  border: none;
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
+  clip-path: polygon(
+    0% 0%,
+    97% 0%,
+    100% 3%,
+    100% 100%,
+    3% 100%,
+    0% 97%
+  );
   
   &::before {
     content: '';
     position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.2),
-      transparent
-    );
-    transform: translateX(-100%);
-    transition: transform 0.5s ease;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(135deg, transparent 50%, rgba(0, 0, 0, 0.1) 50%);
   }
   
-  &:hover::before {
-    transform: translateX(100%);
+  &:hover {
+    animation: ${shadowShift} 1s ease-in-out infinite;
   }
 `;
 
@@ -61,66 +56,53 @@ const ContentWrapper = styled(motion.div)`
 `;
 
 const Content = styled.div`
-  background: rgba(0, 0, 0, 0.3);
-  backdrop-filter: blur(10px);
-  border-radius: 8px;
+  background: white;
   padding: 1rem;
-  color: rgba(255, 255, 255, 0.9);
+  color: #333;
   position: relative;
-  overflow: hidden;
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.2));
+  clip-path: polygon(
+    0% 0%,
+    97% 0%,
+    100% 3%,
+    100% 100%,
+    3% 100%,
+    0% 97%
+  );
   
   &::before {
     content: '';
     position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      45deg,
-      transparent,
-      rgba(255, 255, 255, 0.1),
-      transparent
-    );
-    background-size: 200% 200%;
-    animation: ${gradientFlow} 10s linear infinite;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(135deg, transparent 50%, rgba(0, 0, 0, 0.1) 50%);
   }
 `;
 
 const Title = styled.span`
   font-size: 1.125rem;
   font-weight: 500;
-  color: white;
-  background: linear-gradient(
-    90deg,
-    #fff,
-    #ff1744,
-    #d500f9,
-    #fff
-  );
-  background-size: 300% 100%;
-  animation: ${gradientFlow} 6s linear infinite;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: #333;
   position: relative;
   z-index: 1;
 `;
 
 const IconWrapper = styled(motion.div)`
-  color: white;
+  color: #666;
   font-size: 1.25rem;
   position: relative;
   z-index: 1;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 `;
 
-const RippleEffect = styled.div<{ x: number; y: number }>`
+const PaperFold = styled.div<{ angle: number }>`
   position: absolute;
-  width: 10px;
-  height: 10px;
-  background: rgba(255, 255, 255, 0.4);
-  border-radius: 50%;
-  pointer-events: none;
-  left: ${props => props.x}px;
-  top: ${props => props.y}px;
-  animation: ${ripple} 1s linear forwards;
+  width: 100px;
+  height: 100px;
+  background: rgba(0, 0, 0, 0.03);
+  transform: rotate(${props => props.angle}deg);
+  clip-path: polygon(0% 0%, 100% 0%, 0% 100%);
 `;
 
 interface AccordionItemProps {
@@ -131,31 +113,13 @@ interface AccordionItemProps {
 }
 
 function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) {
-  const [ripples, setRipples] = useState<Array<{ x: number; y: number; id: number }>>([]);
-
-  const handleClick = (e: React.MouseEvent) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    setRipples(prev => [...prev, { x, y, id: Date.now() }]);
-    setTimeout(() => {
-      setRipples(prev => prev.filter(ripple => ripple.id !== Date.now()));
-    }, 1000);
-    
-    onClick();
-  };
-
   return (
     <div className="mb-4">
-      <GradientButton
-        onClick={handleClick}
+      <PaperButton
+        onClick={onClick}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
       >
-        {ripples.map(ripple => (
-          <RippleEffect key={ripple.id} x={ripple.x} y={ripple.y} />
-        ))}
         <div className="flex justify-between items-center">
           <Title>{title}</Title>
           <IconWrapper
@@ -168,7 +132,7 @@ function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) 
             ▼
           </IconWrapper>
         </div>
-      </GradientButton>
+      </PaperButton>
       <AnimatePresence>
         {isOpen && (
           <ContentWrapper
@@ -208,6 +172,10 @@ export default function Accordion({ items, allowMultiple = false }: AccordionPro
 
   return (
     <Container>
+      <PaperFold angle={0} style={{ top: '10%', left: '10%' }} />
+      <PaperFold angle={90} style={{ top: '30%', right: '20%' }} />
+      <PaperFold angle={45} style={{ bottom: '20%', left: '15%' }} />
+      <PaperFold angle={-45} style={{ bottom: '40%', right: '25%' }} />
       {items.map((item, index) => (
         <AccordionItem
           key={index}
@@ -222,8 +190,8 @@ export default function Accordion({ items, allowMultiple = false }: AccordionPro
 }
 
 // Export individual components
-export { Container as GradientContainer };
-export { GradientButton };
-export { Content as GradientContent };
-export { AccordionItem as GradientAccordionItem };
-export { RippleEffect };
+export { Container as PaperContainer };
+export { PaperButton };
+export { Content as PaperContent };
+export { AccordionItem as PaperAccordionItem };
+export { PaperFold }; 

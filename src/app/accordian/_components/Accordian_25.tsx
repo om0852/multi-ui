@@ -4,37 +4,39 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styled, { keyframes } from 'styled-components';
 
-const gradientFlow = keyframes`
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+const twinkle = keyframes`
+  0%, 100% { opacity: 0.3; transform: scale(0.8); }
+  50% { opacity: 1; transform: scale(1.2); }
 `;
 
-const ripple = keyframes`
-  0% { transform: scale(0); opacity: 1; }
-  100% { transform: scale(4); opacity: 0; }
+const nebulaPulse = keyframes`
+  0%, 100% { transform: scale(1); filter: hue-rotate(0deg); }
+  50% { transform: scale(1.1); filter: hue-rotate(90deg); }
+`;
+
+const starFloat = keyframes`
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(180deg); }
 `;
 
 const Container = styled.div`
   padding: 1rem;
-  background: linear-gradient(-45deg, #ff3d00, #ff1744, #d500f9, #651fff);
-  background-size: 400% 400%;
-  animation: ${gradientFlow} 15s ease infinite;
+  background: linear-gradient(135deg, #090a0f 0%, #1b2735 100%);
   min-height: 100%;
   position: relative;
   overflow: hidden;
 `;
 
-const GradientButton = styled(motion.button)`
+const NebulaButton = styled(motion.button)`
   width: 100%;
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(10px);
-  border: none;
-  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 1rem;
   color: white;
   position: relative;
   overflow: hidden;
+  border-radius: 8px;
   
   &::before {
     content: '';
@@ -42,16 +44,30 @@ const GradientButton = styled(motion.button)`
     inset: 0;
     background: linear-gradient(
       90deg,
-      transparent,
-      rgba(255, 255, 255, 0.2),
-      transparent
+      #ff00cc,
+      #3333ff,
+      #00ffff
     );
-    transform: translateX(-100%);
-    transition: transform 0.5s ease;
+    opacity: 0.2;
+    mask: radial-gradient(circle at center, transparent 30%, black 70%);
+    animation: ${nebulaPulse} 10s infinite;
   }
   
-  &:hover::before {
-    transform: translateX(100%);
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at var(--x, 50%) var(--y, 50%),
+      rgba(255, 255, 255, 0.2) 0%,
+      transparent 60%
+    );
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+  
+  &:hover::after {
+    opacity: 1;
   }
 `;
 
@@ -61,12 +77,13 @@ const ContentWrapper = styled(motion.div)`
 `;
 
 const Content = styled.div`
-  background: rgba(0, 0, 0, 0.3);
+  background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(10px);
-  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 1rem;
   color: rgba(255, 255, 255, 0.9);
   position: relative;
+  border-radius: 8px;
   overflow: hidden;
   
   &::before {
@@ -75,12 +92,12 @@ const Content = styled.div`
     inset: 0;
     background: linear-gradient(
       45deg,
-      transparent,
-      rgba(255, 255, 255, 0.1),
-      transparent
+      #ff00cc,
+      #3333ff,
+      #00ffff
     );
-    background-size: 200% 200%;
-    animation: ${gradientFlow} 10s linear infinite;
+    opacity: 0.1;
+    mask: radial-gradient(circle at center, transparent 40%, black 80%);
   }
 `;
 
@@ -88,17 +105,9 @@ const Title = styled.span`
   font-size: 1.125rem;
   font-weight: 500;
   color: white;
-  background: linear-gradient(
-    90deg,
-    #fff,
-    #ff1744,
-    #d500f9,
-    #fff
-  );
-  background-size: 300% 100%;
-  animation: ${gradientFlow} 6s linear infinite;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  text-shadow: 
+    0 0 5px rgba(255, 255, 255, 0.5),
+    0 0 10px rgba(255, 255, 255, 0.3);
   position: relative;
   z-index: 1;
 `;
@@ -108,19 +117,41 @@ const IconWrapper = styled(motion.div)`
   font-size: 1.25rem;
   position: relative;
   z-index: 1;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+  text-shadow: 
+    0 0 5px rgba(255, 255, 255, 0.5),
+    0 0 10px rgba(255, 255, 255, 0.3);
 `;
 
-const RippleEffect = styled.div<{ x: number; y: number }>`
+const Star = styled.div<{ size: number; delay: number }>`
   position: absolute;
-  width: 10px;
-  height: 10px;
-  background: rgba(255, 255, 255, 0.4);
+  width: ${props => props.size}px;
+  height: ${props => props.size}px;
+  background: white;
   border-radius: 50%;
-  pointer-events: none;
-  left: ${props => props.x}px;
-  top: ${props => props.y}px;
-  animation: ${ripple} 1s linear forwards;
+  animation: ${twinkle} ${props => 2 + props.delay}s ease-in-out infinite;
+  animation-delay: ${props => props.delay}s;
+  
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent 70%);
+    transform: translate(-50%, -50%);
+  }
+`;
+
+const Nebula = styled.div<{ color: string }>`
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  background: ${props => props.color};
+  filter: blur(60px);
+  opacity: 0.2;
+  animation: ${nebulaPulse} 15s ease-in-out infinite;
+  mix-blend-mode: screen;
 `;
 
 interface AccordionItemProps {
@@ -131,31 +162,13 @@ interface AccordionItemProps {
 }
 
 function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) {
-  const [ripples, setRipples] = useState<Array<{ x: number; y: number; id: number }>>([]);
-
-  const handleClick = (e: React.MouseEvent) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    
-    setRipples(prev => [...prev, { x, y, id: Date.now() }]);
-    setTimeout(() => {
-      setRipples(prev => prev.filter(ripple => ripple.id !== Date.now()));
-    }, 1000);
-    
-    onClick();
-  };
-
   return (
     <div className="mb-4">
-      <GradientButton
-        onClick={handleClick}
+      <NebulaButton
+        onClick={onClick}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
       >
-        {ripples.map(ripple => (
-          <RippleEffect key={ripple.id} x={ripple.x} y={ripple.y} />
-        ))}
         <div className="flex justify-between items-center">
           <Title>{title}</Title>
           <IconWrapper
@@ -168,7 +181,7 @@ function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) 
             ▼
           </IconWrapper>
         </div>
-      </GradientButton>
+      </NebulaButton>
       <AnimatePresence>
         {isOpen && (
           <ContentWrapper
@@ -208,6 +221,14 @@ export default function Accordion({ items, allowMultiple = false }: AccordionPro
 
   return (
     <Container>
+      <Nebula color="#ff00cc" style={{ top: '10%', left: '10%' }} />
+      <Nebula color="#3333ff" style={{ top: '40%', right: '20%' }} />
+      <Nebula color="#00ffff" style={{ bottom: '20%', left: '30%' }} />
+      <Star size={2} delay={0} style={{ top: '20%', left: '30%' }} />
+      <Star size={3} delay={1} style={{ top: '40%', right: '20%' }} />
+      <Star size={2} delay={2} style={{ bottom: '30%', left: '40%' }} />
+      <Star size={3} delay={3} style={{ bottom: '20%', right: '35%' }} />
+      <Star size={2} delay={4} style={{ top: '50%', left: '50%' }} />
       {items.map((item, index) => (
         <AccordionItem
           key={index}
@@ -222,8 +243,8 @@ export default function Accordion({ items, allowMultiple = false }: AccordionPro
 }
 
 // Export individual components
-export { Container as GradientContainer };
-export { GradientButton };
-export { Content as GradientContent };
-export { AccordionItem as GradientAccordionItem };
-export { RippleEffect };
+export { Container as NebulaContainer };
+export { NebulaButton };
+export { Content as NebulaContent };
+export { AccordionItem as NebulaAccordionItem };
+export { Star, Nebula }; 
