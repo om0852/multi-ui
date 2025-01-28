@@ -24,7 +24,7 @@ const FlipAvatar: React.FC<AvatarProps> = ({
 
   return (
     <motion.div
-      className={`relative ${sizeClasses[size]} rounded-full overflow-hidden ${className} group`}
+      className={`relative ${sizeClasses[size]} w-10 rounded-full overflow-hidden ${className} group`}
     >
       {/* Avatar image with flip animation */}
       <motion.div
