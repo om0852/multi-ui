@@ -38,7 +38,20 @@ body {
   0%, 100% { transform: translateY(0px); }
   50% { transform: translateY(-10px); }
 }
+@keyframes ripple {
+  from {
+    transform: scale(0);
+    opacity: 0.5;
+  }
+  to {
+    transform: scale(4);
+    opacity: 0;
+  }
+}
 
+.animate-ripple {
+  animation: ripple 0.6s linear;
+}
 .float {
   animation: float 3s ease-in-out infinite;
 }
