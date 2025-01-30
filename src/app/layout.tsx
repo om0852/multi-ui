@@ -1,7 +1,7 @@
-"use client"
-// import type { Metadata } from "next";
-import localFont from "next/font/local";
-import "./globals.css";
+import type { Metadata } from 'next';
+import { Inter } from 'next/font/google';
+import './globals.css';
+import StyledComponentsRegistry from '../lib/registry';
 // import { ToastProvider } from "./toast/_components/Toast";
 // import Toast_1 from "./toast/_components/Toast_1";
 // import Toast_2 from "./toast/_components/Toast_2";
@@ -24,35 +24,24 @@ import "./globals.css";
 // import Toast_21 from "./toast/_components/Toast_21";
 // import Toast_22 from "./toast/_components/Toast_22";
 
-const geistSans = localFont({
-  src: "./fonts/GeistVF.woff",
-  variable: "--font-geist-sans",
-  weight: "100 900",
-});
-const geistMono = localFont({
-  src: "./fonts/GeistMonoVF.woff",
-  variable: "--font-geist-mono",
-  weight: "100 900",
-});
+const inter = Inter({ subsets: ['latin'] });
 
-//  const metadata: Metadata = {
-//   title: "Multi UI",
-//   description: "Under construction.....",
-// };
+ const metadata= {
+  title: 'Modern UI Components',
+  description: 'A collection of modern UI components with beautiful animations',
+};
 
 export default function RootLayout({
   children,
-}: Readonly<{
+}: {
   children: React.ReactNode;
-}>) {
+}) {
   return (
     <html lang="en">
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        {/* <ToastProvider Toast={Toast_22} stack={false}> */}
-          <>{children}</>
-        {/* </ToastProvider> */}
+      <body className={inter.className}>
+          {/* <ToastProvider Toast={Toast_22} stack={false}> */}
+            <>{children}</>
+          {/* </ToastProvider> */}
       </body>
     </html>
   );
