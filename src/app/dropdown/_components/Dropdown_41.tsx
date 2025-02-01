@@ -1,4 +1,4 @@
-"use client";
+'use client'
 import { motion, AnimatePresence } from "framer-motion";
 import React, { useEffect, useRef, useState } from "react";
 
@@ -6,7 +6,7 @@ interface DropdownOption {
   id: number;
   label: string;
   value: string;
-  icon?: string;
+  badge?: string;
   disabled?: boolean;
 }
 
@@ -19,15 +19,14 @@ interface DropdownProps {
   onClick?: (option: DropdownOption) => void;
 }
 
-const Dropdown_1: React.FC<DropdownProps> = ({
+const Dropdown_41: React.FC<DropdownProps> = ({
   options = [
-    { id: 1, label: 'Dashboard', value: 'dashboard', icon: '📊' },
-    { id: 2, label: 'Projects', value: 'projects', icon: '📁' },
-    { id: 3, label: 'Team', value: 'team', icon: '👥' },
-    { id: 4, label: 'Calendar', value: 'calendar', icon: '📅' },
-    { id: 5, label: 'Reports', value: 'reports', icon: '📈' }
+    { id: 1, label: 'Active', value: 'active', badge: '12' },
+    { id: 2, label: 'In Progress', value: 'progress', badge: '5' },
+    { id: 3, label: 'Completed', value: 'completed', badge: '28' },
+    { id: 4, label: 'Archived', value: 'archived', badge: '9' }
   ],
-  placeholder = "Menu",
+  placeholder = "Filter Status",
   value,
   onSelect,
   onChange,
@@ -51,26 +50,20 @@ const Dropdown_1: React.FC<DropdownProps> = ({
     <div className="relative w-72" ref={containerRef}>
       <button
         onClick={() => setIsOpen(!isOpen)}
-        className="group w-full px-4 py-3 flex items-center justify-between rounded-2xl bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-500 hover:from-blue-600 hover:via-indigo-600 hover:to-purple-600 text-white shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/40 transition-all duration-300"
+        className="group w-full px-5 py-3 flex items-center justify-between rounded-xl bg-white dark:bg-gray-800 shadow-[0_4px_0_rgb(0,0,0,0.1)] dark:shadow-[0_4px_0_rgb(255,255,255,0.1)] border border-black/10 dark:border-white/10 active:translate-y-[2px] active:shadow-[0_2px_0_rgb(0,0,0,0.1)] dark:active:shadow-[0_2px_0_rgb(255,255,255,0.1)] transition-all duration-150"
       >
-        <div className="flex items-center space-x-3">
-          {selectedOption && options.find((opt) => opt.value === selectedOption)?.icon && (
-            <span className="text-xl">
-              {options.find((opt) => opt.value === selectedOption)?.icon}
-            </span>
-          )}
-          <span className="font-medium">
-            {selectedOption
-              ? options.find((opt) => opt.value === selectedOption)?.label
-              : placeholder}
-          </span>
-        </div>
+        <span className="font-semibold text-gray-800 dark:text-gray-200">
+          {selectedOption
+            ? options.find((opt) => opt.value === selectedOption)?.label
+            : placeholder}
+        </span>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}
           transition={{ 
             type: "spring",
-            stiffness: 300,
-            damping: 20
+            stiffness: 500,
+            damping: 30,
+            mass: 1
           }}
           className="relative w-5 h-5"
         >
@@ -80,7 +73,7 @@ const Dropdown_1: React.FC<DropdownProps> = ({
             viewBox="0 0 24 24" 
             strokeWidth="2.5" 
             stroke="currentColor" 
-            className="w-5 h-5"
+            className="w-5 h-5 text-gray-600 dark:text-gray-400"
           >
             <path 
               strokeLinecap="round" 
@@ -94,36 +87,50 @@ const Dropdown_1: React.FC<DropdownProps> = ({
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, y: 10, scale: 0.95 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 10, scale: 0.95 }}
-            transition={{ type: "spring", stiffness: 200, damping: 20 }}
-            className="absolute w-full mt-2 py-2 rounded-2xl bg-white dark:bg-gray-800 shadow-xl shadow-black/10 border border-gray-100 dark:border-gray-700 overflow-hidden z-50"
+            initial={{ opacity: 0, scale: 0.9, y: 0 }}
+            animate={{ opacity: 1, scale: 1, y: 8 }}
+            exit={{ opacity: 0, scale: 0.9, y: 0 }}
+            transition={{ 
+              type: "spring",
+              bounce: 0.35,
+              duration: 0.4
+            }}
+            className="absolute w-full mt-2 py-2 rounded-xl bg-white dark:bg-gray-800 shadow-lg shadow-black/10 dark:shadow-white/10 border border-black/10 dark:border-white/10 overflow-hidden z-50"
           >
             {options.map((option) => (
               <motion.button
                 key={option.id}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: options.indexOf(option) * 0.1 }}
+                transition={{ 
+                  delay: options.indexOf(option) * 0.1,
+                  type: "spring",
+                  bounce: 0.3
+                }}
                 onClick={() => handleOptionClick(option)}
-                  disabled={option.disabled}
-                className={`w-full px-4 py-2.5 flex items-center space-x-3 text-left hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors duration-150 ${
+                disabled={option.disabled}
+                className={`w-full px-5 py-2.5 flex items-center justify-between text-left hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors duration-150 ${
                   selectedOption === option.value ? 'bg-gray-50 dark:bg-gray-700/50' : ''
                 } ${
                   option.disabled ? 'opacity-50 cursor-not-allowed' : ''
                 }`}
               >
-                {option.icon && (
-                  <span className="text-xl">{option.icon}</span>
-                )}
                 <span className={`font-medium ${
                   selectedOption === option.value 
-                    ? 'text-indigo-600 dark:text-indigo-400' 
+                    ? 'text-blue-600 dark:text-blue-400' 
                     : 'text-gray-700 dark:text-gray-200'
                 }`}>
                   {option.label}
                 </span>
+                {option.badge && (
+                  <span className={`px-2 py-0.5 text-xs font-medium rounded-full ${
+                    selectedOption === option.value
+                      ? 'bg-blue-100 text-blue-600 dark:bg-blue-500/20 dark:text-blue-400'
+                      : 'bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400'
+                  }`}>
+                    {option.badge}
+                  </span>
+                )}
               </motion.button>
             ))}
           </motion.div>
@@ -133,4 +140,4 @@ const Dropdown_1: React.FC<DropdownProps> = ({
   );
 };
 
-export default Dropdown_1;
+export default Dropdown_41; 
