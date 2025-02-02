@@ -1,84 +1,66 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import React, { useState } from "react";
+import { motion } from "framer-motion";
 
-export interface Counter_1Props {
-  from?: number; // Starting value
-  to: number; // Ending value
-  duration?: number; // Total duration for the counter
-  interval?: number; // Time between each increment
-  className?: string; // Custom class for styling
-  formatter?: (value: number) => string; // Function to format the number
-  onComplete?: (finalValue: number) => void; // Function called when counter completes
+interface CounterProps {
+  initialValue?: number;
+  min?: number;
+  max?: number;
+  step?: number;
+  className?: string;
 }
 
-const Counter_1: React.FC<Counter_1Props> = ({
-  from = 0,
-  to,
-  duration = 5,
-  interval = 0.5,
+const Counter_1: React.FC<CounterProps> = ({
+  initialValue = 0,
+  min = -Infinity,
+  max = Infinity,
+  step = 1,
   className = "",
-  formatter = (value) => value.toFixed(0),
-  onComplete,
 }) => {
-  const [visibleValue, setVisibleValue] = useState<number>(from);
+  const [count, setCount] = useState(initialValue);
 
-  useEffect(() => {
-    let counterValue = from;
-    const totalIncrements = duration / interval;
-    const incrementValue = (to - from) / totalIncrements;
-    let stepCount = 0;
+  const increment = () => {
+    setCount((prev) => Math.min(prev + step, max));
+  };
 
-    const timer = setInterval(() => {
-      stepCount++;
-      counterValue += incrementValue;
-
-      const roundedValue = Math.round(counterValue);
-      setVisibleValue(roundedValue);
-
-      if (stepCount >= totalIncrements) {
-        setVisibleValue(to);
-        clearInterval(timer);
-
-        if (onComplete) {
-          onComplete(to);
-        }
-      }
-    }, interval * 1000);
-
-    return () => clearInterval(timer); // Cleanup on unmount
-  }, [from, to, duration, interval, onComplete]);
+  const decrement = () => {
+    setCount((prev) => Math.max(prev - step, min));
+  };
 
   return (
-    <div
-      className={`relative flex flex-col items-center justify-center overflow-hidden ${className}`}
-      style={{
-        fontFamily: "sans-serif",
-        color: "#fff",
-        borderRadius: "10px",
-        backgroundColor: "#1E3A8A",
-        padding: "10px 20px",
-        width: "100px",
-        height: "150px",
-        perspective: 1000,
-      }}
-    >
-      <AnimatePresence mode="wait">
+    <div className={`bg-gradient-to-br from-violet-500 to-fuchsia-500 p-8 rounded-2xl ${className}`}>
+      <div className="flex flex-col items-center space-y-6">
         <motion.div
-          key={visibleValue}
-          initial={{ scale: 0, opacity: 0 }}
+          className="text-6xl font-bold text-white"
+          key={count}
+          initial={{ scale: 0.8, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          exit={{ scale: 0, opacity: 0 }}
-          transition={{
-            duration: 0.4,
-            ease: "easeOut",
-          }}
-          className="absolute top-0 left-0 w-full h-full flex items-center justify-center text-4xl font-bold"
+          transition={{ type: "spring", stiffness: 300 }}
         >
-          {formatter(visibleValue)}
+          {count}
         </motion.div>
-      </AnimatePresence>
+        <div className="flex space-x-4">
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-6 py-3 bg-white/10 rounded-lg text-white font-semibold backdrop-blur-sm
+                     hover:bg-white/20 transition-colors duration-200"
+            onClick={decrement}
+          >
+            -
+          </motion.button>
+          <motion.button
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            className="px-6 py-3 bg-white/10 rounded-lg text-white font-semibold backdrop-blur-sm
+                     hover:bg-white/20 transition-colors duration-200"
+            onClick={increment}
+          >
+            +
+          </motion.button>
+        </div>
+      </div>
     </div>
   );
 };

@@ -1,180 +1,135 @@
 "use client";
-import React, { useState } from "react";
-import styled from "styled-components";
-import { motion } from "framer-motion";
-import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
+import React, { useEffect, useRef, useState } from "react";
 
 interface DropdownOption {
+  id: number;
   label: string;
+  value: string;
+  icon?: string;
   disabled?: boolean;
-  onClick?: (value: string) => void; // Add an onClick function for individual options
-  href?: string; // Optional href for navigation
 }
 
 interface DropdownProps {
-  label: string;
   options: DropdownOption[];
+  placeholder?: string;
+  value?: string;
+  onSelect?: (selectedValue: string) => void;
+  onChange?: (selectedValue: string) => void;
+  onClick?: (option: DropdownOption) => void;
 }
 
-
-const NavList = styled.ul`
-  display: flex;
-  justify-content: center;
-  column-gap: 2rem;
-`;
-
-const Dropdown = styled.li`
-  position: relative;
-`;
-
-const DropdownButton = styled.button<{ isOpen: boolean }>`
-  border: 2px solid #0d41e1;
-  color: #0d41e1;
-  border-radius: 5px;
-  padding: 0.5rem 1rem;
-  background: transparent;
-  cursor: pointer;
-  background: ${({ isOpen }) => (isOpen ? "#0d41e1" : "transparent")};
-  color: ${({ isOpen }) => (isOpen ? "#fff" : "#0d41e1")};
-  transition: background 0.3s, color 0.3s;
-`;
-
-const DropdownButtonWithProps = styled(DropdownButton).attrs(() => ({
-  isOpen: undefined,
-}))``;
-
-const DropdownMenu = styled(motion.ul)`
-  position: absolute;
-  background: #fffffa;
-  border-radius: 5px;
-  bottom: 0;
-  left: 0;
-  transform: translateY(calc(100% + 0.75rem));
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-  min-width: 150px;
-  z-index: 1050;
-  padding: 0.5rem 0;
-  list-style: none;
-`;
-
-const DropdownMenuItem = styled.li`
-  position: relative;
-  font-size: 0.85rem;
-
-  &:not(:last-of-type)::after {
-    content: "";
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 85%;
-    height: 1px;
-    background: #ccc;
-    transform: translateX(calc(15% / 2));
-  }
-
-  button,
-  a {
-    font-size: 0.85rem;
-    padding: 0.5rem 1rem;
-    display: flex;
-    justify-content: space-between;
-    text-decoration: none;
-    color: inherit;
-    position: relative;
-    background: transparent;
-    border: none;
-
-    &:hover {
-      color: #0d41e1;
-    }
-
-    &:hover::before {
-      transform: translateX(0);
-      opacity: 1;
-    }
-
-    &::before {
-      content: "";
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 0.2rem;
-      background: #0d41e1;
-      transition: all ease-in 200ms;
-      transform: translateX(-100%);
-      opacity: 0;
-    }
-  }
-
-  &.disabled {
-    pointer-events: none;
-    color: #ccc;
-  }
-`;
-
-
-
-const Dropdown_1: React.FC<DropdownProps> = ({ label, options }) => {
-  const [openIndex, setOpenIndex] = useState<number | null>(null);
-
-  const handleDropdownToggle = (index: number) => {
-    setOpenIndex(openIndex === index ? null : index);
-  };
+const Dropdown_1: React.FC<DropdownProps> = ({
+  options = [
+    { id: 1, label: 'Dashboard', value: 'dashboard', icon: '📊' },
+    { id: 2, label: 'Projects', value: 'projects', icon: '📁' },
+    { id: 3, label: 'Team', value: 'team', icon: '👥' },
+    { id: 4, label: 'Calendar', value: 'calendar', icon: '📅' },
+    { id: 5, label: 'Reports', value: 'reports', icon: '📈' }
+  ],
+  placeholder = "Menu",
+  value,
+  onSelect,
+  onChange,
+  onClick,
+}) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState<string | undefined>(value);
+  const containerRef = useRef<HTMLDivElement>(null);
 
   const handleOptionClick = (option: DropdownOption) => {
-    // If the option has an onClick handler, call it
-    if (option.onClick) {
-      option.onClick(option.label);
-    }
+    if (option.disabled) return;
+    setSelectedOption(option.value);
+    setIsOpen(false);
+
+    if (onSelect) onSelect(option.value);
+    if (onChange) onChange(option.value);
+    if (onClick) onClick(option);
   };
 
   return (
-    <NavList>
-      <Dropdown>
-        <DropdownButtonWithProps
-          isOpen={openIndex !== null}
-          onClick={() => handleDropdownToggle(openIndex === null ? -1 : openIndex)}
-        >
-          {label}
-        </DropdownButtonWithProps>
-        <DropdownMenu
-          initial={{ opacity: 0, height: 0 }}
-          animate={{
-            opacity: openIndex !== null ? 1 : 0,
-            height: openIndex !== null ? "auto" : 0,
+    <div className="relative w-72" ref={containerRef}>
+      <button
+        onClick={() => setIsOpen(!isOpen)}
+        className="group w-full px-4 py-3 flex items-center justify-between rounded-2xl bg-gradient-to-br from-blue-500 via-indigo-500 to-purple-500 hover:from-blue-600 hover:via-indigo-600 hover:to-purple-600 text-white shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/40 transition-all duration-300"
+      >
+        <div className="flex items-center space-x-3">
+          {selectedOption && options.find((opt) => opt.value === selectedOption)?.icon && (
+            <span className="text-xl">
+              {options.find((opt) => opt.value === selectedOption)?.icon}
+            </span>
+          )}
+          <span className="font-medium">
+            {selectedOption
+              ? options.find((opt) => opt.value === selectedOption)?.label
+              : placeholder}
+          </span>
+        </div>
+        <motion.div
+          animate={{ rotate: isOpen ? 180 : 0 }}
+          transition={{ 
+            type: "spring",
+            stiffness: 300,
+            damping: 20
           }}
-          transition={{ duration: 0.3 }}
+          className="relative w-5 h-5"
         >
-          {options.map((option, index) => (
-            <DropdownMenuItem
-              key={index}
-              className={option.disabled ? "disabled" : ""}
-            >
-              {/* Conditional rendering for a button or a link */}
-              {option.href ? (
-                <Link href={option.href}>
-                  {option.label} <i className="fa-solid fa-star"></i>
-                </Link>
-              ) : (
-                <button
-                  onClick={(e) => {
-                    if (option.disabled) {
-                      e.preventDefault();
-                    } else {
-                      handleOptionClick(option);
-                    }
-                  }}
+          <svg 
+            xmlns="http://www.w3.org/2000/svg" 
+            fill="none" 
+            viewBox="0 0 24 24" 
+            strokeWidth="2.5" 
+            stroke="currentColor" 
+            className="w-5 h-5"
+          >
+            <path 
+              strokeLinecap="round" 
+              strokeLinejoin="round" 
+              d="m19.5 8.25-7.5 7.5-7.5-7.5" 
+            />
+          </svg>
+        </motion.div>
+      </button>
+
+      <AnimatePresence>
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: 10, scale: 0.95 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 10, scale: 0.95 }}
+            transition={{ type: "spring", stiffness: 200, damping: 20 }}
+            className="absolute w-full mt-2 py-2 rounded-2xl bg-white dark:bg-gray-800 shadow-xl shadow-black/10 border border-gray-100 dark:border-gray-700 overflow-hidden z-50"
+          >
+            {options.map((option) => (
+              <motion.button
+                key={option.id}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ delay: options.indexOf(option) * 0.1 }}
+                onClick={() => handleOptionClick(option)}
                   disabled={option.disabled}
-                >
-                  {option.label} <i className="fa-solid fa-star"></i>
-                </button>
-              )}
-            </DropdownMenuItem>
-          ))}
-        </DropdownMenu>
-      </Dropdown>
-    </NavList>
+                className={`w-full px-4 py-2.5 flex items-center space-x-3 text-left hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors duration-150 ${
+                  selectedOption === option.value ? 'bg-gray-50 dark:bg-gray-700/50' : ''
+                } ${
+                  option.disabled ? 'opacity-50 cursor-not-allowed' : ''
+                }`}
+              >
+                {option.icon && (
+                  <span className="text-xl">{option.icon}</span>
+                )}
+                <span className={`font-medium ${
+                  selectedOption === option.value 
+                    ? 'text-indigo-600 dark:text-indigo-400' 
+                    : 'text-gray-700 dark:text-gray-200'
+                }`}>
+                  {option.label}
+                </span>
+              </motion.button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 };
 
