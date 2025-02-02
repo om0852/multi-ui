@@ -7,31 +7,16 @@ type SlideInBadgeProps = {
 
 const SlideInBadge: React.FC<SlideInBadgeProps> = ({
   text,
-  color = "bg-purple-600",
+  color = "bg-pink-500",
 }) => {
   return (
-    <span
-      className={`inline-block px-4 py-2 text-white text-sm font-medium rounded-full shadow-lg ${color} animate-slide-in`}
+    <div
+      className={`inline-block px-4 py-2 text-white font-semibold rounded-lg ${color} 
+      hover:-translate-x-2 hover:translate-y-1 transition-all duration-300 cursor-pointer
+      hover:shadow-lg`}
     >
       {text}
-      <style>
-        {`
-          @keyframes slide-in {
-            0% {
-              transform: translateX(-100%);
-              opacity: 0;
-            }
-            100% {
-              transform: translateX(0);
-              opacity: 1;
-            }
-          }
-          .animate-slide-in {
-            animation: slide-in 0.8s ease-out;
-          }
-        `}
-      </style>
-    </span>
+    </div>
   );
 };
 
