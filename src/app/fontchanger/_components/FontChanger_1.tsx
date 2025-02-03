@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import React, { useEffect, useState } from "react";
 
 type FontFamily =
@@ -26,14 +26,9 @@ type FontFamily =
   | "Cabin"
   | "PT Sans"
   | "Muli"
-  | "Zilla Slab"
-  | "Tisa"
-  | "Playfair Display"
   | "Exo"
   | "Alegreya"
   | "Varela Round"
-  | "Lora"
-  | "Poppins"
   | "Lobster"
   | "Roboto Condensed"
   | "Signika"
@@ -56,7 +51,6 @@ type FontFamily =
   | "Catamaran"
   | "Crimson Pro"
   | "Yanone Kaffeesatz"
-  | "Pacifico"
   | "Great Vibes"
   | "Mochiy Pop P One"
   | "Russo One"
@@ -66,7 +60,6 @@ type FontFamily =
   | "Sora"
   | "Teko"
   | "Zilla Slab Highlight"
-  | "Lato"
   | "Viga"
   | "Prata"
   | "Barlow Condensed"
@@ -88,23 +81,17 @@ type FontFamily =
   | "Cinzel Decorative"
   | "Droid Serif"
   | "Lexend"
-  | "Amatic SC"
   | "Be Vietnam"
   | "Allan"
-  | "Zilla Slab"
   | "Mukta"
-  | "Bitter"
   | "Hammersmith One"
-  | "Bree Serif"
   | "Rakkas"
-  | "Anton"
   | "Shanti"
   | "Alfa Slab One"
   | "Cairo"
   | "Red Hat Display"
   | "Rochester"
   | "Sacramento";
-
 
 interface FontChangerProps {
   fontFamily: FontFamily;
@@ -114,22 +101,22 @@ interface FontChangerProps {
   children: React.ReactNode;
 }
 
-const loadFont = (fontFamily: string) => {
-  const linkId = `font-${fontFamily.replace(/\s+/g, '-')}`;
+const loadFont = (fontFamily: string, onLoad: () => void) => {
+  const formattedFont = fontFamily.replace(/\s+/g, "+");
+  const linkId = `font-${formattedFont}`;
+
   if (!document.getElementById(linkId)) {
     const link = document.createElement("link");
     link.id = linkId;
     link.rel = "stylesheet";
-    link.href = `https://fonts.googleapis.com/css2?family=${fontFamily.replace(
-      /\s+/g,
-      "+"
-    )}&display=swap`;
+    link.href = `https://fonts.googleapis.com/css2?family=${formattedFont}:wght@100;200;300;400;500;600;700;800;900&display=swap`;
 
-    link.onerror = () => {
-      console.error(`Failed to load the font: ${fontFamily}`);
-    };
+    link.onload = () => onLoad();
+    link.onerror = () => console.error(`Failed to load the font: ${fontFamily}`);
 
     document.head.appendChild(link);
+  } else {
+    onLoad();
   }
 };
 
@@ -143,18 +130,11 @@ const FontChanger: React.FC<FontChangerProps> = ({
   const [fontLoaded, setFontLoaded] = useState(false);
 
   useEffect(() => {
-    loadFont(fontFamily);
-
-    // Try setting a timeout to simulate a network delay for font loading
-    const timer = setTimeout(() => {
-      setFontLoaded(true); // fallback to a default font if loading takes too long
-    }, 5000); // 5 seconds timeout
-
-    return () => clearTimeout(timer);
+    loadFont(fontFamily, () => setFontLoaded(true));
   }, [fontFamily]);
 
-  const style = {
-    fontFamily: fontLoaded ? `'${fontFamily}', sans-serif` : 'sans-serif',
+  const style: React.CSSProperties = {
+    fontFamily: fontLoaded ? `'${fontFamily}', sans-serif` : "sans-serif",
     fontWeight,
     fontSize,
     color,
