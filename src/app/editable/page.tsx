@@ -6,6 +6,8 @@ import { Editable_48 } from './_components/Editable_48'
 import { Editable_49 } from './_components/Editable_49'
 import { Editable_50 } from './_components/Editable_50'
 import { Editable_51 } from './_components/Editable_51'
+import { Editable_52 } from './_components/Editable_52'
+import { Editable_53 } from './_components/Editable_53'
 
 const Page = () => {
   const handleSave = (content: string) => {
@@ -74,6 +76,26 @@ const Page = () => {
               language="typescript"
               theme="light"
               showLineNumbers={true}
+            />
+          </section>
+
+          {/* File Explorer */}
+          <section>
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">File Explorer</h2>
+            <Editable_52
+              initialContent=""
+              onSave={handleSave}
+              className="w-full"
+            />
+          </section>
+
+          {/* Music Player */}
+          <section>
+            <h2 className="text-xl font-semibold text-gray-800 mb-4">Music Player</h2>
+            <Editable_53
+              initialContent=""
+              onSave={handleSave}
+              className="w-full"
             />
           </section>
         </div>
