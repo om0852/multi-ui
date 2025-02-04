@@ -67,16 +67,12 @@ const neonPulse = keyframes`
 `;
 
 const Container = styled.div`
+  position: relative;
   width: 100%;
   max-width: 600px;
-  background: #1a1a1a;
-  border: 2px solid #00ffff;
-  border-radius: 4px;
-  padding: 16px;
-  box-shadow: 
-    0 0 10px rgba(0, 255, 255, 0.3),
-    inset 0 0 20px rgba(0, 255, 255, 0.2);
-  position: relative;
+  background: #0a0a0f;
+  border: 1px solid #2d2d3a;
+  border-radius: 12px;
   overflow: hidden;
 
   &::before {
@@ -87,7 +83,7 @@ const Container = styled.div`
     right: 0;
     height: 2px;
     background: rgba(0, 255, 255, 0.5);
-    animation: ${css`${scanline}`} 4s linear infinite;
+    animation: ${props => css`${scanline}`} 4s linear infinite;
     opacity: 0.5;
   }
 `;
@@ -119,7 +115,7 @@ const ListItem = styled.li<{ $active: boolean; $disabled: boolean }>`
   align-items: center;
   gap: 16px;
 
-  ${props => props.$active && `
+  ${props => props.$active && css`
     animation: ${css`${glitch}`} 0.3s cubic-bezier(.25, .46, .45, .94) both infinite;
   `}
 
@@ -153,7 +149,7 @@ const IconWrapper = styled.div<{ $active: boolean }>`
   border: 1px solid ${props => props.$active ? '#0ff' : 'rgba(0, 255, 255, 0.3)'};
   color: ${props => props.$active ? '#0ff' : 'rgba(0, 255, 255, 0.7)'};
   transition: all 0.3s ease;
-  animation: ${css`${neonPulse}`} 2s infinite;
+  animation: ${props => css`${neonPulse}`} 2s infinite;
 
   svg {
     width: 20px;
@@ -196,7 +192,7 @@ const Badge = styled.span<{ $color?: string }>`
   border: 1px solid ${props => props.$color || '#0ff'};
   text-shadow: 0 0 5px ${props => props.$color || '#0ff'};
   box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
-  animation: ${css`${neonPulse}`} 2s infinite;
+  animation: ${props => css`${neonPulse}`} 2s infinite;
 `;
 
 const CyberpunkListGroup: React.FC<ListGroupProps> = ({
