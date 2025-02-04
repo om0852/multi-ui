@@ -5,33 +5,24 @@ type RippleBadgeProps = {
   color?: string;
 };
 
-const RippleBadge: React.FC<RippleBadgeProps> = ({ text, color = "bg-blue-500" }) => {
-  const [ripple, setRipple] = useState<{ x: number; y: number } | null>(null);
+const RippleBadge: React.FC<RippleBadgeProps> = ({ text, color = "bg-violet-500" }) => {
+  const [isRippling, setIsRippling] = useState(false);
 
-  const handleClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    const rect = e.currentTarget.getBoundingClientRect();
-    setRipple({ x: e.clientX - rect.left, y: e.clientY - rect.top });
-
-    setTimeout(() => setRipple(null), 600);
+  const handleClick = () => {
+    setIsRippling(true);
+    setTimeout(() => setIsRippling(false), 600);
   };
 
   return (
-    <div
-      className={`relative inline-flex items-center justify-center px-4 py-2 text-white font-semibold rounded-lg cursor-pointer overflow-hidden ${color}`}
-      onClick={handleClick}
-    >
-      {text}
-      {ripple && (
-        <span
-          className="absolute bg-white opacity-50 rounded-full transform scale-0 animate-ripple"
-          style={{
-            top: ripple.y,
-            left: ripple.x,
-            width: "100px",
-            height: "100px",
-          }}
-        />
-      )}
+    <div className="relative inline-block">
+      <div
+        onClick={handleClick}
+        className={`${color} px-4 py-2 text-white font-semibold rounded-lg cursor-pointer
+        ${isRippling ? 'after:animate-ripple' : ''} 
+        after:absolute after:inset-0 after:rounded-lg after:bg-white after:opacity-0`}
+      >
+        {text}
+      </div>
     </div>
   );
 };
