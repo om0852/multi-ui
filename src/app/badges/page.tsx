@@ -11,6 +11,11 @@ import GradientBorderBadge from "./GradientBorderBadge";
 import TiltBadge from "./TiltBadge";
 import BlurBadge from "./BlurBadge";
 import OutlineBadge from "./OutlineBadge";
+import RippleBadge from "./RippleBadge";
+import FlipBadge from "./FlipBadge";
+import TypingBadge from "./TypingBadge";
+import NeonBadge from "./NeonBadge";
+import FloatingBadge from "./FloatingBadge";
 
 export default function BadgesPage() {
   return (
@@ -73,6 +78,31 @@ export default function BadgesPage() {
           <OutlineBadge text="Outline" color="bg-emerald-500" />
         </div>
 
+        <div className="space-y-2">
+          <h2 className="text-lg font-semibold">Ripple Badge (Click me!)</h2>
+          <RippleBadge text="Click for Ripple" color="bg-violet-500" />
+        </div>
+
+        <div className="space-y-2">
+          <h2 className="text-lg font-semibold">3D Flip Badge (Hover me!)</h2>
+          <FlipBadge text="Flip Me" color="bg-rose-500" />
+        </div>
+
+        <div className="space-y-2">
+          <h2 className="text-lg font-semibold">Typing Badge (Hover me!)</h2>
+          <TypingBadge text="Type Effect" color="bg-teal-500" />
+        </div>
+
+        <div className="space-y-2">
+          <h2 className="text-lg font-semibold">Neon Badge (Hover me!)</h2>
+          <NeonBadge text="Neon Glow" color="bg-fuchsia-500" />
+        </div>
+
+        <div className="space-y-2">
+          <h2 className="text-lg font-semibold">Floating Badge (Hover me!)</h2>
+          <FloatingBadge text="Float" color="bg-amber-500" />
+        </div>
+
         {/* Color Variants Example */}
         <div className="space-y-2">
           <h2 className="text-lg font-semibold">Color Variants</h2>
@@ -112,6 +142,11 @@ export default function BadgesPage() {
           <p>• TiltBadge: Hover to see tilt transformation</p>
           <p>• BlurBadge: Hover for blur and scale effect</p>
           <p>• OutlineBadge: Hover to show outline ring</p>
+          <p>• RippleBadge: Click to see ripple animation effect</p>
+          <p>• FlipBadge: Hover to see 3D flip animation</p>
+          <p>• TypingBadge: Hover to see typing animation</p>
+          <p>• NeonBadge: Hover for neon glow effect</p>
+          <p>• FloatingBadge: Hover to see floating animation</p>
         </div>
       </div>
     </div>
