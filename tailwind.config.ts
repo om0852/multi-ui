@@ -54,6 +54,82 @@ export default {
           '0%, 100%': { backgroundPosition: '0% 50%' },
           '50%': { backgroundPosition: '100% 50%' },
         },
+        wave: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-20%)' },
+        },
+        spotlight: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.5' },
+        },
+        particle: {
+          '0%': { transform: 'scale(0) translate(0, 0)' },
+          '100%': { transform: 'scale(1) translate(50px, -50px)' },
+        },
+        'glitch-1': {
+          '0%, 100%': { transform: 'none' },
+          '33%': { transform: 'translateX(2px)' },
+          '66%': { transform: 'translateX(-2px)' },
+        },
+        'glitch-2': {
+          '0%, 100%': { transform: 'none' },
+          '33%': { transform: 'translateX(-2px)' },
+          '66%': { transform: 'translateX(2px)' },
+        },
+        'glitch-3': {
+          '0%, 100%': { transform: 'none' },
+          '33%': { transform: 'translateY(2px)' },
+          '66%': { transform: 'translateY(-2px)' },
+        },
+        'radar-scan': {
+          '0%': { transform: 'scale(0.5)', opacity: '1' },
+          '100%': { transform: 'scale(1.5)', opacity: '0' },
+        },
+        fire: {
+          '0%': { transform: 'scaleY(1)', opacity: '0.5' },
+          '100%': { transform: 'scaleY(1.2)', opacity: '0' },
+        },
+        rainbow: {
+          '0%': { opacity: '0', transform: 'translateY(10px)' },
+          '50%': { opacity: '0.5' },
+          '100%': { opacity: '0', transform: 'translateY(-10px)' },
+        },
+        matrix: {
+          '0%': { transform: 'translateY(20px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+        twinkle: {
+          '0%, 100%': { opacity: '1', transform: 'scale(1)' },
+          '50%': { opacity: '0.4', transform: 'scale(0.5)' },
+        },
+        spin: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
+        scan: {
+          '0%': { transform: 'translateY(-100%)' },
+          '100%': { transform: 'translateY(100%)' },
+        },
+        magnetic: {
+          '0%': { transform: 'scale(1)', opacity: '0.3' },
+          '100%': { transform: 'scale(1.5)', opacity: '0' },
+        },
+        flicker: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.5' },
+        },
+        hologram: {
+          '0%, 100%': { clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)' },
+          '50%': { clipPath: 'polygon(5% 5%, 95% 5%, 95% 95%, 5% 95%)' },
+        },
+        soundwave: {
+          '0%, 100%': { transform: 'scaleY(1)' },
+          '50%': { transform: 'scaleY(0.5)' },
+        },
+        shatter: {
+          '0%': { transform: 'rotate(0deg) scale(1)', opacity: '1' },
+          '100%': { transform: 'rotate(45deg) scale(1.5)', opacity: '0' },
+        },
       },
       animation: {
         wiggle: 'wiggle 0.3s ease-in-out infinite',
@@ -65,7 +141,25 @@ export default {
         'blink': 'blink 1s step-end infinite',
         'rotate-y': 'rotate-y 0.5s ease-in-out',
         'slideDown': 'slideDown 0.5s ease-out',
-        'gradient': 'gradient 15s ease infinite',
+        'gradient': 'gradient 3s ease infinite',
+        'wave': 'wave 8s ease-in-out infinite',
+        'spotlight': 'spotlight 2s ease-in-out infinite',
+        'particle': 'particle 1s ease-in-out infinite',
+        'glitch-1': 'glitch-1 0.2s ease-in-out infinite',
+        'glitch-2': 'glitch-2 0.3s ease-in-out infinite',
+        'glitch-3': 'glitch-3 0.3s ease-in-out infinite',
+        'radar-scan': 'radar-scan 1.5s ease-out infinite',
+        'fire': 'fire 0.5s ease-out forwards',
+        'rainbow': 'rainbow 0.5s ease-out forwards',
+        'matrix': 'matrix 0.5s ease-out forwards',
+        'twinkle': 'twinkle 1s ease-in-out infinite',
+        'spin-slow': 'spin 3s linear infinite',
+        'scan': 'scan 2s linear infinite',
+        'magnetic': 'magnetic 1s ease-out infinite',
+        'flicker': 'flicker 2s ease-in-out infinite',
+        'hologram': 'hologram 2s ease-in-out infinite',
+        'soundwave': 'soundwave 1s ease-in-out infinite',
+        'shatter': 'shatter 0.5s ease-out forwards',
       },
       transformStyle: {
         'preserve-3d': 'preserve-3d',
