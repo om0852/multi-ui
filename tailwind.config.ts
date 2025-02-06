@@ -106,6 +106,30 @@ export default {
           '0%': { transform: 'rotate(0deg)' },
           '100%': { transform: 'rotate(360deg)' },
         },
+        scan: {
+          '0%': { transform: 'translateY(-100%)' },
+          '100%': { transform: 'translateY(100%)' },
+        },
+        magnetic: {
+          '0%': { transform: 'scale(1)', opacity: '0.3' },
+          '100%': { transform: 'scale(1.5)', opacity: '0' },
+        },
+        flicker: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0.5' },
+        },
+        hologram: {
+          '0%, 100%': { clipPath: 'polygon(0 0, 100% 0, 100% 100%, 0% 100%)' },
+          '50%': { clipPath: 'polygon(5% 5%, 95% 5%, 95% 95%, 5% 95%)' },
+        },
+        soundwave: {
+          '0%, 100%': { transform: 'scaleY(1)' },
+          '50%': { transform: 'scaleY(0.5)' },
+        },
+        shatter: {
+          '0%': { transform: 'rotate(0deg) scale(1)', opacity: '1' },
+          '100%': { transform: 'rotate(45deg) scale(1.5)', opacity: '0' },
+        },
       },
       animation: {
         wiggle: 'wiggle 0.3s ease-in-out infinite',
@@ -130,6 +154,12 @@ export default {
         'matrix': 'matrix 0.5s ease-out forwards',
         'twinkle': 'twinkle 1s ease-in-out infinite',
         'spin-slow': 'spin 3s linear infinite',
+        'scan': 'scan 2s linear infinite',
+        'magnetic': 'magnetic 1s ease-out infinite',
+        'flicker': 'flicker 2s ease-in-out infinite',
+        'hologram': 'hologram 2s ease-in-out infinite',
+        'soundwave': 'soundwave 1s ease-in-out infinite',
+        'shatter': 'shatter 0.5s ease-out forwards',
       },
       transformStyle: {
         'preserve-3d': 'preserve-3d',

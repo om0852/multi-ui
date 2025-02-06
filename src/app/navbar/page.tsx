@@ -26,6 +26,11 @@ import StackNavbar from './components/StackNavbar';
 import RainbowTrailNavbar from './components/RainbowTrailNavbar';
 import MatrixNavbar from './components/MatrixNavbar';
 import ConstellationNavbar from './components/ConstellationNavbar';
+import ScanlineNavbar from './components/ScanlineNavbar';
+import MagneticFieldNavbar from './components/MagneticFieldNavbar';
+import HologramNavbar from './components/HologramNavbar';
+import SoundwaveNavbar from './components/SoundwaveNavbar';
+import CrystalNavbar from './components/CrystalNavbar';
 
 export default function NavbarPage() {
   return (
@@ -156,6 +161,31 @@ export default function NavbarPage() {
           <ConstellationNavbar />
         </div>
 
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Scanline Effect Navbar</h2>
+          <ScanlineNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Magnetic Field Navbar</h2>
+          <MagneticFieldNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Hologram Effect Navbar</h2>
+          <HologramNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Soundwave Effect Navbar</h2>
+          <SoundwaveNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Crystal Effect Navbar</h2>
+          <CrystalNavbar />
+        </div>
+
         {/* Documentation */}
         <div className="mt-12 p-6 bg-white rounded-lg mx-4">
           <h2 className="text-xl font-bold mb-4">Features</h2>
@@ -185,6 +215,11 @@ export default function NavbarPage() {
             <p>• RainbowTrailNavbar: Colorful rainbow trail animation</p>
             <p>• MatrixNavbar: Matrix-inspired digital rain effect</p>
             <p>• ConstellationNavbar: Twinkling stars constellation effect</p>
+            <p>• ScanlineNavbar: Retro scanline animation effect</p>
+            <p>• MagneticFieldNavbar: Expanding magnetic field rings</p>
+            <p>• HologramNavbar: Futuristic hologram glitch effect</p>
+            <p>• SoundwaveNavbar: Audio visualizer-style animation</p>
+            <p>• CrystalNavbar: Crystal shattering hover effect</p>
           </div>
         </div>
       </div>
