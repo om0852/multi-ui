@@ -1,74 +1,96 @@
-// "use client"
-// import React from "react";
-// import Typewriter_5 from "./_components/Typewriter_5";
-// import Typewriter_3 from "./_components/Typewriter_3";
-// import Typewriter_4 from "./_components/Typewriter_4";
-// import Typewriter_2 from "./_components/Typewriter_2";
-// import Typewriter_1 from "./_components/Typewriter_1";
-// import Typewriter_6 from "./_components/Typewriter_6";
-// import Typewriter_7 from "./_components/Typewriter_7";
-// import Typewriter_8 from "./_components/Typewriter_8";
-// import Typewriter_9 from "./_components/Typewriter_9";
-// import Typewriter from "./_components/Typewriter_10";
+"use client"
+import React from "react";
+import Typewriter_13 from "./_components/Typewriter_13";
+import Typewriter_14 from "./_components/Typewriter_14";
+import Typewriter_15 from "./_components/Typewriter_15";
+import Typewriter_16 from "./_components/Typewriter_16";
+import Typewriter_17 from "./_components/Typewriter_17";
 
-// const Page = () => {
-//   return (
-//     <div className="p-[20vh]">
-//       {/* <Typewriter_1
-//         message="Follow the multi ui "
-//         cursorColor="green"
-//         duration={2}
-//         steps={10}
-//         className="text-4xl text-red-400 w-[auto]"
-//       /> */}
-//       <Typewriter_2 message="om salunke welcome" duration={20}  className="w-[10vh]"/>
-//       {/* <Typewriter_3
-//         messages={[
-//           "Hi, I'm Si.",
-//           "I am Creative.",
-//           "I Love Design.",
-//           "I Love to Develop.",
-//         ]}
-//         typingSpeed={20}
-//         className="text-4xl text-red-400 w-[20vh]"
-//       /> */}
-//       {/* <Typewriter_4 messages={["om salunke \n welcome","welcome to this ","testing"]} typingSpeed={20} cursorWidth={20}/>
-      
-//       <Typewriter_5
-//         text="Web Developer"
-//         fontSize="2rem"
-//         cursorColor="red"
-//         cursorWidth="0.2em"
-//         reverse={false}
-//         loop={true}
-//         speed={2} // slower typing speed
-//       />
-// <Typewriter_6 text="I'm a Web Developer" speed={100} loop={true} reverse={false} />
-//       <Typewriter_7 
-//   messages={["Hello, World!"]} 
-//   typeSpeed={120} 
-//   cursorColor="red" 
-//   className="text-bold" 
-//   duration={0.6} 
-//   loop={true} 
-//   reverse={true}
-// />
-//       <Typewriter_8 messages={["om salunke"]} loop={true}/>
-//       <Typewriter_9 messages={["om salunke welcome"]} loop={false} /> */}
-// <Typewriter messages={["om salunke ...","salunke om"]} colors={["red","blue"]} showCursor={true} loop={true}/>
-//     </div>
-//   );
-// };
-
-// export default Page;
-import React from 'react'
-
-const page = () => {
+const TypewriterShowcase = () => {
   return (
-    <div>
-      
-    </div>
-  )
-}
+    <div className="min-h-screen bg-gray-900 p-8">
+      {/* Spiral 3D Animation */}
+      <div className="mb-12">
+        <h2 className="text-white mb-4 text-xl">Spiral 3D Effect:</h2>
+        <Typewriter_13 
+          text={[
+            "Spinning in 3D Space! 🌀",
+            "Watch the spiral effect! 🎡",
+            "Dynamic rotations! 🔄"
+          ]}
+          typingSpeed={70}
+          cursorColor="#8b5cf6"
+          textColor="#8b5cf6"
+          fontSize="2.5rem"
+          glowColor="rgba(139, 92, 246, 0.6)"
+          spiral3dEffect={true}
+          perspective="1200px"
+        />
+      </div>
 
-export default page
+      {/* Matrix Rain Effect */}
+      <div className="mb-12 bg-black p-6 rounded-lg">
+        <h2 className="text-white mb-4 text-xl">Matrix Code Rain:</h2>
+        <Typewriter_14 
+          text={[
+            "DECRYPTING_MATRIX>>",
+            "ACCESSING_MAINFRAME..",
+            "BREACH_SUCCESSFUL!"
+          ]}
+          typingSpeed={40}
+          cursorColor="#22c55e"
+          textColor="#22c55e"
+          fontSize="2rem"
+          scrambleEffect={true}
+        />
+      </div>
+
+      {/* Neon Flicker */}
+      <div className="mb-12">
+        <h2 className="text-white mb-4 text-xl">Neon Sign Effect:</h2>
+        <Typewriter_15 
+          text="Welcome to Cyber City! ⚡"
+          typingSpeed={80}
+          primaryColor="#f0abfc"
+          secondaryColor="#818cf8"
+          fontSize="3rem"
+          flickerIntensity={0.7}
+        />
+      </div>
+
+      {/* Handwriting Effect */}
+      <div className="mb-12 bg-white p-6 rounded-lg">
+        <h2 className="text-gray-800 mb-4 text-xl">Handwritten Notes:</h2>
+        <Typewriter_16 
+          text={[
+            "Dear Diary... ✍️",
+            "Today was amazing! 📖",
+            "Let me tell you why... 💭"
+          ]}
+          typingSpeed={60}
+          inkColor="#1d4ed8"
+          fontSize="2.4rem"
+          strokeWidth={2}
+          inkSpread={3}
+        />
+      </div>
+
+      {/* Smoke Effect */}
+      <div className="mb-12">
+        <h2 className="text-white mb-4 text-xl">Mystic Smoke:</h2>
+        <Typewriter_17 
+          text={[
+            "Dissolving into mist... 💨",
+            "Like smoke in the wind... 🌫️",
+            "Fading away... ✨"
+          ]}
+          typingSpeed={50}
+          smokeColor="#6366f1"
+          fontSize="2.8rem"
+        />
+      </div>
+    </div>
+  );
+};
+
+export default TypewriterShowcase;
