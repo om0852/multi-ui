@@ -1,15 +1,36 @@
 'use client'
 import React from 'react';
-import GlassNavbar from './_components/GlassNavbar';
-import ExpandingNavbar from './_components/ExpandingNavbar';
-import FloatingNavbar from './_components/FloatingNavbar';
-import GlowNavbar from './_components/GlowNavbar';
-import RotatingNavbar from './_components/RotatingNavbar';
-import PerspectiveNavbar from './_components/PerspectiveNavbar';
-import MagneticNavbar from './_components/MagneticNavbar';
-import SplitNavbar from './_components/SplitNavbar';
-import LiquidNavbar from './_components/LiquidNavbar';
-import NeonBorderNavbar from './_components/NeonBorderNavbar';
+import GlassNavbar from './components/GlassNavbar';
+import ExpandingNavbar from './components/ExpandingNavbar';
+import FloatingNavbar from './components/FloatingNavbar';
+import GlowNavbar from './components/GlowNavbar';
+import RotatingNavbar from './components/RotatingNavbar';
+import PerspectiveNavbar from './components/PerspectiveNavbar';
+import MagneticNavbar from './components/MagneticNavbar';
+import SplitNavbar from './components/SplitNavbar';
+import LiquidNavbar from './components/LiquidNavbar';
+import NeonBorderNavbar from './components/NeonBorderNavbar';
+import MorphingNavbar from './components/MorphingNavbar';
+
+import WaveNavbar from './components/WaveNavbar';
+import SpotlightNavbar from './components/SpotlightNavbar'; 
+import TypewriterNavbar from './components/TypewriterNavbar';
+import ShimmerNavbar from './components/ShimmerNavbar';
+import FlipCardNavbar from './components/FlipCardNavbar';
+import ParticleNavbar from './components/ParticleNavbar';
+import GlitchNavbar from './components/GlitchNavbar';
+import MagneticPullNavbar from './components/MagneticPullNavbar';
+import RadarNavbar from './components/RadarNavbar';
+import FireTrailNavbar from './components/FireTrailNavbar';
+import StackNavbar from './components/StackNavbar';
+import RainbowTrailNavbar from './components/RainbowTrailNavbar';
+import MatrixNavbar from './components/MatrixNavbar';
+import ConstellationNavbar from './components/ConstellationNavbar';
+import ScanlineNavbar from './components/ScanlineNavbar';
+import MagneticFieldNavbar from './components/MagneticFieldNavbar';
+import HologramNavbar from './components/HologramNavbar';
+import SoundwaveNavbar from './components/SoundwaveNavbar';
+import CrystalNavbar from './components/CrystalNavbar';
 
 export default function NavbarPage() {
   return (
@@ -65,6 +86,106 @@ export default function NavbarPage() {
           <NeonBorderNavbar />
         </div>
 
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Morphing Background Navbar</h2>
+          <MorphingNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Wave Effect Navbar</h2>
+          <WaveNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Spotlight Effect Navbar</h2>
+          <SpotlightNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Typewriter Effect Navbar</h2>
+          <TypewriterNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Shimmer Effect Navbar</h2>
+          <ShimmerNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">3D Flip Card Navbar</h2>
+          <FlipCardNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Particle Effect Navbar</h2>
+          <ParticleNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Glitch Effect Navbar</h2>
+          <GlitchNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Magnetic Pull Navbar</h2>
+          <MagneticPullNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Radar Scan Navbar</h2>
+          <RadarNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Fire Trail Navbar</h2>
+          <FireTrailNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">3D Stack Navbar</h2>
+          <StackNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Rainbow Trail Navbar</h2>
+          <RainbowTrailNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Matrix Effect Navbar</h2>
+          <MatrixNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Constellation Navbar</h2>
+          <ConstellationNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Scanline Effect Navbar</h2>
+          <ScanlineNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Magnetic Field Navbar</h2>
+          <MagneticFieldNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Hologram Effect Navbar</h2>
+          <HologramNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Soundwave Effect Navbar</h2>
+          <SoundwaveNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Crystal Effect Navbar</h2>
+          <CrystalNavbar />
+        </div>
+
         {/* Documentation */}
         <div className="mt-12 p-6 bg-white rounded-lg mx-4">
           <h2 className="text-xl font-bold mb-4">Features</h2>
@@ -79,6 +200,26 @@ export default function NavbarPage() {
             <p>• SplitNavbar: Text splitting animation on hover</p>
             <p>• LiquidNavbar: Smooth liquid-like transitions</p>
             <p>• NeonBorderNavbar: Animated neon border effect</p>
+            <p>• MorphingNavbar: Smooth morphing background transitions</p>
+            <p>• WaveNavbar: Animated wave pattern background</p>
+            <p>• SpotlightNavbar: Dynamic spotlight hover effect</p>
+            <p>• TypewriterNavbar: Terminal-style typewriter animation</p>
+            <p>• ShimmerNavbar: Elegant shimmer effect on hover</p>
+            <p>• FlipCardNavbar: 3D card flip animation on hover</p>
+            <p>• ParticleNavbar: Particle explosion effect on hover</p>
+            <p>• GlitchNavbar: Cyberpunk-style glitch animation</p>
+            <p>• MagneticPullNavbar: Magnetic pull effect between items</p>
+            <p>• RadarNavbar: Radar scanning animation on hover</p>
+            <p>• FireTrailNavbar: Fiery trail effect on hover</p>
+            <p>• StackNavbar: 3D stacking layers effect</p>
+            <p>• RainbowTrailNavbar: Colorful rainbow trail animation</p>
+            <p>• MatrixNavbar: Matrix-inspired digital rain effect</p>
+            <p>• ConstellationNavbar: Twinkling stars constellation effect</p>
+            <p>• ScanlineNavbar: Retro scanline animation effect</p>
+            <p>• MagneticFieldNavbar: Expanding magnetic field rings</p>
+            <p>• HologramNavbar: Futuristic hologram glitch effect</p>
+            <p>• SoundwaveNavbar: Audio visualizer-style animation</p>
+            <p>• CrystalNavbar: Crystal shattering hover effect</p>
           </div>
         </div>
       </div>
