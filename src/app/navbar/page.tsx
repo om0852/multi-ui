@@ -21,6 +21,11 @@ import ParticleNavbar from './components/ParticleNavbar';
 import GlitchNavbar from './components/GlitchNavbar';
 import MagneticPullNavbar from './components/MagneticPullNavbar';
 import RadarNavbar from './components/RadarNavbar';
+import FireTrailNavbar from './components/FireTrailNavbar';
+import StackNavbar from './components/StackNavbar';
+import RainbowTrailNavbar from './components/RainbowTrailNavbar';
+import MatrixNavbar from './components/MatrixNavbar';
+import ConstellationNavbar from './components/ConstellationNavbar';
 
 export default function NavbarPage() {
   return (
@@ -126,6 +131,31 @@ export default function NavbarPage() {
           <RadarNavbar />
         </div>
 
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Fire Trail Navbar</h2>
+          <FireTrailNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">3D Stack Navbar</h2>
+          <StackNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Rainbow Trail Navbar</h2>
+          <RainbowTrailNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Matrix Effect Navbar</h2>
+          <MatrixNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Constellation Navbar</h2>
+          <ConstellationNavbar />
+        </div>
+
         {/* Documentation */}
         <div className="mt-12 p-6 bg-white rounded-lg mx-4">
           <h2 className="text-xl font-bold mb-4">Features</h2>
@@ -150,6 +180,11 @@ export default function NavbarPage() {
             <p>• GlitchNavbar: Cyberpunk-style glitch animation</p>
             <p>• MagneticPullNavbar: Magnetic pull effect between items</p>
             <p>• RadarNavbar: Radar scanning animation on hover</p>
+            <p>• FireTrailNavbar: Fiery trail effect on hover</p>
+            <p>• StackNavbar: 3D stacking layers effect</p>
+            <p>• RainbowTrailNavbar: Colorful rainbow trail animation</p>
+            <p>• MatrixNavbar: Matrix-inspired digital rain effect</p>
+            <p>• ConstellationNavbar: Twinkling stars constellation effect</p>
           </div>
         </div>
       </div>

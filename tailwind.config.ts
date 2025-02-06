@@ -85,6 +85,27 @@ export default {
           '0%': { transform: 'scale(0.5)', opacity: '1' },
           '100%': { transform: 'scale(1.5)', opacity: '0' },
         },
+        fire: {
+          '0%': { transform: 'scaleY(1)', opacity: '0.5' },
+          '100%': { transform: 'scaleY(1.2)', opacity: '0' },
+        },
+        rainbow: {
+          '0%': { opacity: '0', transform: 'translateY(10px)' },
+          '50%': { opacity: '0.5' },
+          '100%': { opacity: '0', transform: 'translateY(-10px)' },
+        },
+        matrix: {
+          '0%': { transform: 'translateY(20px)', opacity: '0' },
+          '100%': { transform: 'translateY(0)', opacity: '1' },
+        },
+        twinkle: {
+          '0%, 100%': { opacity: '1', transform: 'scale(1)' },
+          '50%': { opacity: '0.4', transform: 'scale(0.5)' },
+        },
+        spin: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
       },
       animation: {
         wiggle: 'wiggle 0.3s ease-in-out infinite',
@@ -96,7 +117,7 @@ export default {
         'blink': 'blink 1s step-end infinite',
         'rotate-y': 'rotate-y 0.5s ease-in-out',
         'slideDown': 'slideDown 0.5s ease-out',
-        'gradient': 'gradient 15s ease infinite',
+        'gradient': 'gradient 3s ease infinite',
         'wave': 'wave 8s ease-in-out infinite',
         'spotlight': 'spotlight 2s ease-in-out infinite',
         'particle': 'particle 1s ease-in-out infinite',
@@ -104,6 +125,11 @@ export default {
         'glitch-2': 'glitch-2 0.3s ease-in-out infinite',
         'glitch-3': 'glitch-3 0.3s ease-in-out infinite',
         'radar-scan': 'radar-scan 1.5s ease-out infinite',
+        'fire': 'fire 0.5s ease-out forwards',
+        'rainbow': 'rainbow 0.5s ease-out forwards',
+        'matrix': 'matrix 0.5s ease-out forwards',
+        'twinkle': 'twinkle 1s ease-in-out infinite',
+        'spin-slow': 'spin 3s linear infinite',
       },
       transformStyle: {
         'preserve-3d': 'preserve-3d',
