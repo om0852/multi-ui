@@ -130,6 +130,71 @@ export default {
           '0%': { transform: 'rotate(0deg) scale(1)', opacity: '1' },
           '100%': { transform: 'rotate(45deg) scale(1.5)', opacity: '0' },
         },
+        smoke: {
+          '0%': { transform: 'translateY(0) scale(1)', opacity: '0' },
+          '50%': { opacity: '0.5' },
+          '100%': { transform: 'translateY(-20px) scale(1.5)', opacity: '0' },
+        },
+        fadeIn: {
+          '0%': { opacity: '0' },
+          '100%': { opacity: '1' },
+        },
+        pixelate: {
+          '0%': { transform: 'scale(0)', opacity: '0' },
+          '100%': { transform: 'scale(1)', opacity: '1' },
+        },
+        flash: {
+          '0%, 100%': { opacity: '0' },
+          '50%': { opacity: '1' },
+        },
+        lightning: {
+          '0%': { transform: 'translateX(-100%)' },
+          '100%': { transform: 'translateX(100%)' },
+        },
+        spark: {
+          '0%, 100%': { opacity: '0.5', height: '100%' },
+          '50%': { opacity: '1', height: '50%' },
+        },
+        portal: {
+          '0%, 100%': { transform: 'scale(1) rotate(0deg)' },
+          '50%': { transform: 'scale(1.5) rotate(180deg)' },
+        },
+        circuit: {
+          '0%': { transform: 'translateX(0) translateY(0)' },
+          '25%': { transform: 'translateX(100%) translateY(0)' },
+          '50%': { transform: 'translateX(100%) translateY(100%)' },
+          '75%': { transform: 'translateX(0) translateY(100%)' },
+          '100%': { transform: 'translateX(0) translateY(0)' },
+        },
+        fold: {
+          '0%': { transform: 'perspective(500px) rotateX(0)' },
+          '100%': { transform: 'perspective(500px) rotateX(-90deg)' },
+        },
+        unfold: {
+          '0%': { transform: 'perspective(500px) rotateX(90deg)' },
+          '100%': { transform: 'perspective(500px) rotateX(0)' },
+        },
+        bubble: {
+          '0%': { transform: 'scale(1) translateY(0)', opacity: '0.5' },
+          '100%': { transform: 'scale(0) translateY(-100px)', opacity: '0' },
+        },
+        splash: {
+          '0%': { transform: 'scale(0) rotate(0deg)', opacity: '0' },
+          '50%': { opacity: '0.5' },
+          '100%': { transform: 'scale(1.5) rotate(45deg)', opacity: '0' },
+        },
+        vhsNoise: {
+          '0%, 100%': { transform: 'translateX(0)' },
+          '50%': { transform: 'translateX(2px)' },
+        },
+        vhsOffset: {
+          '0%, 100%': { transform: 'translateX(0)' },
+          '50%': { transform: 'translateX(-2px)' },
+        },
+        vhsGlitch: {
+          '0%, 100%': { clipPath: 'inset(0 0 0 0)' },
+          '50%': { clipPath: 'inset(10% 0 10% 0)' },
+        },
       },
       animation: {
         wiggle: 'wiggle 0.3s ease-in-out infinite',
@@ -160,6 +225,21 @@ export default {
         'hologram': 'hologram 2s ease-in-out infinite',
         'soundwave': 'soundwave 1s ease-in-out infinite',
         'shatter': 'shatter 0.5s ease-out forwards',
+        'smoke': 'smoke 1s ease-out forwards',
+        'fadeIn': 'fadeIn 0.3s ease-out forwards',
+        'pixelate': 'pixelate 0.5s ease-out forwards',
+        'flash': 'flash 0.3s ease-out',
+        'lightning': 'lightning 0.5s ease-out',
+        'spark': 'spark 0.2s ease-out infinite',
+        'portal': 'portal 1s ease-out infinite',
+        'circuit': 'circuit 2s linear infinite',
+        'fold': 'fold 0.3s ease-out forwards',
+        'unfold': 'unfold 0.3s ease-out forwards',
+        'bubble': 'bubble 1s ease-out forwards',
+        'splash': 'splash 0.5s ease-out forwards',
+        'vhsNoise': 'vhsNoise 0.2s steps(2) infinite',
+        'vhsOffset': 'vhsOffset 0.2s ease-out infinite',
+        'vhsGlitch': 'vhsGlitch 0.2s ease-out infinite',
       },
       transformStyle: {
         'preserve-3d': 'preserve-3d',
