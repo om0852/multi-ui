@@ -15,6 +15,11 @@ import InkDropNavbar from './components/InkDropNavbar';
 import MagneticRippleNavbar from './components/MagneticRippleNavbar';
 import CosmicDustNavbar from './components/CosmicDustNavbar';
 import DigitalScanNavbar from './components/DigitalScanNavbar';
+import DNAHelixNavbar from './components/DNAHelixNavbar';
+import KaleidoscopeNavbar from './components/KaleidoscopeNavbar';
+import QuantumNavbar from './components/QuantumNavbar';
+import WindNavbar from './components/WindNavbar';
+import FractalNavbar from './components/FractalNavbar';
 
 export default function NavbarPage() {
   return (
@@ -95,6 +100,31 @@ export default function NavbarPage() {
           <DigitalScanNavbar />
         </div>
 
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">DNA Helix Navbar</h2>
+          <DNAHelixNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Kaleidoscope Navbar</h2>
+          <KaleidoscopeNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Quantum Effect Navbar</h2>
+          <QuantumNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Wind Effect Navbar</h2>
+          <WindNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Fractal Effect Navbar</h2>
+          <FractalNavbar />
+        </div>
+
         {/* Documentation */}
         <div className="mt-12 p-6 bg-white rounded-lg mx-4">
           <h2 className="text-xl font-bold mb-4">Features</h2>
@@ -144,6 +174,11 @@ export default function NavbarPage() {
             <p>• MagneticRippleNavbar: Expanding magnetic field waves</p>
             <p>• CosmicDustNavbar: Floating space dust particles</p>
             <p>• DigitalScanNavbar: Digital scanning with glitch effect</p>
+            <p>• DNAHelixNavbar: Rotating DNA strand animation</p>
+            <p>• KaleidoscopeNavbar: Rotating kaleidoscope patterns</p>
+            <p>• QuantumNavbar: Quantum particle orbit effect</p>
+            <p>• WindNavbar: Flowing wind gust animation</p>
+            <p>• FractalNavbar: Growing fractal pattern effect</p>
           </div>
         </div>
       </div>

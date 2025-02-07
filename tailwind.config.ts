@@ -240,6 +240,39 @@ export default {
           '0%, 100%': { transform: 'translateX(0)' },
           '50%': { transform: 'translateX(2px)' },
         },
+        dnaRotate: {
+          '0%, 100%': { transform: 'rotate(30deg) translateY(0)' },
+          '50%': { transform: 'rotate(-30deg) translateY(2px)' },
+        },
+        kaleidoscope: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
+        quantumPulse: {
+          '0%, 100%': { transform: 'scale(1)', opacity: '0.1' },
+          '50%': { transform: 'scale(1.1)', opacity: '0.3' },
+        },
+        quantumOrbit: {
+          '0%': { transform: 'rotate(0deg)' },
+          '100%': { transform: 'rotate(360deg)' },
+        },
+        quantumParticle: {
+          '0%': { transform: 'rotate(0deg) translateX(10px)' },
+          '100%': { transform: 'rotate(-360deg) translateX(10px)' },
+        },
+        windGust: {
+          '0%': { transform: 'translateX(-100%)', opacity: '0' },
+          '50%': { opacity: '1' },
+          '100%': { transform: 'translateX(100%)', opacity: '0' },
+        },
+        windFlow: {
+          '0%, 100%': { transform: 'translateX(0)' },
+          '50%': { transform: 'translateX(10px)' },
+        },
+        fractalGrow: {
+          '0%': { transform: 'scaleX(0)', opacity: '0' },
+          '100%': { transform: 'scaleX(1)', opacity: '1' },
+        },
       },
       animation: {
         wiggle: 'wiggle 0.3s ease-in-out infinite',
@@ -296,6 +329,14 @@ export default {
         'digitalScan': 'digitalScan 1s linear infinite',
         'digitalNoise': 'digitalNoise 0.2s steps(3) infinite',
         'digitalGlitch': 'digitalGlitch 0.1s steps(2) infinite',
+        'dnaRotate': 'dnaRotate 2s ease-in-out infinite',
+        'kaleidoscope': 'kaleidoscope 3s linear infinite',
+        'quantumPulse': 'quantumPulse 2s ease-in-out infinite',
+        'quantumOrbit': 'quantumOrbit 4s linear infinite',
+        'quantumParticle': 'quantumParticle 4s linear infinite',
+        'windGust': 'windGust 1s ease-out forwards',
+        'windFlow': 'windFlow 2s ease-in-out infinite',
+        'fractalGrow': 'fractalGrow 0.5s ease-out forwards',
       },
       transformStyle: {
         'preserve-3d': 'preserve-3d',
