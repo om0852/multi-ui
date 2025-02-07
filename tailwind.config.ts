@@ -195,6 +195,51 @@ export default {
           '0%, 100%': { clipPath: 'inset(0 0 0 0)' },
           '50%': { clipPath: 'inset(10% 0 10% 0)' },
         },
+        heartbeat: {
+          '0%, 100%': { transform: 'scale(1)' },
+          '50%': { transform: 'scale(1.1)' },
+        },
+        heartglow: {
+          '0%, 100%': { opacity: '0.3' },
+          '50%': { opacity: '0.6' },
+        },
+        heartpulse: {
+          '0%, 100%': { transform: 'scale(1)', opacity: '1' },
+          '50%': { transform: 'scale(3)', opacity: '0' },
+        },
+        inkDrop: {
+          '0%': { transform: 'scale(0) translateY(-50%)', opacity: '0' },
+          '100%': { transform: 'scale(1) translateY(0)', opacity: '1' },
+        },
+        inkFade: {
+          '0%': { opacity: '0', transform: 'translateY(-10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
+        },
+        magneticRipple: {
+          '0%': { transform: 'scale(1)', opacity: '1' },
+          '100%': { transform: 'scale(1.5)', opacity: '0' },
+        },
+        magneticGlow: {
+          '0%, 100%': { opacity: '0.3' },
+          '50%': { opacity: '0.6' },
+        },
+        cosmicDust: {
+          '0%': { transform: 'translate(0, 0) scale(1)', opacity: '0' },
+          '50%': { opacity: '1' },
+          '100%': { transform: 'translate(20px, -20px) scale(0)', opacity: '0' },
+        },
+        digitalScan: {
+          '0%': { transform: 'translateY(-100%)' },
+          '100%': { transform: 'translateY(100%)' },
+        },
+        digitalNoise: {
+          '0%, 100%': { clipPath: 'inset(0 0 0 0)' },
+          '50%': { clipPath: 'inset(10% 0 20% 0)' },
+        },
+        digitalGlitch: {
+          '0%, 100%': { transform: 'translateX(0)' },
+          '50%': { transform: 'translateX(2px)' },
+        },
       },
       animation: {
         wiggle: 'wiggle 0.3s ease-in-out infinite',
@@ -240,6 +285,17 @@ export default {
         'vhsNoise': 'vhsNoise 0.2s steps(2) infinite',
         'vhsOffset': 'vhsOffset 0.2s ease-out infinite',
         'vhsGlitch': 'vhsGlitch 0.2s ease-out infinite',
+        'heartbeat': 'heartbeat 1s ease-in-out infinite',
+        'heartglow': 'heartglow 1s ease-in-out infinite',
+        'heartpulse': 'heartpulse 1s ease-in-out infinite',
+        'inkDrop': 'inkDrop 0.5s ease-out forwards',
+        'inkFade': 'inkFade 0.5s ease-out forwards',
+        'magneticRipple': 'magneticRipple 1.5s ease-out infinite',
+        'magneticGlow': 'magneticGlow 1.5s ease-out infinite',
+        'cosmicDust': 'cosmicDust 2s ease-out infinite',
+        'digitalScan': 'digitalScan 1s linear infinite',
+        'digitalNoise': 'digitalNoise 0.2s steps(3) infinite',
+        'digitalGlitch': 'digitalGlitch 0.1s steps(2) infinite',
       },
       transformStyle: {
         'preserve-3d': 'preserve-3d',

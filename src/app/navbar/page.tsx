@@ -10,6 +10,11 @@ import PaperFoldNavbar from './components/PaperFoldNavbar';
 import BubbleNavbar from './components/BubbleNavbar';
 import PaintNavbar from './components/PaintNavbar';
 import VHSNavbar from './components/VHSNavbar';
+import HeartbeatNavbar from './components/HeartbeatNavbar';
+import InkDropNavbar from './components/InkDropNavbar';
+import MagneticRippleNavbar from './components/MagneticRippleNavbar';
+import CosmicDustNavbar from './components/CosmicDustNavbar';
+import DigitalScanNavbar from './components/DigitalScanNavbar';
 
 export default function NavbarPage() {
   return (
@@ -65,6 +70,31 @@ export default function NavbarPage() {
           <VHSNavbar />
         </div>
 
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Heartbeat Effect Navbar</h2>
+          <HeartbeatNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Ink Drop Effect Navbar</h2>
+          <InkDropNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Magnetic Ripple Navbar</h2>
+          <MagneticRippleNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Cosmic Dust Navbar</h2>
+          <CosmicDustNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Digital Scan Navbar</h2>
+          <DigitalScanNavbar />
+        </div>
+
         {/* Documentation */}
         <div className="mt-12 p-6 bg-white rounded-lg mx-4">
           <h2 className="text-xl font-bold mb-4">Features</h2>
@@ -109,6 +139,11 @@ export default function NavbarPage() {
             <p>• BubbleNavbar: Rising bubble particles animation</p>
             <p>• PaintNavbar: Colorful paint splash effect</p>
             <p>• VHSNavbar: Retro VHS glitch and noise effect</p>
+            <p>• HeartbeatNavbar: Pulsing heartbeat animation with glow</p>
+            <p>• InkDropNavbar: Liquid ink drop spreading effect</p>
+            <p>• MagneticRippleNavbar: Expanding magnetic field waves</p>
+            <p>• CosmicDustNavbar: Floating space dust particles</p>
+            <p>• DigitalScanNavbar: Digital scanning with glitch effect</p>
           </div>
         </div>
       </div>
