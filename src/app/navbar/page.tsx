@@ -20,6 +20,16 @@ import KaleidoscopeNavbar from './components/KaleidoscopeNavbar';
 import QuantumNavbar from './components/QuantumNavbar';
 import WindNavbar from './components/WindNavbar';
 import FractalNavbar from './components/FractalNavbar';
+import NeonWaveNavbar from './components/NeonWaveNavbar';
+import CubeRotateNavbar from './components/CubeRotateNavbar';
+import MagneticDistortNavbar from './components/MagneticDistortNavbar';
+import LiquidDripNavbar from './components/LiquidDripNavbar';
+import NeonTrailNavbar from './components/NeonTrailNavbar';
+import ShatteredGlassNavbar from './components/ShatteredGlassNavbar';
+import TimeWarpNavbar from './components/TimeWarpNavbar';
+import CyberCircuitNavbar from './components/CyberCircuitNavbar';
+import PlasmaGlowNavbar from './components/PlasmaGlowNavbar';
+import BinaryCodeNavbar from './components/BinaryCodeNavbar';
 
 export default function NavbarPage() {
   return (
@@ -125,6 +135,56 @@ export default function NavbarPage() {
           <FractalNavbar />
         </div>
 
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Neon Wave Navbar</h2>
+          <NeonWaveNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">3D Cube Rotate Navbar</h2>
+          <CubeRotateNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Magnetic Distort Navbar</h2>
+          <MagneticDistortNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Liquid Drip Navbar</h2>
+          <LiquidDripNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Neon Trail Navbar</h2>
+          <NeonTrailNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Shattered Glass Navbar</h2>
+          <ShatteredGlassNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Time Warp Navbar</h2>
+          <TimeWarpNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Cyber Circuit Navbar</h2>
+          <CyberCircuitNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Plasma Glow Navbar</h2>
+          <PlasmaGlowNavbar />
+        </div>
+
+        <div className="space-y-4">
+          <h2 className="text-xl font-semibold px-4">Binary Code Navbar</h2>
+          <BinaryCodeNavbar />
+        </div>
+
         {/* Documentation */}
         <div className="mt-12 p-6 bg-white rounded-lg mx-4">
           <h2 className="text-xl font-bold mb-4">Features</h2>
@@ -179,6 +239,16 @@ export default function NavbarPage() {
             <p>• QuantumNavbar: Quantum particle orbit effect</p>
             <p>• WindNavbar: Flowing wind gust animation</p>
             <p>• FractalNavbar: Growing fractal pattern effect</p>
+            <p>• NeonWaveNavbar: Pulsing neon wave animation</p>
+            <p>• CubeRotateNavbar: 3D cube rotation effect</p>
+            <p>• MagneticDistortNavbar: Magnetic field distortion</p>
+            <p>• LiquidDripNavbar: Liquid dripping animation</p>
+            <p>• NeonTrailNavbar: Glowing neon trail effect</p>
+            <p>• ShatteredGlassNavbar: Glass shattering animation effect</p>
+            <p>• TimeWarpNavbar: Time distortion spiral animation</p>
+            <p>• CyberCircuitNavbar: Cyber circuit pulse patterns</p>
+            <p>• PlasmaGlowNavbar: Plasma energy glow effect</p>
+            <p>• BinaryCodeNavbar: Falling binary code animation</p>
           </div>
         </div>
       </div>

@@ -273,6 +273,42 @@ export default {
           '0%': { transform: 'scaleX(0)', opacity: '0' },
           '100%': { transform: 'scaleX(1)', opacity: '1' },
         },
+        neonWave: {
+          '0%, 100%': { transform: 'translateY(0) scale(1)' },
+          '50%': { transform: 'translateY(-2px) scale(1.1)' },
+        },
+        magneticDistort: {
+          '0%, 100%': { transform: 'scale(1) rotate(0deg)' },
+          '50%': { transform: 'scale(1.1) rotate(5deg)' },
+        },
+        liquidDrip: {
+          '0%': { height: '0', opacity: '1' },
+          '100%': { height: '100px', opacity: '0' },
+        },
+        neonTrail: {
+          '0%': { opacity: '0.5', transform: 'translateX(0)' },
+          '100%': { opacity: '0', transform: 'translateX(10px)' },
+        },
+        shatterAnim: {
+          '0%': { transform: 'scale(1)', opacity: '1' },
+          '100%': { transform: 'scale(2)', opacity: '0' },
+        },
+        timeWarp: {
+          '0%': { transform: 'rotate(0deg) scale(1)' },
+          '100%': { transform: 'rotate(360deg) scale(1.5)' },
+        },
+        cyberPulse: {
+          '0%, 100%': { opacity: '0.2' },
+          '50%': { opacity: '0.8' },
+        },
+        plasmaGlow: {
+          '0%, 100%': { transform: 'scale(1)', opacity: '0.5' },
+          '50%': { transform: 'scale(1.2)', opacity: '0.8' },
+        },
+        binaryFall: {
+          '0%': { transform: 'translateY(-100%)', opacity: '1' },
+          '100%': { transform: 'translateY(100%)', opacity: '0' },
+        },
       },
       animation: {
         wiggle: 'wiggle 0.3s ease-in-out infinite',
@@ -337,6 +373,15 @@ export default {
         'windGust': 'windGust 1s ease-out forwards',
         'windFlow': 'windFlow 2s ease-in-out infinite',
         'fractalGrow': 'fractalGrow 0.5s ease-out forwards',
+        'neonWave': 'neonWave 1.5s ease-in-out infinite',
+        'magneticDistort': 'magneticDistort 2s ease-in-out infinite',
+        'liquidDrip': 'liquidDrip 1s ease-in infinite',
+        'neonTrail': 'neonTrail 1s ease-out forwards',
+        'shatterAnim': 'shatterAnim 0.5s ease-out forwards',
+        'timeWarp': 'timeWarp 2s linear infinite',
+        'cyberPulse': 'cyberPulse 1.5s ease-in-out infinite',
+        'plasmaGlow': 'plasmaGlow 2s ease-in-out infinite',
+        'binaryFall': 'binaryFall 1s linear infinite',
       },
       transformStyle: {
         'preserve-3d': 'preserve-3d',
