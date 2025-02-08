@@ -136,7 +136,7 @@ const StyledWrapper = styled.div<StyledWrapperProps>`
   ${[...Array(8)].map((_, i) => `
     .tooth:nth-child(${i + 1}) {
       top: ${5 + i * 5}px;
-      transform: rotate(${props => props.$isChecked ? '10deg' : '0deg'});
+      transform: rotate(${(props: { $isChecked: boolean }) => props.$isChecked ? '10deg' : '0deg'});
       transition-delay: ${i * 0.05}s;
     }
   `).join('')}
