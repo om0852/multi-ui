@@ -13,6 +13,7 @@ interface TabsListProps {
   children: React.ReactNode; // Tab triggers (e.g., <TabsTrigger>)
   activeTab: string; // Currently active tab
   setActiveTab: (value: string) => void; // Function to change the active tab
+  className?: string; // Custom class for the container
 }
 
 interface TabsTriggerProps {
@@ -20,12 +21,14 @@ interface TabsTriggerProps {
   children: React.ReactNode; // Content of the tab trigger
   activeTab?: string; // Currently active tab
   setActiveTab?: (value: string) => void; // Function to change the active tab
+  className?: string; // Custom class for the container
 }
 
 interface TabsContentProps {
   value: string; // Tab value associated with this content
   children: React.ReactNode; // Content of the tab
   activeTab?: string; // Currently active tab
+  className?: string; // Custom class for the container
 }
 
 const Tabs: React.FC<TabsProps> = ({ defaultValue, className, children }) => {
@@ -45,9 +48,9 @@ const Tabs: React.FC<TabsProps> = ({ defaultValue, className, children }) => {
   );
 };
 
-const TabsList: React.FC<TabsListProps> = ({ children, activeTab, setActiveTab }) => {
+const TabsList: React.FC<TabsListProps> = ({ children, activeTab, setActiveTab, className = "" }) => {
   return (
-    <div className="flex justify-center gap-4 mb-6">
+    <div className={`inline-flex h-12 items-center justify-center rounded-xl bg-gradient-to-br from-gray-900 to-gray-800 p-1.5 ${className}`}>
       {React.Children.map(children, (child) =>
         React.isValidElement(child)
           ? React.cloneElement(child as React.ReactElement<any>, {
@@ -65,35 +68,68 @@ const TabsTrigger: React.FC<TabsTriggerProps> = ({
   children,
   activeTab,
   setActiveTab,
+  className = "",
 }) => {
   const isActive = activeTab === value;
 
   return (
-    <motion.button
-      className={`relative w-full px-5 py-2 text-sm font-semibold rounded-full transition-all ${
+    <button
+      className={`relative inline-flex items-center justify-center whitespace-nowrap rounded-lg px-8 py-2 text-sm font-medium ring-offset-white transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-gray-300 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${
         isActive
-          ? "bg-purple-500 text-white shadow-md"
-          : "bg-gray-200 text-gray-600 hover:bg-gray-300"
-      }`}
-      whileTap={{ scale: 0.9 }}
+          ? "text-gray-900"
+          : "text-gray-100 hover:text-white hover:bg-white/10"
+      } ${className}`}
       onClick={() => setActiveTab?.(value)}
     >
-      {children}
-    </motion.button>
+      {isActive && (
+        <motion.div
+          className="absolute inset-0 z-10 rounded-lg bg-white"
+          layoutId="active-tab"
+          transition={{
+            type: "spring",
+            stiffness: 400,
+            damping: 30,
+            mass: 1
+          }}
+        />
+      )}
+      <span className="relative z-20 flex items-center gap-2">
+        {children}
+        {isActive && (
+          <motion.div
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            exit={{ scale: 0 }}
+            transition={{ delay: 0.1, duration: 0.2 }}
+          >
+            <div className="h-1.5 w-1.5 rounded-full bg-blue-600" />
+          </motion.div>
+        )}
+      </span>
+    </button>
   );
 };
 
-const TabsContent: React.FC<TabsContentProps> = ({ value, children, activeTab }) => {
+const TabsContent: React.FC<TabsContentProps> = ({ value, children, activeTab, className = "" }) => {
   return (
     <AnimatePresence mode="wait">
       {activeTab === value && (
         <motion.div
           key={value}
-          initial={{ opacity: 0, rotateY: -90 }}
-          animate={{ opacity: 1, rotateY: 0 }}
-          exit={{ opacity: 0, rotateY: 90 }}
-          transition={{ duration: 0.5 }}
-          className="p-6 bg-white rounded-xl shadow-lg"
+          initial={{ opacity: 0, rotateX: 90, perspective: 1000 }}
+          animate={{ opacity: 1, rotateX: 0 }}
+          exit={{ opacity: 0, rotateX: -90 }}
+          transition={{
+            type: "spring",
+            stiffness: 300,
+            damping: 30,
+            mass: 1,
+            times: [0, 0.5, 1]
+          }}
+          className={`mt-6 rounded-xl p-4 focus:outline-none transform-gpu ${className}`}
+          style={{
+            transformStyle: "preserve-3d"
+          }}
         >
           {children}
         </motion.div>

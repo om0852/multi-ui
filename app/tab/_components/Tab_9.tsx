@@ -26,6 +26,7 @@ interface TabsContentProps {
   value: string; // Tab value associated with this content
   children: React.ReactNode; // Content of the tab
   activeTab?: string; // Currently active tab
+  className?: string; // Custom class for the content
 }
 
 const Tabs: React.FC<TabsProps> = ({ defaultValue, className, children }) => {
@@ -95,25 +96,50 @@ const TabsTrigger: React.FC<TabsTriggerProps> = ({
   );
 };
 
-const TabsContent: React.FC<TabsContentProps> = ({ value, children, activeTab }) => {
+const TabsContent: React.FC<TabsContentProps> = ({ value, children, activeTab, className = "" }) => {
   return (
-    <AnimatePresence>
-      {activeTab === value && (
-        <motion.div
-          key={value}
-          initial={{ opacity: 0, x: 300 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -300 }}
-          transition={{
-            opacity: { duration: 0.4, ease: "easeInOut" },
-            x: { type: "spring", stiffness: 200, damping: 25 },
-          }}
-          className="pt-6"
-        >
-          {children}
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <div className="relative overflow-hidden">
+      <AnimatePresence mode="wait">
+        {activeTab === value && (
+          <motion.div
+            key={value}
+            initial={{ 
+              opacity: 0,
+              scale: 1.5,
+              filter: "blur(20px)",
+              y: 20
+            }}
+            animate={{ 
+              opacity: 1,
+              scale: 1,
+              filter: "blur(0px)",
+              y: 0
+            }}
+            exit={{ 
+              opacity: 0,
+              scale: 0.8,
+              filter: "blur(10px)",
+              y: -20
+            }}
+            transition={{
+              opacity: { duration: 0.4 },
+              scale: { type: "spring", stiffness: 300, damping: 25 },
+              filter: { duration: 0.4 },
+              y: { type: "spring", stiffness: 400, damping: 30 }
+            }}
+            className={`mt-6 rounded-xl p-4 focus:outline-none transform-gpu ${className}`}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ delay: 0.2, duration: 0.3 }}
+            >
+              {children}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 };
 

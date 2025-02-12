@@ -50,8 +50,8 @@ const Tabs: React.FC<TabsProps> = ({ defaultValue, className = "", children }) =
 
 const TabsList: React.FC<TabsListProps> = ({ children, activeTab, setActiveTab, className = "" }) => {
   return (
-    <div className={`inline-flex p-3 bg-gray-900 rounded-2xl shadow-[0_0_15px_rgba(139,92,246,0.3)] ${className}`}>
-      <div className="flex w-full gap-2">
+    <div className={`inline-flex p-3 bg-gradient-to-br from-pink-500/20 via-purple-500/20 to-blue-500/20 backdrop-blur-xl rounded-xl shadow-lg ${className}`}>
+      <div className="flex w-full gap-2 p-1 bg-black/20 rounded-lg backdrop-blur-sm">
         {React.Children.map(children, (child) =>
           React.isValidElement(child)
             ? React.cloneElement(child as React.ReactElement<any>, {
@@ -76,40 +76,62 @@ const TabsTrigger: React.FC<TabsTriggerProps> = ({
 
   return (
     <button
-      className={`group relative flex-1 px-5 py-2.5 text-sm font-medium transition-all duration-500 rounded-xl overflow-hidden ${
+      className={`group relative flex-1 px-6 py-3 text-sm font-medium transition-all duration-500 rounded-lg overflow-hidden ${
         isActive
-          ? "text-white shadow-[0_0_20px_rgba(139,92,246,0.5)]"
-          : "text-gray-400 hover:text-white"
+          ? "text-white"
+          : "text-pink-200/70 hover:text-white"
       } ${className}`}
       onClick={() => setActiveTab?.(value)}
     >
       {isActive && (
         <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-violet-600 to-indigo-600"
-          layoutId="neon-bg"
-          transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-        />
+          className="absolute inset-0 bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500"
+          layoutId="retro-bg"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+        >
+          <motion.div
+            className="absolute inset-0 bg-[linear-gradient(0deg,rgba(255,255,255,0.2)_1px,transparent_1px)] bg-[size:100%_4px]"
+            animate={{
+              backgroundPosition: ["0px 0px", "0px -100px"],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+          />
+        </motion.div>
       )}
-      <motion.div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        initial={false}
-        animate={isActive ? { opacity: 1 } : { opacity: 0 }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-violet-600/20 to-indigo-600/20 blur-xl" />
-      </motion.div>
       <span className="relative z-10 flex items-center justify-center gap-2">
         {children}
         {isActive && (
           <motion.div
-            initial={{ scale: 0, rotate: 180 }}
-            animate={{ scale: 1, rotate: 0 }}
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
             transition={{
               type: "spring",
-              stiffness: 200,
-              damping: 10
+              stiffness: 300,
+              damping: 20
             }}
           >
-            <div className="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
+            <motion.div
+              animate={{
+                boxShadow: [
+                  "0 0 10px rgba(236,72,153,0.5)",
+                  "0 0 20px rgba(236,72,153,0.8)",
+                  "0 0 10px rgba(236,72,153,0.5)",
+                ],
+              }}
+              transition={{
+                duration: 1.5,
+                repeat: Infinity,
+                ease: "easeInOut",
+              }}
+              className="w-2 h-2 rounded-full bg-gradient-to-r from-pink-500 to-purple-500"
+            />
           </motion.div>
         )}
       </span>
@@ -126,36 +148,49 @@ const TabsContent: React.FC<TabsContentProps> = ({ value, children, activeTab, c
             key={value}
             initial={{ 
               opacity: 0,
-              filter: "blur(10px)",
-              y: 20
+              y: 20,
+              scale: 0.95
             }}
             animate={{ 
               opacity: 1,
-              filter: "blur(0px)",
-              y: 0
+              y: 0,
+              scale: 1
             }}
             exit={{ 
               opacity: 0,
-              filter: "blur(10px)",
-              y: -20
+              y: -20,
+              scale: 0.95
             }}
             transition={{
-              type: "spring",
-              bounce: 0.2,
-              duration: 0.5
+              duration: 0.3,
+              ease: [0.23, 1, 0.32, 1]
             }}
-            className={`mt-6 p-6 bg-gray-900/50 backdrop-blur-xl rounded-2xl shadow-[0_0_25px_rgba(139,92,246,0.2)] border border-violet-500/20 ${className}`}
+            className={`mt-6 p-8 bg-gradient-to-br from-pink-500/10 via-purple-500/10 to-blue-500/10 backdrop-blur-xl rounded-xl border border-white/10 shadow-[0_0_25px_rgba(236,72,153,0.1)] ${className}`}
           >
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.1 }}
-              className="relative z-10"
+              className="relative"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-violet-600/10 to-indigo-600/10 blur-2xl" />
-              <div className="relative text-gray-200">
+              <div className="absolute inset-0 bg-gradient-to-br from-pink-500/5 via-purple-500/5 to-blue-500/5" />
+              <motion.div
+                className="relative z-10 text-pink-100"
+                animate={{
+                  textShadow: [
+                    "0 0 8px rgba(236,72,153,0.3)",
+                    "0 0 16px rgba(236,72,153,0.6)",
+                    "0 0 8px rgba(236,72,153,0.3)",
+                  ],
+                }}
+                transition={{
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              >
                 {children}
-              </div>
+              </motion.div>
             </motion.div>
           </motion.div>
         )}
@@ -164,4 +199,4 @@ const TabsContent: React.FC<TabsContentProps> = ({ value, children, activeTab, c
   );
 };
 
-export { Tabs, TabsList, TabsTrigger, TabsContent };
+export { Tabs, TabsList, TabsTrigger, TabsContent }; 

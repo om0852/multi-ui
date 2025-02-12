@@ -26,6 +26,7 @@ interface TabsContentProps {
   value: string; // Tab value associated with this content
   children: React.ReactNode; // Content of the tab
   activeTab?: string; // Currently active tab
+  className?: string; // Custom class for the content container
 }
 
 const Tabs: React.FC<TabsProps> = ({ defaultValue, className, children }) => {
@@ -89,25 +90,45 @@ const TabsTrigger: React.FC<TabsTriggerProps> = ({
   );
 };
 
-const TabsContent: React.FC<TabsContentProps> = ({ value, children, activeTab }) => {
+const TabsContent: React.FC<TabsContentProps> = ({ value, children, activeTab, className = "" }) => {
+  const [direction, setDirection] = useState(0);
+  
+  React.useEffect(() => {
+    setDirection(value > activeTab ? 1 : -1);
+  }, [value, activeTab]);
+
   return (
-    <AnimatePresence>
-      {activeTab === value && (
-        <motion.div
-          key={value}
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          transition={{
-            opacity: { duration: 0.3 },
-            scale: { type: "spring", stiffness: 300, damping: 25 },
-          }}
-          className="pt-6"
-        >
-          {children}
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <div className="overflow-hidden">
+      <AnimatePresence mode="wait" custom={direction}>
+        {activeTab === value && (
+          <motion.div
+            key={value}
+            custom={direction}
+            initial={{ opacity: 0, x: 100 * direction }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -100 * direction }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 30,
+              mass: 1
+            }}
+            className={`mt-6 rounded-xl p-4 focus:outline-none ${className}`}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{
+                delay: 0.2,
+                duration: 0.3
+              }}
+            >
+              {children}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 };
 

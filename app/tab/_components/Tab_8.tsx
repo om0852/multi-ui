@@ -26,6 +26,7 @@ interface TabsContentProps {
   value: string; // Tab value associated with this content
   children: React.ReactNode; // Content of the tab
   activeTab?: string; // Currently active tab
+  className?: string; // Custom class for the content container
 }
 
 const Tabs: React.FC<TabsProps> = ({ defaultValue, className, children }) => {
@@ -88,28 +89,55 @@ const TabsTrigger: React.FC<TabsTriggerProps> = ({
   );
 };
 
-const TabsContent: React.FC<TabsContentProps> = ({ value, children, activeTab }) => {
+const TabsContent: React.FC<TabsContentProps> = ({ value, children, activeTab, className = "" }) => {
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+        delayChildren: 0.2,
+      },
+    },
+    exit: {
+      opacity: 0,
+      transition: {
+        staggerChildren: 0.05,
+        staggerDirection: -1,
+      },
+    },
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 },
+    exit: { opacity: 0, y: -20 },
+  };
+
+  // Wrap child elements with motion.div
+  const wrappedChildren = React.Children.map(children, (child) => {
+    if (React.isValidElement(child)) {
+      return (
+        <motion.div variants={item} className="content-item">
+          {child}
+        </motion.div>
+      );
+    }
+    return child;
+  });
+
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="wait">
       {activeTab === value && (
         <motion.div
           key={value}
-          initial={{ opacity: 0, scale: 0.9, filter: "blur(10px)" }}
-          animate={{ opacity: 1, scale: 1, filter: "blur(0)" }}
-          exit={{
-            opacity: 0,
-            scale: 0.95,
-            filter: "blur(5px)",
-            transition: { duration: 0.3 },
-          }}
-          transition={{
-            opacity: { duration: 0.3 },
-            scale: { type: "spring", stiffness: 250, damping: 25 },
-            filter: { type: "spring", stiffness: 300, damping: 30 },
-          }}
-          className="pt-6"
+          variants={container}
+          initial="hidden"
+          animate="show"
+          exit="exit"
+          className={`mt-6 rounded-xl p-4 focus:outline-none space-y-4 ${className}`}
         >
-          {children}
+          {wrappedChildren}
         </motion.div>
       )}
     </AnimatePresence>

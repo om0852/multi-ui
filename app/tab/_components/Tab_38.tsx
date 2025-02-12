@@ -50,8 +50,8 @@ const Tabs: React.FC<TabsProps> = ({ defaultValue, className = "", children }) =
 
 const TabsList: React.FC<TabsListProps> = ({ children, activeTab, setActiveTab, className = "" }) => {
   return (
-    <div className={`inline-flex p-3 bg-gradient-to-br from-rose-500/20 to-pink-500/20 backdrop-blur-xl rounded-[2rem] shadow-xl ${className}`}>
-      <div className="flex w-full gap-3 p-1">
+    <div className={`inline-flex p-4 bg-gradient-to-br from-zinc-800 to-zinc-900 rounded-2xl shadow-[0_8px_32px_rgba(0,0,0,0.3)] ${className}`}>
+      <div className="flex w-full gap-3 p-2 bg-black/20 rounded-xl">
         {React.Children.map(children, (child) =>
           React.isValidElement(child)
             ? React.cloneElement(child as React.ReactElement<any>, {
@@ -75,30 +75,42 @@ const TabsTrigger: React.FC<TabsTriggerProps> = ({
   const isActive = activeTab === value;
 
   return (
-    <button
-      className={`group relative flex-1 px-6 py-3 text-sm font-medium transition-all duration-500 rounded-2xl overflow-hidden ${
+    <motion.button
+      className={`group relative flex-1 px-6 py-3 text-sm font-medium transition-all duration-500 rounded-lg overflow-hidden ${
         isActive
           ? "text-white"
-          : "text-gray-400 hover:text-white"
+          : "text-zinc-400 hover:text-white"
       } ${className}`}
       onClick={() => setActiveTab?.(value)}
+      whileHover={{ scale: 1.02 }}
+      whileTap={{ scale: 0.98 }}
     >
       {isActive && (
         <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-rose-500 to-pink-500"
-          layoutId="blob-bg"
-          transition={{ type: "spring", bounce: 0.3, duration: 0.8 }}
+          className="absolute inset-0"
+          layoutId="metal-bg"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
         >
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(255,255,255,0.2),transparent)]" />
+          <div className="absolute inset-0 bg-gradient-to-r from-zinc-300 via-zinc-100 to-zinc-300" />
+          <motion.div
+            className="absolute inset-0"
+            animate={{
+              background: [
+                "linear-gradient(to right, rgba(255,255,255,0) 0%, rgba(255,255,255,0.4) 50%, rgba(255,255,255,0) 100%)",
+                "linear-gradient(to right, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 50%, rgba(255,255,255,0.4) 100%)",
+              ],
+              x: ["-200%", "200%"],
+            }}
+            transition={{
+              duration: 3,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+          />
         </motion.div>
       )}
-      <motion.div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        initial={false}
-        animate={isActive ? { opacity: 1 } : { opacity: 0 }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-rose-500/20 to-pink-500/20 blur-xl" />
-      </motion.div>
       <span className="relative z-10 flex items-center justify-center gap-2">
         {children}
         {isActive && (
@@ -113,24 +125,27 @@ const TabsTrigger: React.FC<TabsTriggerProps> = ({
           >
             <motion.div
               animate={{
-                scale: [1, 1.2, 1],
-                rotate: [0, 180, 360]
+                boxShadow: [
+                  "0 0 20px rgba(255,255,255,0.3)",
+                  "0 0 40px rgba(255,255,255,0.5)",
+                  "0 0 20px rgba(255,255,255,0.3)",
+                ],
               }}
               transition={{
                 duration: 2,
                 repeat: Infinity,
-                ease: "linear"
+                ease: "easeInOut",
               }}
-              className="w-2 h-2 rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,0.8)]"
+              className="w-2 h-2 rounded-full bg-gradient-to-r from-zinc-300 to-white"
             />
           </motion.div>
         )}
       </span>
-    </button>
+    </motion.button>
   );
 };
 
-const TabsContent: React.FC<TabsContentProps> = ({ value, children, activeTab, className = "" }) => {
+const TabsContent: React.FC<TabsContentProps> = ({ value, children, activeTab = "", className = "" }) => {
   return (
     <div className="relative">
       <AnimatePresence mode="wait">
@@ -139,37 +154,47 @@ const TabsContent: React.FC<TabsContentProps> = ({ value, children, activeTab, c
             key={value}
             initial={{ 
               opacity: 0,
-              scale: 0.8,
-              filter: "blur(10px)",
-              borderRadius: "16px"
+              y: 20,
+              scale: 0.95
             }}
             animate={{ 
               opacity: 1,
-              scale: 1,
-              filter: "blur(0px)",
-              borderRadius: "24px"
+              y: 0,
+              scale: 1
             }}
             exit={{ 
               opacity: 0,
-              scale: 1.1,
-              filter: "blur(10px)",
-              borderRadius: "32px"
+              y: -20,
+              scale: 0.95
             }}
             transition={{
-              type: "spring",
-              bounce: 0.2,
-              duration: 0.6
+              duration: 0.3,
+              ease: "easeOut"
             }}
-            className={`mt-8 p-8 bg-gradient-to-br from-rose-500/10 to-pink-500/10 backdrop-blur-2xl rounded-[2rem] shadow-2xl border border-white/10 ${className}`}
+            className={`mt-6 p-8 bg-gradient-to-br from-zinc-800 to-zinc-900 rounded-xl shadow-lg ${className}`}
           >
             <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
               transition={{ delay: 0.1 }}
               className="relative"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-rose-500/5 to-pink-500/5 blur-3xl" />
-              <div className="relative z-10 text-gray-200">
+              <motion.div
+                className="absolute inset-0"
+                animate={{
+                  background: [
+                    "linear-gradient(45deg, rgba(255,255,255,0.1) 0%, transparent 100%)",
+                    "linear-gradient(45deg, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%)",
+                    "linear-gradient(45deg, transparent 0%, rgba(255,255,255,0.1) 100%)",
+                  ],
+                }}
+                transition={{
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "linear",
+                }}
+              />
+              <div className="relative z-10 text-zinc-100">
                 {children}
               </div>
             </motion.div>
@@ -180,8 +205,4 @@ const TabsContent: React.FC<TabsContentProps> = ({ value, children, activeTab, c
   );
 };
 
-export { Tabs, TabsList, TabsTrigger, TabsContent };
-
-
-
-
+export { Tabs, TabsList, TabsTrigger, TabsContent }; 

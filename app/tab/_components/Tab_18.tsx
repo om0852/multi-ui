@@ -1,4 +1,4 @@
-"use client";
+ "use client";
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -50,8 +50,8 @@ const Tabs: React.FC<TabsProps> = ({ defaultValue, className = "", children }) =
 
 const TabsList: React.FC<TabsListProps> = ({ children, activeTab, setActiveTab, className = "" }) => {
   return (
-    <div className={`inline-flex p-3 bg-gray-900 rounded-2xl shadow-[0_0_15px_rgba(139,92,246,0.3)] ${className}`}>
-      <div className="flex w-full gap-2">
+    <div className={`inline-flex p-3 bg-gray-900 border border-purple-500/30 rounded-lg shadow-[0_0_20px_rgba(168,85,247,0.15)] ${className}`}>
+      <div className="flex w-full gap-2 p-1 bg-gray-800/50">
         {React.Children.map(children, (child) =>
           React.isValidElement(child)
             ? React.cloneElement(child as React.ReactElement<any>, {
@@ -76,40 +76,61 @@ const TabsTrigger: React.FC<TabsTriggerProps> = ({
 
   return (
     <button
-      className={`group relative flex-1 px-5 py-2.5 text-sm font-medium transition-all duration-500 rounded-xl overflow-hidden ${
+      className={`group relative flex-1 px-6 py-3 text-sm font-medium transition-all duration-300 rounded-md overflow-hidden ${
         isActive
-          ? "text-white shadow-[0_0_20px_rgba(139,92,246,0.5)]"
-          : "text-gray-400 hover:text-white"
+          ? "text-purple-300"
+          : "text-gray-400 hover:text-purple-300"
       } ${className}`}
       onClick={() => setActiveTab?.(value)}
     >
       {isActive && (
         <motion.div
-          className="absolute inset-0 bg-gradient-to-r from-violet-600 to-indigo-600"
-          layoutId="neon-bg"
-          transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
-        />
+          className="absolute inset-0 bg-purple-900/30"
+          layoutId="cyber-bg"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
+        >
+          <motion.div
+            className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(168,85,247,0.2)_50%,transparent_75%)] bg-[length:250%_250%]"
+            animate={{
+              backgroundPosition: ["0% 0%", "100% 100%"],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "linear",
+            }}
+          />
+          <div className="absolute inset-x-0 h-px top-0 bg-gradient-to-r from-transparent via-purple-500 to-transparent" />
+          <div className="absolute inset-x-0 h-px bottom-0 bg-gradient-to-r from-transparent via-purple-500 to-transparent" />
+        </motion.div>
       )}
-      <motion.div
-        className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        initial={false}
-        animate={isActive ? { opacity: 1 } : { opacity: 0 }}
-      >
-        <div className="absolute inset-0 bg-gradient-to-r from-violet-600/20 to-indigo-600/20 blur-xl" />
-      </motion.div>
       <span className="relative z-10 flex items-center justify-center gap-2">
         {children}
         {isActive && (
           <motion.div
-            initial={{ scale: 0, rotate: 180 }}
-            animate={{ scale: 1, rotate: 0 }}
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
             transition={{
               type: "spring",
-              stiffness: 200,
-              damping: 10
+              stiffness: 300,
+              damping: 20
             }}
           >
-            <div className="w-1.5 h-1.5 rounded-full bg-white shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
+            <motion.div
+              animate={{
+                opacity: [1, 0.3, 1],
+                x: [0, 2, -2, 0],
+              }}
+              transition={{
+                duration: 2,
+                repeat: Infinity,
+                ease: "steps(3)",
+              }}
+              className="w-1 h-4 bg-purple-500 shadow-[0_0_8px_rgba(168,85,247,0.8)]"
+            />
           </motion.div>
         )}
       </span>
@@ -117,43 +138,42 @@ const TabsTrigger: React.FC<TabsTriggerProps> = ({
   );
 };
 
-const TabsContent: React.FC<TabsContentProps> = ({ value, children, activeTab, className = "" }) => {
+const TabsContent: React.FC<TabsContentProps> = ({ value, children, activeTab = "", className = "" }) => {
   return (
     <div className="relative">
-      <AnimatePresence mode="wait">
+      <AnimatePresence mode="wait" initial={false}>
         {activeTab === value && (
           <motion.div
             key={value}
             initial={{ 
               opacity: 0,
-              filter: "blur(10px)",
-              y: 20
+              x: -10,
+              clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)"
             }}
             animate={{ 
               opacity: 1,
-              filter: "blur(0px)",
-              y: 0
+              x: 0,
+              clipPath: "polygon(0 0, 100% 0, 100% 100%, 0 100%)"
             }}
             exit={{ 
               opacity: 0,
-              filter: "blur(10px)",
-              y: -20
+              x: 10,
+              clipPath: "polygon(0 0, 95% 0, 90% 100%, 5% 100%)"
             }}
             transition={{
-              type: "spring",
-              bounce: 0.2,
-              duration: 0.5
+              duration: 0.3,
+              ease: "easeInOut"
             }}
-            className={`mt-6 p-6 bg-gray-900/50 backdrop-blur-xl rounded-2xl shadow-[0_0_25px_rgba(139,92,246,0.2)] border border-violet-500/20 ${className}`}
+            className={`mt-6 p-6 bg-gray-900/80 border border-purple-500/20 rounded-lg shadow-[0_0_30px_rgba(168,85,247,0.1)] ${className}`}
           >
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.1 }}
-              className="relative z-10"
+              className="relative"
             >
-              <div className="absolute inset-0 bg-gradient-to-br from-violet-600/10 to-indigo-600/10 blur-2xl" />
-              <div className="relative text-gray-200">
+              <div className="absolute inset-0 bg-purple-500/5" />
+              <div className="relative z-10 text-purple-100">
                 {children}
               </div>
             </motion.div>
