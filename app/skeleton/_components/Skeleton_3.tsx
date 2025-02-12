@@ -3,38 +3,78 @@ import React from "react";
 import { motion } from "framer-motion";
 import clsx from "clsx";
 
-interface Skeleton_4Props {
+interface SkeletonProps {
+  width: string;
+  height: string;
+  borderRadius?: string;
   className?: string;
 }
 
-const Skeleton_4: React.FC<Skeleton_4Props> = ({ className = "" }) => {
+const Skeleton: React.FC<SkeletonProps> = ({
+  width,
+  height,
+  borderRadius = "rounded-md",
+  className = "",
+}) => {
   return (
-    <motion.div
+    <div
       className={clsx(
-        "bg-indigo-300 rounded-lg shadow-md", // Unique color and effects
+        "relative p-[1px] overflow-hidden",
+        borderRadius,
         className
       )}
-      style={{
-        height: "80px", // Adjust the height
-        width: "100%", // Full width
-        position: "relative", // To apply the shimmer effect
-        overflow: "hidden", // Prevent shimmer overflow
-      }}
+      style={{ width, height }}
     >
       <motion.div
-        className="absolute inset-0 bg-gradient-to-r from-transparent via-indigo-400 to-transparent"
+        className="absolute inset-0"
         animate={{
-          x: ["-100%", "100%"], // Animate shimmer across the element
+          background: [
+            "linear-gradient(90deg, #f0f0f0, #e0e0e0, #f0f0f0)",
+            "linear-gradient(90deg, #e0e0e0, #f0f0f0, #e0e0e0)",
+          ],
+          boxShadow: [
+            "0 0 10px rgba(255,255,255,0.5)",
+            "0 0 20px rgba(255,255,255,0.8)",
+            "0 0 10px rgba(255,255,255,0.5)",
+          ],
         }}
         transition={{
+          duration: 2,
           repeat: Infinity,
-          repeatType: "loop",
-          duration: 1.5, // Shimmer duration
-          ease: "ease-in-out", // Smooth animation
+          ease: "easeInOut",
         }}
       />
-    </motion.div>
+      <motion.div
+        className={clsx(
+          "relative h-full w-full bg-gray-100 dark:bg-gray-800",
+          borderRadius
+        )}
+        animate={{
+          opacity: [0.7, 0.9, 0.7],
+        }}
+        transition={{
+          duration: 1.5,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      >
+        <motion.div
+          className="absolute inset-0"
+          animate={{
+            background: [
+              "radial-gradient(circle at 30% 30%, rgba(255,255,255,0.1), transparent 70%)",
+              "radial-gradient(circle at 70% 70%, rgba(255,255,255,0.1), transparent 70%)",
+            ],
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+        />
+      </motion.div>
+    </div>
   );
 };
 
-export default Skeleton_4;
+export default Skeleton;

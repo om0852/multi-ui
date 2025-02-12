@@ -13,18 +13,34 @@ interface SkeletonProps {
 const Skeleton: React.FC<SkeletonProps> = ({
   width,
   height,
-  borderRadius = "md",
-  className = "", // Default to empty string
+  borderRadius = "rounded-md",
+  className = "",
 }) => {
   return (
-    <motion.div
+    <div
       className={clsx(
-        "bg-gray-200 animate-pulse", 
-        borderRadius, 
-        className // Apply custom className passed as prop
+        "relative overflow-hidden bg-gray-200 dark:bg-gray-800",
+        borderRadius,
+        className
       )}
       style={{ width, height }}
-    />
+    >
+      <motion.div
+        className="absolute inset-0 -translate-x-full"
+        animate={{
+          transform: ["translateX(-100%)", "translateX(100%)"],
+          background: [
+            "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%)",
+            "linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.4) 50%, transparent 100%)",
+          ],
+        }}
+        transition={{
+          duration: 1.5,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+      />
+    </div>
   );
 };
 

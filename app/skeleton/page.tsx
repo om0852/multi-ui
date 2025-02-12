@@ -1,5 +1,5 @@
 "use client"
-import Skeleton from "./_components/Skeleton_6";
+import Skeleton from "./_components/Skeleton_16";
 
 const App: React.FC = () => (
   <div className="p-6 space-y-4">
@@ -9,13 +9,13 @@ const App: React.FC = () => (
     <Skeleton width="300px" height="1.5rem" />
 
     {/* Circular Skeleton */}
-    <Skeleton diameter="50px" animationSpeed={2} />
+    <Skeleton width="300px" height="1.5rem" />
 
     {/* Custom Border Radius */}
     <Skeleton width="150px" height="1rem" borderRadius="1rem" />
 
     {/* Fast Animation Rectangular */}
-    <Skeleton width="200px" height="1rem" animationSpeed={0.8} />
+    <Skeleton width="200px" height="1rem"  />
   </div>
 );
 

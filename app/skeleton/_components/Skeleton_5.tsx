@@ -1,51 +1,77 @@
+"use client";
+
 import React from "react";
-import styled from "styled-components";
 import { motion } from "framer-motion";
+import clsx from "clsx";
 
 interface SkeletonProps {
-  width?: string;
-  height?: string;
+  width: string;
+  height: string;
   borderRadius?: string;
-  animationSpeed?: number;
   className?: string;
 }
 
-const StyledWaveSkeleton = styled(motion.div)<SkeletonProps>`
-  width: ${(props) => props.width || "100%"};
-  height: ${(props) => props.height || "1rem"};
-  border-radius: ${(props) => props.borderRadius || "0.5rem"};
-  background: linear-gradient(
-    90deg,
-    rgba(240, 240, 240, 1) 25%,
-    rgba(220, 220, 220, 1) 50%,
-    rgba(240, 240, 240, 1) 75%
-  );
-  background-size: 200%;
-`;
-
-export const PulseSkeleton: React.FC<SkeletonProps> = ({
-    width,
-    height,
-    borderRadius,
-    className,
-  }) => {
-    return (
+const Skeleton: React.FC<SkeletonProps> = ({
+  width,
+  height,
+  borderRadius = "rounded-md",
+  className = "",
+}) => {
+  return (
+    <div
+      className={clsx(
+        "relative overflow-hidden",
+        borderRadius,
+        className
+      )}
+      style={{ width, height }}
+    >
       <motion.div
-        style={{
-          width: width || "100%",
-          height: height || "1rem",
-          borderRadius: borderRadius || "0.5rem",
-          backgroundColor: "#e0e0e0",
+        className="absolute inset-0 bg-gradient-to-r from-purple-400 via-pink-500 to-red-500"
+        animate={{
+          backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
         }}
-        className={className}
-        initial={{ opacity: 0.6 }}
-        animate={{ opacity: [0.6, 1, 0.6] }}
         transition={{
-          duration: 1.5,
+          duration: 3,
           repeat: Infinity,
-          ease: "ease-in",
+          ease: "easeInOut",
+        }}
+        style={{
+          backgroundSize: "200% 200%",
         }}
       />
-    );
-  };
+      <motion.div
+        className="absolute inset-0 bg-black/40"
+        animate={{
+          opacity: [0.4, 0.5, 0.4],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+      {Array.from({ length: 3 }).map((_, i) => (
+        <motion.div
+          key={i}
+          className="absolute inset-0"
+          animate={{
+            y: ["0%", "100%", "0%"],
+          }}
+          transition={{
+            duration: 5,
+            delay: i * 0.3,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          style={{
+            background: "linear-gradient(180deg, transparent 0%, rgba(255,255,255,0.1) 50%, transparent 100%)",
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
+export default Skeleton;
   

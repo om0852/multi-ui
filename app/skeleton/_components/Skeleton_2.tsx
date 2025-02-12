@@ -3,57 +3,52 @@ import React from "react";
 import { motion } from "framer-motion";
 import clsx from "clsx";
 
-interface SkeletonScreenProps {
-  width?: string;
-  height?: string;
+interface SkeletonProps {
+  width: string;
+  height: string;
+  borderRadius?: string;
   className?: string;
 }
 
-const SkeletonScreen: React.FC<SkeletonScreenProps> = ({
-  width = "w-[500px]",
-  height = "h-[600px]",
+const Skeleton: React.FC<SkeletonProps> = ({
+  width,
+  height,
+  borderRadius = "rounded-md",
   className = "",
 }) => {
   return (
     <motion.div
       className={clsx(
-        "relative overflow-hidden bg-gray-200",
-        width,
-        height,
+        "relative overflow-hidden bg-gradient-to-r from-gray-200 via-gray-300 to-gray-200 dark:from-gray-800 dark:via-gray-700 dark:to-gray-800",
+        borderRadius,
         className
       )}
-      initial={{ backgroundPositionX: "0%" }}
-      animate={{ backgroundPositionX: ["-100%", "200%"] }}
-      transition={{ duration: 1.5, repeat: Infinity, ease: "ease-in" }}
-      style={{
-        backgroundImage: `
-          radial-gradient(circle 50px at 50px 50px, lightgray 99%, transparent 0),
-          linear-gradient(100deg, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.5) 50%, rgba(255, 255, 255, 0) 80%),
-          linear-gradient(lightgray 20px, transparent 0),
-          linear-gradient(lightgray 20px, transparent 0),
-          linear-gradient(lightgray 20px, transparent 0),
-          linear-gradient(lightgray 20px, transparent 0)
-        `,
-        backgroundRepeat: "repeat-y",
-        backgroundSize: `
-          100px 200px, 
-          50px 200px, 
-          150px 200px,
-          350px 200px,
-          300px 200px,
-          250px 200px
-        `,
-        backgroundPosition: `
-          0 0, 
-          0 0, 
-          120px 0,
-          120px 40px,
-          120px 80px,
-          120px 120px
-        `,
+      style={{ width, height }}
+      animate={{
+        backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
       }}
-    />
+      transition={{
+        duration: 2,
+        repeat: Infinity,
+        ease: "easeInOut",
+      }}
+    >
+      <motion.div
+        className="absolute inset-0"
+        animate={{
+          opacity: [0.3, 0.6, 0.3],
+        }}
+        transition={{
+          duration: 1.5,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+        style={{
+          background: "radial-gradient(circle at center, rgba(255,255,255,0.1), transparent)",
+        }}
+      />
+    </motion.div>
   );
 };
 
-export default SkeletonScreen;
+export default Skeleton;

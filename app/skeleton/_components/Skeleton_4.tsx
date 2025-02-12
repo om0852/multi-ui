@@ -1,53 +1,78 @@
+"use client";
+
 import React from "react";
-import styled from "styled-components";
 import { motion } from "framer-motion";
 import clsx from "clsx";
 
 interface SkeletonProps {
-  width?: string;
-  height?: string;
+  width: string;
+  height: string;
   borderRadius?: string;
-  animationSpeed?: number; // Speed in seconds
   className?: string;
 }
 
-const StyledSkeleton = styled(motion.div)<SkeletonProps>`
-  width: ${(props) => props.width || "100%"};
-  height: ${(props) => props.height || "1rem"};
-  border-radius: ${(props) => props.borderRadius || "0.5rem"};
-  background: linear-gradient(
-    90deg,
-    rgba(240, 240, 240, 1) 25%,
-    rgba(220, 220, 220, 1) 50%,
-    rgba(240, 240, 240, 1) 75%
-  );
-  background-size: 200%;
-  animation: shimmer ${(props) => props.animationSpeed || 2}s infinite;
-
-  @keyframes shimmer {
-    0% {
-      background-position: 200% 0;
-    }
-    100% {
-      background-position: -200% 0;
-    }
-  }
-`;
-
-export const Skeleton: React.FC<SkeletonProps> = ({
+const Skeleton: React.FC<SkeletonProps> = ({
   width,
   height,
-  borderRadius,
-  animationSpeed,
-  className,
+  borderRadius = "rounded-md",
+  className = "",
 }) => {
   return (
-    <StyledSkeleton
-      width={width}
-      height={height}
-      borderRadius={borderRadius}
-      animationSpeed={animationSpeed}
-      className={clsx("shadow-sm", className)}
-    />
+    <motion.div
+      className={clsx(
+        "relative overflow-hidden bg-gray-900",
+        borderRadius,
+        className
+      )}
+      style={{ width, height }}
+    >
+      <motion.div
+        className="absolute inset-0"
+        animate={{
+          background: [
+            "linear-gradient(90deg, #00f2fe 0%, #4facfe 100%)",
+            "linear-gradient(90deg, #4facfe 0%, #00f2fe 100%)",
+          ],
+          opacity: [0.1, 0.2, 0.1],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+      <motion.div
+        className="absolute inset-0"
+        animate={{
+          boxShadow: [
+            "inset 0 0 20px rgba(79,172,254,0.5)",
+            "inset 0 0 40px rgba(79,172,254,0.8)",
+            "inset 0 0 20px rgba(79,172,254,0.5)",
+          ],
+        }}
+        transition={{
+          duration: 1.5,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+      <motion.div
+        className="absolute inset-0"
+        style={{
+          background: "radial-gradient(circle at 50% 50%, rgba(79,172,254,0.2), transparent)",
+        }}
+        animate={{
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.5, 0.3],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+    </motion.div>
   );
 };
+
+export default Skeleton;

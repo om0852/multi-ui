@@ -20,33 +20,38 @@ const Skeleton: React.FC<SkeletonProps> = ({
   return (
     <div
       className={clsx(
-        "relative overflow-hidden backdrop-blur-sm",
+        "relative overflow-hidden bg-black/20 backdrop-blur-sm",
         borderRadius,
         className
       )}
       style={{ width, height }}
     >
       <motion.div
-        className="absolute inset-0 bg-gradient-to-br from-white/20 via-sky-100/30 to-white/20"
+        className="absolute inset-0"
         animate={{
-          backgroundPosition: ["0% 0%", "100% 100%", "0% 0%"],
+          background: [
+            "linear-gradient(45deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8f00ff)",
+            "linear-gradient(45deg, #8f00ff, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082)",
+          ],
         }}
         transition={{
           duration: 3,
           repeat: Infinity,
-          ease: "easeInOut",
+          ease: "linear",
         }}
         style={{
+          opacity: 0.2,
           backgroundSize: "200% 200%",
         }}
       />
       <motion.div
         className="absolute inset-0"
+        style={{
+          background: "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.2), transparent)",
+        }}
         animate={{
-          background: [
-            "linear-gradient(45deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 100%)",
-            "linear-gradient(45deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 100%)",
-          ],
+          scale: [1, 1.2, 1],
+          opacity: [0.3, 0.5, 0.3],
         }}
         transition={{
           duration: 2,
@@ -54,34 +59,33 @@ const Skeleton: React.FC<SkeletonProps> = ({
           ease: "easeInOut",
         }}
       />
-      {Array.from({ length: 4 }).map((_, i) => (
+      {Array.from({ length: 3 }).map((_, i) => (
         <motion.div
           key={i}
-          className="absolute w-full h-full"
+          className="absolute inset-0"
           style={{
-            background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent)",
-            transform: `rotate(${i * 45}deg)`,
+            background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
+            transform: `rotate(${i * 60}deg)`,
           }}
           animate={{
-            opacity: [0, 0.5, 0],
-            scale: [1, 1.2, 1],
+            x: ["-100%", "100%"],
           }}
           transition={{
-            duration: 2,
-            delay: i * 0.3,
+            duration: 1.5,
+            delay: i * 0.2,
             repeat: Infinity,
-            ease: "easeInOut",
+            ease: "linear",
           }}
         />
       ))}
       <motion.div
         className="absolute inset-0"
         style={{
-          boxShadow: "inset 0 0 20px rgba(255,255,255,0.5)",
-          background: "radial-gradient(circle at 50% 50%, rgba(255,255,255,0.2), transparent 70%)",
+          backdropFilter: "blur(5px)",
+          WebkitBackdropFilter: "blur(5px)",
         }}
         animate={{
-          opacity: [0.3, 0.6, 0.3],
+          opacity: [0.5, 0.7, 0.5],
         }}
         transition={{
           duration: 2,
@@ -93,4 +97,4 @@ const Skeleton: React.FC<SkeletonProps> = ({
   );
 };
 
-export default Skeleton;
+export default Skeleton; 
