@@ -5,44 +5,74 @@ import { motion } from "framer-motion";
 interface SeparatorProps {
   orientation?: "horizontal" | "vertical";
   thickness?: number;
+  length?: string;
   color?: string;
-  length?: string; // For custom width/height
   animated?: boolean;
 }
 
-const ZigzagSeparator: React.FC<SeparatorProps> = ({
+const NeonLineSeparator: React.FC<SeparatorProps> = ({
   orientation = "horizontal",
   thickness = 4,
-  color = "#e5e7eb", // Default color (Tailwind bg-gray-200)
-  length = "100%", // Full width/height by default
-  animated = false,
+  length = "100%",
+  color = "#10b981",
+  animated = true,
 }) => {
   const isHorizontal = orientation === "horizontal";
-  const separatorStyles = {
-    width: isHorizontal ? length : `${thickness}px`,
-    height: isHorizontal ? `${thickness}px` : length,
-  };
 
   return (
     <motion.div
-      initial={animated ? { scaleX: 0, scaleY: 0 } : undefined}
-      animate={animated ? { scaleX: 1, scaleY: 1 } : undefined}
-      transition={animated ? { duration: 0.5, ease: "easeOut" } : undefined}
-      className={`relative ${isHorizontal ? "w-full" : "h-full"}`}
-      style={separatorStyles}
+      className="relative"
+      style={{
+        width: isHorizontal ? length : `${thickness}px`,
+        height: isHorizontal ? `${thickness}px` : length,
+      }}
     >
-      {/* Zigzag pattern */}
-      <div
-        className="absolute inset-0 bg-transparent"
+      <motion.div
+        className="absolute inset-0"
         style={{
-          clipPath: isHorizontal
-            ? `polygon(0% 0%, 10% 100%, 20% 0%, 30% 100%, 40% 0%, 50% 100%, 60% 0%, 70% 100%, 80% 0%, 90% 100%, 100% 0%)`
-            : `polygon(0% 0%, 10% 100%, 20% 0%, 30% 100%, 40% 0%, 50% 100%, 60% 0%, 70% 100%, 80% 0%, 90% 100%, 100% 0%)`,
-          backgroundColor: color, // Set the background color for the zigzag
+          backgroundColor: color,
+          boxShadow: `0 0 10px ${color}, 0 0 20px ${color}, 0 0 30px ${color}, 0 0 40px ${color}`,
+          borderRadius: "4px",
+        }}
+        animate={
+          animated
+            ? {
+                opacity: [0.5, 1, 0.5],
+                boxShadow: [
+                  `0 0 10px ${color}, 0 0 20px ${color}`,
+                  `0 0 20px ${color}, 0 0 40px ${color}`,
+                  `0 0 10px ${color}, 0 0 20px ${color}`,
+                ],
+              }
+            : {}
+        }
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: "easeInOut",
+        }}
+      />
+      <motion.div
+        className="absolute inset-0"
+        style={{
+          background: `linear-gradient(90deg, transparent, ${color}, transparent)`,
+          opacity: 0.5,
+        }}
+        animate={
+          animated
+            ? {
+                x: ["-100%", "100%"],
+              }
+            : {}
+        }
+        transition={{
+          duration: 3,
+          repeat: Infinity,
+          ease: "linear",
         }}
       />
     </motion.div>
   );
 };
 
-export default ZigzagSeparator;
+export default NeonLineSeparator;

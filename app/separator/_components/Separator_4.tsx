@@ -5,53 +5,73 @@ import { motion } from "framer-motion";
 interface SeparatorProps {
   orientation?: "horizontal" | "vertical";
   thickness?: number;
-  color?: string;
-  length?: string; // For custom width/height
+  length?: string;
   animated?: boolean;
 }
 
-const WaveSeparator: React.FC<SeparatorProps> = ({
+const GradientPulseSeparator: React.FC<SeparatorProps> = ({
   orientation = "horizontal",
-  thickness = 4,
-  color = "#3490dc", // Default color (Tailwind blue-600)
-  length = "100%", // Full width/height by default
+  thickness = 6,
+  length = "100%",
   animated = true,
 }) => {
   const isHorizontal = orientation === "horizontal";
-  const separatorStyles = {
-    width: isHorizontal ? length : `${thickness}px`,
-    height: isHorizontal ? `${thickness}px` : length,
-  };
 
   return (
     <motion.div
-      initial={animated ? { scaleX: 0, scaleY: 0 } : undefined}
-      animate={animated ? { scaleX: 1, scaleY: 1 } : undefined}
-      transition={animated ? { duration: 0.5, ease: "easeOut" } : undefined}
-      className={`relative ${isHorizontal ? "w-full" : "h-full"}`}
-      style={separatorStyles}
+      className="relative overflow-hidden rounded-full"
+      style={{
+        width: isHorizontal ? length : `${thickness}px`,
+        height: isHorizontal ? `${thickness}px` : length,
+      }}
     >
-      {/* Wave pattern */}
-      <div
-        className="absolute inset-0 bg-transparent"
+      <motion.div
+        className="absolute inset-0"
         style={{
-          backgroundImage: `linear-gradient(to right, ${color} 50%, transparent 50%)`,
-          backgroundSize: `50px 100%`, // Controls the wave pattern size
-          animation: animated ? `waveAnimation 2s linear infinite` : undefined,
+          background: "linear-gradient(90deg, #f472b6, #8b5cf6, #3b82f6, #8b5cf6, #f472b6)",
+          backgroundSize: "200% 100%",
+        }}
+        animate={
+          animated
+            ? {
+                backgroundPosition: ["0% 50%", "100% 50%", "0% 50%"],
+                scale: [1, 1.05, 1],
+              }
+            : {}
+        }
+        transition={{
+          backgroundPosition: {
+            duration: 3,
+            repeat: Infinity,
+            ease: "linear",
+          },
+          scale: {
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut",
+          },
         }}
       />
-      <style jsx>{`
-        @keyframes waveAnimation {
-          0% {
-            background-position: 0 0;
-          }
-          100% {
-            background-position: 100% 0;
-          }
+      <motion.div
+        className="absolute inset-0"
+        style={{
+          background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent)",
+        }}
+        animate={
+          animated
+            ? {
+                x: ["-100%", "100%"],
+              }
+            : {}
         }
-      `}</style>
+        transition={{
+          duration: 1.5,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+      />
     </motion.div>
   );
 };
 
-export default WaveSeparator;
+export default GradientPulseSeparator;

@@ -5,34 +5,66 @@ import { motion } from "framer-motion";
 interface SeparatorProps {
   orientation?: "horizontal" | "vertical";
   thickness?: number;
-  color?: string;
-  length?: string; // For custom width/height
+  length?: string;
   animated?: boolean;
 }
 
-const Separator: React.FC<SeparatorProps> = ({
+const RainbowWaveSeparator: React.FC<SeparatorProps> = ({
   orientation = "horizontal",
-  thickness = 2,
-  color = "#e5e7eb", // Tailwind: bg-gray-200
-  length = "100%", // Full width/height by default
-  animated = false,
+  thickness = 6,
+  length = "100%",
+  animated = true,
 }) => {
   const isHorizontal = orientation === "horizontal";
 
   return (
     <motion.div
-      initial={animated ? { scaleX: 0, scaleY: 0 } : undefined}
-      animate={animated ? { scaleX: 1, scaleY: 1 } : undefined}
-      transition={animated ? { duration: 0.5, ease: "easeOut" } : undefined}
-      className={`bg-${color} ${isHorizontal ? "w-full" : "h-full"}`}
+      className="relative overflow-hidden"
       style={{
         width: isHorizontal ? length : `${thickness}px`,
         height: isHorizontal ? `${thickness}px` : length,
-        backgroundColor: color,
-        borderRadius: "4px", // Rounded edges
       }}
-    />
+    >
+      <motion.div
+        className="absolute inset-0"
+        style={{
+          background: "linear-gradient(90deg, #ff0000, #ff7f00, #ffff00, #00ff00, #0000ff, #4b0082, #8f00ff)",
+          backgroundSize: "200% 100%",
+        }}
+        animate={{
+          backgroundPosition: ["0% 50%", "200% 50%"],
+          y: animated ? [0, -10, 0] : 0,
+        }}
+        transition={{
+          backgroundPosition: {
+            duration: 5,
+            repeat: Infinity,
+            ease: "linear",
+          },
+          y: {
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut",
+          },
+        }}
+      />
+      <motion.div
+        className="absolute inset-0"
+        style={{
+          background: "radial-gradient(circle at 50% 50%, transparent 25%, rgba(255,255,255,0.3) 26%, transparent 27%)",
+          backgroundSize: "20px 20px",
+        }}
+        animate={{
+          x: [-20, 0],
+        }}
+        transition={{
+          duration: 2,
+          repeat: Infinity,
+          ease: "linear",
+        }}
+      />
+    </motion.div>
   );
 };
 
-export default Separator;
+export default RainbowWaveSeparator;
