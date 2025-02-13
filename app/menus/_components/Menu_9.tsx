@@ -15,15 +15,15 @@ type MenuProps = {
   className?: string;
 };
 
-export function Menu_6({ items, className = "" }: MenuProps) {
+export function Menu_9({ items, className = "" }: MenuProps) {
   return (
-    <nav className={`p-4 bg-gradient-to-br from-rose-500 to-pink-500 rounded-2xl ${className}`}>
+    <nav className={`p-4 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-2xl ${className}`}>
       <div className="space-y-1">
         {items.map((item, index) => (
           <motion.div
             key={item.href}
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
             transition={{ delay: index * 0.1 }}
           >
             <Link
@@ -31,21 +31,24 @@ export function Menu_6({ items, className = "" }: MenuProps) {
               className="group flex items-center px-4 py-2.5 rounded-xl bg-white/10 hover:bg-white/20 transition-colors duration-200"
             >
               {item.icon && (
-                <span className="mr-3 text-white/80 group-hover:text-white">
+                <motion.span
+                  className="mr-3 text-white/80 group-hover:text-white"
+                  whileHover={{ scale: 1.1, rotate: 10 }}
+                >
                   {item.icon}
-                </span>
+                </motion.span>
               )}
               <span className="text-sm font-medium text-white">
                 {item.label}
               </span>
-              <motion.span
+              <motion.div
                 className="ml-auto text-white/60 group-hover:text-white"
                 initial={false}
                 animate={{ x: 0 }}
                 whileHover={{ x: 4 }}
               >
                 →
-              </motion.span>
+              </motion.div>
             </Link>
           </motion.div>
         ))}
@@ -61,16 +64,16 @@ export function Component() {
       href: "/dashboard",
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
         </svg>
       ),
     },
     {
-      label: "Analytics",
-      href: "/analytics",
+      label: "Projects",
+      href: "/projects",
       icon: (
         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z" />
         </svg>
       ),
     },
@@ -86,5 +89,5 @@ export function Component() {
     },
   ];
 
-  return <Menu_6 items={items} />;
+  return <Menu_9 items={items} />;
 } 
