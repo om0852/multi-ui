@@ -3,87 +3,78 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 
 interface RatingProps {
-  max?: number; // Maximum number of stars, default is 5
-  onRatingChange?: (rating: number) => void; // Callback for rating changes
-  fillColor?: string; // Fill color for selected stars
-  borderColor?: string; // Border color for stars
-  initialRating?: number; // Initial rating value (e.g., 0 to max), can be fractional
-  disabled?: boolean; // Disable interaction with the stars
+  max?: number;
+  onRatingChange?: (rating: number) => void;
+  disabled?: boolean;
+  initialRating?: number;
 }
 
-const AnimatedStarRating: React.FC<RatingProps> = ({
+const RainbowRating: React.FC<RatingProps> = ({
   max = 5,
   onRatingChange,
-  fillColor = "currentColor",
-  borderColor = "currentColor",
+  disabled = false,
   initialRating = 0,
-  disabled = false, // Disable interaction if true
 }) => {
-  const [rating, setRating] = useState<number>(initialRating); // State to store the current rating
+  const [rating, setRating] = useState<number>(initialRating);
+  const [hoveredRating, setHoveredRating] = useState<number | null>(null);
 
-  // Handle click on a star to set the rating
-  const handleRating = (starIndex: number) => {
-    if (disabled) return; // Prevent interaction if disabled
+  // Rainbow colors array
+  const colors = [
+    "#FF0000", // Red
+    "#FF7F00", // Orange
+    "#FFFF00", // Yellow
+    "#00FF00", // Green
+    "#0000FF", // Blue
+  ];
 
-    // Toggle rating between full, half, and empty stars
-    if (rating === starIndex + 1) {
-      setRating(starIndex + 0.5); // Toggle to half-star
-    } else if (rating === starIndex + 0.5) {
-      setRating(starIndex); // Toggle to no star
-    } else {
-      setRating(starIndex + 1); // Set to full star
-    }
-
-    if (onRatingChange) onRatingChange(rating);
+  const handleRating = (value: number) => {
+    if (disabled) return;
+    setRating(value);
+    if (onRatingChange) onRatingChange(value);
   };
 
   return (
-    <div className="flex items-center space-x-1">
+    <div className="flex items-center space-x-2">
       {Array.from({ length: max }, (_, index) => {
-        const isFullStar = rating >= index + 1;
-        const isHalfStar = rating > index && rating < index + 1;
+        const value = index + 1;
+        const isActive = (hoveredRating || rating) >= value;
 
         return (
           <motion.button
             key={index}
-            onClick={() => handleRating(index)} // +1 because index is 0-based
-            whileHover={{ scale: 1.2, rotate: 15 }}
-            whileTap={{ scale: 0.8, rotate: -15 }}
-            transition={{ type: "spring", stiffness: 300 }}
-            className={`focus:outline-none ${disabled ? "opacity-50 cursor-not-allowed" : ""}`}
-            disabled={disabled} // Disable button if disabled is true
+            onClick={() => handleRating(value)}
+            onMouseEnter={() => !disabled && setHoveredRating(value)}
+            onMouseLeave={() => !disabled && setHoveredRating(null)}
+            whileHover={{ 
+              scale: 1.2,
+              rotate: 360,
+              transition: { duration: 0.5 }
+            }}
+            whileTap={{ scale: 0.8 }}
+            animate={isActive ? {
+              y: [0, -10, 0],
+              transition: {
+                duration: 1,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }
+            } : {}}
+            className={`focus:outline-none ${disabled ? "cursor-not-allowed opacity-50" : ""}`}
+            disabled={disabled}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              fill={isFullStar ? fillColor : "none"} // Full fill for full stars
               viewBox="0 0 24 24"
-              strokeWidth={1.5}
-              stroke={borderColor}
-              className="w-6 h-6"
+              fill={isActive ? colors[index] : "none"}
+              stroke={colors[index]}
+              strokeWidth="2"
+              className="w-8 h-8 transition-colors duration-300"
             >
-              <defs>
-                {/* Gradient for half-filled stars */}
-                {isHalfStar && (
-                  <linearGradient id="halfFill" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="50%" stopColor={fillColor} />
-                    <stop offset="50%" stopColor="white" />
-                  </linearGradient>
-                )}
-              </defs>
               <path
                 strokeLinecap="round"
                 strokeLinejoin="round"
-                d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
+                d="M9.813 15.904L9 18.75l-.813-2.846a4.5 4.5 0 00-3.09-3.09L2.25 12l2.846-.813a4.5 4.5 0 003.09-3.09L9 5.25l.813 2.846a4.5 4.5 0 003.09 3.09L15.75 12l-2.846.813a4.5 4.5 0 00-3.09 3.09zM18.259 8.715L18 9.75l-.259-1.035a3.375 3.375 0 00-2.455-2.456L14.25 6l1.036-.259a3.375 3.375 0 002.455-2.456L18 2.25l.259 1.035a3.375 3.375 0 002.456 2.456L21.75 6l-1.035.259a3.375 3.375 0 00-2.456 2.456zM16.894 20.567L16.5 21.75l-.394-1.183a2.25 2.25 0 00-1.423-1.423L13.5 18.75l1.183-.394a2.25 2.25 0 001.423-1.423l.394-1.183.394 1.183a2.25 2.25 0 001.423 1.423l1.183.394-1.183.394a2.25 2.25 0 00-1.423 1.423z"
               />
-              {/* For half-filled stars */}
-              {isHalfStar && (
-                <path
-                  fill="url(#halfFill)"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z"
-                />
-              )}
             </svg>
           </motion.button>
         );
@@ -92,4 +83,5 @@ const AnimatedStarRating: React.FC<RatingProps> = ({
   );
 };
 
-export default AnimatedStarRating;
+export default RainbowRating;
+
