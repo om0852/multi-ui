@@ -43,7 +43,7 @@ const Sidebar: React.FC = () => {
 
             <div id="users-accordion" className="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden" role="region" aria-labelledby="users-accordion">
               <ul className="hs-accordion-group ps-3 pt-2" data-hs-accordion-always-open>
-                <dro className="hs-accordion" id="users-accordion-sub-1">
+                <li className="hs-accordion" id="users-accordion-sub-1">
                   <button type="button" className="hs-accordion-toggle hs-accordion-active:text-blue-600 hs-accordion-active:hover:bg-transparent w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100" aria-expanded="true" aria-controls="users-accordion-sub-1">
                     Sub Menu 1
 
@@ -71,7 +71,7 @@ const Sidebar: React.FC = () => {
                       </li>
                     </ul>
                   </div>
-                </dro>
+                </li>
                 <li className="hs-accordion" id="users-accordion-sub-2">
                   <button type="button" className="hs-accordion-toggle hs-accordion-active:text-blue-600 hs-accordion-active:hover:bg-transparent w-full text-start flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-700 rounded-lg hover:bg-gray-100 focus:outline-none focus:bg-gray-100" aria-expanded="true" aria-controls="users-accordion-sub-2">
                     Sub Menu 2
