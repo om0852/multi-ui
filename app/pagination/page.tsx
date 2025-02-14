@@ -1,6 +1,16 @@
 "use client";
 import React, { useState } from "react";
 import FancyPagination from "./_components/Pagination_10";
+import SliderPagination from "./_components/SliderPagination";
+import CircularPagination from "./_components/CircularPagination";
+import DotPagination from "./_components/DotPagination";
+import MinimalPagination from "./_components/MinimalPagination";
+import CardPagination from "./_components/CardPagination";
+import GradientPagination from './_components/GradientPagination';
+import NeumorphicPagination from './_components/NeumorphicPagination';
+import BorderAnimationPagination from './_components/BorderAnimationPagination';
+import FloatingPagination from './_components/FloatingPagination';
+import StackedPagination from './_components/StackedPagination';
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -12,16 +22,96 @@ const App = () => {
   };
 
   return (
-    <div className="p-4">
-      <h1 className="text-xl font-bold mb-4">Pagination Example</h1>
-      <FancyPagination
-        totalPages={totalPages}
-        currentPage={currentPage}
-        visibleCount={7}
-        onPageChange={handlePageChange}
-        className="my-custom-pagination"
-      />
-      <p className="mt-4 text-lg">Currently Viewing Page: {currentPage}</p>
+    <div className="flex min-h-screen flex-col items-center gap-16 p-24">
+      <div className="space-y-4">
+        <h2 className="text-xl font-bold text-center">Circular Pagination</h2>
+        <CircularPagination
+          totalPages={5}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
+      </div>
+
+      <div className="space-y-4">
+        <h2 className="text-xl font-bold text-center">Slider Pagination</h2>
+        <SliderPagination
+          totalPages={5}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
+      </div>
+
+      <div className="space-y-4">
+        <h2 className="text-xl font-bold text-center">Dot Pagination</h2>
+        <DotPagination
+          totalPages={5}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
+      </div>
+
+      <div className="space-y-4">
+        <h2 className="text-xl font-bold text-center">Card Pagination</h2>
+        <CardPagination
+          totalPages={5}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
+      </div>
+
+      <div className="space-y-4">
+        <h2 className="text-xl font-bold text-center">Minimal Pagination</h2>
+        <MinimalPagination
+          totalPages={5}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
+      </div>
+
+      <div className="space-y-4">
+        <h2 className="text-xl font-bold text-center">Gradient Pagination</h2>
+        <GradientPagination
+          totalPages={5}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
+      </div>
+
+      <div className="space-y-4">
+        <h2 className="text-xl font-bold text-center">Neumorphic Pagination</h2>
+        <NeumorphicPagination
+          totalPages={5}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
+      </div>
+
+      <div className="space-y-4">
+        <h2 className="text-xl font-bold text-center">Border Animation Pagination</h2>
+        <BorderAnimationPagination
+          totalPages={5}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
+      </div>
+
+      <div className="space-y-4">
+        <h2 className="text-xl font-bold text-center">Floating Pagination</h2>
+        <FloatingPagination
+          totalPages={5}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
+      </div>
+
+      <div className="space-y-4">
+        <h2 className="text-xl font-bold text-center">Stacked Pagination</h2>
+        <StackedPagination
+          totalPages={5}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
+      </div>
     </div>
   );
 };
