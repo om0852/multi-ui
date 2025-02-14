@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Image from 'next/image'
 
 interface AnimatedPasswordInputProps {
   id?: string
@@ -147,15 +148,19 @@ const PasswordCriteria: React.FC<{ label: string; met: boolean }> = ({ label, me
       className="rounded-full p-1"
     >
       {met ? (
-        <img 
+        <Image 
           src="https://img.icons8.com/?size=100&id=sz8cPVwzLrMP&format=png&color=000000" 
           alt="Valid" 
+          width={12}
+          height={12}
           className="w-3 h-3"
         />
       ) : (
-        <img 
+        <Image 
           src="https://img.icons8.com/?size=100&id=T9nkeADgD3z6&format=png&color=000000" 
           alt="Invalid" 
+          width={12}
+          height={12}
           className="w-3 h-3"
         />
       )}

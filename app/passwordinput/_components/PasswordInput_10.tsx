@@ -22,7 +22,7 @@ const PlayfulPasswordInput: React.FC<{
 }) => {
   const [password, setPassword] = useState(value);
   const [isVisible, setIsVisible] = useState(false);
-  const [shake, setShake] = useState(false);
+  const [isShaking, setIsShaking] = useState(false);
 
   const handleInputChange = (value: string) => {
     setPassword(value);
@@ -31,15 +31,15 @@ const PlayfulPasswordInput: React.FC<{
 
   const handleShake = () => {
     if (!isValid) {
-      setShake(true);
-      setTimeout(() => setShake(false), 500);
+      setIsShaking(true);
+      setTimeout(() => setIsShaking(false), 500);
     }
   };
 
   return (
     <motion.div
       className={`relative ${className}`}
-      animate={shake ? { x: [-10, 10, -10, 10, 0] } : {}}
+      animate={isShaking ? { x: [-10, 10, -10, 10, 0] } : {}}
       transition={{ duration: 0.4 }}
     >
       <div className="relative bg-white dark:bg-gray-800 rounded-2xl shadow-lg overflow-hidden px-4 py-3">
@@ -55,6 +55,7 @@ const PlayfulPasswordInput: React.FC<{
             type={isVisible ? "text" : "password"}
             value={password}
             onChange={(e) => handleInputChange(e.target.value)}
+            onBlur={handleShake}
             className={`block w-full outline-none sm:text-sm border ${
               isValid
                 ? "border-gray-300 dark:border-gray-600"

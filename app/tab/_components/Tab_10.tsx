@@ -3,6 +3,11 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+interface TabChildProps {
+  activeTab?: string;
+  setActiveTab?: (value: string) => void;
+}
+
 interface TabsProps {
   defaultValue: string;
   className?: string;
@@ -36,7 +41,7 @@ const Tabs: React.FC<TabsProps> = ({ defaultValue, className, children }) => {
     <div className={`flex flex-col ${className}`}>
       {React.Children.map(children, (child) =>
         React.isValidElement(child)
-          ? React.cloneElement(child as React.ReactElement<any>, {
+          ? React.cloneElement(child as React.ReactElement<TabChildProps>, {
               activeTab,
               setActiveTab,
             })
@@ -51,7 +56,7 @@ const TabsList: React.FC<TabsListProps> = ({ children, activeTab, setActiveTab }
     <div className="flex items-center gap-6 p-2 bg-gradient-to-r w-full from-cyan-500 to-purple-500 rounded-lg shadow-xl">
       {React.Children.map(children, (child) =>
         React.isValidElement(child)
-          ? React.cloneElement(child as React.ReactElement<any>, {
+          ? React.cloneElement(child as React.ReactElement<TabChildProps>, {
               activeTab,
               setActiveTab,
             })
@@ -89,11 +94,11 @@ const TabsTrigger: React.FC<TabsTriggerProps> = ({
   );
 };
 
-const TabsContent: React.FC<TabsContentProps> = ({ value, children, activeTab, className = "" }) => {
+const TabsContent: React.FC<TabsContentProps> = ({ value, children, activeTab = "", className = "" }) => {
   const [direction, setDirection] = useState(0);
   
   React.useEffect(() => {
-    setDirection(value > activeTab ? 1 : -1);
+    setDirection(value > (activeTab || "") ? 1 : -1);
   }, [value, activeTab]);
 
   return (

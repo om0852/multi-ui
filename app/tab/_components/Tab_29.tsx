@@ -31,6 +31,11 @@ interface TabsContentProps {
   className?: string;
 }
 
+interface TabChildProps {
+  activeTab?: string;
+  setActiveTab?: (value: string) => void;
+}
+
 const Tabs: React.FC<TabsProps> = ({ defaultValue, className = "", children }) => {
   const [activeTab, setActiveTab] = useState(defaultValue);
 
@@ -38,7 +43,7 @@ const Tabs: React.FC<TabsProps> = ({ defaultValue, className = "", children }) =
     <div className={`flex flex-col ${className}`}>
       {React.Children.map(children, (child) =>
         React.isValidElement(child)
-          ? React.cloneElement(child as React.ReactElement<any>, {
+          ? React.cloneElement(child as React.ReactElement<TabChildProps>, {
               activeTab,
               setActiveTab,
             })
@@ -50,11 +55,11 @@ const Tabs: React.FC<TabsProps> = ({ defaultValue, className = "", children }) =
 
 const TabsList: React.FC<TabsListProps> = ({ children, activeTab, setActiveTab, className = "" }) => {
   return (
-    <div className={`inline-flex p-4 bg-gradient-to-br from-orange-500/20 via-red-500/20 to-rose-500/20 rounded-2xl backdrop-blur-xl border border-orange-500/10 ${className}`}>
-      <div className="flex w-full gap-3 p-2 bg-black/10 rounded-xl">
+    <div className={`inline-flex p-4 bg-gradient-to-br from-orange-500/10 via-amber-500/10 to-yellow-500/10 backdrop-blur-xl rounded-[2rem] ${className}`}>
+      <div className="flex w-full gap-3 p-2 bg-white/5 rounded-[1.5rem]">
         {React.Children.map(children, (child) =>
           React.isValidElement(child)
-            ? React.cloneElement(child as React.ReactElement<any>, {
+            ? React.cloneElement(child as React.ReactElement<TabChildProps>, {
                 activeTab,
                 setActiveTab,
               })

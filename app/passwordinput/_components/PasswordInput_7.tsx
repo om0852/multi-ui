@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Image from 'next/image'
 
 interface PlayfulPasswordInputProps {
   id?: string
@@ -24,7 +25,7 @@ export const PlayfulPasswordInput: React.FC<PlayfulPasswordInputProps> = ({
   const [isVisible, setIsVisible] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
   const [strength, setStrength] = useState(0)
-  const [shake, setShake] = useState(false)
+  const [isShaking, setIsShaking] = useState(false)
 
   useEffect(() => {
     const calculateStrength = (pwd: string) => {
@@ -52,8 +53,8 @@ export const PlayfulPasswordInput: React.FC<PlayfulPasswordInputProps> = ({
     if (isPasswordValid) {
       onSubmit?.(true)
     } else {
-      setShake(true)
-      setTimeout(() => setShake(false), 500)
+      setIsShaking(true)
+      setTimeout(() => setIsShaking(false), 500)
       onSubmit?.(false)
     }
   }
@@ -61,7 +62,7 @@ export const PlayfulPasswordInput: React.FC<PlayfulPasswordInputProps> = ({
   return (
     <motion.div 
       className={`relative ${className}`}
-      animate={shake ? { x: [-10, 10, -10, 10, 0] } : {}}
+      animate={isShaking ? { x: [-10, 10, -10, 10, 0] } : {}}
       transition={{ duration: 0.4 }}
     >
       <motion.div
@@ -193,12 +194,14 @@ const Criteria: React.FC<{ label: string; met: boolean }> = ({ label, met }) => 
       }`}
       animate={{ rotate: met ? 0 : 180 }}
     >
-      <img 
+      <Image 
         src={met 
           ? "https://img.icons8.com/?size=100&id=sz8cPVwzLrMP&format=png&color=000000"
           : "https://img.icons8.com/?size=100&id=T9nkeADgD3z6&format=png&color=000000"
         }
         alt={met ? "Valid" : "Invalid"}
+        width={12}
+        height={12}
         className="w-3 h-3"
       />
     </motion.div>

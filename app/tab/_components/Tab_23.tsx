@@ -3,6 +3,11 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+interface TabChildProps {
+  activeTab?: string;
+  setActiveTab?: (value: string) => void;
+}
+
 interface TabsProps {
   defaultValue: string;
   className?: string;
@@ -38,7 +43,7 @@ const Tabs: React.FC<TabsProps> = ({ defaultValue, className = "", children }) =
     <div className={`flex flex-col ${className}`}>
       {React.Children.map(children, (child) =>
         React.isValidElement(child)
-          ? React.cloneElement(child as React.ReactElement<any>, {
+          ? React.cloneElement(child as React.ReactElement<TabChildProps>, {
               activeTab,
               setActiveTab,
             })
@@ -57,7 +62,7 @@ const TabsList: React.FC<TabsListProps> = ({ children, activeTab, setActiveTab, 
       <div className="flex w-full gap-4">
         {React.Children.map(children, (child) =>
           React.isValidElement(child)
-            ? React.cloneElement(child as React.ReactElement<any>, {
+            ? React.cloneElement(child as React.ReactElement<TabChildProps>, {
                 activeTab,
                 setActiveTab,
               })

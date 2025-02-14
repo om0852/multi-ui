@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import clsx from "clsx";
+import Image from "next/image";
 
 interface PasswordInputProps {
   id?: string;
@@ -26,7 +27,7 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
 }) => {
   const [password, setPassword] = useState(value);
   const [isVisible, setIsVisible] = useState(false);
-  const [shake, setShake] = useState(false);
+  const [isShaking, setIsShaking] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const handleInputChange = (value: string) => {
@@ -39,8 +40,8 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
     const errorMessage = validate(password);
     if (errorMessage) {
       setError(errorMessage);
-      setShake(true);
-      setTimeout(() => setShake(false), 500);
+      setIsShaking(true);
+      setTimeout(() => setIsShaking(false), 500);
     }
   };
 
@@ -49,9 +50,9 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
       <motion.div
         className={clsx(
           "relative flex items-center p-2 rounded-lg shadow-md bg-gray-100 dark:bg-gray-800",
-          shake ? "ring-2 ring-red-500" : "ring-0"
+          isShaking ? "ring-2 ring-red-500" : "ring-0"
         )}
-        animate={shake ? { scale: [1, 1.05, 0.95, 1] } : {}}
+        animate={isShaking ? { scale: [1, 1.05, 0.95, 1] } : {}}
         transition={{ duration: 0.4 }}
       >
         <input
@@ -73,13 +74,15 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
           className="absolute right-3 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300"
           aria-label="Toggle password visibility"
         >
-          <img
+          <Image
             src={
               isVisible
                 ? "https://img.icons8.com/?size=100&id=85028&format=png&color=000000"
                 : "https://img.icons8.com/?size=100&id=121539&format=png&color=000000"
             }
             alt={isVisible ? "Hide password" : "Show password"}
+            width={20}
+            height={20}
             className="w-5 h-5"
           />
         </motion.button>

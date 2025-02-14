@@ -1,45 +1,150 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-// Define the Card component as a functional React component with TypeScript
-type TooltipProps = {}; // You can add props here if needed in the future
-
-const Tooltip: React.FC<TooltipProps> = () => {
-  const [mounted, setMounted] = useState(false);
-
-  // Set mounted to true after the component is rendered on the client
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Don't render on the server during hydration
-  if (!mounted) return null;
-  return (
-    <div className="relative group inline-block">
-      <div className="bg-white py-2 rounded-md shadow-lg hover:cursor-pointer flex justify-center items-center gap-4 px-4">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 18 14" height={25} width={25}>
-          <path fill="#FFA000" d="M16.2 1.75H8.1L6.3 0H1.8C0.81 0 0 0.7875 0 1.75V12.25C0 13.2125 0.81 14 1.8 14H15.165L18 9.1875V3.5C18 2.5375 17.19 1.75 16.2 1.75Z" />
-          <path fill="#FFCA28" d="M16.2 2H1.8C0.81 2 0 2.77143 0 3.71429V12.2857C0 13.2286 0.81 14 1.8 14H16.2C17.19 14 18 13.2286 18 12.2857V3.71429C18 2.77143 17.19 2 16.2 2Z" />
-        </svg>
-        <p>Project Structure</p>
-      </div>
-      <div className="absolute left-0 mt-2 w-64 bg-white border border-gray-200 rounded-md shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-1000">
-        <ul className="p-4 space-y-1">
-          <li className="py-1">📁 src</li>
-          <li className="pl-4 py-1">📁 app</li>
-          <li className="pl-8 py-1">📄 layout.js</li>
-          <li className="pl-8 py-1">📄 page.js</li>
-          <li className="pl-4 py-1">📁 components</li>
-          <li className="pl-8 py-1">📄 header.js</li>
-          <li className="pl-8 py-1">📄 footer.js</li>
-          <li className="pl-4 py-1">📁 styles</li>
-          <li className="pl-8 py-1">📄 globals.css</li>
-        </ul>
-      </div>
-    </div>
-  );
+interface TooltipProps {
+  text: string;
+  position?: 'top' | 'bottom' | 'left' | 'right';
+  children: React.ReactNode;
+  backgroundColor?: string;
+  textColor?: string;
+  arrowSize?: number;
+  delay?: number;
+  className?: string;
 }
 
-export default Tooltip;
+const Tooltip_10: React.FC<TooltipProps> = ({
+  text,
+  position = 'top',
+  children,
+  backgroundColor = '#000000',
+  textColor = '#ffffff',
+  arrowSize = 6,
+  delay = 0.2,
+  className = '',
+}) => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  const getPosition = () => {
+    switch (position) {
+      case 'top':
+        return { bottom: '100%', left: '50%', transform: 'translateX(-50%)' };
+      case 'bottom':
+        return { top: '100%', left: '50%', transform: 'translateX(-50%)' };
+      case 'left':
+        return { right: '100%', top: '50%', transform: 'translateY(-50%)' };
+      case 'right':
+        return { left: '100%', top: '50%', transform: 'translateY(-50%)' };
+      default:
+        return { bottom: '100%', left: '50%', transform: 'translateX(-50%)' };
+    }
+  };
+
+  const getArrowStyle = () => {
+    const size = `${arrowSize}px`;
+    const color = backgroundColor;
+
+    switch (position) {
+      case 'top':
+        return {
+          bottom: `-${arrowSize}px`,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          borderLeft: size + ' solid transparent',
+          borderRight: size + ' solid transparent',
+          borderTop: size + ` solid ${color}`,
+        };
+      case 'bottom':
+        return {
+          top: `-${arrowSize}px`,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          borderLeft: size + ' solid transparent',
+          borderRight: size + ' solid transparent',
+          borderBottom: size + ` solid ${color}`,
+        };
+      case 'left':
+        return {
+          right: `-${arrowSize}px`,
+          top: '50%',
+          transform: 'translateY(-50%)',
+          borderTop: size + ' solid transparent',
+          borderBottom: size + ' solid transparent',
+          borderLeft: size + ` solid ${color}`,
+        };
+      case 'right':
+        return {
+          left: `-${arrowSize}px`,
+          top: '50%',
+          transform: 'translateY(-50%)',
+          borderTop: size + ' solid transparent',
+          borderBottom: size + ' solid transparent',
+          borderRight: size + ` solid ${color}`,
+        };
+      default:
+        return {};
+    }
+  };
+
+  return (
+    <div
+      className={`relative inline-block ${className}`}
+      onMouseEnter={() => setIsVisible(true)}
+      onMouseLeave={() => setIsVisible(false)}
+    >
+      {children}
+      <AnimatePresence>
+        {isVisible && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.9 }}
+            transition={{ 
+              type: "spring",
+              stiffness: 500,
+              damping: 30,
+              delay 
+            }}
+            style={{
+              ...getPosition(),
+              position: 'absolute',
+              padding: '0.5rem 1rem',
+              backgroundColor,
+              color: textColor,
+              borderRadius: '4px',
+              fontSize: '0.875rem',
+              lineHeight: '1.25rem',
+              whiteSpace: 'nowrap',
+              zIndex: 50,
+              marginBottom: position === 'top' ? '0.5rem' : 0,
+              marginTop: position === 'bottom' ? '0.5rem' : 0,
+              marginLeft: position === 'right' ? '0.5rem' : 0,
+              marginRight: position === 'left' ? '0.5rem' : 0,
+              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1), 0 0 1px rgba(0, 0, 0, 0.1)',
+              backdropFilter: 'blur(8px)',
+            }}
+          >
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: delay + 0.1 }}
+            >
+              {text}
+            </motion.div>
+            <div
+              style={{
+                position: 'absolute',
+                width: 0,
+                height: 0,
+                ...getArrowStyle(),
+              }}
+            />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+export default Tooltip_10;

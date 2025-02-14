@@ -1,4 +1,4 @@
- "use client";
+"use client";
 
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
@@ -31,6 +31,11 @@ interface TabsContentProps {
   className?: string;
 }
 
+interface TabChildProps {
+  activeTab?: string;
+  setActiveTab?: (value: string) => void;
+}
+
 const Tabs: React.FC<TabsProps> = ({ defaultValue, className = "", children }) => {
   const [activeTab, setActiveTab] = useState(defaultValue);
 
@@ -38,7 +43,7 @@ const Tabs: React.FC<TabsProps> = ({ defaultValue, className = "", children }) =
     <div className={`flex flex-col ${className}`}>
       {React.Children.map(children, (child) =>
         React.isValidElement(child)
-          ? React.cloneElement(child as React.ReactElement<any>, {
+          ? React.cloneElement(child as React.ReactElement<TabChildProps>, {
               activeTab,
               setActiveTab,
             })
@@ -54,7 +59,7 @@ const TabsList: React.FC<TabsListProps> = ({ children, activeTab, setActiveTab, 
       <div className="flex w-full gap-3 p-2 bg-white/5 rounded-xl border border-white/20">
         {React.Children.map(children, (child) =>
           React.isValidElement(child)
-            ? React.cloneElement(child as React.ReactElement<any>, {
+            ? React.cloneElement(child as React.ReactElement<TabChildProps>, {
                 activeTab,
                 setActiveTab,
               })
