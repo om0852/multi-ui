@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface TypewriterProps {
@@ -27,7 +27,7 @@ const Typewriter_23: React.FC<TypewriterProps> = ({
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(true);
 
-  const texts = Array.isArray(text) ? text : [text];
+  const texts = useMemo(() => Array.isArray(text) ? text : [text], [text]);
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;

@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Image from 'next/image'
 
 interface PlayfulPasswordInputProps {
   id?: string
@@ -217,12 +218,14 @@ const Criteria: React.FC<{ label: string; met: boolean }> = ({ label, met }) => 
       className={`flex-shrink-0 w-5 h-5 rounded-full flex items-center justify-center ${met ? 'bg-green-100 dark:bg-green-800' : 'bg-red-100 dark:bg-red-800'}`}
       animate={{ rotate: met ? 0 : 180 }}
     >
-      <img
+      <Image
         src={met
           ? "https://img.icons8.com/?size=100&id=sz8cPVwzLrMP&format=png&color=000000"
           : "https://img.icons8.com/?size=100&id=T9nkeADgD3z6&format=png&color=000000"
         }
         alt={met ? "Valid" : "Invalid"}
+        width={12}
+        height={12}
         className="w-3 h-3"
       />
     </motion.div>

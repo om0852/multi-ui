@@ -1,5 +1,6 @@
 "use client"
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 
 interface ScrollAreaProps {
   orientation: "vertical" | "horizontal" | "both";
@@ -26,10 +27,10 @@ const ScrollArea: React.FC<ScrollAreaProps> = ({
 
   return (
     <div
-      className={`relative ${overflowClasses} rounded-md w-full h-[auto] border`}
+      className={`relative ${overflowClasses} rounded-xl bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-lg`}
       style={{
-        scrollbarWidth: `${scrollbarThickness}px` as 'thin' | 'none' | 'auto', // For Firefox
-        scrollbarColor: `${thumbColor} ${trackColor}`, // Thumb and track colors for Firefox
+        scrollbarWidth: "thin",
+        scrollbarColor: `${thumbColor} ${trackColor}`,
       }}
     >
       {/* Custom Scrollbar Styles */}
@@ -44,15 +45,25 @@ const ScrollArea: React.FC<ScrollAreaProps> = ({
         }
         ::-webkit-scrollbar-track {
           background: ${trackColor};
-          border-radius: 4px;
+          border-radius: 12px;
+          margin: 4px;
+          border: 3px solid transparent;
+          background-clip: padding-box;
+          box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
         }
         ::-webkit-scrollbar-thumb {
-          background: ${thumbColor};
-          border-radius: 4px;
+          background: linear-gradient(to bottom right, ${thumbColor}, ${thumbColor}dd);
+          border-radius: 12px;
+          border: 3px solid transparent;
+          background-clip: padding-box;
+          transition: all 0.3s ease;
         }
         ::-webkit-scrollbar-thumb:hover {
-          background: ${thumbColor};
-          opacity: 0.8;
+          background: linear-gradient(to bottom right, ${thumbColor}dd, ${thumbColor});
+          box-shadow: 0 0 10px ${thumbColor}66;
+        }
+        ::-webkit-scrollbar-corner {
+          background: transparent;
         }
       `}</style>
       {children}
@@ -62,79 +73,152 @@ const ScrollArea: React.FC<ScrollAreaProps> = ({
 
 export function ScrollAreaDemo() {
   const [orientation, setOrientation] = useState<"vertical" | "horizontal" | "both">("both");
-  const [scrollbarThickness, setScrollbarThickness] = useState(8);
-  const [thumbColor, setThumbColor] = useState("#4b5563"); // Tailwind: text-gray-600
-  const [trackColor, setTrackColor] = useState("#f1f5f9"); // Tailwind: bg-gray-100
+  const [scrollbarThickness, setScrollbarThickness] = useState(14);
+  const [thumbColor, setThumbColor] = useState("#6366f1");
+  const [trackColor, setTrackColor] = useState("#e0e7ff");
 
-  const tags = Array.from({ length: 50 }).map(
-    (_, i, a) => `v1.2.0-beta.${a.length - i}`
-  );
+  const cards = Array.from({ length: 20 }).map((_, i) => ({
+    title: `Card ${i + 1}`,
+    description: `This is a sample description for card ${i + 1}. It contains some text to demonstrate scrolling.`,
+  }));
 
   return (
-    <div className="p-4 space-y-6">
-      {/* Adjustment Controls */}
-      <div className="flex flex-col space-y-4 p-4 bg-gray-100 rounded-md border">
-        <label className="flex items-center space-x-4">
-          <span>Orientation:</span>
-          <select
-            className="p-2 border rounded-md"
-            value={orientation}
-            onChange={(e) =>
-              setOrientation(e.target.value as "vertical" | "horizontal" | "both")
-            }
-          >
-            <option value="vertical">Vertical</option>
-            <option value="horizontal">Horizontal</option>
-            <option value="both">Both</option>
-          </select>
-        </label>
-        <label className="flex items-center space-x-4">
-          <span>Scrollbar Thickness:</span>
-          <input
-            type="number"
-            className="p-2 border rounded-md w-20"
-            min="4"
-            max="20"
-            value={scrollbarThickness}
-            onChange={(e) => setScrollbarThickness(Number(e.target.value))}
-          />
-        </label>
-        <label className="flex items-center space-x-4">
-          <span>Thumb Color:</span>
-          <input
-            type="color"
-            className="p-1 rounded-md"
-            value={thumbColor}
-            onChange={(e) => setThumbColor(e.target.value)}
-          />
-        </label>
-        <label className="flex items-center space-x-4">
-          <span>Track Color:</span>
-          <input
-            type="color"
-            className="p-1 rounded-md"
-            value={trackColor}
-            onChange={(e) => setTrackColor(e.target.value)}
-          />
-        </label>
-      </div>
-
-      {/* Scrollable Area */}
-      <ScrollArea
-        orientation={"horizontal"}
-        scrollbarThickness={scrollbarThickness}
-        thumbColor={thumbColor}
-        trackColor={"red"}
+    <div className="p-8 space-y-8 bg-gradient-to-br from-indigo-50 to-purple-50 rounded-2xl">
+      {/* Controls Panel */}
+      <motion.div 
+        className="space-y-6 p-8 bg-white rounded-2xl shadow-xl border border-indigo-50"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
       >
-        <div className="min-w-[auto] flex h-[10vh] p-4 space-y-2">
-          <h4 className="text-sm flex flex-row font-medium leading-none">Tags</h4>
-          {tags.map((tag, index) => (
-            <div key={index} className="text-sm">
-              {tag}
-            </div>
-          ))}
+        <div className="flex items-center justify-between">
+          <h2 className="text-2xl font-semibold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
+            Scroll Area Settings
+          </h2>
+          <motion.div
+            className="text-xs font-medium text-indigo-600 px-3 py-1 bg-indigo-50 rounded-full"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            Customizable
+          </motion.div>
         </div>
-      </ScrollArea>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {/* Orientation Control */}
+          <div className="space-y-3">
+            <label className="text-sm font-medium text-gray-700">Scroll Direction</label>
+            <select
+              className="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-all"
+              value={orientation}
+              onChange={(e) => setOrientation(e.target.value as "vertical" | "horizontal" | "both")}
+            >
+              <option value="vertical">Vertical Only</option>
+              <option value="horizontal">Horizontal Only</option>
+              <option value="both">Both Directions</option>
+            </select>
+          </div>
+
+          {/* Thickness Control */}
+          <div className="space-y-3">
+            <label className="text-sm font-medium text-gray-700">
+              Scrollbar Size: {scrollbarThickness}px
+            </label>
+            <div className="relative">
+              <input
+                type="range"
+                className="w-full h-2 bg-indigo-100 rounded-lg appearance-none cursor-pointer accent-indigo-600"
+                min="10"
+                max="24"
+                value={scrollbarThickness}
+                onChange={(e) => setScrollbarThickness(Number(e.target.value))}
+              />
+              <div className="absolute -bottom-6 left-0 right-0 flex justify-between text-xs text-gray-500">
+                <span>10px</span>
+                <span>24px</span>
+              </div>
+            </div>
+          </div>
+
+          {/* Color Controls */}
+          <div className="space-y-3">
+            <label className="text-sm font-medium text-gray-700">Scrollbar Color</label>
+            <div className="flex items-center space-x-3">
+              <input
+                type="color"
+                className="h-10 w-20 rounded-lg cursor-pointer border border-gray-200"
+                value={thumbColor}
+                onChange={(e) => setThumbColor(e.target.value)}
+              />
+              <span className="text-sm text-gray-600 font-mono">{thumbColor}</span>
+            </div>
+          </div>
+
+          <div className="space-y-3">
+            <label className="text-sm font-medium text-gray-700">Track Color</label>
+            <div className="flex items-center space-x-3">
+              <input
+                type="color"
+                className="h-10 w-20 rounded-lg cursor-pointer border border-gray-200"
+                value={trackColor}
+                onChange={(e) => setTrackColor(e.target.value)}
+              />
+              <span className="text-sm text-gray-600 font-mono">{trackColor}</span>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Scrollable Content */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, delay: 0.2 }}
+      >
+        <ScrollArea
+          orientation={orientation}
+          scrollbarThickness={scrollbarThickness}
+          thumbColor={thumbColor}
+          trackColor={trackColor}
+        >
+          <div 
+            className={`min-w-[800px] grid gap-4 p-6 bg-white/80 backdrop-blur-sm rounded-xl shadow-inner
+              ${orientation === "vertical" ? "h-[500px] grid-cols-1" : "grid-cols-2"}
+            `}
+          >
+            {cards.map((card, index) => (
+              <motion.div
+                key={index}
+                className="p-6 bg-gradient-to-br from-white to-indigo-50/50 rounded-xl shadow-sm hover:shadow-md transition-shadow"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{
+                  duration: 0.4,
+                  delay: index * 0.05,
+                  ease: "easeOut",
+                }}
+                whileHover={{
+                  y: -2,
+                  transition: { duration: 0.2 },
+                }}
+              >
+                <h3 className="text-lg font-semibold text-indigo-900 mb-2">
+                  {card.title}
+                </h3>
+                <p className="text-gray-600 text-sm leading-relaxed">
+                  {card.description}
+                </p>
+                <motion.div
+                  className="mt-4 text-xs font-medium text-indigo-600 inline-flex items-center"
+                  whileHover={{ x: 5 }}
+                >
+                  Learn more →
+                </motion.div>
+              </motion.div>
+            ))}
+          </div>
+        </ScrollArea>
+      </motion.div>
     </div>
   );
 }

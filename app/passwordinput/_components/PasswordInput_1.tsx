@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import clsx from "clsx";
+import Image from "next/image";
 
 interface PasswordInputProps {
   id?: string;
@@ -27,8 +28,8 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
   const [password, setPassword] = useState(value);
   const [isVisible, setIsVisible] = useState(false);
   const [isFocused, setIsFocused] = useState(false);
-  const [shake, setShake] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isShaking, setIsShaking] = useState(false);
 
   const handleInputChange = (value: string) => {
     setPassword(value);
@@ -40,8 +41,8 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
     const errorMessage = validate(password);
     if (errorMessage) {
       setError(errorMessage);
-      setShake(true);
-      setTimeout(() => setShake(false), 500);
+      setIsShaking(true);
+      setTimeout(() => setIsShaking(false), 500);
     }
   };
 
@@ -54,7 +55,7 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
             ? "border-blue-500"
             : "border-gray-300 dark:border-gray-600"
         )}
-        animate={shake ? { x: [-10, 10, -10, 10, 0] } : {}}
+        animate={isShaking ? { x: [-10, 10, -10, 10, 0] } : {}}
         transition={{ duration: 0.5 }}
       >
         <input
@@ -79,13 +80,15 @@ export const PasswordInput: React.FC<PasswordInputProps> = ({
           onClick={() => setIsVisible(!isVisible)}
           aria-label="Toggle password visibility"
         >
-          <img
+          <Image
             src={
               isVisible
                 ? "https://img.icons8.com/?size=100&id=85028&format=png&color=000000"
                 : "https://img.icons8.com/?size=100&id=121539&format=png&color=000000"
             }
             alt={isVisible ? "Hide password" : "Show password"}
+            width={20}
+            height={20}
             className="w-5 h-5"
           />
         </motion.button>

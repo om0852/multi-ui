@@ -1,5 +1,5 @@
- "use client"
-import React, { useState, useEffect } from "react";
+"use client"
+import React, { useState, useEffect, useMemo } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 interface TypewriterProps {
@@ -15,7 +15,6 @@ interface TypewriterProps {
   scrambleEffect?: boolean;
 }
 
-const matrixChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%&*";
 
 const Typewriter_14: React.FC<TypewriterProps> = ({
   text,
@@ -32,9 +31,8 @@ const Typewriter_14: React.FC<TypewriterProps> = ({
   const [displayText, setDisplayText] = useState<string>("");
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
   const [isTyping, setIsTyping] = useState(true);
-  const [scrambledChars, setScrambledChars] = useState<string[]>([]);
 
-  const texts = Array.isArray(text) ? text : [text];
+  const texts = useMemo(() => Array.isArray(text) ? text : [text], [text]);
 
   useEffect(() => {
     let timeout: NodeJS.Timeout;
@@ -43,12 +41,6 @@ const Typewriter_14: React.FC<TypewriterProps> = ({
       if (displayText.length < texts[currentTextIndex].length) {
         timeout = setTimeout(() => {
           setDisplayText(texts[currentTextIndex].slice(0, displayText.length + 1));
-          if (scrambleEffect) {
-            setScrambledChars(prev => [
-              ...prev,
-              matrixChars[Math.floor(Math.random() * matrixChars.length)]
-            ]);
-          }
         }, typingSpeed);
       } else {
         timeout = setTimeout(() => {
@@ -59,7 +51,6 @@ const Typewriter_14: React.FC<TypewriterProps> = ({
       if (displayText.length > 0) {
         timeout = setTimeout(() => {
           setDisplayText(displayText.slice(0, -1));
-          setScrambledChars(prev => prev.slice(0, -1));
         }, typingSpeed / 2);
       } else {
         setCurrentTextIndex((prev) => (prev + 1) % texts.length);

@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import Rating from "./_components/Rating_5";
+import Rating from "./_components/Rating_12";
 
 const page = () => {
   return (
@@ -11,7 +11,6 @@ const page = () => {
         borderColor="gray"
         onRatingChange={(newRating) => console.log(newRating)}
         initialRating={2.5}
-        disabled={true}
       />
     </div>
   );

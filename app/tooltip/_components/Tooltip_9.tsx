@@ -1,81 +1,116 @@
 "use client";
 
-import React, { useState, useEffect } from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 
-// Define the Card component as a functional React component with TypeScript
-type TooltipProps = {}; // You can add props here if needed in the future
-
-const Tooltip: React.FC<TooltipProps> = () => {
-  const [mounted, setMounted] = useState(false);
-
-  // Set mounted to true after the component is rendered on the client
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  // Don't render on the server during hydration
-  if (!mounted) return null;
-  return (
-    <StyledWrapper>
-      <div className="tooltip">
-        <div className="icon">i</div>
-        <div className="tooltiptext">This is a cool tooltip!</div>
-      </div>
-    </StyledWrapper>
-  );
+interface TooltipProps {
+  text: string;
+  position?: 'top' | 'bottom' | 'left' | 'right';
+  children: React.ReactNode;
+  gradientStart?: string;
+  gradientEnd?: string;
+  backgroundColor?: string;
+  textColor?: string;
+  delay?: number;
+  className?: string;
 }
 
-const StyledWrapper = styled.div`
-  .tooltip {
-    position: relative;
-    display: inline-block;
-    cursor: pointer;
-    font-family: "Arial", sans-serif;
-  }
+const Tooltip_9: React.FC<TooltipProps> = ({
+  text,
+  position = 'top',
+  children,
+  gradientStart = '#3b82f6',
+  gradientEnd = '#8b5cf6',
+  backgroundColor = '#ffffff',
+  textColor = '#1f2937',
+  delay = 0.2,
+  className = '',
+}) => {
+  const [isVisible, setIsVisible] = useState(false);
 
-  .tooltip:hover .tooltiptext {
-    visibility: visible;
-    opacity: 1;
-  }
+  const getPosition = () => {
+    switch (position) {
+      case 'top':
+        return { bottom: '100%', left: '50%', transform: 'translateX(-50%)' };
+      case 'bottom':
+        return { top: '100%', left: '50%', transform: 'translateX(-50%)' };
+      case 'left':
+        return { right: '100%', top: '50%', transform: 'translateY(-50%)' };
+      case 'right':
+        return { left: '100%', top: '50%', transform: 'translateY(-50%)' };
+      default:
+        return { bottom: '100%', left: '50%', transform: 'translateX(-50%)' };
+    }
+  };
 
-  .tooltiptext {
-    visibility: hidden;
-    width: 200px;
-    background-color: #333;
-    color: #fff;
-    text-align: center;
-    border-radius: 5px;
-    padding: 10px;
-    position: absolute;
-    z-index: 1;
-    top: 125%;
-    left: 50%;
-    margin-left: -100px;
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
+  const getInitialAnimation = () => {
+    switch (position) {
+      case 'top':
+        return { opacity: 0, y: 10, scale: 0.95 };
+      case 'bottom':
+        return { opacity: 0, y: -10, scale: 0.95 };
+      case 'left':
+        return { opacity: 0, x: 10, scale: 0.95 };
+      case 'right':
+        return { opacity: 0, x: -10, scale: 0.95 };
+      default:
+        return { opacity: 0, y: 10, scale: 0.95 };
+    }
+  };
 
-  .tooltiptext::after {
-    content: "";
-    position: absolute;
-    top: -10px;
-    left: 50%;
-    margin-left: -10px;
-    border-width: 10px;
-    border-style: solid;
-    border-color: transparent transparent #333 transparent;
-  }
+  return (
+    <div
+      className={`relative inline-block ${className}`}
+      onMouseEnter={() => setIsVisible(true)}
+      onMouseLeave={() => setIsVisible(false)}
+    >
+      {children}
+      <AnimatePresence>
+        {isVisible && (
+          <motion.div
+            initial={getInitialAnimation()}
+            animate={{ opacity: 1, x: 0, y: 0, scale: 1 }}
+            exit={getInitialAnimation()}
+            transition={{ 
+              duration: 0.3,
+              delay,
+              type: 'spring',
+              stiffness: 400,
+              damping: 25
+            }}
+            style={{
+              ...getPosition(),
+              position: 'absolute',
+              padding: '0.75rem 1.5rem',
+              backgroundColor,
+              color: textColor,
+              borderRadius: '0.75rem',
+              fontSize: '0.875rem',
+              whiteSpace: 'nowrap',
+              zIndex: 50,
+              boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+              marginBottom: position === 'top' ? '0.75rem' : 0,
+              marginTop: position === 'bottom' ? '0.75rem' : 0,
+              marginLeft: position === 'right' ? '0.75rem' : 0,
+              marginRight: position === 'left' ? '0.75rem' : 0,
+              background: `linear-gradient(${backgroundColor}, ${backgroundColor}) padding-box,
+                          linear-gradient(135deg, ${gradientStart}, ${gradientEnd}) border-box`,
+              border: '2px solid transparent',
+            }}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              transition={{ duration: 0.2, delay: delay + 0.1 }}
+            >
+              {text}
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
 
-  .tooltip .icon {
-    display: inline-block;
-    width: 20px;
-    height: 20px;
-    background-color: #4caf50;
-    color: #fff;
-    border-radius: 50%;
-    text-align: center;
-    line-height: 20px;
-  }`;
-
-export default Tooltip;
+export default Tooltip_9;

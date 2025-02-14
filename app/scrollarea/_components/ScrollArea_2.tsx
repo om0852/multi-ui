@@ -26,9 +26,9 @@ const ScrollArea: React.FC<ScrollAreaProps> = ({
 
   return (
     <div
-      className={`relative ${overflowClasses} rounded-lg border shadow-md`}
+      className={`relative ${overflowClasses} rounded-lg border shadow-lg bg-white/5 backdrop-blur-sm`}
       style={{
-        scrollbarWidth: "thin", // For Firefox
+        scrollbarWidth: "thin",
         scrollbarColor: `${thumbColor} ${trackColor}`,
       }}
     >
@@ -43,15 +43,23 @@ const ScrollArea: React.FC<ScrollAreaProps> = ({
         }
         ::-webkit-scrollbar-track {
           background: ${trackColor};
-          border-radius: 4px;
+          border-radius: 8px;
+          margin: 4px;
+          border: 2px solid transparent;
+          background-clip: padding-box;
         }
         ::-webkit-scrollbar-thumb {
           background: ${thumbColor};
-          border-radius: 4px;
+          border-radius: 8px;
+          border: 2px solid transparent;
+          background-clip: padding-box;
+          transition: background-color 0.3s ease;
         }
         ::-webkit-scrollbar-thumb:hover {
-          background: ${thumbColor};
-          opacity: 0.8;
+          background: ${thumbColor}dd;
+        }
+        ::-webkit-scrollbar-corner {
+          background: transparent;
         }
       `}</style>
       {children}
@@ -61,22 +69,30 @@ const ScrollArea: React.FC<ScrollAreaProps> = ({
 
 export function ScrollAreaDemo() {
   const [orientation, setOrientation] = useState<"vertical" | "horizontal" | "both">("horizontal");
-  const [scrollbarThickness, setScrollbarThickness] = useState(8);
-  const [thumbColor, setThumbColor] = useState("#4b5563"); // Tailwind: text-gray-600
-  const [trackColor, setTrackColor] = useState("#f1f5f9"); // Tailwind: bg-gray-100
+  const [scrollbarThickness, setScrollbarThickness] = useState(12);
+  const [thumbColor, setThumbColor] = useState("#4b5563");
+  const [trackColor, setTrackColor] = useState("#f1f5f9");
 
   const tags = Array.from({ length: 50 }).map(
     (_, i, a) => `Tag ${a.length - i}`
   );
 
   return (
-    <div className="p-6 space-y-8">
-      {/* Adjustment Controls */}
-      <div className="flex flex-col space-y-4 p-4 bg-gray-100 rounded-lg border">
-        <label className="flex items-center space-x-4">
-          <span>Orientation:</span>
+    <div className="p-8 space-y-8 bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl">
+      {/* Controls Section */}
+      <motion.div 
+        className="flex flex-col space-y-6 p-6 bg-white rounded-xl shadow-lg border border-gray-100"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <h2 className="text-xl font-semibold text-gray-800">Scrollbar Customization</h2>
+        
+        {/* Orientation Control */}
+        <div className="flex flex-col space-y-2">
+          <label className="text-sm font-medium text-gray-600">Orientation:</label>
           <select
-            className="p-2 border rounded-md"
+            className="p-2.5 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
             value={orientation}
             onChange={(e) =>
               setOrientation(e.target.value as "vertical" | "horizontal" | "both")
@@ -86,67 +102,91 @@ export function ScrollAreaDemo() {
             <option value="horizontal">Horizontal</option>
             <option value="both">Both</option>
           </select>
-        </label>
-        <label className="flex items-center space-x-4">
-          <span>Scrollbar Thickness:</span>
+        </div>
+
+        {/* Thickness Control */}
+        <div className="flex flex-col space-y-2">
+          <label className="text-sm font-medium text-gray-600">
+            Scrollbar Thickness: {scrollbarThickness}px
+          </label>
           <input
-            type="number"
-            className="p-2 border rounded-md w-20"
-            min="4"
+            type="range"
+            className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
+            min="8"
             max="20"
             value={scrollbarThickness}
             onChange={(e) => setScrollbarThickness(Number(e.target.value))}
           />
-        </label>
-        <label className="flex items-center space-x-4">
-          <span>Thumb Color:</span>
-          <input
-            type="color"
-            className="p-1 rounded-md"
-            value={thumbColor}
-            onChange={(e) => setThumbColor(e.target.value)}
-          />
-        </label>
-        <label className="flex items-center space-x-4">
-          <span>Track Color:</span>
-          <input
-            type="color"
-            className="p-1 rounded-md"
-            value={trackColor}
-            onChange={(e) => setTrackColor(e.target.value)}
-          />
-        </label>
-      </div>
+        </div>
 
-      {/* Scrollable Area with Animation */}
-      <ScrollArea
-        orientation={orientation}
-        scrollbarThickness={scrollbarThickness}
-        thumbColor={thumbColor}
-        trackColor={trackColor}
+        {/* Color Controls */}
+        <div className="grid grid-cols-2 gap-6">
+          <div className="flex flex-col space-y-2">
+            <label className="text-sm font-medium text-gray-600">Thumb Color:</label>
+            <div className="flex items-center space-x-2">
+              <input
+                type="color"
+                className="h-10 w-20 rounded cursor-pointer border border-gray-200"
+                value={thumbColor}
+                onChange={(e) => setThumbColor(e.target.value)}
+              />
+              <span className="text-sm text-gray-500">{thumbColor}</span>
+            </div>
+          </div>
+          <div className="flex flex-col space-y-2">
+            <label className="text-sm font-medium text-gray-600">Track Color:</label>
+            <div className="flex items-center space-x-2">
+              <input
+                type="color"
+                className="h-10 w-20 rounded cursor-pointer border border-gray-200"
+                value={trackColor}
+                onChange={(e) => setTrackColor(e.target.value)}
+              />
+              <span className="text-sm text-gray-500">{trackColor}</span>
+            </div>
+          </div>
+        </div>
+      </motion.div>
+
+      {/* Scrollable Content */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
       >
-        <motion.div
-          className="min-w-[800px] flex flex-row space-x-4 p-4"
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.5, ease: "easeOut" }}
+        <ScrollArea
+          orientation={orientation}
+          scrollbarThickness={scrollbarThickness}
+          thumbColor={thumbColor}
+          trackColor={trackColor}
         >
-          {tags.map((tag, index) => (
-            <motion.div
-              key={index}
-              className="bg-blue-100 text-blue-900 rounded-md px-3 py-1 shadow-md text-sm"
-              whileHover={{
-                scale: 1.1,
-                backgroundColor: "#4b5563", // Tailwind: text-gray-600
-                color: "#ffffff",
-              }}
-              transition={{ duration: 0.3 }}
-            >
-              {tag}
-            </motion.div>
-          ))}
-        </motion.div>
-      </ScrollArea>
+          <div 
+            className={`min-w-[800px] flex flex-wrap gap-3 p-6 bg-white rounded-lg shadow-inner
+              ${orientation === "vertical" ? "h-[400px] flex-col" : ""}
+            `}
+          >
+            {tags.map((tag, index) => (
+              <motion.div
+                key={index}
+                className="bg-blue-50 text-blue-600 rounded-lg px-4 py-2 shadow-sm hover:shadow-md transition-shadow"
+                whileHover={{
+                  scale: 1.05,
+                  backgroundColor: "#3b82f6",
+                  color: "#ffffff",
+                }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{
+                  duration: 0.2,
+                  delay: index * 0.02,
+                }}
+              >
+                {tag}
+              </motion.div>
+            ))}
+          </div>
+        </ScrollArea>
+      </motion.div>
     </div>
   );
 }

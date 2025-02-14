@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Image from 'next/image'
 
 interface FuturisticPasswordInputProps {
   id?: string
@@ -22,7 +23,7 @@ export const FuturisticPasswordInput: React.FC<FuturisticPasswordInputProps> = (
   const [isVisible, setIsVisible] = useState(false)
   const [isFocused, setIsFocused] = useState(false)
   const [strength, setStrength] = useState(0)
-  const [shake, setShake] = useState(false)
+  const [isShaking, setIsShaking] = useState(false)
 
   useEffect(() => {
     const calculateStrength = (pwd: string) => {
@@ -40,12 +41,18 @@ export const FuturisticPasswordInput: React.FC<FuturisticPasswordInputProps> = (
   const handleInputChange = (value: string) => {
     setPassword(value)
     onChange?.(value)
+
+    // Trigger shake animation if password is too weak
+    if (value.length > 0 && value.length < 6) {
+      setIsShaking(true)
+      setTimeout(() => setIsShaking(false), 500)
+    }
   }
 
   return (
     <motion.div 
       className={`relative ${className}`}
-      animate={shake ? { x: [-10, 10, -10, 10, 0] } : {}}
+      animate={isShaking ? { x: [-10, 10, -10, 10, 0] } : {}}
       transition={{ duration: 0.4 }}
     >
       <div className="relative bg-gray-900 rounded-lg overflow-hidden border border-cyan-500 shadow-lg shadow-cyan-500/50">
@@ -164,12 +171,14 @@ const Criteria: React.FC<{ label: string; met: boolean }> = ({ label, met }) => 
       }`}
       animate={{ rotate: met ? 0 : 180 }}
     >
-      <img 
+      <Image 
         src={met 
           ? "https://img.icons8.com/?size=100&id=sz8cPVwzLrMP&format=png&color=000000"
           : "https://img.icons8.com/?size=100&id=T9nkeADgD3z6&format=png&color=000000"
         }
         alt={met ? "Valid" : "Invalid"}
+        width={12}
+        height={12}
         className="w-3 h-3"
       />
     </motion.div>
