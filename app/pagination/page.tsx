@@ -11,6 +11,11 @@ import NeumorphicPagination from './_components/NeumorphicPagination';
 import BorderAnimationPagination from './_components/BorderAnimationPagination';
 import FloatingPagination from './_components/FloatingPagination';
 import StackedPagination from './_components/StackedPagination';
+import RipplePagination from './_components/RipplePagination';
+import GlassPagination from './_components/GlassPagination';
+import ExpandingPagination from './_components/ExpandingPagination';
+import OutlinePagination from './_components/OutlinePagination';
+import MinimalistPagination from './_components/MinimalistPagination';
 
 const App = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -107,6 +112,51 @@ const App = () => {
       <div className="space-y-4">
         <h2 className="text-xl font-bold text-center">Stacked Pagination</h2>
         <StackedPagination
+          totalPages={5}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
+      </div>
+
+      <div className="space-y-4">
+        <h2 className="text-xl font-bold text-center">Ripple Pagination</h2>
+        <RipplePagination
+          totalPages={5}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
+      </div>
+
+      <div className="space-y-4">
+        <h2 className="text-xl font-bold text-center">Glass Pagination</h2>
+        <GlassPagination
+          totalPages={5}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
+      </div>
+
+      <div className="space-y-4">
+        <h2 className="text-xl font-bold text-center">Expanding Pagination</h2>
+        <ExpandingPagination
+          totalPages={5}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
+      </div>
+
+      <div className="space-y-4">
+        <h2 className="text-xl font-bold text-center">Outline Pagination</h2>
+        <OutlinePagination
+          totalPages={5}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
+      </div>
+
+      <div className="space-y-4">
+        <h2 className="text-xl font-bold text-center">Minimalist Pagination</h2>
+        <MinimalistPagination
           totalPages={5}
           currentPage={currentPage}
           onPageChange={setCurrentPage}
