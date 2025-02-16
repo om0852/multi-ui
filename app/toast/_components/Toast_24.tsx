@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import clsx from "clsx";
-import { animationVariants, ThemeClassesBorder, positionClasses, useToastTimer } from "./utils";
-import { ToastProps } from "./toast-context";
+import { 
+  positionClasses, 
+  useToastTimer,
+  ToastProps,
+  ToastAnimationType,
+  ToastTheme
+} from "./utils";
 
-const Toast_24: React.FC<ToastProps> = ({
+interface ExtendedToastProps extends Omit<ToastProps, 'theme' | 'animationType'> {
+  audio?: string;
+  theme?: ToastTheme;
+  animationType?: ToastAnimationType;
+}
+
+const Toast_24: React.FC<ExtendedToastProps> = ({
   message,
   close,
   icon,
@@ -16,6 +27,7 @@ const Toast_24: React.FC<ToastProps> = ({
   onHoverPause = true,
   actionButton,
   stack,
+  audio
 }) => {
   const { handleMouseEnter, handleMouseLeave } = useToastTimer(
     autoDismiss,
@@ -24,12 +36,23 @@ const Toast_24: React.FC<ToastProps> = ({
     onHoverPause
   );
 
+  useEffect(() => {
+    if (audio) {
+      const sound = new Audio(audio);
+      sound.play().catch(error => console.log('Audio playback failed:', error));
+    }
+  }, [audio]);
+
   return (
     <motion.div
       initial={{ y: 50, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       exit={{ y: 50, opacity: 0 }}
-      transition={{ type: "spring", stiffness: 200, damping: 20 }}
+      transition={{ 
+        type: "spring", 
+        stiffness: animationType === "bounce" ? 300 : 200, 
+        damping: animationType === "bounce" ? 15 : 20 
+      }}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={clsx(

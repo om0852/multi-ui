@@ -1,11 +1,18 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import clsx from "clsx";
-import { animationVariants, ThemeClassesBorder, positionClasses, useToastTimer } from "./utils";
-import { ToastProps } from "./toast-context";
+import { 
+  positionClasses, 
+  useToastTimer,
+  ToastProps,
+  ToastAnimationType,
+  ToastTheme
+} from "./utils";
 
-interface ExtendedToastProps extends ToastProps {
+interface ExtendedToastProps extends Omit<ToastProps, 'theme' | 'animationType'> {
   audio?: string;
+  theme?: ToastTheme;
+  animationType?: ToastAnimationType;
 }
 
 const Toast_31: React.FC<ExtendedToastProps> = ({
@@ -36,12 +43,37 @@ const Toast_31: React.FC<ExtendedToastProps> = ({
     }
   }, [audio]);
 
+  const getAnimationConfig = () => {
+    switch (animationType) {
+      case "slide":
+        return {
+          initial: { x: -100, opacity: 0 },
+          animate: { x: 0, opacity: 1 },
+          exit: { x: -100, opacity: 0 },
+          transition: { type: "spring", stiffness: 200, damping: 20 }
+        };
+      case "zoom":
+        return {
+          initial: { scale: 0.5, opacity: 0 },
+          animate: { scale: 1, opacity: 1 },
+          exit: { scale: 0.5, opacity: 0 },
+          transition: { type: "spring", stiffness: 300, damping: 25 }
+        };
+      default:
+        return {
+          initial: { y: -50, opacity: 0 },
+          animate: { y: 0, opacity: 1 },
+          exit: { y: 50, opacity: 0 },
+          transition: { type: "spring", stiffness: 200, damping: 20 }
+        };
+    }
+  };
+
+  const animation = getAnimationConfig();
+
   return (
     <motion.div
-      initial={{ y: 50, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      exit={{ y: 50, opacity: 0 }}
-      transition={{ type: "spring", stiffness: 200, damping: 20 }}
+      {...animation}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={clsx(
@@ -51,146 +83,85 @@ const Toast_31: React.FC<ExtendedToastProps> = ({
         stack ? "static" : "fixed",
       )}
     >
-      {/* Holographic Container */}
+      {/* Minimalist Container */}
       <div className={clsx(
-        "relative rounded-lg overflow-hidden backdrop-blur-xl",
+        "relative p-4 rounded-lg",
         theme === 'dark'
-          ? 'bg-violet-900/20 border border-violet-500/50'
-          : 'bg-violet-50/30 border border-violet-200/50'
+          ? 'bg-gray-800 border border-gray-700'
+          : 'bg-white border border-gray-200',
+        "shadow-lg"
       )}>
-        {/* Holographic Overlay */}
+        {/* Progress Bar */}
         <motion.div
-          animate={{
-            background: [
-              "linear-gradient(45deg, rgba(167,139,250,0.1) 0%, rgba(139,92,246,0.1) 100%)",
-              "linear-gradient(45deg, rgba(139,92,246,0.1) 0%, rgba(167,139,250,0.1) 100%)",
-            ],
-          }}
-          transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-          className="absolute inset-0"
+          initial={{ scaleX: 1 }}
+          animate={{ scaleX: 0 }}
+          transition={{ duration: duration / 1000, ease: "linear" }}
+          style={{ originX: 0 }}
+          className={clsx(
+            "absolute bottom-0 left-0 right-0 h-0.5",
+            theme === 'dark' ? 'bg-gray-600' : 'bg-gray-300'
+          )}
         />
 
-        {/* Floating Particles */}
-        {[...Array(5)].map((_, i) => (
-          <motion.div
-            key={i}
-            className={clsx(
-              "absolute w-1 h-1 rounded-full",
-              theme === 'dark' ? 'bg-violet-400/30' : 'bg-violet-300/30'
-            )}
-            animate={{
-              y: [0, -20, 0],
-              x: [0, 10, 0],
-              opacity: [0, 1, 0],
-            }}
-            transition={{
-              duration: 2,
-              delay: i * 0.4,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            style={{
-              left: `${20 + i * 15}%`,
-              top: `${50 + i * 10}%`,
-            }}
-          />
-        ))}
-
-        {/* Content Container */}
-        <div className="relative p-4">
-          <div className="flex items-start space-x-3">
-            {/* Holographic Icon */}
+        <div className="flex items-start space-x-3">
+          {/* Icon */}
+          {icon && (
             <motion.div
-              animate={{
-                scale: [1, 1.1, 1],
-                opacity: [0.8, 1, 0.8],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
+              animate={{ scale: [1, 1.05, 1] }}
+              transition={{ duration: 2, repeat: Infinity }}
               className={clsx(
-                "flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center",
+                "flex-shrink-0 w-8 h-8 rounded-md flex items-center justify-center",
                 theme === 'dark'
-                  ? 'bg-violet-900/30 text-violet-300'
-                  : 'bg-violet-100/50 text-violet-600'
+                  ? 'bg-gray-700'
+                  : 'bg-gray-100'
               )}
             >
-              <span className="text-2xl filter drop-shadow-lg">{icon}</span>
+              <span className="text-lg">{icon}</span>
             </motion.div>
+          )}
 
-            {/* Message */}
-            <div className="flex-1 min-w-0">
-              <motion.p
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
+          {/* Content */}
+          <div className="flex-1 min-w-0">
+            <p className={clsx(
+              "text-sm font-medium",
+              theme === 'dark' ? 'text-white' : 'text-gray-900'
+            )}>
+              {message}
+            </p>
+
+            {/* Action Button */}
+            {actionButton && (
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={actionButton.onClick}
                 className={clsx(
-                  "text-sm font-medium",
-                  theme === 'dark' ? 'text-violet-200' : 'text-violet-800'
+                  "mt-2 text-xs font-medium px-3 py-1 rounded-md transition-colors",
+                  theme === 'dark'
+                    ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 )}
               >
-                {message}
-              </motion.p>
-
-              {/* Action Button */}
-              {actionButton && (
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={actionButton.onClick}
-                  className={clsx(
-                    "mt-2 px-4 py-1 text-xs font-medium rounded-lg backdrop-blur-sm",
-                    theme === 'dark'
-                      ? 'bg-violet-900/30 text-violet-300 hover:bg-violet-800/30'
-                      : 'bg-violet-100/50 text-violet-700 hover:bg-violet-200/50'
-                  )}
-                >
-                  {actionButton.label}
-                </motion.button>
-              )}
-            </div>
-
-            {/* Close Button */}
-            <motion.button
-              whileHover={{ rotate: 90 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={close}
-              className={clsx(
-                "flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center",
-                theme === 'dark'
-                  ? 'text-violet-300 hover:bg-violet-800/30'
-                  : 'text-violet-600 hover:bg-violet-100/50'
-              )}
-            >
-              ×
-            </motion.button>
+                {actionButton.label}
+              </motion.button>
+            )}
           </div>
+
+          {/* Close Button */}
+          <motion.button
+            onClick={close}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            className={clsx(
+              "flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-md",
+              theme === 'dark'
+                ? 'text-gray-400 hover:text-white hover:bg-gray-700'
+                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
+            )}
+          >
+            ×
+          </motion.button>
         </div>
-
-        {/* Holographic Progress Ring */}
-        <svg className="absolute -right-3 -top-3 w-8 h-8 rotate-[-90deg]">
-          <motion.circle
-            cx="16"
-            cy="16"
-            r="12"
-            fill="none"
-            strokeWidth="2"
-            stroke={theme === 'dark' ? 'rgb(167,139,250)' : 'rgb(139,92,246)'}
-            strokeDasharray="75"
-            initial={{ strokeDashoffset: 0 }}
-            animate={{ strokeDashoffset: 75 }}
-            transition={{ duration: duration / 1000, ease: "linear" }}
-          />
-        </svg>
-
-        {/* Holographic Lines */}
-        <div className={clsx(
-          "absolute inset-0 pointer-events-none",
-          theme === 'dark'
-            ? 'bg-gradient-to-b from-violet-500/5 via-transparent to-violet-500/5'
-            : 'bg-gradient-to-b from-violet-200/10 via-transparent to-violet-200/10'
-        )} />
       </div>
     </motion.div>
   );

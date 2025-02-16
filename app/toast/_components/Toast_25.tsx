@@ -1,10 +1,21 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import clsx from "clsx";
-import { animationVariants, ThemeClassesBorder, positionClasses, useToastTimer } from "./utils";
-import { ToastProps } from "./toast-context";
+import { 
+  positionClasses, 
+  useToastTimer,
+  ToastProps,
+  ToastAnimationType,
+  ToastTheme
+} from "./utils";
 
-const Toast_25: React.FC<ToastProps> = ({
+interface ExtendedToastProps extends Omit<ToastProps, 'theme' | 'animationType'> {
+  audio?: string;
+  theme?: ToastTheme;
+  animationType?: ToastAnimationType;
+}
+
+const Toast_25: React.FC<ExtendedToastProps> = ({
   message,
   close,
   icon,
@@ -16,6 +27,7 @@ const Toast_25: React.FC<ToastProps> = ({
   onHoverPause = true,
   actionButton,
   stack,
+  audio
 }) => {
   const { handleMouseEnter, handleMouseLeave } = useToastTimer(
     autoDismiss,
@@ -24,12 +36,44 @@ const Toast_25: React.FC<ToastProps> = ({
     onHoverPause
   );
 
+  useEffect(() => {
+    if (audio) {
+      const sound = new Audio(audio);
+      sound.play().catch(error => console.log('Audio playback failed:', error));
+    }
+  }, [audio]);
+
+  const getAnimationConfig = () => {
+    switch (animationType) {
+      case "bounce":
+        return {
+          initial: { rotateX: -45, opacity: 0, y: -30 },
+          animate: { rotateX: 0, opacity: 1, y: 0 },
+          exit: { rotateX: 45, opacity: 0, y: 30 },
+          transition: { type: "spring", stiffness: 300, damping: 15 }
+        };
+      case "slide":
+        return {
+          initial: { x: 300, opacity: 0 },
+          animate: { x: 0, opacity: 1 },
+          exit: { x: 300, opacity: 0 },
+          transition: { type: "spring", stiffness: 200, damping: 20 }
+        };
+      default:
+        return {
+          initial: { rotateX: -90, opacity: 0, y: -50 },
+          animate: { rotateX: 0, opacity: 1, y: 0 },
+          exit: { rotateX: 90, opacity: 0, y: 50 },
+          transition: { type: "spring", stiffness: 150, damping: 15 }
+        };
+    }
+  };
+
+  const animation = getAnimationConfig();
+
   return (
     <motion.div
-      initial={{ rotateX: -90, opacity: 0, y: -50 }}
-      animate={{ rotateX: 0, opacity: 1, y: 0 }}
-      exit={{ rotateX: 90, opacity: 0, y: 50 }}
-      transition={{ type: "spring", stiffness: 150, damping: 15 }}
+      {...animation}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={clsx(
@@ -41,90 +85,68 @@ const Toast_25: React.FC<ToastProps> = ({
     >
       {/* Card Container */}
       <div className={clsx(
-        "relative overflow-hidden rounded-lg shadow-lg",
-        theme === 'dark' ? 'bg-gray-800' : 'bg-white',
-        "transform-gpu perspective-1000"
+        "relative p-4 rounded-lg shadow-lg",
+        theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-gray-900',
+        "border border-gray-200 dark:border-gray-700"
       )}>
         {/* Progress Bar */}
         <motion.div
-          initial={{ scaleX: 1, opacity: 0.7 }}
-          animate={{ scaleX: 0, opacity: 1 }}
+          initial={{ scaleX: 1 }}
+          animate={{ scaleX: 0 }}
           transition={{ duration: duration / 1000, ease: "linear" }}
           style={{ originX: 0 }}
           className={clsx(
-            "absolute top-0 left-0 right-0 h-1",
-            theme === 'dark' ? 'bg-indigo-400' : 'bg-indigo-500'
+            "absolute bottom-0 left-0 right-0 h-1",
+            theme === 'dark' ? 'bg-blue-500' : 'bg-blue-600'
           )}
         />
 
-        {/* Content */}
-        <div className="p-4">
-          {/* Header */}
-          <div className="flex items-center justify-between mb-2">
-            <div className="flex items-center space-x-2">
-              <span className={clsx(
-                "flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center",
-                theme === 'dark' ? 'bg-indigo-900/50' : 'bg-indigo-100'
-              )}>
-                {icon}
-              </span>
-              <h6 className={clsx(
-                "font-semibold",
-                theme === 'dark' ? 'text-white' : 'text-gray-900'
-              )}>
-                Notification
-              </h6>
+        <div className="flex items-start space-x-3">
+          {/* Icon */}
+          {icon && (
+            <div className={clsx(
+              "flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center",
+              theme === 'dark' ? 'bg-gray-700' : 'bg-gray-100'
+            )}>
+              <span className="text-lg">{icon}</span>
             </div>
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={close}
-              className={clsx(
-                "w-6 h-6 rounded-full flex items-center justify-center",
-                theme === 'dark' 
-                  ? 'hover:bg-gray-700 text-gray-400' 
-                  : 'hover:bg-gray-100 text-gray-500'
-              )}
-            >
-              ×
-            </motion.button>
-          </div>
+          )}
 
-          {/* Message */}
-          <p className={clsx(
-            "text-sm mb-3",
-            theme === 'dark' ? 'text-gray-300' : 'text-gray-600'
-          )}>
-            {message}
-          </p>
+          {/* Content */}
+          <div className="flex-1 min-w-0">
+            <p className="text-sm font-medium">
+              {message}
+            </p>
 
-          {/* Action Button */}
-          {actionButton && (
-            <div className="flex justify-end">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+            {/* Action Button */}
+            {actionButton && (
+              <button
                 onClick={actionButton.onClick}
                 className={clsx(
-                  "px-3 py-1 text-sm font-medium rounded-full",
+                  "mt-2 text-xs font-medium px-2 py-1 rounded",
                   theme === 'dark'
-                    ? 'bg-indigo-900/50 text-indigo-200 hover:bg-indigo-900/70'
-                    : 'bg-indigo-100 text-indigo-700 hover:bg-indigo-200'
+                    ? 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
                 )}
               >
                 {actionButton.label}
-              </motion.button>
-            </div>
-          )}
-        </div>
+              </button>
+            )}
+          </div>
 
-        {/* Bottom Border Gradient */}
-        <div className={clsx(
-          "h-1 bg-gradient-to-r",
-          theme === 'dark'
-            ? 'from-indigo-500 via-purple-500 to-pink-500'
-            : 'from-indigo-400 via-purple-400 to-pink-400'
-        )} />
+          {/* Close Button */}
+          <button
+            onClick={close}
+            className={clsx(
+              "flex-shrink-0 w-5 h-5 flex items-center justify-center rounded-full",
+              theme === 'dark'
+                ? 'text-gray-400 hover:text-white hover:bg-gray-700'
+                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
+            )}
+          >
+            ×
+          </button>
+        </div>
       </div>
     </motion.div>
   );

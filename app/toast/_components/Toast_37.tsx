@@ -1,11 +1,18 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import clsx from "clsx";
-import { animationVariants, ThemeClassesBorder, positionClasses, useToastTimer } from "./utils";
-import { ToastProps } from "./toast-context";
+import { 
+  positionClasses, 
+  useToastTimer,
+  ToastProps,
+  ToastAnimationType,
+  ToastTheme
+} from "./utils";
 
-interface ExtendedToastProps extends ToastProps {
+interface ExtendedToastProps extends Omit<ToastProps, 'theme' | 'animationType'> {
   audio?: string;
+  theme?: ToastTheme;
+  animationType?: ToastAnimationType;
 }
 
 const Toast_37: React.FC<ExtendedToastProps> = ({
@@ -36,12 +43,37 @@ const Toast_37: React.FC<ExtendedToastProps> = ({
     }
   }, [audio]);
 
+  const getAnimationConfig = () => {
+    switch (animationType) {
+      case "slide":
+        return {
+          initial: { x: 300, opacity: 0 },
+          animate: { x: 0, opacity: 1 },
+          exit: { x: 300, opacity: 0 },
+          transition: { type: "spring", stiffness: 200, damping: 20 }
+        };
+      case "bounce":
+        return {
+          initial: { scale: 0.9, y: -20, opacity: 0 },
+          animate: { scale: 1, y: 0, opacity: 1 },
+          exit: { scale: 0.9, y: -20, opacity: 0 },
+          transition: { type: "spring", stiffness: 300, damping: 15 }
+        };
+      default:
+        return {
+          initial: { scale: 0.9, opacity: 0 },
+          animate: { scale: 1, opacity: 1 },
+          exit: { scale: 0.9, opacity: 0 },
+          transition: { type: "spring", stiffness: 200, damping: 20 }
+        };
+    }
+  };
+
+  const animation = getAnimationConfig();
+
   return (
     <motion.div
-      initial={{ y: -50, opacity: 0, rotateX: 90 }}
-      animate={{ y: 0, opacity: 1, rotateX: 0 }}
-      exit={{ y: 50, opacity: 0, rotateX: -90 }}
-      transition={{ type: "spring", stiffness: 300, damping: 25 }}
+      {...animation}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={clsx(
@@ -51,160 +83,102 @@ const Toast_37: React.FC<ExtendedToastProps> = ({
         stack ? "static" : "fixed",
       )}
     >
-      {/* Retro Container */}
+      {/* Neon Container */}
       <div className={clsx(
-        "relative overflow-hidden rounded-lg",
+        "relative p-4 rounded-lg",
         theme === 'dark'
-          ? 'bg-black border-2 border-pink-500'
-          : 'bg-gray-900 border-2 border-cyan-400',
-        "shadow-[0_0_20px_rgba(236,72,153,0.5)]"
+          ? 'bg-gray-900 border border-pink-500 shadow-[0_0_20px_rgba(236,72,153,0.5)]'
+          : 'bg-gray-100 border border-pink-400 shadow-[0_0_20px_rgba(244,114,182,0.3)]',
+        "overflow-hidden"
       )}>
-        {/* Grid Background */}
+        {/* Neon Glow Effect */}
         <div className={clsx(
-          "absolute inset-0",
-          "bg-[linear-gradient(transparent_1px,_transparent_1px),_linear-gradient(90deg,_transparent_1px,_transparent_1px)]",
-          "bg-[size:20px_20px]",
+          "absolute inset-0 blur-sm pointer-events-none",
           theme === 'dark'
-            ? '[background-image:linear-gradient(rgba(236,72,153,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(236,72,153,0.1)_1px,transparent_1px)]'
-            : '[background-image:linear-gradient(rgba(34,211,238,0.1)_1px,transparent_1px),linear-gradient(90deg,rgba(34,211,238,0.1)_1px,transparent_1px)]'
-        )}>
-          {/* Moving Grid Animation */}
-          <motion.div
-            animate={{
-              y: [0, 20],
-              x: [0, 20],
-            }}
-            transition={{
-              duration: 2,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-            className="absolute inset-0"
-            style={{
-              backgroundImage: `linear-gradient(45deg, ${theme === 'dark' ? 'rgba(236,72,153,0.1)' : 'rgba(34,211,238,0.1)'} 25%, transparent 25%)`,
-              backgroundSize: '20px 20px',
-            }}
-          />
-        </div>
-
-        {/* Content Container */}
-        <div className="relative p-4">
-          <div className="flex items-start space-x-3">
-            {/* Neon Icon */}
-            <motion.div
-              animate={{
-                textShadow: [
-                  "0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 42px #ec4899, 0 0 82px #ec4899, 0 0 92px #ec4899",
-                  "0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 42px #ec4899, 0 0 72px #ec4899, 0 0 82px #ec4899",
-                  "0 0 7px #fff, 0 0 10px #fff, 0 0 21px #fff, 0 0 42px #ec4899, 0 0 82px #ec4899, 0 0 92px #ec4899",
-                ],
-              }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className={clsx(
-                "flex-shrink-0 w-12 h-12 rounded-lg",
-                "flex items-center justify-center",
-                theme === 'dark'
-                  ? 'text-pink-500'
-                  : 'text-cyan-400',
-                "text-2xl font-bold",
-                "shadow-[0_0_10px_rgba(236,72,153,0.5)]"
-              )}
-            >
-              {icon}
-            </motion.div>
-
-            {/* Message Area */}
-            <div className="flex-1 min-w-0">
-              <motion.p
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
-                className={clsx(
-                  "text-sm font-bold",
-                  theme === 'dark'
-                    ? 'text-pink-500'
-                    : 'text-cyan-400',
-                  "text-shadow-[0_0_5px_rgba(236,72,153,0.5)]"
-                )}
-              >
-                {message}
-              </motion.p>
-
-              {/* Action Button */}
-              {actionButton && (
-                <motion.button
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={actionButton.onClick}
-                  className={clsx(
-                    "mt-2 px-4 py-1.5 text-sm font-bold rounded",
-                    "border transition-all duration-200",
-                    theme === 'dark'
-                      ? 'border-pink-500 text-pink-500 hover:bg-pink-500/20'
-                      : 'border-cyan-400 text-cyan-400 hover:bg-cyan-400/20',
-                    "shadow-[0_0_10px_rgba(236,72,153,0.3)]"
-                  )}
-                >
-                  {actionButton.label}
-                </motion.button>
-              )}
-            </div>
-
-            {/* Close Button */}
-            <motion.button
-              whileHover={{ scale: 1.1, rotate: 90 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={close}
-              className={clsx(
-                "flex-shrink-0 w-6 h-6 rounded-full",
-                "flex items-center justify-center",
-                theme === 'dark'
-                  ? 'text-pink-500 hover:bg-pink-500/20'
-                  : 'text-cyan-400 hover:bg-cyan-400/20'
-              )}
-            >
-              ×
-            </motion.button>
-          </div>
-        </div>
+            ? 'bg-gradient-to-br from-pink-500/20 via-purple-500/20 to-blue-500/20'
+            : 'bg-gradient-to-br from-pink-400/20 via-purple-400/20 to-blue-400/20'
+        )} />
 
         {/* Progress Bar */}
-        <div className="relative h-1">
-          <motion.div
-            initial={{ scaleX: 1 }}
-            animate={{ scaleX: 0 }}
-            transition={{ duration: duration / 1000, ease: "linear" }}
-            style={{ originX: 0 }}
-            className={clsx(
-              "absolute inset-0",
-              theme === 'dark'
-                ? 'bg-gradient-to-r from-pink-500 via-purple-500 to-pink-500'
-                : 'bg-gradient-to-r from-cyan-400 via-blue-500 to-cyan-400',
-              "shadow-[0_0_10px_rgba(236,72,153,0.5)]"
-            )}
-          />
-        </div>
-
-        {/* Scan Line Effect */}
         <motion.div
-          animate={{
-            y: ["0%", "100%", "0%"],
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: "linear",
-          }}
+          initial={{ scaleX: 1 }}
+          animate={{ scaleX: 0 }}
+          transition={{ duration: duration / 1000, ease: "linear" }}
+          style={{ originX: 0 }}
           className={clsx(
-            "absolute inset-x-0 h-1/2 pointer-events-none",
+            "absolute bottom-0 left-0 right-0 h-0.5",
             theme === 'dark'
-              ? 'bg-gradient-to-b from-transparent via-pink-500/10 to-transparent'
-              : 'bg-gradient-to-b from-transparent via-cyan-400/10 to-transparent'
+              ? 'bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500'
+              : 'bg-gradient-to-r from-pink-400 via-purple-400 to-blue-400'
           )}
         />
+
+        <div className="relative flex items-start space-x-3">
+          {/* Icon */}
+          {icon && (
+            <motion.div
+              animate={{ 
+                scale: [1, 1.1, 1],
+                rotate: [0, 5, -5, 0]
+              }}
+              transition={{ 
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className={clsx(
+                "flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center",
+                theme === 'dark'
+                  ? 'bg-gray-800 border border-pink-500 text-pink-500'
+                  : 'bg-gray-200 border border-pink-400 text-pink-600'
+              )}
+            >
+              <span className="text-xl">{icon}</span>
+            </motion.div>
+          )}
+
+          {/* Content */}
+          <div className="flex-1 min-w-0">
+            <p className={clsx(
+              "text-sm font-medium",
+              theme === 'dark' ? 'text-pink-500' : 'text-pink-600'
+            )}>
+              {message}
+            </p>
+
+            {/* Action Button */}
+            {actionButton && (
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={actionButton.onClick}
+                className={clsx(
+                  "mt-2 text-xs font-medium px-4 py-1.5 rounded-lg",
+                  theme === 'dark'
+                    ? 'bg-gray-800 border border-pink-500 text-pink-500 hover:bg-pink-500 hover:text-gray-900'
+                    : 'bg-gray-200 border border-pink-400 text-pink-600 hover:bg-pink-400 hover:text-gray-900'
+                )}
+              >
+                {actionButton.label}
+              </motion.button>
+            )}
+          </div>
+
+          {/* Close Button */}
+          <motion.button
+            onClick={close}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            className={clsx(
+              "flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg",
+              theme === 'dark'
+                ? 'bg-gray-800 border border-pink-500 text-pink-500 hover:bg-pink-500 hover:text-gray-900'
+                : 'bg-gray-200 border border-pink-400 text-pink-600 hover:bg-pink-400 hover:text-gray-900'
+            )}
+          >
+            ×
+          </motion.button>
+        </div>
       </div>
     </motion.div>
   );

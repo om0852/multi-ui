@@ -1,11 +1,18 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import clsx from "clsx";
-import { animationVariants, ThemeClassesBorder, positionClasses, useToastTimer } from "./utils";
-import { ToastProps } from "./toast-context";
+import { 
+  positionClasses, 
+  useToastTimer,
+  ToastProps,
+  ToastAnimationType,
+  ToastTheme
+} from "./utils";
 
-interface ExtendedToastProps extends ToastProps {
+interface ExtendedToastProps extends Omit<ToastProps, 'theme' | 'animationType'> {
   audio?: string;
+  theme?: ToastTheme;
+  animationType?: ToastAnimationType;
 }
 
 const Toast_41: React.FC<ExtendedToastProps> = ({
@@ -31,17 +38,42 @@ const Toast_41: React.FC<ExtendedToastProps> = ({
 
   useEffect(() => {
     if (audio) {
-      const audioElement = new Audio(audio);
-      audioElement.play();
+      const sound = new Audio(audio);
+      sound.play().catch(error => console.log('Audio playback failed:', error));
     }
   }, [audio]);
 
+  const getAnimationConfig = () => {
+    switch (animationType) {
+      case "slide":
+        return {
+          initial: { x: 300, opacity: 0, rotateY: -45 },
+          animate: { x: 0, opacity: 1, rotateY: 0 },
+          exit: { x: 300, opacity: 0, rotateY: 45 },
+          transition: { type: "spring", stiffness: 200, damping: 20 }
+        };
+      case "bounce":
+        return {
+          initial: { scale: 0.9, y: -20, opacity: 0, rotateX: -45 },
+          animate: { scale: 1, y: 0, opacity: 1, rotateX: 0 },
+          exit: { scale: 0.9, y: -20, opacity: 0, rotateX: 45 },
+          transition: { type: "spring", stiffness: 300, damping: 15 }
+        };
+      default:
+        return {
+          initial: { scale: 0.9, opacity: 0, rotateY: -45 },
+          animate: { scale: 1, opacity: 1, rotateY: 0 },
+          exit: { scale: 0.9, opacity: 0, rotateY: 45 },
+          transition: { type: "spring", stiffness: 200, damping: 20 }
+        };
+    }
+  };
+
+  const animation = getAnimationConfig();
+
   return (
     <motion.div
-      initial={{ scale: 0.8, opacity: 0, rotate: -10 }}
-      animate={{ scale: 1, opacity: 1, rotate: 0 }}
-      exit={{ scale: 0.8, opacity: 0, rotate: 10 }}
-      transition={{ type: "spring", stiffness: 300, damping: 25 }}
+      {...animation}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={clsx(
@@ -49,185 +81,110 @@ const Toast_41: React.FC<ExtendedToastProps> = ({
         "w-[320px]",
         positionClasses[position],
         stack ? "static" : "fixed",
+        "perspective-[1000px]"
       )}
     >
+      {/* 3D Card Container */}
       <div className={clsx(
-        "relative overflow-hidden rounded-2xl",
+        "relative p-4 rounded-2xl transform-gpu",
         theme === 'dark'
-          ? 'bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900'
-          : 'bg-gradient-to-br from-slate-100 via-purple-100 to-slate-100',
-        "border border-purple-500/30",
-        "shadow-lg shadow-purple-500/20"
+          ? 'bg-gradient-to-br from-gray-800 to-gray-900'
+          : 'bg-gradient-to-br from-gray-50 to-white',
+        "shadow-[0_10px_20px_rgba(0,0,0,0.2)]",
+        "border",
+        theme === 'dark' ? 'border-gray-700' : 'border-gray-200'
       )}>
-        {/* Star Field Background */}
-        <div className="absolute inset-0">
-          {[...Array(20)].map((_, i) => (
-            <motion.div
-              key={i}
-              animate={{
-                scale: [0.5, 1, 0.5],
-                opacity: [0.3, 0.8, 0.3],
-              }}
-              transition={{
-                duration: 2 + Math.random() * 2,
-                repeat: Infinity,
-                delay: Math.random() * 2,
-              }}
-              className={clsx(
-                "absolute w-1 h-1 rounded-full",
-                theme === 'dark' ? 'bg-white' : 'bg-purple-500'
-              )}
-              style={{
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
-            />
-          ))}
-        </div>
+        {/* 3D Lighting Effect */}
+        <div className={clsx(
+          "absolute inset-0 rounded-2xl",
+          "bg-gradient-to-tr",
+          theme === 'dark'
+            ? 'from-transparent via-gray-800/50 to-white/5'
+            : 'from-transparent via-gray-50/50 to-white/80'
+        )} />
 
-        {/* Nebula Effect */}
+        {/* Progress Bar */}
         <motion.div
-          animate={{
-            opacity: [0.3, 0.5, 0.3],
-            scale: [1, 1.2, 1],
-          }}
-          transition={{
-            duration: 8,
-            repeat: Infinity,
-            ease: "easeInOut",
-          }}
+          initial={{ scaleX: 1 }}
+          animate={{ scaleX: 0 }}
+          transition={{ duration: duration / 1000, ease: "linear" }}
+          style={{ originX: 0 }}
           className={clsx(
-            "absolute inset-0",
-            "bg-[radial-gradient(ellipse_at_center,rgba(167,139,250,0.2)_0%,transparent_70%)]"
+            "absolute bottom-0 left-0 right-0 h-1 rounded-full",
+            theme === 'dark'
+              ? 'bg-gradient-to-r from-blue-600 via-blue-500 to-blue-600'
+              : 'bg-gradient-to-r from-blue-500 via-blue-400 to-blue-500'
           )}
         />
 
-        {/* Constellation Lines */}
-        <svg className="absolute inset-0 w-full h-full">
-          <motion.path
-            d="M10 10 L50 50 L90 30 L130 70"
-            stroke={theme === 'dark' ? 'rgba(167,139,250,0.2)' : 'rgba(147,51,234,0.2)'}
-            strokeWidth="1"
-            fill="none"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{
-              duration: 3,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-          />
-        </svg>
-
-        <div className="relative p-4">
-          <div className="flex items-start space-x-4">
-            {/* Cosmic Icon */}
+        <div className="relative flex items-start space-x-3">
+          {/* Icon */}
+          {icon && (
             <motion.div
-              animate={{
-                rotate: 360,
-                scale: [1, 1.1, 1],
+              animate={{ 
+                rotateY: [0, 180, 360],
+                scale: [1, 1.1, 1]
               }}
-              transition={{
-                rotate: {
-                  duration: 20,
-                  repeat: Infinity,
-                  ease: "linear",
-                },
-                scale: {
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                },
+              transition={{ 
+                duration: 3,
+                repeat: Infinity,
+                ease: "easeInOut"
               }}
               className={clsx(
-                "flex-shrink-0 w-12 h-12 rounded-full",
-                "flex items-center justify-center",
-                "bg-gradient-to-br from-purple-500/20 to-transparent",
-                theme === 'dark' ? 'text-purple-300' : 'text-purple-600'
+                "flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center",
+                theme === 'dark'
+                  ? 'bg-gray-700/80 text-white shadow-lg'
+                  : 'bg-white/80 text-gray-900 shadow-md',
+                "transform-gpu preserve-3d"
               )}
             >
-              <span className="text-2xl">{icon}</span>
+              <span className="text-xl">{icon}</span>
             </motion.div>
+          )}
 
-            {/* Content */}
-            <div className="flex-1">
-              <motion.p
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
+          {/* Content */}
+          <div className="flex-1 min-w-0">
+            <p className={clsx(
+              "text-sm font-medium",
+              theme === 'dark' ? 'text-white' : 'text-gray-900'
+            )}>
+              {message}
+            </p>
+
+            {/* Action Button */}
+            {actionButton && (
+              <motion.button
+                whileHover={{ scale: 1.02, translateZ: 10 }}
+                whileTap={{ scale: 0.98, translateZ: 5 }}
+                onClick={actionButton.onClick}
                 className={clsx(
-                  "text-sm",
-                  theme === 'dark' ? 'text-purple-100' : 'text-purple-900'
+                  "mt-2 text-xs font-medium px-4 py-2 rounded-lg",
+                  "transform-gpu transition-all duration-200",
+                  theme === 'dark'
+                    ? 'bg-gray-700/80 text-white hover:bg-gray-600/80 shadow-lg'
+                    : 'bg-white/80 text-gray-900 hover:bg-gray-50/80 shadow-md'
                 )}
               >
-                {message}
-              </motion.p>
-
-              {actionButton && (
-                <motion.button
-                  whileHover={{ scale: 1.05, y: -2 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={actionButton.onClick}
-                  className={clsx(
-                    "mt-3 px-4 py-1.5 text-sm rounded-lg",
-                    "backdrop-blur-sm transition-all duration-200",
-                    theme === 'dark'
-                      ? 'bg-purple-500/20 text-purple-300 hover:bg-purple-500/30'
-                      : 'bg-purple-500/10 text-purple-700 hover:bg-purple-500/20'
-                  )}
-                >
-                  {actionButton.label}
-                </motion.button>
-              )}
-            </div>
-
-            {/* Close Button */}
-            <motion.button
-              whileHover={{ scale: 1.1, rotate: 90 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={close}
-              className={clsx(
-                "flex-shrink-0 w-6 h-6 rounded-full",
-                "flex items-center justify-center",
-                theme === 'dark'
-                  ? 'text-purple-300 hover:bg-purple-500/20'
-                  : 'text-purple-700 hover:bg-purple-500/10'
-              )}
-            >
-              ×
-            </motion.button>
+                {actionButton.label}
+              </motion.button>
+            )}
           </div>
-        </div>
 
-        {/* Cosmic Progress Ring */}
-        <div className="relative h-1">
-          <motion.div
-            initial={{ scaleX: 1 }}
-            animate={{ scaleX: 0 }}
-            transition={{ duration: duration / 1000, ease: "linear" }}
-            style={{ originX: 0 }}
+          {/* Close Button */}
+          <motion.button
+            onClick={close}
+            whileHover={{ scale: 1.1, rotateZ: 180 }}
+            whileTap={{ scale: 0.9 }}
             className={clsx(
-              "absolute inset-0",
+              "flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg",
+              "transform-gpu transition-all duration-200",
               theme === 'dark'
-                ? 'bg-gradient-to-r from-purple-500 via-fuchsia-500 to-purple-500'
-                : 'bg-gradient-to-r from-purple-400 via-fuchsia-400 to-purple-400'
+                ? 'bg-gray-700/80 text-white/70 hover:text-white hover:bg-gray-600/80'
+                : 'bg-white/80 text-gray-600 hover:text-gray-900 hover:bg-gray-50/80'
             )}
           >
-            {/* Sparkle Effect */}
-            <motion.div
-              animate={{
-                x: ["0%", "100%"],
-              }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-              className={clsx(
-                "absolute inset-0",
-                "bg-gradient-to-r from-transparent via-white/50 to-transparent"
-              )}
-            />
-          </motion.div>
+            ×
+          </motion.button>
         </div>
       </div>
     </motion.div>

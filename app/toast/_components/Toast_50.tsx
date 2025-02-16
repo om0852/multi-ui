@@ -1,11 +1,18 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import clsx from "clsx";
-import { animationVariants, ThemeClassesBorder, positionClasses, useToastTimer } from "./utils";
-import { ToastProps } from "./toast-context";
+import { 
+  positionClasses, 
+  useToastTimer,
+  ToastProps,
+  ToastAnimationType,
+  ToastTheme
+} from "./utils";
 
-interface ExtendedToastProps extends ToastProps {
+interface ExtendedToastProps extends Omit<ToastProps, 'theme' | 'animationType'> {
   audio?: string;
+  theme?: ToastTheme;
+  animationType?: ToastAnimationType;
 }
 
 const Toast_50: React.FC<ExtendedToastProps> = ({
@@ -31,144 +38,169 @@ const Toast_50: React.FC<ExtendedToastProps> = ({
 
   useEffect(() => {
     if (audio) {
-      const audioElement = new Audio(audio);
-      audioElement.play();
+      const sound = new Audio(audio);
+      sound.play().catch(error => console.log('Audio playback failed:', error));
     }
   }, [audio]);
 
+  const getAnimationConfig = () => {
+    switch (animationType) {
+      case "slide":
+        return {
+          initial: { x: 300, opacity: 0, rotateY: -45 },
+          animate: { x: 0, opacity: 1, rotateY: 0 },
+          exit: { x: 300, opacity: 0, rotateY: 45 },
+          transition: { type: "spring", stiffness: 200, damping: 20 }
+        };
+      case "bounce":
+        return {
+          initial: { y: -50, opacity: 0, scale: 0.9, rotateX: -45 },
+          animate: { y: 0, opacity: 1, scale: 1, rotateX: 0 },
+          exit: { y: 50, opacity: 0, scale: 0.9, rotateX: 45 },
+          transition: { type: "spring", stiffness: 300, damping: 15 }
+        };
+      default:
+        return {
+          initial: { scale: 0.9, opacity: 0, z: -100 },
+          animate: { scale: 1, opacity: 1, z: 0 },
+          exit: { scale: 0.9, opacity: 0, z: -100 },
+          transition: { type: "spring", stiffness: 200, damping: 20 }
+        };
+    }
+  };
+
+  const animation = getAnimationConfig();
+
   return (
     <motion.div
-      initial={{ opacity: 0, y: -20, rotateX: 45 }}
-      animate={{ opacity: 1, y: 0, rotateX: 0 }}
-      exit={{ opacity: 0, y: 20, rotateX: -45 }}
-      transition={{ type: "spring", stiffness: 300, damping: 25 }}
+      {...animation}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={clsx(
         "relative z-50",
         "w-[320px]",
         positionClasses[position],
-        stack ? "static" : "fixed",
+        stack ? "static" : "fixed"
       )}
+      style={{ perspective: "1000px" }}
     >
-      <div className={clsx(
-        "relative p-4 rounded-lg",
-        theme === 'dark'
-          ? 'bg-gray-900/40 backdrop-blur-xl'
-          : 'bg-white/40 backdrop-blur-xl',
-        "border border-white/20",
-        "shadow-[0_0_20px_rgba(255,255,255,0.1)]",
-        "overflow-hidden"
-      )}>
-        {/* Crystal Facets */}
-        <div className="absolute inset-0">
+      {/* 3D Card Container */}
+      <motion.div
+        whileHover={{ scale: 1.02, rotateY: 5 }}
+        className={clsx(
+          "relative p-4 rounded-2xl overflow-hidden",
+          theme === 'dark'
+            ? 'bg-gradient-to-br from-slate-800 via-slate-900 to-slate-800'
+            : 'bg-gradient-to-br from-slate-100 via-white to-slate-100',
+          "shadow-2xl",
+          "transform-style-preserve-3d"
+        )}
+      >
+        {/* 3D Layer Effects */}
+        <div className={clsx(
+          "absolute inset-0",
+          theme === 'dark'
+            ? 'bg-gradient-to-br from-cyan-500/10 via-transparent to-purple-500/10'
+            : 'bg-gradient-to-br from-cyan-300/10 via-transparent to-purple-300/10',
+          "transform translate-z-[-20px]"
+        )} />
+
+        {/* Floating Particles */}
+        {[...Array(5)].map((_, i) => (
           <motion.div
+            key={i}
             animate={{
-              opacity: [0.1, 0.2, 0.1],
-              rotate: [0, 360],
+              y: [0, -20, 0],
+              x: [0, 10, 0],
+              opacity: [0.3, 0.6, 0.3],
             }}
             transition={{
-              duration: 20,
+              duration: 3,
+              delay: i * 0.2,
               repeat: Infinity,
-              ease: "linear",
-            }}
-            className="absolute inset-0 bg-[conic-gradient(from_0deg,transparent,rgba(255,255,255,0.1),transparent)]"
-          />
-          <motion.div
-            animate={{
-              opacity: [0.05, 0.15, 0.05],
-              rotate: [360, 0],
-            }}
-            transition={{
-              duration: 15,
-              repeat: Infinity,
-              ease: "linear",
-            }}
-            className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,transparent,rgba(255,255,255,0.1))]"
-          />
-        </div>
-
-        {/* Light Refraction */}
-        <motion.div
-          animate={{
-            x: ["0%", "100%"],
-            opacity: [0, 1, 0],
-          }}
-          transition={{
-            duration: 3,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-          className="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent transform -skew-x-12"
-        />
-
-        <div className="relative flex items-start space-x-3">
-          {/* Crystal Icon Container */}
-          <motion.div
-            whileHover={{
-              scale: 1.1,
-              rotateY: 180,
-              transition: { duration: 0.6 },
+              ease: "easeInOut"
             }}
             className={clsx(
-              "flex-shrink-0 w-10 h-10 rounded-lg",
-              "flex items-center justify-center",
+              "absolute w-2 h-2 rounded-full",
               theme === 'dark'
                 ? 'bg-white/10'
                 : 'bg-black/5',
-              "border border-white/20",
-              "backdrop-blur-sm",
-              "relative overflow-hidden"
+              `top-${Math.floor(Math.random() * 100)}%`,
+              `left-${Math.floor(Math.random() * 100)}%`
             )}
-          >
-            <span className={clsx(
-              "relative z-10 text-xl",
-              theme === 'dark' ? 'text-white' : 'text-gray-900'
-            )}>
-              {icon}
-            </span>
-            <motion.div
-              animate={{
-                backgroundPosition: ["0% 0%", "100% 100%"],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-              className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent"
-            />
-          </motion.div>
+          />
+        ))}
 
-          {/* Content */}
-          <div className="flex-1">
-            <motion.p
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+        {/* Progress Bar */}
+        <motion.div
+          initial={{ scaleX: 1 }}
+          animate={{ scaleX: 0 }}
+          transition={{ duration: duration / 1000, ease: "linear" }}
+          style={{ originX: 0 }}
+          className={clsx(
+            "absolute bottom-0 left-0 right-0 h-1",
+            theme === 'dark'
+              ? 'bg-gradient-to-r from-cyan-500/30 via-white/20 to-purple-500/30'
+              : 'bg-gradient-to-r from-cyan-300/30 via-black/10 to-purple-300/30'
+          )}
+        />
+
+        <div className="relative flex items-start space-x-4">
+          {/* Icon */}
+          {icon && (
+            <motion.div
+              animate={{ 
+                rotateY: [0, 360],
+                scale: [1, 1.1, 1]
+              }}
+              transition={{ 
+                rotateY: {
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: "linear"
+                },
+                scale: {
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }
+              }}
               className={clsx(
-                "text-sm",
-                theme === 'dark' ? 'text-white' : 'text-gray-900'
+                "flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center",
+                theme === 'dark'
+                  ? 'bg-white/10 text-white'
+                  : 'bg-black/5 text-black',
+                "backdrop-blur-sm",
+                "transform-style-preserve-3d"
               )}
             >
-              {message}
-            </motion.p>
+              <span className="text-xl transform translate-z-[10px]">{icon}</span>
+            </motion.div>
+          )}
 
+          {/* Content */}
+          <div className="flex-1 min-w-0 pt-1">
+            <p className={clsx(
+              "text-sm font-medium transform translate-z-[5px]",
+              theme === 'dark' ? 'text-white' : 'text-black'
+            )}>
+              {message}
+            </p>
+
+            {/* Action Button */}
             {actionButton && (
               <motion.button
-                whileHover={{
-                  scale: 1.05,
-                  boxShadow: "0 0 20px rgba(255,255,255,0.2)",
-                }}
+                whileHover={{ scale: 1.05, translateZ: 15 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={actionButton.onClick}
                 className={clsx(
-                  "mt-2 px-4 py-1.5 text-sm rounded-lg",
+                  "mt-3 px-4 py-1.5 text-xs font-medium rounded-lg",
                   theme === 'dark'
                     ? 'bg-white/10 text-white hover:bg-white/20'
-                    : 'bg-black/5 text-gray-900 hover:bg-black/10',
+                    : 'bg-black/5 text-black hover:bg-black/10',
                   "backdrop-blur-sm",
-                  "border border-white/20",
-                  "transition-all duration-300"
+                  "transition-colors duration-200",
+                  "transform-style-preserve-3d"
                 )}
               >
                 {actionButton.label}
@@ -178,61 +210,23 @@ const Toast_50: React.FC<ExtendedToastProps> = ({
 
           {/* Close Button */}
           <motion.button
-            whileHover={{
-              rotate: 180,
-              scale: 1.1,
-              boxShadow: "0 0 10px rgba(255,255,255,0.2)",
-            }}
-            whileTap={{ scale: 0.9 }}
             onClick={close}
+            whileHover={{ scale: 1.1, rotate: 90, translateZ: 10 }}
+            whileTap={{ scale: 0.9 }}
             className={clsx(
-              "flex-shrink-0 w-6 h-6 rounded-full",
-              "flex items-center justify-center",
+              "flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center",
               theme === 'dark'
                 ? 'bg-white/10 text-white hover:bg-white/20'
-                : 'bg-black/5 text-gray-900 hover:bg-black/10',
+                : 'bg-black/5 text-black hover:bg-black/10',
               "backdrop-blur-sm",
-              "border border-white/20"
+              "transition-colors duration-200",
+              "transform-style-preserve-3d"
             )}
           >
             ×
           </motion.button>
         </div>
-
-        {/* Crystal Progress Bar */}
-        <div className="relative h-1 mt-3">
-          <div className={clsx(
-            "absolute inset-0 rounded-full",
-            theme === 'dark'
-              ? 'bg-white/5'
-              : 'bg-black/5'
-          )} />
-          <motion.div
-            initial={{ scaleX: 1 }}
-            animate={{ scaleX: 0 }}
-            transition={{ duration: duration / 1000, ease: "linear" }}
-            style={{ originX: 0 }}
-            className={clsx(
-              "absolute inset-0 rounded-full",
-              "bg-gradient-to-r from-white/30 to-white/10",
-              "backdrop-blur-sm"
-            )}
-          >
-            {/* Prismatic Effect */}
-            <motion.div
-              animate={{
-                x: ["0%", "100%"],
-              }}
-              transition={{
-                duration: 1.5,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-              className="absolute inset-0 bg-gradient-to-r from-transparent via-white/40 to-transparent"
-            />
-          </motion.div>
-        </div>
-      </div>
+      </motion.div>
     </motion.div>
   );
 };

@@ -1,11 +1,18 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import clsx from "clsx";
-import { animationVariants, ThemeClassesBorder, positionClasses, useToastTimer } from "./utils";
-import { ToastProps } from "./toast-context";
+import { 
+  positionClasses, 
+  useToastTimer,
+  ToastProps,
+  ToastAnimationType,
+  ToastTheme
+} from "./utils";
 
-interface ExtendedToastProps extends ToastProps {
+interface ExtendedToastProps extends Omit<ToastProps, 'theme' | 'animationType'> {
   audio?: string;
+  theme?: ToastTheme;
+  animationType?: ToastAnimationType;
 }
 
 const Toast_33: React.FC<ExtendedToastProps> = ({
@@ -36,12 +43,37 @@ const Toast_33: React.FC<ExtendedToastProps> = ({
     }
   }, [audio]);
 
+  const getAnimationConfig = () => {
+    switch (animationType) {
+      case "slide":
+        return {
+          initial: { x: 300, opacity: 0 },
+          animate: { x: 0, opacity: 1 },
+          exit: { x: 300, opacity: 0 },
+          transition: { type: "spring", stiffness: 200, damping: 20 }
+        };
+      case "bounce":
+        return {
+          initial: { scale: 0.9, y: -20, opacity: 0 },
+          animate: { scale: 1, y: 0, opacity: 1 },
+          exit: { scale: 0.9, y: -20, opacity: 0 },
+          transition: { type: "spring", stiffness: 300, damping: 15 }
+        };
+      default:
+        return {
+          initial: { scale: 0.9, opacity: 0 },
+          animate: { scale: 1, opacity: 1 },
+          exit: { scale: 0.9, opacity: 0 },
+          transition: { type: "spring", stiffness: 200, damping: 20 }
+        };
+    }
+  };
+
+  const animation = getAnimationConfig();
+
   return (
     <motion.div
-      initial={{ x: 100, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      exit={{ x: 100, opacity: 0 }}
-      transition={{ type: "spring", stiffness: 200, damping: 20 }}
+      {...animation}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={clsx(
@@ -51,168 +83,96 @@ const Toast_33: React.FC<ExtendedToastProps> = ({
         stack ? "static" : "fixed",
       )}
     >
-      {/* HUD Container */}
+      {/* Glassmorphic Container */}
       <div className={clsx(
-        "relative rounded-lg overflow-hidden backdrop-blur-sm",
+        "relative p-4 rounded-xl backdrop-blur-md",
         theme === 'dark'
-          ? 'bg-black/40 border border-emerald-500/30'
-          : 'bg-white/40 border border-emerald-400/30'
+          ? 'bg-gray-800/90 shadow-lg border border-gray-700/50'
+          : 'bg-white/90 shadow-lg border border-gray-200/50',
+        "transform-gpu"
       )}>
-        {/* Scanning Line Effect */}
+        {/* Gradient Overlay */}
+        <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-transparent via-white/5 to-white/10 pointer-events-none" />
+
+        {/* Progress Bar */}
         <motion.div
-          animate={{
-            y: ["0%", "100%", "0%"],
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: "linear",
-          }}
+          initial={{ scaleX: 1 }}
+          animate={{ scaleX: 0 }}
+          transition={{ duration: duration / 1000, ease: "linear" }}
+          style={{ originX: 0 }}
           className={clsx(
-            "absolute inset-x-0 h-1/3 pointer-events-none",
-            theme === 'dark'
-              ? 'bg-gradient-to-b from-emerald-500/0 via-emerald-500/10 to-emerald-500/0'
-              : 'bg-gradient-to-b from-emerald-400/0 via-emerald-400/10 to-emerald-400/0'
+            "absolute bottom-0 left-0 right-0 h-0.5 bg-gradient-to-r",
+            theme === 'dark' 
+              ? 'from-blue-500 via-purple-500 to-pink-500'
+              : 'from-blue-400 via-purple-400 to-pink-400'
           )}
         />
 
-        {/* HUD Corner Accents */}
-        <div className="absolute inset-0">
-          <div className={clsx(
-            "absolute top-0 left-0 w-3 h-3 border-l-2 border-t-2",
-            theme === 'dark' ? 'border-emerald-500' : 'border-emerald-400'
-          )} />
-          <div className={clsx(
-            "absolute top-0 right-0 w-3 h-3 border-r-2 border-t-2",
-            theme === 'dark' ? 'border-emerald-500' : 'border-emerald-400'
-          )} />
-          <div className={clsx(
-            "absolute bottom-0 left-0 w-3 h-3 border-l-2 border-b-2",
-            theme === 'dark' ? 'border-emerald-500' : 'border-emerald-400'
-          )} />
-          <div className={clsx(
-            "absolute bottom-0 right-0 w-3 h-3 border-r-2 border-b-2",
-            theme === 'dark' ? 'border-emerald-500' : 'border-emerald-400'
-          )} />
-        </div>
-
-        {/* Content Container */}
-        <div className="relative p-4">
-          <div className="flex items-start space-x-3">
-            {/* Icon with Scanning Effect */}
-            <div className="relative flex-shrink-0">
-              <motion.div
-                animate={{
-                  opacity: [1, 0.5, 1],
-                  scale: [1, 1.1, 1],
-                }}
-                transition={{
-                  duration: 2,
-                  repeat: Infinity,
-                  ease: "easeInOut",
-                }}
-                className={clsx(
-                  "w-10 h-10 rounded-lg flex items-center justify-center",
-                  theme === 'dark'
-                    ? 'bg-emerald-900/30 text-emerald-400'
-                    : 'bg-emerald-100/50 text-emerald-600'
-                )}
-              >
-                <span className="text-2xl">{icon}</span>
-              </motion.div>
-              <motion.div
-                animate={{
-                  opacity: [0, 1, 0],
-                  y: [0, 20, 0],
-                }}
-                transition={{
-                  duration: 1.5,
-                  repeat: Infinity,
-                  ease: "linear",
-                }}
-                className={clsx(
-                  "absolute inset-0 rounded-lg",
-                  theme === 'dark'
-                    ? 'bg-gradient-to-b from-emerald-500/20 to-transparent'
-                    : 'bg-gradient-to-b from-emerald-400/20 to-transparent'
-                )}
-              />
-            </div>
-
-            {/* Message with Typing Effect */}
-            <div className="flex-1 min-w-0">
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                className={clsx(
-                  "text-sm font-mono",
-                  theme === 'dark' ? 'text-emerald-400' : 'text-emerald-700'
-                )}
-              >
-                {message}
-              </motion.p>
-
-              {/* Action Button */}
-              {actionButton && (
-                <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={actionButton.onClick}
-                  className={clsx(
-                    "mt-2 px-4 py-1 text-xs font-mono rounded border",
-                    theme === 'dark'
-                      ? 'border-emerald-500/50 text-emerald-400 hover:bg-emerald-500/20'
-                      : 'border-emerald-400/50 text-emerald-700 hover:bg-emerald-400/20'
-                  )}
-                >
-                  {`> ${actionButton.label}`}
-                </motion.button>
-              )}
-            </div>
-
-            {/* Close Button */}
-            <motion.button
-              whileHover={{ rotate: 90 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={close}
+        <div className="flex items-start space-x-3">
+          {/* Icon */}
+          {icon && (
+            <motion.div
+              animate={{ 
+                scale: [1, 1.1, 1],
+                rotate: [0, 5, -5, 0]
+              }}
+              transition={{ 
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
               className={clsx(
-                "flex-shrink-0 w-6 h-6 rounded flex items-center justify-center",
+                "flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center backdrop-blur-sm",
                 theme === 'dark'
-                  ? 'text-emerald-400 hover:bg-emerald-500/20'
-                  : 'text-emerald-600 hover:bg-emerald-400/20'
+                  ? 'bg-gray-700/80 text-white'
+                  : 'bg-gray-100/80 text-gray-900'
               )}
             >
-              ×
-            </motion.button>
-          </div>
-        </div>
+              <span className="text-lg">{icon}</span>
+            </motion.div>
+          )}
 
-        {/* HUD Progress Bar */}
-        <div className="relative h-1">
-          <motion.div
-            initial={{ scaleX: 1 }}
-            animate={{ scaleX: 0 }}
-            transition={{ duration: duration / 1000, ease: "linear" }}
-            style={{ originX: 0 }}
-            className={clsx(
-              "absolute inset-0",
-              theme === 'dark' ? 'bg-emerald-500' : 'bg-emerald-400'
-            )}
-          />
-          {/* Progress Bar Segments */}
-          <div className="absolute inset-0 flex">
-            {[...Array(20)].map((_, i) => (
-              <div
-                key={i}
+          {/* Content */}
+          <div className="flex-1 min-w-0">
+            <p className={clsx(
+              "text-sm font-medium",
+              theme === 'dark' ? 'text-white' : 'text-gray-900'
+            )}>
+              {message}
+            </p>
+
+            {/* Action Button */}
+            {actionButton && (
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={actionButton.onClick}
                 className={clsx(
-                  "flex-1 border-r",
+                  "mt-2 text-xs font-medium px-3 py-1 rounded-lg backdrop-blur-sm",
                   theme === 'dark'
-                    ? 'border-black/50'
-                    : 'border-white/50'
+                    ? 'bg-gray-700/80 text-gray-300 hover:bg-gray-600/80'
+                    : 'bg-gray-100/80 text-gray-700 hover:bg-gray-200/80'
                 )}
-              />
-            ))}
+              >
+                {actionButton.label}
+              </motion.button>
+            )}
           </div>
+
+          {/* Close Button */}
+          <motion.button
+            onClick={close}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            className={clsx(
+              "flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-lg backdrop-blur-sm",
+              theme === 'dark'
+                ? 'text-gray-400 hover:text-white hover:bg-gray-700/80'
+                : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100/80'
+            )}
+          >
+            ×
+          </motion.button>
         </div>
       </div>
     </motion.div>

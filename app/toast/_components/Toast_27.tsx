@@ -1,10 +1,21 @@
 import React from "react";
 import { motion } from "framer-motion";
 import clsx from "clsx";
-import { animationVariants, ThemeClassesBorder, positionClasses, useToastTimer } from "./utils";
-import { ToastProps } from "./toast-context";
+import { 
+  positionClasses, 
+  useToastTimer,
+  ToastProps,
+  ToastAnimationType,
+  ToastTheme
+} from "./utils";
 
-const Toast_27: React.FC<ToastProps> = ({
+interface ExtendedToastProps extends Omit<ToastProps, 'theme' | 'animationType'> {
+  audio?: string;
+  theme?: ToastTheme;
+  animationType?: ToastAnimationType;
+}
+
+const Toast_27: React.FC<ExtendedToastProps> = ({
   message,
   close,
   icon,
@@ -24,12 +35,37 @@ const Toast_27: React.FC<ToastProps> = ({
     onHoverPause
   );
 
+  const getAnimationConfig = () => {
+    switch (animationType) {
+      case "slide":
+        return {
+          initial: { x: 300, opacity: 0 },
+          animate: { x: 0, opacity: 1 },
+          exit: { x: 300, opacity: 0 },
+          transition: { type: "spring", stiffness: 200, damping: 20 }
+        };
+      case "fade":
+        return {
+          initial: { opacity: 0 },
+          animate: { opacity: 1 },
+          exit: { opacity: 0 },
+          transition: { type: "spring", stiffness: 200, damping: 20 }
+        };
+      default:
+        return {
+          initial: { y: -50, opacity: 0 },
+          animate: { y: 0, opacity: 1 },
+          exit: { y: -50, opacity: 0 },
+          transition: { type: "spring", stiffness: 200, damping: 20 }
+        };
+    }
+  };
+
+  const animation = getAnimationConfig();
+
   return (
     <motion.div
-      initial={{ y: -50, opacity: 0 }}
-      animate={{ y: 0, opacity: 1 }}
-      exit={{ y: -50, opacity: 0 }}
-      transition={{ type: "spring", stiffness: 200, damping: 20 }}
+      {...animation}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={clsx(
@@ -108,28 +144,17 @@ const Toast_27: React.FC<ToastProps> = ({
 
             {/* Close Button */}
             <motion.button
-              whileHover={{ rotate: 180 }}
               onClick={close}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
               className={clsx(
-                "flex-shrink-0 rounded-lg p-1",
+                "flex-shrink-0 w-6 h-6 flex items-center justify-center rounded-full",
                 theme === 'dark'
-                  ? 'hover:bg-gray-800 text-gray-400'
-                  : 'hover:bg-gray-100 text-gray-500'
+                  ? 'text-gray-400 hover:text-white hover:bg-gray-800'
+                  : 'text-gray-500 hover:text-gray-700 hover:bg-gray-100'
               )}
             >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M6 18L18 6M6 6l12 12"
-                />
-              </svg>
+              ×
             </motion.button>
           </div>
         </div>

@@ -1,11 +1,18 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import clsx from "clsx";
-import { animationVariants, ThemeClassesBorder, positionClasses, useToastTimer } from "./utils";
-import { ToastProps } from "./toast-context";
+import { 
+  positionClasses, 
+  useToastTimer,
+  ToastProps,
+  ToastAnimationType,
+  ToastTheme
+} from "./utils";
 
-interface ExtendedToastProps extends ToastProps {
+interface ExtendedToastProps extends Omit<ToastProps, 'theme' | 'animationType'> {
   audio?: string;
+  theme?: ToastTheme;
+  animationType?: ToastAnimationType;
 }
 
 const Toast_30: React.FC<ExtendedToastProps> = ({
@@ -36,12 +43,37 @@ const Toast_30: React.FC<ExtendedToastProps> = ({
     }
   }, [audio]);
 
+  const getAnimationConfig = () => {
+    switch (animationType) {
+      case "slide":
+        return {
+          initial: { x: -100, opacity: 0 },
+          animate: { x: 0, opacity: 1 },
+          exit: { x: -100, opacity: 0 },
+          transition: { type: "spring", stiffness: 200, damping: 20 }
+        };
+      case "fade":
+        return {
+          initial: { opacity: 0 },
+          animate: { opacity: 1 },
+          exit: { opacity: 0 },
+          transition: { duration: 0.2 }
+        };
+      default:
+        return {
+          initial: { x: -100, opacity: 0 },
+          animate: { x: 0, opacity: 1 },
+          exit: { x: -100, opacity: 0 },
+          transition: { type: "spring", stiffness: 200, damping: 20 }
+        };
+    }
+  };
+
+  const animation = getAnimationConfig();
+
   return (
     <motion.div
-      initial={{ x: -100, opacity: 0 }}
-      animate={{ x: 0, opacity: 1 }}
-      exit={{ x: -100, opacity: 0 }}
-      transition={{ type: "spring", stiffness: 200, damping: 20 }}
+      {...animation}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={clsx(
@@ -53,65 +85,57 @@ const Toast_30: React.FC<ExtendedToastProps> = ({
     >
       {/* Terminal Container */}
       <div className={clsx(
-        "relative rounded-md overflow-hidden",
-        theme === 'dark' 
-          ? 'bg-black border border-green-500' 
-          : 'bg-gray-900 border border-green-400'
+        "relative",
+        theme === 'dark'
+          ? 'bg-white'
+          : 'bg-black',
+        "transform-gpu"
       )}>
-        {/* Terminal Header */}
-        <div className={clsx(
-          "px-3 py-1 flex items-center justify-between",
-          theme === 'dark' ? 'bg-green-900/20' : 'bg-green-800/20'
-        )}>
-          <div className="flex space-x-1.5">
-            <div className="w-2.5 h-2.5 rounded-full bg-red-500" />
-            <div className="w-2.5 h-2.5 rounded-full bg-yellow-500" />
-            <div className="w-2.5 h-2.5 rounded-full bg-green-500" />
-          </div>
-          <span className={clsx(
-            "text-xs font-mono",
-            theme === 'dark' ? 'text-green-500' : 'text-green-400'
-          )}>
-            notification.sh
-          </span>
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={close}
-            className="text-gray-400 hover:text-gray-300"
-          >
-            ×
-          </motion.button>
+        {/* Geometric Shapes */}
+        <div className="absolute -inset-1">
+          <div className={clsx(
+            "absolute top-0 left-0 w-4 h-4",
+            theme === 'dark' ? 'bg-black' : 'bg-white'
+          )} />
+          <div className={clsx(
+            "absolute top-0 right-0 w-4 h-4",
+            theme === 'dark' ? 'bg-black' : 'bg-white'
+          )} />
+          <div className={clsx(
+            "absolute bottom-0 left-0 w-4 h-4",
+            theme === 'dark' ? 'bg-black' : 'bg-white'
+          )} />
+          <div className={clsx(
+            "absolute bottom-0 right-0 w-4 h-4",
+            theme === 'dark' ? 'bg-black' : 'bg-white'
+          )} />
         </div>
 
-        {/* Content */}
-        <div className="p-4 font-mono">
+        {/* Content Container */}
+        <div className="relative p-4">
           <div className="flex items-start space-x-3">
-            {/* Command Prompt */}
-            <div className={clsx(
-              "flex-shrink-0",
-              theme === 'dark' ? 'text-green-500' : 'text-green-400'
-            )}>
-              {icon} ~$
-            </div>
-
-            {/* Message with Typing Effect */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="flex-1"
-            >
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5 }}
+            {/* Icon */}
+            {icon && (
+              <motion.div
+                animate={{ scale: [1, 1.1, 1] }}
+                transition={{ duration: 2, repeat: Infinity }}
                 className={clsx(
-                  "text-sm",
-                  theme === 'dark' ? 'text-green-500' : 'text-green-400'
+                  "flex-shrink-0 w-8 h-8 rounded-none flex items-center justify-center",
+                  theme === 'dark' ? 'bg-black text-white' : 'bg-white text-black'
                 )}
               >
+                <span className="text-lg">{icon}</span>
+              </motion.div>
+            )}
+
+            {/* Content */}
+            <div className="flex-1 min-w-0">
+              <p className={clsx(
+                "text-sm font-mono",
+                theme === 'dark' ? 'text-black' : 'text-white'
+              )}>
                 {message}
-              </motion.p>
+              </p>
 
               {/* Action Button */}
               {actionButton && (
@@ -120,44 +144,45 @@ const Toast_30: React.FC<ExtendedToastProps> = ({
                   whileTap={{ scale: 0.95 }}
                   onClick={actionButton.onClick}
                   className={clsx(
-                    "mt-2 px-3 py-1 text-xs border rounded",
+                    "mt-2 text-xs font-mono px-3 py-1",
                     theme === 'dark'
-                      ? 'border-green-500 text-green-500 hover:bg-green-500/20'
-                      : 'border-green-400 text-green-400 hover:bg-green-400/20'
+                      ? 'bg-black text-white hover:bg-gray-900'
+                      : 'bg-white text-black hover:bg-gray-100'
                   )}
                 >
                   {actionButton.label}
                 </motion.button>
               )}
-            </motion.div>
+            </div>
+
+            {/* Close Button */}
+            <motion.button
+              onClick={close}
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              className={clsx(
+                "flex-shrink-0 w-6 h-6 flex items-center justify-center",
+                theme === 'dark'
+                  ? 'text-black hover:bg-black hover:text-white'
+                  : 'text-white hover:bg-white hover:text-black'
+              )}
+            >
+              ×
+            </motion.button>
           </div>
+
+          {/* Progress Bar */}
+          <motion.div
+            initial={{ scaleX: 1 }}
+            animate={{ scaleX: 0 }}
+            transition={{ duration: duration / 1000, ease: "linear" }}
+            style={{ originX: 0 }}
+            className={clsx(
+              "absolute bottom-0 left-0 right-0 h-1",
+              theme === 'dark' ? 'bg-black' : 'bg-white'
+            )}
+          />
         </div>
-
-        {/* Progress Bar */}
-        <motion.div
-          initial={{ scaleX: 1 }}
-          animate={{ scaleX: 0 }}
-          transition={{ duration: duration / 1000, ease: "linear" }}
-          style={{ originX: 0 }}
-          className={clsx(
-            "absolute bottom-0 left-0 right-0 h-0.5",
-            theme === 'dark' ? 'bg-green-500' : 'bg-green-400'
-          )}
-        />
-
-        {/* Scan Line Effect */}
-        <motion.div
-          animate={{
-            opacity: [0.1, 0.2, 0.1],
-            y: [0, 300, 0],
-          }}
-          transition={{
-            duration: 2,
-            repeat: Infinity,
-            ease: "linear",
-          }}
-          className="absolute inset-0 bg-gradient-to-b from-transparent via-green-500/10 to-transparent pointer-events-none"
-        />
       </div>
     </motion.div>
   );

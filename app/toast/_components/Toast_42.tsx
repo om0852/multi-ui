@@ -1,11 +1,18 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import clsx from "clsx";
-import { animationVariants, ThemeClassesBorder, positionClasses, useToastTimer } from "./utils";
-import { ToastProps } from "./toast-context";
+import { 
+  positionClasses, 
+  useToastTimer,
+  ToastProps,
+  ToastAnimationType,
+  ToastTheme
+} from "./utils";
 
-interface ExtendedToastProps extends ToastProps {
+interface ExtendedToastProps extends Omit<ToastProps, 'theme' | 'animationType'> {
   audio?: string;
+  theme?: ToastTheme;
+  animationType?: ToastAnimationType;
 }
 
 const Toast_42: React.FC<ExtendedToastProps> = ({
@@ -31,17 +38,42 @@ const Toast_42: React.FC<ExtendedToastProps> = ({
 
   useEffect(() => {
     if (audio) {
-      const audioElement = new Audio(audio);
-      audioElement.play();
+      const sound = new Audio(audio);
+      sound.play().catch(error => console.log('Audio playback failed:', error));
     }
   }, [audio]);
 
+  const getAnimationConfig = () => {
+    switch (animationType) {
+      case "slide":
+        return {
+          initial: { x: 300, opacity: 0, rotate: -2 },
+          animate: { x: 0, opacity: 1, rotate: 1 },
+          exit: { x: 300, opacity: 0, rotate: 2 },
+          transition: { type: "spring", stiffness: 200, damping: 20 }
+        };
+      case "bounce":
+        return {
+          initial: { scale: 0.9, y: -20, opacity: 0, rotate: -2 },
+          animate: { scale: 1, y: 0, opacity: 1, rotate: 1 },
+          exit: { scale: 0.9, y: -20, opacity: 0, rotate: 2 },
+          transition: { type: "spring", stiffness: 300, damping: 15 }
+        };
+      default:
+        return {
+          initial: { scale: 0.9, opacity: 0, rotate: -2 },
+          animate: { scale: 1, opacity: 1, rotate: 1 },
+          exit: { scale: 0.9, opacity: 0, rotate: 2 },
+          transition: { type: "spring", stiffness: 200, damping: 20 }
+        };
+    }
+  };
+
+  const animation = getAnimationConfig();
+
   return (
     <motion.div
-      initial={{ x: 50, opacity: 0, scale: 0.9 }}
-      animate={{ x: 0, opacity: 1, scale: 1 }}
-      exit={{ x: -50, opacity: 0, scale: 0.9 }}
-      transition={{ type: "spring", stiffness: 300, damping: 25 }}
+      {...animation}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={clsx(
@@ -51,197 +83,108 @@ const Toast_42: React.FC<ExtendedToastProps> = ({
         stack ? "static" : "fixed",
       )}
     >
+      {/* Paper-like Container */}
       <div className={clsx(
-        "relative overflow-hidden rounded-lg",
+        "relative p-4 rounded-lg",
         theme === 'dark'
-          ? 'bg-gray-900 border border-emerald-500/30'
-          : 'bg-white border border-emerald-500/30',
-        "shadow-lg"
+          ? 'bg-gray-800'
+          : 'bg-amber-50',
+        "shadow-[2px_2px_10px_rgba(0,0,0,0.1)]",
+        "border",
+        theme === 'dark' ? 'border-gray-700' : 'border-amber-200/50',
+        "before:absolute before:inset-0 before:bg-[radial-gradient(#fff_0.5px,transparent_1px)] before:bg-[size:16px_16px] before:opacity-5"
       )}>
-        {/* Circuit Pattern Background */}
+        {/* Paper Texture */}
         <div className={clsx(
-          "absolute inset-0",
-          theme === 'dark'
-            ? 'bg-[linear-gradient(45deg,transparent_25%,rgba(16,185,129,0.05)_25%,rgba(16,185,129,0.05)_50%,transparent_50%,transparent_75%,rgba(16,185,129,0.05)_75%)]'
-            : 'bg-[linear-gradient(45deg,transparent_25%,rgba(16,185,129,0.1)_25%,rgba(16,185,129,0.1)_50%,transparent_50%,transparent_75%,rgba(16,185,129,0.1)_75%)]',
-          "bg-[length:20px_20px]"
+          "absolute inset-0 rounded-lg",
+          "bg-[linear-gradient(45deg,transparent_25%,rgba(255,255,255,0.05)_25%,rgba(255,255,255,0.05)_50%,transparent_50%,transparent_75%,rgba(255,255,255,0.05)_75%)]",
+          "bg-[size:4px_4px]",
+          "opacity-30"
         )} />
 
-        {/* Animated Circuit Paths */}
-        <svg className="absolute inset-0 w-full h-full">
-          {/* Horizontal Lines */}
-          <motion.path
-            d="M0 20 H320"
-            stroke={theme === 'dark' ? 'rgba(16,185,129,0.2)' : 'rgba(16,185,129,0.3)'}
-            strokeWidth="1"
-            fill="none"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 2, repeat: Infinity }}
-          />
-          <motion.path
-            d="M0 40 H320"
-            stroke={theme === 'dark' ? 'rgba(16,185,129,0.2)' : 'rgba(16,185,129,0.3)'}
-            strokeWidth="1"
-            fill="none"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 2, delay: 0.5, repeat: Infinity }}
-          />
+        {/* Progress Bar */}
+        <motion.div
+          initial={{ scaleX: 1 }}
+          animate={{ scaleX: 0 }}
+          transition={{ duration: duration / 1000, ease: "linear" }}
+          style={{ originX: 0 }}
+          className={clsx(
+            "absolute bottom-0 left-0 right-0 h-0.5",
+            theme === 'dark'
+              ? 'bg-gradient-to-r from-amber-600 to-orange-600'
+              : 'bg-gradient-to-r from-amber-500 to-orange-500'
+          )}
+        />
 
-          {/* Vertical Lines */}
-          <motion.path
-            d="M40 0 V80"
-            stroke={theme === 'dark' ? 'rgba(16,185,129,0.2)' : 'rgba(16,185,129,0.3)'}
-            strokeWidth="1"
-            fill="none"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 2, delay: 1, repeat: Infinity }}
-          />
-          <motion.path
-            d="M280 0 V80"
-            stroke={theme === 'dark' ? 'rgba(16,185,129,0.2)' : 'rgba(16,185,129,0.3)'}
-            strokeWidth="1"
-            fill="none"
-            initial={{ pathLength: 0 }}
-            animate={{ pathLength: 1 }}
-            transition={{ duration: 2, delay: 1.5, repeat: Infinity }}
-          />
-        </svg>
-
-        {/* Data Flow Effect */}
-        <div className="absolute inset-0">
-          {[...Array(3)].map((_, i) => (
+        <div className="relative flex items-start space-x-3">
+          {/* Icon */}
+          {icon && (
             <motion.div
-              key={i}
-              animate={{
-                x: ["0%", "100%"],
-                opacity: [0, 1, 0],
+              animate={{ 
+                rotate: [0, 5, -5, 0],
+                scale: [1, 1.05, 0.95, 1]
               }}
-              transition={{
-                duration: 2,
-                delay: i * 0.5,
+              transition={{ 
+                duration: 4,
                 repeat: Infinity,
-                ease: "linear",
+                ease: "easeInOut"
               }}
               className={clsx(
-                "absolute h-px w-12",
+                "flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center",
                 theme === 'dark'
-                  ? 'bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent'
-                  : 'bg-gradient-to-r from-transparent via-emerald-500/70 to-transparent'
-              )}
-              style={{
-                top: `${20 + i * 20}%`,
-              }}
-            />
-          ))}
-        </div>
-
-        <div className="relative p-4">
-          <div className="flex items-start space-x-4">
-            {/* Tech Icon */}
-            <motion.div
-              animate={{
-                borderColor: ["rgba(16,185,129,0.3)", "rgba(16,185,129,0.7)", "rgba(16,185,129,0.3)"],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-              className={clsx(
-                "flex-shrink-0 w-12 h-12",
-                "border-2 rounded",
-                "flex items-center justify-center",
-                theme === 'dark'
-                  ? 'bg-gray-800/50 text-emerald-400'
-                  : 'bg-emerald-50 text-emerald-600'
+                  ? 'bg-gray-700/80 text-amber-500'
+                  : 'bg-amber-100/80 text-amber-700',
+                "border",
+                theme === 'dark' ? 'border-gray-600' : 'border-amber-200'
               )}
             >
-              <span className="text-2xl">{icon}</span>
+              <span className="text-xl">{icon}</span>
             </motion.div>
+          )}
 
-            {/* Content */}
-            <div className="flex-1">
-              <motion.p
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
+          {/* Content */}
+          <div className="flex-1 min-w-0">
+            <p className={clsx(
+              "text-sm font-medium",
+              theme === 'dark' ? 'text-amber-100' : 'text-amber-900'
+            )}>
+              {message}
+            </p>
+
+            {/* Action Button */}
+            {actionButton && (
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={actionButton.onClick}
                 className={clsx(
-                  "text-sm font-mono",
-                  theme === 'dark' ? 'text-emerald-100' : 'text-emerald-900'
+                  "mt-2 text-xs font-medium px-4 py-1.5 rounded-lg",
+                  "border",
+                  theme === 'dark'
+                    ? 'bg-gray-700/80 text-amber-400 border-gray-600 hover:bg-gray-600/80'
+                    : 'bg-amber-100/80 text-amber-800 border-amber-200 hover:bg-amber-200/80'
                 )}
               >
-                {message}
-              </motion.p>
-
-              {actionButton && (
-                <motion.button
-                  whileHover={{ scale: 1.05, x: 5 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={actionButton.onClick}
-                  className={clsx(
-                    "mt-3 px-4 py-1.5 text-sm font-mono rounded",
-                    "border transition-all duration-200",
-                    theme === 'dark'
-                      ? 'border-emerald-500/30 text-emerald-400 hover:bg-emerald-500/20'
-                      : 'border-emerald-500/30 text-emerald-600 hover:bg-emerald-500/10'
-                  )}
-                >
-                  {'>'} {actionButton.label}
-                </motion.button>
-              )}
-            </div>
-
-            {/* Close Button */}
-            <motion.button
-              whileHover={{ scale: 1.1, rotate: 90 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={close}
-              className={clsx(
-                "flex-shrink-0 w-6 h-6",
-                "flex items-center justify-center",
-                "font-mono",
-                theme === 'dark'
-                  ? 'text-emerald-400 hover:text-emerald-300'
-                  : 'text-emerald-600 hover:text-emerald-500'
-              )}
-            >
-              ×
-            </motion.button>
+                {actionButton.label}
+              </motion.button>
+            )}
           </div>
-        </div>
 
-        {/* Progress Bar with Data Flow */}
-        <div className="relative h-1">
-          <motion.div
-            initial={{ scaleX: 1 }}
-            animate={{ scaleX: 0 }}
-            transition={{ duration: duration / 1000, ease: "steps(100)" }}
-            style={{ originX: 0 }}
+          {/* Close Button */}
+          <motion.button
+            onClick={close}
+            whileHover={{ scale: 1.1, rotate: 90 }}
+            whileTap={{ scale: 0.9 }}
             className={clsx(
-              "absolute inset-0",
+              "flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg",
+              "border",
               theme === 'dark'
-                ? 'bg-emerald-500'
-                : 'bg-emerald-500'
+                ? 'bg-gray-700/80 text-amber-400/70 hover:text-amber-400 border-gray-600'
+                : 'bg-amber-100/80 text-amber-700/70 hover:text-amber-900 border-amber-200'
             )}
           >
-            {/* Data Pulse Effect */}
-            <motion.div
-              animate={{
-                x: ["0%", "100%"],
-              }}
-              transition={{
-                duration: 1,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-              className={clsx(
-                "absolute inset-0",
-                "bg-gradient-to-r from-transparent via-white/50 to-transparent"
-              )}
-            />
-          </motion.div>
+            ×
+          </motion.button>
         </div>
       </div>
     </motion.div>

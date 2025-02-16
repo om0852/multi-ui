@@ -1,11 +1,18 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import clsx from "clsx";
-import { animationVariants, ThemeClassesBorder, positionClasses, useToastTimer } from "./utils";
-import { ToastProps } from "./toast-context";
+import { 
+  positionClasses, 
+  useToastTimer,
+  ToastProps,
+  ToastAnimationType,
+  ToastTheme
+} from "./utils";
 
-interface ExtendedToastProps extends ToastProps {
+interface ExtendedToastProps extends Omit<ToastProps, 'theme' | 'animationType'> {
   audio?: string;
+  theme?: ToastTheme;
+  animationType?: ToastAnimationType;
 }
 
 const Toast_43: React.FC<ExtendedToastProps> = ({
@@ -31,17 +38,42 @@ const Toast_43: React.FC<ExtendedToastProps> = ({
 
   useEffect(() => {
     if (audio) {
-      const audioElement = new Audio(audio);
-      audioElement.play();
+      const sound = new Audio(audio);
+      sound.play().catch(error => console.log('Audio playback failed:', error));
     }
   }, [audio]);
 
+  const getAnimationConfig = () => {
+    switch (animationType) {
+      case "slide":
+        return {
+          initial: { x: 300, opacity: 0 },
+          animate: { x: 0, opacity: 1 },
+          exit: { x: 300, opacity: 0 },
+          transition: { type: "spring", stiffness: 200, damping: 20 }
+        };
+      case "bounce":
+        return {
+          initial: { scale: 0.9, y: -20, opacity: 0 },
+          animate: { scale: 1, y: 0, opacity: 1 },
+          exit: { scale: 0.9, y: -20, opacity: 0 },
+          transition: { type: "spring", stiffness: 300, damping: 15 }
+        };
+      default:
+        return {
+          initial: { scale: 0.9, opacity: 0 },
+          animate: { scale: 1, opacity: 1 },
+          exit: { scale: 0.9, opacity: 0 },
+          transition: { type: "spring", stiffness: 200, damping: 20 }
+        };
+    }
+  };
+
+  const animation = getAnimationConfig();
+
   return (
     <motion.div
-      initial={{ x: -50, opacity: 0, rotateY: 90 }}
-      animate={{ x: 0, opacity: 1, rotateY: 0 }}
-      exit={{ x: 50, opacity: 0, rotateY: -90 }}
-      transition={{ type: "spring", stiffness: 300, damping: 25 }}
+      {...animation}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={clsx(
@@ -51,201 +83,128 @@ const Toast_43: React.FC<ExtendedToastProps> = ({
         stack ? "static" : "fixed",
       )}
     >
+      {/* Holographic Container */}
       <div className={clsx(
-        "relative overflow-hidden",
+        "relative p-4 rounded-2xl overflow-hidden backdrop-blur-xl",
         theme === 'dark'
-          ? 'bg-black border-2 border-rose-500'
-          : 'bg-gray-100 border-2 border-rose-400',
-        "shadow-[0_0_20px_rgba(244,63,94,0.5)]"
+          ? 'bg-gray-900/40'
+          : 'bg-white/40',
+        "border border-white/20",
+        "shadow-[0_8px_32px_rgba(31,38,135,0.37)]"
       )}>
-        {/* Glitch Effect Layers */}
+        {/* Rainbow Gradient */}
         <motion.div
           animate={{
-            x: [0, -5, 5, -5, 0],
-            opacity: [1, 0.8, 0.9, 0.7, 1],
+            backgroundPosition: ['0% 50%', '100% 50%', '0% 50%']
           }}
           transition={{
-            duration: 0.5,
+            duration: 15,
             repeat: Infinity,
-            repeatDelay: 5,
+            ease: "linear"
           }}
           className={clsx(
-            "absolute inset-0 z-10",
-            theme === 'dark'
-              ? 'bg-rose-500/20'
-              : 'bg-rose-400/20',
-            "mix-blend-overlay"
-          )}
-        />
-        <motion.div
-          animate={{
-            x: [0, 5, -5, 5, 0],
-            opacity: [1, 0.9, 0.7, 0.8, 1],
-          }}
-          transition={{
-            duration: 0.5,
-            repeat: Infinity,
-            repeatDelay: 5,
-          }}
-          className={clsx(
-            "absolute inset-0 z-20",
-            theme === 'dark'
-              ? 'bg-cyan-500/20'
-              : 'bg-cyan-400/20',
+            "absolute inset-0",
+            "bg-gradient-to-r from-violet-500/20 via-fuchsia-500/20 via-blue-500/20 via-green-500/20 via-yellow-500/20 via-orange-500/20 to-red-500/20",
+            "bg-[size:200%_auto]",
             "mix-blend-overlay"
           )}
         />
 
-        {/* Scanline Effect */}
+        {/* Holographic Pattern */}
+        <div className={clsx(
+          "absolute inset-0",
+          "bg-[radial-gradient(circle_at_center,white_0.5px,transparent_1px)]",
+          "bg-[size:8px_8px]",
+          "opacity-10"
+        )} />
+
+        {/* Progress Bar */}
         <motion.div
-          animate={{
-            y: ["0%", "100%"],
-          }}
-          transition={{
-            duration: 1.5,
-            repeat: Infinity,
-            ease: "linear",
-          }}
+          initial={{ scaleX: 1 }}
+          animate={{ scaleX: 0 }}
+          transition={{ duration: duration / 1000, ease: "linear" }}
+          style={{ originX: 0 }}
           className={clsx(
-            "absolute inset-0 z-30",
-            "bg-gradient-to-b from-transparent via-white/5 to-transparent",
-            "pointer-events-none"
+            "absolute bottom-0 left-0 right-0 h-0.5",
+            "bg-gradient-to-r from-violet-500 via-fuchsia-500 to-violet-500",
+            "bg-[size:200%_auto]"
           )}
         />
 
-        {/* Content Container */}
-        <div className="relative z-40 p-4">
-          <div className="flex items-start space-x-4">
-            {/* Cyberpunk Icon */}
+        <div className="relative flex items-start space-x-3">
+          {/* Icon */}
+          {icon && (
             <motion.div
-              animate={{
-                boxShadow: [
-                  "0 0 20px rgba(244,63,94,0.5)",
-                  "0 0 30px rgba(244,63,94,0.7)",
-                  "0 0 20px rgba(244,63,94,0.5)",
-                ],
+              animate={{ 
+                rotateY: [0, 360],
+                scale: [1, 1.1, 1]
               }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "linear",
+              transition={{ 
+                rotateY: {
+                  duration: 3,
+                  repeat: Infinity,
+                  ease: "linear"
+                },
+                scale: {
+                  duration: 2,
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }
               }}
               className={clsx(
-                "flex-shrink-0 w-12 h-12",
-                "flex items-center justify-center",
-                "border border-rose-500",
+                "flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center backdrop-blur-xl",
                 theme === 'dark'
-                  ? 'bg-black/50 text-rose-400'
-                  : 'bg-white/50 text-rose-500',
-                "relative"
+                  ? 'bg-white/10 text-white'
+                  : 'bg-black/5 text-black',
+                "border border-white/20"
               )}
             >
-              <span className="text-2xl relative z-10">{icon}</span>
-              {/* Icon Glitch Effect */}
-              <motion.span
-                animate={{
-                  x: [0, 2, -2, 0],
-                  opacity: [0, 1, 0],
-                }}
-                transition={{
-                  duration: 0.3,
-                  repeat: Infinity,
-                  repeatDelay: 5,
-                }}
-                className="absolute inset-0 flex items-center justify-center text-2xl text-cyan-400"
-              >
-                {icon}
-              </motion.span>
+              <span className="text-xl">{icon}</span>
             </motion.div>
+          )}
 
-            {/* Content */}
-            <div className="flex-1">
-              <motion.p
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
+          {/* Content */}
+          <div className="flex-1 min-w-0">
+            <p className={clsx(
+              "text-sm font-medium",
+              theme === 'dark' ? 'text-white' : 'text-gray-900'
+            )}>
+              {message}
+            </p>
+
+            {/* Action Button */}
+            {actionButton && (
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={actionButton.onClick}
                 className={clsx(
-                  "text-sm font-mono",
-                  theme === 'dark' ? 'text-rose-100' : 'text-rose-900'
+                  "mt-2 text-xs font-medium px-4 py-1.5 rounded-lg backdrop-blur-xl",
+                  theme === 'dark'
+                    ? 'bg-white/10 text-white hover:bg-white/20 border border-white/20'
+                    : 'bg-black/5 text-gray-900 hover:bg-black/10 border border-black/10'
                 )}
               >
-                {message}
-              </motion.p>
-
-              {actionButton && (
-                <motion.button
-                  whileHover={{ scale: 1.05, x: 5 }}
-                  whileTap={{ scale: 0.95 }}
-                  onClick={actionButton.onClick}
-                  className={clsx(
-                    "mt-3 px-4 py-1.5 text-sm font-mono",
-                    "border border-rose-500",
-                    "transition-all duration-200",
-                    theme === 'dark'
-                      ? 'bg-black/50 text-rose-400 hover:bg-rose-500/20'
-                      : 'bg-white/50 text-rose-500 hover:bg-rose-400/20',
-                    "shadow-[0_0_10px_rgba(244,63,94,0.3)]"
-                  )}
-                >
-                  {'>'} {actionButton.label}
-                </motion.button>
-              )}
-            </div>
-
-            {/* Close Button */}
-            <motion.button
-              whileHover={{ scale: 1.1, rotate: 90 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={close}
-              className={clsx(
-                "flex-shrink-0 w-6 h-6",
-                "flex items-center justify-center",
-                "font-mono",
-                theme === 'dark'
-                  ? 'text-rose-400 hover:text-rose-300'
-                  : 'text-rose-500 hover:text-rose-400'
-              )}
-            >
-              ×
-            </motion.button>
+                {actionButton.label}
+              </motion.button>
+            )}
           </div>
-        </div>
 
-        {/* Cyberpunk Progress Bar */}
-        <div className="relative h-1 bg-black">
-          <motion.div
-            initial={{ scaleX: 1 }}
-            animate={{ scaleX: 0 }}
-            transition={{ duration: duration / 1000, ease: "linear" }}
-            style={{ originX: 0 }}
+          {/* Close Button */}
+          <motion.button
+            onClick={close}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
             className={clsx(
-              "absolute inset-0",
-              "bg-gradient-to-r from-rose-500 via-purple-500 to-cyan-500"
+              "flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg backdrop-blur-xl",
+              theme === 'dark'
+                ? 'bg-white/10 text-white/70 hover:text-white hover:bg-white/20 border border-white/20'
+                : 'bg-black/5 text-gray-600 hover:text-gray-900 hover:bg-black/10 border border-black/10'
             )}
           >
-            {/* Glitch Effect */}
-            <motion.div
-              animate={{
-                x: ["0%", "100%"],
-                opacity: [0.5, 1, 0.5],
-              }}
-              transition={{
-                duration: 1,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-              className={clsx(
-                "absolute inset-0",
-                "bg-gradient-to-r from-transparent via-white/50 to-transparent"
-              )}
-            />
-          </motion.div>
+            ×
+          </motion.button>
         </div>
-
-        {/* Corner Accents */}
-        <div className="absolute top-0 left-0 w-2 h-2 border-t-2 border-l-2 border-cyan-500" />
-        <div className="absolute top-0 right-0 w-2 h-2 border-t-2 border-r-2 border-cyan-500" />
-        <div className="absolute bottom-0 left-0 w-2 h-2 border-b-2 border-l-2 border-cyan-500" />
-        <div className="absolute bottom-0 right-0 w-2 h-2 border-b-2 border-r-2 border-cyan-500" />
       </div>
     </motion.div>
   );

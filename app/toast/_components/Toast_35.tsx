@@ -1,11 +1,18 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import clsx from "clsx";
-import { animationVariants, ThemeClassesBorder, positionClasses, useToastTimer } from "./utils";
-import { ToastProps } from "./toast-context";
+import { 
+  positionClasses, 
+  useToastTimer,
+  ToastProps,
+  ToastAnimationType,
+  ToastTheme
+} from "./utils";
 
-interface ExtendedToastProps extends ToastProps {
+interface ExtendedToastProps extends Omit<ToastProps, 'theme' | 'animationType'> {
   audio?: string;
+  theme?: ToastTheme;
+  animationType?: ToastAnimationType;
 }
 
 const Toast_35: React.FC<ExtendedToastProps> = ({
@@ -36,12 +43,37 @@ const Toast_35: React.FC<ExtendedToastProps> = ({
     }
   }, [audio]);
 
+  const getAnimationConfig = () => {
+    switch (animationType) {
+      case "slide":
+        return {
+          initial: { x: 300, opacity: 0 },
+          animate: { x: 0, opacity: 1 },
+          exit: { x: 300, opacity: 0 },
+          transition: { type: "spring", stiffness: 200, damping: 20 }
+        };
+      case "bounce":
+        return {
+          initial: { scale: 0.9, y: -20, opacity: 0 },
+          animate: { scale: 1, y: 0, opacity: 1 },
+          exit: { scale: 0.9, y: -20, opacity: 0 },
+          transition: { type: "spring", stiffness: 300, damping: 15 }
+        };
+      default:
+        return {
+          initial: { scale: 0.9, opacity: 0 },
+          animate: { scale: 1, opacity: 1 },
+          exit: { scale: 0.9, opacity: 0 },
+          transition: { type: "spring", stiffness: 200, damping: 20 }
+        };
+    }
+  };
+
+  const animation = getAnimationConfig();
+
   return (
     <motion.div
-      initial={{ scale: 0.8, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      exit={{ scale: 0.8, opacity: 0 }}
-      transition={{ type: "spring", stiffness: 400, damping: 30 }}
+      {...animation}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={clsx(
@@ -51,141 +83,114 @@ const Toast_35: React.FC<ExtendedToastProps> = ({
         stack ? "static" : "fixed",
       )}
     >
-      {/* Glass Container */}
+      {/* Gradient Container */}
       <div className={clsx(
-        "relative overflow-hidden rounded-xl",
-        "backdrop-blur-xl backdrop-saturate-150",
+        "relative p-4 rounded-xl overflow-hidden",
         theme === 'dark'
-          ? 'bg-white/10 border border-white/20'
-          : 'bg-white/60 border border-white/40',
-        "shadow-lg shadow-black/5"
+          ? 'bg-gradient-to-br from-purple-900 via-indigo-900 to-blue-900'
+          : 'bg-gradient-to-br from-purple-100 via-indigo-100 to-blue-100',
+        "shadow-lg"
       )}>
-        {/* Glassmorphic Highlights */}
-        <div className={clsx(
-          "absolute inset-0",
-          theme === 'dark'
-            ? 'bg-gradient-to-br from-white/10 to-transparent'
-            : 'bg-gradient-to-br from-white/40 to-transparent'
-        )} />
-
-        {/* Content Container */}
-        <div className="relative p-4">
-          <div className="flex items-start space-x-3">
-            {/* Icon with Glass Effect */}
-            <motion.div
-              animate={{
-                scale: [1, 1.1, 1],
-                rotate: [0, 5, -5, 0],
-              }}
-              transition={{
-                duration: 3,
-                repeat: Infinity,
-                ease: "easeInOut",
-              }}
-              className={clsx(
-                "relative flex-shrink-0 w-12 h-12 rounded-lg",
-                "backdrop-blur-md",
-                theme === 'dark'
-                  ? 'bg-white/20 text-white'
-                  : 'bg-black/5 text-gray-800',
-                "flex items-center justify-center"
-              )}
-            >
-              <span className="text-2xl filter drop-shadow">{icon}</span>
-              {/* Highlight Effect */}
-              <div className={clsx(
-                "absolute inset-0 rounded-lg",
-                "bg-gradient-to-br from-white/30 to-transparent"
-              )} />
-            </motion.div>
-
-            {/* Message Area */}
-            <div className="flex-1 min-w-0">
-              <motion.p
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
-                className={clsx(
-                  "text-sm font-medium",
-                  theme === 'dark' ? 'text-white' : 'text-gray-800'
-                )}
-              >
-                {message}
-              </motion.p>
-
-              {/* Action Button */}
-              {actionButton && (
-                <motion.button
-                  whileHover={{ scale: 1.02, y: -1 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={actionButton.onClick}
-                  className={clsx(
-                    "mt-2 px-4 py-1.5 text-sm rounded-lg",
-                    "backdrop-blur-sm transition-all duration-200",
-                    theme === 'dark'
-                      ? 'bg-white/10 text-white hover:bg-white/20'
-                      : 'bg-black/5 text-gray-800 hover:bg-black/10'
-                  )}
-                >
-                  {actionButton.label}
-                </motion.button>
-              )}
-            </div>
-
-            {/* Close Button */}
-            <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
-              onClick={close}
-              className={clsx(
-                "flex-shrink-0 w-6 h-6 rounded-full",
-                "backdrop-blur-sm flex items-center justify-center",
-                theme === 'dark'
-                  ? 'bg-white/10 text-white hover:bg-white/20'
-                  : 'bg-black/5 text-gray-800 hover:bg-black/10'
-              )}
-            >
-              ×
-            </motion.button>
-          </div>
-        </div>
-
-        {/* Progress Bar with Glass Effect */}
-        <div className={clsx(
-          "relative h-1",
-          theme === 'dark' ? 'bg-white/5' : 'bg-black/5'
-        )}>
-          <motion.div
-            initial={{ scaleX: 1 }}
-            animate={{ scaleX: 0 }}
-            transition={{ duration: duration / 1000, ease: "linear" }}
-            style={{ originX: 0 }}
-            className={clsx(
-              "absolute inset-0",
-              theme === 'dark'
-                ? 'bg-gradient-to-r from-white/30 to-white/20'
-                : 'bg-gradient-to-r from-black/20 to-black/10'
-            )}
-          />
-        </div>
-
-        {/* Shimmer Effect */}
+        {/* Animated Gradient Background */}
         <motion.div
           animate={{
-            x: ["0%", "100%"],
-            opacity: [0, 0.5, 0],
+            backgroundPosition: ['0% 0%', '100% 100%'],
+            opacity: [0.5, 0.8, 0.5]
           }}
           transition={{
-            duration: 2,
+            duration: 5,
             repeat: Infinity,
-            ease: "easeInOut",
+            ease: "linear"
           }}
           className={clsx(
-            "absolute inset-0 w-1/2 skew-x-12",
+            "absolute inset-0",
             theme === 'dark'
-              ? 'bg-gradient-to-r from-transparent via-white/10 to-transparent'
-              : 'bg-gradient-to-r from-transparent via-white/40 to-transparent'
+              ? 'bg-gradient-to-r from-purple-500/20 via-indigo-500/20 to-blue-500/20'
+              : 'bg-gradient-to-r from-purple-300/20 via-indigo-300/20 to-blue-300/20',
+            "bg-[size:200%_200%]"
           )}
         />
+
+        {/* Progress Bar */}
+        <motion.div
+          initial={{ scaleX: 1 }}
+          animate={{ scaleX: 0 }}
+          transition={{ duration: duration / 1000, ease: "linear" }}
+          style={{ originX: 0 }}
+          className={clsx(
+            "absolute bottom-0 left-0 right-0 h-1",
+            theme === 'dark'
+              ? 'bg-gradient-to-r from-purple-500 via-indigo-500 to-blue-500'
+              : 'bg-gradient-to-r from-purple-400 via-indigo-400 to-blue-400'
+          )}
+        />
+
+        <div className="relative flex items-start space-x-3">
+          {/* Icon */}
+          {icon && (
+            <motion.div
+              animate={{ 
+                scale: [1, 1.1, 1],
+                rotate: [0, 5, -5, 0]
+              }}
+              transition={{ 
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
+              className={clsx(
+                "flex-shrink-0 w-10 h-10 rounded-lg flex items-center justify-center backdrop-blur-sm",
+                theme === 'dark'
+                  ? 'bg-white/10'
+                  : 'bg-white/40'
+              )}
+            >
+              <span className="text-xl">{icon}</span>
+            </motion.div>
+          )}
+
+          {/* Content */}
+          <div className="flex-1 min-w-0">
+            <p className={clsx(
+              "text-sm font-medium",
+              theme === 'dark' ? 'text-white' : 'text-gray-900'
+            )}>
+              {message}
+            </p>
+
+            {/* Action Button */}
+            {actionButton && (
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={actionButton.onClick}
+                className={clsx(
+                  "mt-2 text-xs font-medium px-4 py-1.5 rounded-lg backdrop-blur-sm",
+                  theme === 'dark'
+                    ? 'bg-white/10 text-white hover:bg-white/20'
+                    : 'bg-white/40 text-gray-900 hover:bg-white/60'
+                )}
+              >
+                {actionButton.label}
+              </motion.button>
+            )}
+          </div>
+
+          {/* Close Button */}
+          <motion.button
+            onClick={close}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            className={clsx(
+              "flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg backdrop-blur-sm",
+              theme === 'dark'
+                ? 'text-white/70 hover:text-white bg-white/10 hover:bg-white/20'
+                : 'text-gray-600 hover:text-gray-900 bg-white/40 hover:bg-white/60'
+            )}
+          >
+            ×
+          </motion.button>
+        </div>
       </div>
     </motion.div>
   );

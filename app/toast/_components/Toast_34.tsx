@@ -1,11 +1,18 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import clsx from "clsx";
-import { animationVariants, ThemeClassesBorder, positionClasses, useToastTimer } from "./utils";
-import { ToastProps } from "./toast-context";
+import { 
+  positionClasses, 
+  useToastTimer,
+  ToastProps,
+  ToastAnimationType,
+  ToastTheme
+} from "./utils";
 
-interface ExtendedToastProps extends ToastProps {
+interface ExtendedToastProps extends Omit<ToastProps, 'theme' | 'animationType'> {
   audio?: string;
+  theme?: ToastTheme;
+  animationType?: ToastAnimationType;
 }
 
 const Toast_34: React.FC<ExtendedToastProps> = ({
@@ -36,12 +43,37 @@ const Toast_34: React.FC<ExtendedToastProps> = ({
     }
   }, [audio]);
 
+  const getAnimationConfig = () => {
+    switch (animationType) {
+      case "slide":
+        return {
+          initial: { x: 300, opacity: 0 },
+          animate: { x: 0, opacity: 1 },
+          exit: { x: 300, opacity: 0 },
+          transition: { type: "spring", stiffness: 200, damping: 20 }
+        };
+      case "bounce":
+        return {
+          initial: { scale: 0.9, y: -20, opacity: 0 },
+          animate: { scale: 1, y: 0, opacity: 1 },
+          exit: { scale: 0.9, y: -20, opacity: 0 },
+          transition: { type: "spring", stiffness: 300, damping: 15 }
+        };
+      default:
+        return {
+          initial: { scale: 0.9, opacity: 0 },
+          animate: { scale: 1, opacity: 1 },
+          exit: { scale: 0.9, opacity: 0 },
+          transition: { type: "spring", stiffness: 200, damping: 20 }
+        };
+    }
+  };
+
+  const animation = getAnimationConfig();
+
   return (
     <motion.div
-      initial={{ y: -20, opacity: 0, rotateX: 45 }}
-      animate={{ y: 0, opacity: 1, rotateX: 0 }}
-      exit={{ y: 20, opacity: 0, rotateX: -45 }}
-      transition={{ type: "spring", stiffness: 300, damping: 25 }}
+      {...animation}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={clsx(
@@ -51,91 +83,70 @@ const Toast_34: React.FC<ExtendedToastProps> = ({
         stack ? "static" : "fixed",
       )}
     >
-      {/* Main Container */}
+      {/* Neumorphic Container */}
       <div className={clsx(
-        "relative overflow-hidden rounded-2xl p-4",
+        "relative p-4 rounded-2xl",
         theme === 'dark'
-          ? 'bg-gradient-to-br from-violet-900/90 via-indigo-900/90 to-purple-900/90'
-          : 'bg-gradient-to-br from-violet-100 via-indigo-100 to-purple-100',
-        "backdrop-blur-lg shadow-2xl",
-        "transform-gpu perspective-1000"
+          ? 'bg-gray-800 shadow-[5px_5px_10px_rgba(0,0,0,0.3),-5px_-5px_10px_rgba(255,255,255,0.05)]'
+          : 'bg-gray-100 shadow-[5px_5px_10px_rgba(0,0,0,0.1),-5px_-5px_10px_rgba(255,255,255,0.8)]',
+        "transform-gpu"
       )}>
-        {/* Floating Orbs */}
-        {[...Array(3)].map((_, i) => (
-          <motion.div
-            key={i}
-            className={clsx(
-              "absolute w-16 h-16 rounded-full blur-xl",
-              theme === 'dark'
-                ? 'bg-violet-500/30'
-                : 'bg-violet-300/30'
-            )}
-            animate={{
-              x: [0, 30, 0],
-              y: [0, -30, 0],
-              scale: [1, 1.2, 1],
-            }}
-            transition={{
-              duration: 4,
-              delay: i * 0.8,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            style={{
-              left: `${i * 30}%`,
-              top: `${i * 20}%`,
-            }}
-          />
-        ))}
+        {/* Progress Bar */}
+        <motion.div
+          initial={{ scaleX: 1 }}
+          animate={{ scaleX: 0 }}
+          transition={{ duration: duration / 1000, ease: "linear" }}
+          style={{ originX: 0 }}
+          className={clsx(
+            "absolute bottom-0 left-0 right-0 h-1 rounded-full",
+            theme === 'dark' ? 'bg-blue-500/50' : 'bg-blue-400/50'
+          )}
+        />
 
-        {/* Content Container */}
-        <div className="relative flex items-start space-x-4">
+        <div className="flex items-start space-x-3">
           {/* Icon */}
-          <motion.div
-            animate={{
-              rotate: [0, 10, -10, 0],
-              scale: [1, 1.1, 0.9, 1],
-            }}
-            transition={{
-              duration: 4,
-              repeat: Infinity,
-              ease: "easeInOut",
-            }}
-            className={clsx(
-              "flex-shrink-0 w-12 h-12 rounded-2xl flex items-center justify-center",
-              theme === 'dark'
-                ? 'bg-violet-800/50 text-violet-200'
-                : 'bg-violet-200/50 text-violet-700'
-            )}
-          >
-            <span className="text-2xl">{icon}</span>
-          </motion.div>
-
-          {/* Message */}
-          <div className="flex-1 min-w-0">
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
+          {icon && (
+            <motion.div
+              animate={{ 
+                scale: [1, 1.1, 1],
+                rotate: [0, 5, -5, 0]
+              }}
+              transition={{ 
+                duration: 2,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
               className={clsx(
-                "text-sm font-medium",
-                theme === 'dark' ? 'text-white' : 'text-gray-800'
+                "flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center",
+                theme === 'dark'
+                  ? 'bg-gray-700 shadow-[inset_2px_2px_4px_rgba(0,0,0,0.3),inset_-2px_-2px_4px_rgba(255,255,255,0.05)]'
+                  : 'bg-gray-200 shadow-[inset_2px_2px_4px_rgba(0,0,0,0.1),inset_-2px_-2px_4px_rgba(255,255,255,0.8)]'
               )}
             >
+              <span className="text-xl">{icon}</span>
+            </motion.div>
+          )}
+
+          {/* Content */}
+          <div className="flex-1 min-w-0">
+            <p className={clsx(
+              "text-sm font-medium",
+              theme === 'dark' ? 'text-white' : 'text-gray-900'
+            )}>
               {message}
-            </motion.p>
+            </p>
 
             {/* Action Button */}
             {actionButton && (
               <motion.button
-                whileHover={{ scale: 1.05, y: -2 }}
-                whileTap={{ scale: 0.95 }}
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
                 onClick={actionButton.onClick}
                 className={clsx(
-                  "mt-3 px-4 py-1.5 text-sm rounded-xl",
-                  "transition-colors duration-200",
+                  "mt-2 text-xs font-medium px-4 py-1.5 rounded-lg",
                   theme === 'dark'
-                    ? 'bg-violet-800/50 text-violet-200 hover:bg-violet-700/50'
-                    : 'bg-violet-200/50 text-violet-700 hover:bg-violet-300/50'
+                    ? 'bg-gray-700 text-gray-300 hover:bg-gray-600 shadow-[2px_2px_4px_rgba(0,0,0,0.3),-2px_-2px_4px_rgba(255,255,255,0.05)]'
+                    : 'bg-gray-200 text-gray-700 hover:bg-gray-300 shadow-[2px_2px_4px_rgba(0,0,0,0.1),-2px_-2px_4px_rgba(255,255,255,0.8)]'
                 )}
               >
                 {actionButton.label}
@@ -145,46 +156,19 @@ const Toast_34: React.FC<ExtendedToastProps> = ({
 
           {/* Close Button */}
           <motion.button
-            whileHover={{ scale: 1.2, rotate: 180 }}
-            whileTap={{ scale: 0.8 }}
             onClick={close}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
             className={clsx(
-              "flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center",
+              "flex-shrink-0 w-8 h-8 flex items-center justify-center rounded-lg",
               theme === 'dark'
-                ? 'text-violet-200 hover:bg-violet-800/50'
-                : 'text-violet-700 hover:bg-violet-200/50'
+                ? 'text-gray-400 hover:text-white bg-gray-700 shadow-[2px_2px_4px_rgba(0,0,0,0.3),-2px_-2px_4px_rgba(255,255,255,0.05)]'
+                : 'text-gray-500 hover:text-gray-700 bg-gray-200 shadow-[2px_2px_4px_rgba(0,0,0,0.1),-2px_-2px_4px_rgba(255,255,255,0.8)]'
             )}
           >
             ×
           </motion.button>
         </div>
-
-        {/* Progress Ring */}
-        <svg
-          className="absolute bottom-2 right-2 w-6 h-6"
-          viewBox="0 0 24 24"
-        >
-          <motion.circle
-            cx="12"
-            cy="12"
-            r="10"
-            fill="none"
-            strokeWidth="2"
-            stroke={theme === 'dark' ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.1)'}
-          />
-          <motion.circle
-            cx="12"
-            cy="12"
-            r="10"
-            fill="none"
-            strokeWidth="2"
-            stroke={theme === 'dark' ? '#8B5CF6' : '#6D28D9'}
-            strokeLinecap="round"
-            initial={{ pathLength: 1 }}
-            animate={{ pathLength: 0 }}
-            transition={{ duration: duration / 1000, ease: "linear" }}
-          />
-        </svg>
       </div>
     </motion.div>
   );
