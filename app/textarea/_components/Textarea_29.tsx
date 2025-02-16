@@ -117,7 +117,7 @@ const Textarea_29: React.FC<TextareaProps> = ({
               [ERROR] {error}
             </motion.p>
           ) : helperText ? (
-            <p className="text-green-600 text-sm">// {helperText}</p>
+            <p className="text-green-600 text-sm">{`${helperText}`}</p>
           ) : null}
         </div>
         {showCharacterCount && maxLength && (

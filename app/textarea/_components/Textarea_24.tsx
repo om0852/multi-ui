@@ -82,6 +82,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, FloatingTextareaProps>(
           "relative p-1 rounded-lg overflow-hidden",
           "backdrop-blur-xl",
           "bg-gradient-to-br from-white/20 to-white/5",
+          isFocused && "shadow-[0_0_15px_rgba(255,0,204,0.3)]",
           disabled && "opacity-50"
         )}>
           {/* Holographic Background */}
@@ -130,10 +131,12 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, FloatingTextareaProps>(
               "placeholder-gray-500",
               "focus:outline-none focus:ring-0",
               disabled && "cursor-not-allowed",
+              isFocused && "placeholder-white/40",
               className
             )}
             style={{
-              minHeight: "120px"
+              minHeight: "120px",
+              boxShadow: isFocused ? 'inset 0 0 10px rgba(255,0,204,0.1)' : 'none'
             }}
           />
 

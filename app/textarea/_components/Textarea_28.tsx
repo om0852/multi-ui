@@ -86,7 +86,8 @@ const Textarea_28 = React.forwardRef<HTMLTextAreaElement, FloatingTextareaProps>
               "block text-sm font-medium mb-2",
               {
                 "text-blue-400": isFocused,
-                "text-white/70": !isFocused,
+                "text-gray-700": !isFocused && theme === 'light',
+                "text-white/70": !isFocused && theme === 'dark',
               },
               labelClassName
             )}
@@ -110,15 +111,20 @@ const Textarea_28 = React.forwardRef<HTMLTextAreaElement, FloatingTextareaProps>
             disabled={disabled}
             className={clsx(
               "w-full p-4 rounded-xl",
-              "bg-white/10 backdrop-blur-md",
-              "border border-white/20",
+              theme === 'dark' 
+                ? "bg-white/10 backdrop-blur-md border-white/20" 
+                : "bg-gray-50 border-gray-200",
+              "border",
               {
                 "bg-gray-900/50 cursor-not-allowed": disabled,
-                "text-white placeholder-white/30": !disabled,
+                "text-white placeholder-white/30": !disabled && theme === 'dark',
+                "text-gray-900 placeholder-gray-400": !disabled && theme === 'light',
               },
               "transition-all duration-300 ease-in-out",
               {
-                "focus:outline-none focus:border-blue-400/50 focus:bg-white/20": !disabled,
+                "focus:outline-none focus:border-blue-400/50": !disabled,
+                "focus:bg-white/20": !disabled && theme === 'dark',
+                "focus:bg-white": !disabled && theme === 'light',
               },
               "resize-none min-h-[120px]",
               "shadow-[0_8px_30px_rgb(0,0,0,0.12)]",
@@ -144,13 +150,23 @@ const Textarea_28 = React.forwardRef<HTMLTextAreaElement, FloatingTextareaProps>
         <div className="mt-1 flex justify-between">
           <div>
             {error ? (
-              <p className={clsx("text-red-400 text-sm", errorClassName)}>{error}</p>
+              <p className={clsx(
+                "text-red-400 text-sm", 
+                errorClassName
+              )}>{error}</p>
             ) : helperText ? (
-              <p className={clsx("text-blue-400/70 text-sm", helperClassName)}>{helperText}</p>
+              <p className={clsx(
+                theme === 'dark' ? "text-blue-400/70" : "text-blue-600/70",
+                "text-sm",
+                helperClassName
+              )}>{helperText}</p>
             ) : null}
           </div>
           {showCharacterCount && maxLength && (
-            <p className={clsx("text-blue-400/70 text-sm")}>
+            <p className={clsx(
+              theme === 'dark' ? "text-blue-400/70" : "text-blue-600/70",
+              "text-sm"
+            )}>
               {characterCount}/{maxLength}
             </p>
           )}

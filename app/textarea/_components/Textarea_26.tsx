@@ -2,7 +2,6 @@
 
 import React, { TextareaHTMLAttributes, useState } from 'react';
 import { motion } from 'framer-motion';
-import clsx from 'clsx';
 
 interface TextareaProps extends TextareaHTMLAttributes<HTMLTextAreaElement> {
   label?: string;

@@ -182,7 +182,7 @@ const Textarea_36: React.FC<TextareaProps> = ({
               }}
               transition={{ duration: 2, repeat: Infinity }}
             >
-              // {helperText}
+              {`${helperText}`}
             </motion.div>
           ) : null}
         </div>

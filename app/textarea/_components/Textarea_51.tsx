@@ -29,7 +29,7 @@ const Textarea_51: React.FC<TextareaProps> = ({
   };
 
   // Generate random bubbles
-  const bubbles = Array.from({ length: 15 }).map((_, i) => ({
+  const bubbles = Array.from({ length: 15 }).map(() => ({
     size: Math.random() * 20 + 10,
     x: Math.random() * 100,
     duration: Math.random() * 3 + 2,
@@ -154,7 +154,7 @@ const Textarea_51: React.FC<TextareaProps> = ({
           />
 
           {/* Seaweed Decorations */}
-          {[...Array(3)].map((_, i) => (
+          {[...Array(3)].map(( i) => (
             <motion.div
               key={i}
               className="absolute bottom-0 w-4 origin-bottom"

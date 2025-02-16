@@ -113,19 +113,19 @@ const Textarea_45: React.FC<TextareaProps> = ({
           />
 
           {/* Pixel Corner Decorations */}
-          {['top-0 left-0', 'top-0 right-0', 'bottom-0 left-0', 'bottom-0 right-0'].map((position, i) => (
+          {['top-0 left-0', 'top-0 right-0', 'bottom-0 left-0', 'bottom-0 right-0'].map((position, index) => (
             <motion.div
-              key={i}
+              key={index}
               className={`absolute w-4 h-4 ${position}`}
               style={{
                 background: '#92400E',
                 clipPath: 'polygon(0 0, 100% 0, 0 100%)',
-                transform: `rotate(${i * 90}deg)`,
+                transform: `rotate(${index * 90}deg)`,
               }}
               animate={{
                 scale: isFocused ? [1, 1.2, 1] : 1,
               }}
-              transition={{ duration: 1, repeat: Infinity, delay: i * 0.2 }}
+              transition={{ duration: 1, repeat: Infinity, delay: index * 0.2 }}
             />
           ))}
 

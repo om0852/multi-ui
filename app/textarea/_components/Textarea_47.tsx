@@ -125,23 +125,23 @@ const Textarea_47: React.FC<TextareaProps> = ({
           />
 
           {/* Crystal Facets */}
-          {[...Array(4)].map((_, i) => (
+          {[...Array(4)].map((_, index) => (
             <motion.div
-              key={i}
+              key={index}
               className="absolute w-16 h-16"
               style={{
-                top: i < 2 ? 0 : 'auto',
-                bottom: i >= 2 ? 0 : 'auto',
-                left: i % 2 === 0 ? 0 : 'auto',
-                right: i % 2 === 1 ? 0 : 'auto',
-                background: `linear-gradient(${45 + i * 90}deg, transparent, rgba(167,139,250,0.1))`,
+                top: index < 2 ? 0 : 'auto',
+                bottom: index >= 2 ? 0 : 'auto',
+                left: index % 2 === 0 ? 0 : 'auto',
+                right: index % 2 === 1 ? 0 : 'auto',
+                background: `linear-gradient(${45 + index * 90}deg, transparent, rgba(167,139,250,0.1))`,
                 clipPath: 'polygon(0 0, 100% 0, 100% 100%)',
-                transform: `rotate(${i * 90}deg)`,
+                transform: `rotate(${index * 90}deg)`,
               }}
               animate={{
                 opacity: isFocused ? [0.3, 0.6, 0.3] : 0.3,
               }}
-              transition={{ duration: 2, repeat: Infinity, delay: i * 0.5 }}
+              transition={{ duration: 2, repeat: Infinity, delay: index * 0.5 }}
             />
           ))}
 

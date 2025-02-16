@@ -29,7 +29,7 @@ const Textarea_37: React.FC<TextareaProps> = ({
   };
 
   // Generate random stars
-  const stars = Array.from({ length: 50 }).map((_, i) => ({
+  const stars = Array.from({ length: 50 }).map(() => ({
     size: Math.random() * 2 + 1,
     x: Math.random() * 100,
     y: Math.random() * 100,

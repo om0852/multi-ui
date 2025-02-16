@@ -29,7 +29,7 @@ const Textarea_46: React.FC<TextareaProps> = ({
   };
 
   // Generate random raindrops
-  const raindrops = Array.from({ length: 20 }).map((_, i) => ({
+  const raindrops = Array.from({ length: 20 }).map(() => ({
     delay: Math.random() * 2,
     duration: Math.random() * 1 + 1,
     x: Math.random() * 100,
@@ -75,9 +75,9 @@ const Textarea_46: React.FC<TextareaProps> = ({
           }}
         >
           {/* Raindrops */}
-          {raindrops.map((drop, i) => (
+          {raindrops.map((drop, index) => (
             <motion.div
-              key={i}
+              key={index}
               className="absolute w-px h-10 bg-gradient-to-b from-transparent via-green-300/30 to-transparent"
               style={{
                 left: `${drop.x}%`,
@@ -97,9 +97,9 @@ const Textarea_46: React.FC<TextareaProps> = ({
           ))}
 
           {/* Floating Leaves */}
-          {[...Array(3)].map((_, i) => (
+          {[...Array(3)].map((unused, index) => (
             <motion.div
-              key={i}
+              key={index}
               className="absolute text-2xl"
               initial={{
                 x: -20,
@@ -112,13 +112,13 @@ const Textarea_46: React.FC<TextareaProps> = ({
                 rotate: 360,
               }}
               transition={{
-                duration: 15 + i * 2,
+                duration: 15 + index * 2,
                 repeat: Infinity,
-                delay: i * 5,
+                delay: index * 5,
                 ease: 'linear',
               }}
             >
-              {['🌿', '🍃', '🌱'][i]}
+              {['🌿', '🍃', '🌱'][index]}
             </motion.div>
           ))}
         </motion.div>

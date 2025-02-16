@@ -29,7 +29,7 @@ const Textarea_41: React.FC<TextareaProps> = ({
   };
 
   // Generate random bubbles
-  const bubbles = Array.from({ length: 10 }).map((_, i) => ({
+  const bubbles = Array.from({ length: 10 }).map(() => ({
     size: Math.random() * 10 + 5,
     delay: Math.random() * 2,
     duration: Math.random() * 3 + 2,

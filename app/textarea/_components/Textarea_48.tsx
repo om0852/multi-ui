@@ -29,7 +29,7 @@ const Textarea_48: React.FC<TextareaProps> = ({
   };
 
   // Generate random sand particles
-  const sandParticles = Array.from({ length: 30 }).map((_, i) => ({
+  const sandParticles = Array.from({ length: 30 }).map(() => ({
     size: Math.random() * 2 + 1,
     x: Math.random() * 100,
     y: Math.random() * 100,

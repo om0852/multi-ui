@@ -90,7 +90,8 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, FloatingTextareaProps>(
             "relative h-full",
             "bg-white dark:bg-gray-900",
             "rounded-[10px]",
-            "overflow-hidden"
+            "overflow-hidden",
+            isFocused && "ring-2 ring-violet-500/50"
           )}>
             {/* Background Pattern */}
             <div className={clsx(
@@ -118,6 +119,7 @@ const Textarea = React.forwardRef<HTMLTextAreaElement, FloatingTextareaProps>(
                 "placeholder-gray-400 dark:placeholder-gray-500",
                 "focus:outline-none focus:ring-0",
                 disabled && "cursor-not-allowed",
+                isFocused && "placeholder-violet-400 dark:placeholder-violet-500",
                 className
               )}
               style={{

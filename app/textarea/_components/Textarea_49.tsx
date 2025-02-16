@@ -29,7 +29,7 @@ const Textarea_49: React.FC<TextareaProps> = ({
   };
 
   // Generate random embers
-  const embers = Array.from({ length: 20 }).map((_, i) => ({
+  const embers = Array.from({ length: 20 }).map(() => ({
     size: Math.random() * 3 + 2,
     x: Math.random() * 100,
     delay: Math.random() * 2,

@@ -113,7 +113,7 @@ const Textarea_38: React.FC<TextareaProps> = ({
             animate={{
               '--x': isFocused ? ['0%', '100%', '0%'] : '50%',
               '--y': isFocused ? ['0%', '100%', '0%'] : '50%',
-            } as any}
+            } satisfies Record<`--${string}`, string | string[]>}
             transition={{ duration: 5, repeat: Infinity }}
           />
 

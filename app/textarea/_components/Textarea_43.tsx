@@ -70,18 +70,18 @@ const Textarea_43: React.FC<TextareaProps> = ({
           }}
         >
           {/* Rotating Gears */}
-          {[...Array(4)].map((_, i) => (
+          {[...Array(4)].map((_, index) => (
             <motion.svg
-              key={i}
+              key={index}
               viewBox="0 0 16 16"
               className={`absolute w-12 h-12 opacity-10 ${
-                i === 0 ? 'top-0 left-0' :
-                i === 1 ? 'top-0 right-0' :
-                i === 2 ? 'bottom-0 left-0' :
+                index === 0 ? 'top-0 left-0' :
+                index === 1 ? 'top-0 right-0' :
+                index === 2 ? 'bottom-0 left-0' :
                 'bottom-0 right-0'
               }`}
               animate={{ 
-                rotate: i % 2 === 0 ? 360 : -360,
+                rotate: index % 2 === 0 ? 360 : -360,
                 scale: isFocused ? [1, 1.1, 1] : 1,
               }}
               transition={{ 
@@ -94,19 +94,19 @@ const Textarea_43: React.FC<TextareaProps> = ({
           ))}
 
           {/* Rivets */}
-          {[...Array(8)].map((_, i) => (
+          {[...Array(8)].map((_, index) => (
             <motion.div
-              key={i}
+              key={index}
               className="absolute w-3 h-3 rounded-full bg-gradient-to-br from-amber-600 to-amber-800"
               style={{
-                top: i < 4 ? '4px' : 'calc(100% - 16px)',
-                left: `${(i % 4) * 33 + 8}%`,
+                top: index < 4 ? '4px' : 'calc(100% - 16px)',
+                left: `${(index % 4) * 33 + 8}%`,
                 boxShadow: 'inset -1px -1px 2px rgba(0,0,0,0.3)',
               }}
               animate={{
                 scale: isFocused ? [1, 1.1, 1] : 1,
               }}
-              transition={{ duration: 1, delay: i * 0.1, repeat: Infinity }}
+              transition={{ duration: 1, delay: index * 0.1, repeat: Infinity }}
             />
           ))}
         </motion.div>
@@ -140,14 +140,14 @@ const Textarea_43: React.FC<TextareaProps> = ({
           />
 
           {/* Mechanical Corner Decorations */}
-          {['top-0 left-0', 'top-0 right-0', 'bottom-0 left-0', 'bottom-0 right-0'].map((position, i) => (
+          {['top-0 left-0', 'top-0 right-0', 'bottom-0 left-0', 'bottom-0 right-0'].map((position, index) => (
             <motion.div
-              key={i}
+              key={index}
               className={`absolute w-8 h-8 ${position} pointer-events-none`}
               animate={{
-                rotate: i % 2 === 0 ? [0, 90, 0] : [0, -90, 0],
+                rotate: index % 2 === 0 ? [0, 90, 0] : [0, -90, 0],
               }}
-              transition={{ duration: 4, repeat: Infinity, delay: i * 0.5 }}
+              transition={{ duration: 4, repeat: Infinity, delay: index * 0.5 }}
             >
               <div className="absolute inset-0 border-2 border-amber-700"
                    style={{
@@ -171,7 +171,7 @@ const Textarea_43: React.FC<TextareaProps> = ({
               [ERROR]: {error}
             </motion.p>
           ) : helperText ? (
-            <p className="text-amber-600/70 text-sm font-mono">// {helperText}</p>
+            <p className="text-amber-600/70 text-sm font-mono">{`// ${helperText}`}</p>
           ) : null}
         </div>
         {showCharacterCount && maxLength && (

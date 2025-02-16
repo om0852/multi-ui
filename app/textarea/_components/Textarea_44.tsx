@@ -29,13 +29,13 @@ const Textarea_44: React.FC<TextareaProps> = ({
   };
 
   // Generate random shapes
-  const shapes = Array.from({ length: 6 }).map((_, i) => ({
-    type: ['circle', 'square', 'triangle'][i % 3],
+  const shapes = Array.from({ length: 6 }).map((_, index) => ({
+    type: ['circle', 'square', 'triangle'][index % 3],
     size: Math.random() * 40 + 20,
     x: Math.random() * 100,
     y: Math.random() * 100,
     rotation: Math.random() * 360,
-    delay: i * 0.5,
+    delay: index * 0.5,
   }));
 
   return (
@@ -70,9 +70,9 @@ const Textarea_44: React.FC<TextareaProps> = ({
           }}
         >
           {/* Animated Shapes */}
-          {shapes.map((shape, i) => (
+          {shapes.map((shape, index) => (
             <motion.div
-              key={i}
+              key={index}
               className="absolute"
               style={{
                 width: shape.size,
@@ -156,12 +156,12 @@ const Textarea_44: React.FC<TextareaProps> = ({
           />
 
           {/* Corner Accents */}
-          {['top-0 left-0', 'top-0 right-0', 'bottom-0 left-0', 'bottom-0 right-0'].map((position, i) => (
+          {['top-0 left-0', 'top-0 right-0', 'bottom-0 left-0', 'bottom-0 right-0'].map((position, index) => (
             <motion.div
-              key={i}
+              key={index}
               className={`absolute w-8 h-8 ${position}`}
               style={{
-                background: `linear-gradient(${45 + i * 90}deg, rgba(139,92,246,0.2), rgba(236,72,153,0.2))`,
+                background: `linear-gradient(${45 + index * 90}deg, rgba(139,92,246,0.2), rgba(236,72,153,0.2))`,
                 clipPath: 'polygon(0 0, 100% 0, 100% 100%)',
                 opacity: 0.5,
               }}
@@ -169,7 +169,7 @@ const Textarea_44: React.FC<TextareaProps> = ({
                 scale: isFocused ? [1, 1.2, 1] : 1,
                 rotate: isFocused ? [0, 45, 0] : 0,
               }}
-              transition={{ duration: 2, repeat: Infinity, delay: i * 0.2 }}
+              transition={{ duration: 2, repeat: Infinity, delay: index * 0.2 }}
             />
           ))}
         </div>

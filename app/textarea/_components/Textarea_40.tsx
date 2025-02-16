@@ -131,17 +131,17 @@ const Textarea_40: React.FC<TextareaProps> = ({
           />
 
           {/* Corner Glitch Effects */}
-          {['top-0 left-0', 'top-0 right-0', 'bottom-0 left-0', 'bottom-0 right-0'].map((position, i) => (
+          {['top-0 left-0', 'top-0 right-0', 'bottom-0 left-0', 'bottom-0 right-0'].map((position) => (
             <motion.div
-              key={i}
+              key={position}
               className={`absolute w-8 h-8 ${position}`}
               animate={{
                 opacity: isFocused ? [0.5, 1, 0.5] : 0.5,
                 scale: isFocused ? [1, 1.2, 1] : 1,
               }}
-              transition={{ duration: 1, repeat: Infinity, delay: i * 0.2 }}
+              transition={{ duration: 1, repeat: Infinity }}
               style={{
-                background: `linear-gradient(45deg, ${i % 2 ? '#0FF' : '#F0F'}, transparent)`,
+                background: `linear-gradient(45deg, ${position.includes('left') ? '#0FF' : '#F0F'}, transparent)`,
               }}
             />
           ))}

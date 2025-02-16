@@ -99,9 +99,9 @@ const Textarea_42: React.FC<TextareaProps> = ({
           />
 
           {/* Stars */}
-          {Array.from({ length: 50 }).map((_, i) => (
+          {Array.from({ length: 50 }).map((_, index) => (
             <motion.div
-              key={i}
+              key={index}
               className="absolute rounded-full bg-white"
               style={{
                 width: Math.random() * 2 + 1,

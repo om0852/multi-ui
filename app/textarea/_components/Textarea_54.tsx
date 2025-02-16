@@ -29,7 +29,7 @@ const Textarea_54: React.FC<TextareaProps> = ({
   };
 
   // Generate random pebbles
-  const pebbles = Array.from({ length: 8 }).map((_, i) => ({
+  const pebbles = Array.from({ length: 8 }).map(() => ({
     size: Math.random() * 4 + 2,
     x: Math.random() * 100,
     y: Math.random() * 100,

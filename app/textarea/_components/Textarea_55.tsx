@@ -76,9 +76,9 @@ const Textarea_55: React.FC<TextareaProps> = ({
           }}
         >
           {/* Circuit Paths */}
-          {paths.map((path, i) => (
+          {paths.map((path, index) => (
             <motion.div
-              key={i}
+              key={index}
               className="absolute inset-0"
               style={{
                 opacity: 0.2,
@@ -98,7 +98,7 @@ const Textarea_55: React.FC<TextareaProps> = ({
                   transition={{
                     duration: 3,
                     repeat: Infinity,
-                    delay: i * 0.5,
+                    delay: index * 0.5,
                   }}
                 />
               </svg>
@@ -106,13 +106,13 @@ const Textarea_55: React.FC<TextareaProps> = ({
           ))}
 
           {/* Circuit Nodes */}
-          {[...Array(6)].map((_, i) => (
+          {[...Array(6)].map((_, index) => (
             <motion.div
-              key={i}
+              key={index}
               className="absolute w-2 h-2 rounded-full bg-lime-500/30"
               style={{
-                left: `${(i % 3) * 45 + 5}%`,
-                top: i < 3 ? '10%' : '90%',
+                left: `${(index % 3) * 45 + 5}%`,
+                top: index < 3 ? '10%' : '90%',
               }}
               animate={{
                 scale: [1, 1.5, 1],
@@ -126,7 +126,7 @@ const Textarea_55: React.FC<TextareaProps> = ({
               transition={{
                 duration: 2,
                 repeat: Infinity,
-                delay: i * 0.3,
+                delay: index * 0.3,
               }}
             />
           ))}
@@ -185,9 +185,9 @@ const Textarea_55: React.FC<TextareaProps> = ({
           />
 
           {/* Corner LEDs */}
-          {['top-0 left-0', 'top-0 right-0', 'bottom-0 left-0', 'bottom-0 right-0'].map((position, i) => (
+          {['top-0 left-0', 'top-0 right-0', 'bottom-0 left-0', 'bottom-0 right-0'].map((position, index) => (
             <motion.div
-              key={i}
+              key={index}
               className={`absolute w-2 h-2 ${position} m-2 rounded-full bg-lime-500`}
               animate={{
                 opacity: [0.3, 0.7, 0.3],
@@ -200,7 +200,7 @@ const Textarea_55: React.FC<TextareaProps> = ({
               transition={{
                 duration: 2,
                 repeat: Infinity,
-                delay: i * 0.5,
+                delay: index * 0.5,
               }}
             />
           ))}
@@ -228,7 +228,7 @@ const Textarea_55: React.FC<TextareaProps> = ({
               }}
               transition={{ duration: 2, repeat: Infinity }}
             >
-              // {helperText}
+              {`// ${helperText}`}
             </motion.p>
           ) : null}
         </div>
