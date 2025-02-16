@@ -8,7 +8,6 @@ interface TimelineItemProps {
   description: string;
   date: string;
   icon?: React.ReactNode;
-  category?: string;
   tags?: string[];
   link?: string;
 }
@@ -17,7 +16,6 @@ interface TimelineProps {
   data: TimelineItemProps[];
   theme?: 'light' | 'dark';
   layout?: 'left' | 'right' | 'alternate';
-  animated?: boolean;
 }
 
 const cardVariants: Variants = {
@@ -47,7 +45,6 @@ const TimelineItem: React.FC<TimelineItemProps & {
   description,
   date,
   icon,
-  category,
   tags,
   link,
   index,
@@ -110,17 +107,6 @@ const TimelineItem: React.FC<TimelineItemProps & {
 
         {/* Content */}
         <div>
-          {category && (
-            <span className={clsx(
-              "inline-block px-3 py-1 rounded-full text-xs font-medium mb-2",
-              theme === 'dark'
-                ? "bg-gray-700 text-gray-300"
-                : "bg-gray-100 text-gray-600"
-            )}>
-              {category}
-            </span>
-          )}
-
           <h3 className={clsx(
             "text-xl font-bold mb-2",
             theme === 'dark' ? "text-white" : "text-gray-900"
@@ -178,8 +164,7 @@ const TimelineItem: React.FC<TimelineItemProps & {
 const Timeline: React.FC<TimelineProps> = ({
   data,
   theme = 'light',
-  layout = 'alternate',
-  animated = true,
+  layout = 'alternate'
 }) => {
   return (
     <motion.div

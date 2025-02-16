@@ -8,7 +8,6 @@ interface TimelineItemProps {
   description: string;
   date: string;
   icon?: React.ReactNode;
-  category?: string;
   tags?: string[];
   link?: string;
 }
@@ -17,7 +16,6 @@ interface TimelineProps {
   data: TimelineItemProps[];
   theme?: 'light' | 'dark';
   layout?: 'left' | 'right' | 'alternate';
-  animated?: boolean;
 }
 
 const itemVariants: Variants = {
@@ -44,33 +42,44 @@ const TimelineItem: React.FC<TimelineItemProps & {
   description,
   date,
   icon,
-  category,
   tags,
   link,
   index,
   theme,
   layout
 }) => {
+  const isLeft = layout === 'left' || (layout === 'alternate' && index % 2 === 0);
+  const paddingClass = isLeft ? "pl-8" : "pr-8";
+  const dotPosition = isLeft ? "left-0" : "right-0";
+  const linePosition = isLeft ? "left-0" : "right-0";
+  const translateDot = isLeft ? "-translate-x-[6px]" : "translate-x-[6px]";
+  const translateLine = isLeft ? "-translate-x-[1px]" : "translate-x-[1px]";
+
   return (
     <motion.div
       variants={itemVariants}
       className={clsx(
-        "relative pl-8 pb-12 last:pb-0",
+        "relative pb-12 last:pb-0",
+        paddingClass,
         theme === 'dark' ? "text-white" : "text-gray-800"
       )}
     >
-      {/* Dot */}
+      {/* Dot with Icon */}
       <div className={clsx(
-        "absolute left-0 w-3 h-3 rounded-full",
-        theme === 'dark' ? "bg-white" : "bg-black",
-        "-translate-x-[6px]"
-      )} />
+        "absolute w-6 h-6 rounded-full flex items-center justify-center",
+        dotPosition,
+        theme === 'dark' ? "bg-white text-black" : "bg-black text-white",
+        translateDot
+      )}>
+        {icon && <span className="text-xs">{icon}</span>}
+      </div>
 
       {/* Vertical Line */}
       <div className={clsx(
-        "absolute left-0 top-3 w-px h-[calc(100%-12px)]",
+        "absolute top-3 w-px h-[calc(100%-12px)]",
+        linePosition,
         theme === 'dark' ? "bg-gray-700" : "bg-gray-200",
-        "-translate-x-[1px]"
+        translateLine
       )} />
 
       {/* Content */}
@@ -134,8 +143,7 @@ const TimelineItem: React.FC<TimelineItemProps & {
 const Timeline: React.FC<TimelineProps> = ({
   data,
   theme = 'light',
-  layout = 'left',
-  animated = true,
+  layout = 'left'
 }) => {
   return (
     <motion.div

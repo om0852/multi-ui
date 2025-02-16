@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import clsx from "clsx";
 
@@ -9,7 +9,6 @@ interface TimelineItemProps {
   description: string;
   date: string;
   icon?: React.ReactNode;
-  category?: string;
   tags?: string[];
   link?: string;
 }
@@ -17,7 +16,6 @@ interface TimelineItemProps {
 interface TimelineProps {
   data: TimelineItemProps[];
   theme?: 'light' | 'dark';
-  animated?: boolean;
 }
 
 const TimelineItem: React.FC<TimelineItemProps & { 
@@ -28,7 +26,6 @@ const TimelineItem: React.FC<TimelineItemProps & {
   description,
   date,
   icon,
-  category,
   tags,
   link,
   index,
@@ -40,12 +37,13 @@ const TimelineItem: React.FC<TimelineItemProps & {
     offset: ["start end", "end start"]
   });
 
+  const isEven = index % 2 === 0;
   const y = useTransform(scrollYProgress, [0, 1], [100, -100]);
+  const yReverse = useTransform(scrollYProgress, [0, 1], [-100, 100]);
   const opacity = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0, 1, 1, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.2, 0.8, 1], [0.8, 1, 1, 0.8]);
   const rotate = useTransform(scrollYProgress, [0, 1], [10, -10]);
-
-  const isEven = index % 2 === 0;
+  const yTransform = isEven ? y : yReverse;
 
   return (
     <motion.div
@@ -53,7 +51,7 @@ const TimelineItem: React.FC<TimelineItemProps & {
       style={{
         opacity,
         scale,
-        y: isEven ? y : useTransform(y, (value) => -value)
+        y: yTransform
       }}
       className={clsx(
         "relative mb-32 last:mb-0",
@@ -172,8 +170,7 @@ const TimelineItem: React.FC<TimelineItemProps & {
 
 const Timeline: React.FC<TimelineProps> = ({
   data,
-  theme = 'light',
-  animated = true,
+  theme = 'light'
 }) => {
   return (
     <div className={clsx(

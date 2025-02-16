@@ -17,7 +17,6 @@ interface TimelineItemProps {
 interface TimelineProps {
   data: TimelineItemProps[];
   theme?: 'light' | 'dark';
-  animated?: boolean;
 }
 
 const TimelineItem: React.FC<TimelineItemProps & { 
@@ -298,7 +297,6 @@ const TimelineItem: React.FC<TimelineItemProps & {
 const Timeline: React.FC<TimelineProps> = ({
   data,
   theme = 'light',
-  animated = true,
 }) => {
   return (
     <div className={clsx(

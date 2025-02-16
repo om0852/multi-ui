@@ -8,7 +8,6 @@ interface TimelineItemProps {
   description: string;
   date: string;
   icon?: React.ReactNode;
-  category?: string;
   tags?: string[];
   link?: string;
   color?: string;
@@ -17,7 +16,6 @@ interface TimelineItemProps {
 interface TimelineProps {
   data: TimelineItemProps[];
   theme?: 'light' | 'dark';
-  animated?: boolean;
 }
 
 const itemVariants: Variants = {
@@ -77,7 +75,6 @@ const TimelineItem: React.FC<TimelineItemProps & {
   description,
   date,
   icon,
-  category,
   tags,
   link,
   color = 'blue',
@@ -182,8 +179,7 @@ const TimelineItem: React.FC<TimelineItemProps & {
 
 const Timeline: React.FC<TimelineProps> = ({
   data,
-  theme = 'light',
-  animated = true,
+  theme = 'light'
 }) => {
   return (
     <motion.div

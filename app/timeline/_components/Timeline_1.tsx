@@ -8,7 +8,6 @@ interface TimelineItemProps {
   description: string;
   date: string;
   icon?: React.ReactNode;
-  category?: string;
   tags?: string[];
   link?: string;
 }
@@ -17,8 +16,6 @@ interface TimelineProps {
   data: TimelineItemProps[];
   theme?: 'light' | 'dark';
   layout?: 'left' | 'right' | 'alternate';
-  lineStyle?: 'solid' | 'dashed' | 'dotted';
-  animated?: boolean;
 }
 
 const itemVariants: Variants = {
@@ -61,7 +58,6 @@ const TimelineItem: React.FC<TimelineItemProps & {
   description,
   date,
   icon,
-  category,
   tags,
   link,
   index,
@@ -103,23 +99,6 @@ const TimelineItem: React.FC<TimelineItemProps & {
             "hover:shadow-xl transform hover:-translate-y-1"
           )}
         >
-          {category && (
-            <span className={clsx(
-              "inline-block px-3 py-1 rounded-full text-xs font-medium mb-2",
-              theme === 'dark' ? "bg-gray-700 text-gray-300" : "bg-gray-100 text-gray-600"
-            )}>
-              {category}
-            </span>
-          )}
-          
-          <h3 className="text-xl font-bold mb-2">{title}</h3>
-          <p className={clsx(
-            "text-sm mb-3",
-            theme === 'dark' ? "text-gray-400" : "text-gray-600"
-          )}>
-            {description}
-          </p>
-          
           {tags && tags.length > 0 && (
             <div className="flex flex-wrap gap-2 mb-3">
               {tags.map((tag, i) => (
@@ -137,7 +116,15 @@ const TimelineItem: React.FC<TimelineItemProps & {
               ))}
             </div>
           )}
-
+          
+          <h3 className="text-xl font-bold mb-2">{title}</h3>
+          <p className={clsx(
+            "text-sm mb-3",
+            theme === 'dark' ? "text-gray-400" : "text-gray-600"
+          )}>
+            {description}
+          </p>
+          
           <time className={clsx(
             "text-sm font-medium",
             theme === 'dark' ? "text-gray-400" : "text-gray-500"
@@ -197,9 +184,7 @@ const TimelineItem: React.FC<TimelineItemProps & {
 const Timeline: React.FC<TimelineProps> = ({
   data,
   theme = 'light',
-  layout = 'alternate',
-  lineStyle = 'solid',
-  animated = true,
+  layout = 'alternate'
 }) => {
   return (
     <motion.div

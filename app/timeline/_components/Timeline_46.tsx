@@ -17,7 +17,6 @@ interface TimelineItemProps {
 interface TimelineProps {
   data: TimelineItemProps[];
   theme?: 'light' | 'dark';
-  animated?: boolean;
 }
 
 const TimelineItem: React.FC<TimelineItemProps & { 
@@ -61,11 +60,13 @@ const TimelineItem: React.FC<TimelineItemProps & {
       <motion.div
         whileHover={{ scale: 1.1 }}
         className={clsx(
-          "absolute left-0 top-0 w-2 h-2 -translate-x-1/2",
+          "absolute left-0 top-0 w-6 h-6 -translate-x-1/2 flex items-center justify-center",
           theme === 'dark' ? 'bg-gray-300' : 'bg-gray-700',
           "rounded-full"
         )}
-      />
+      >
+        {icon && <span className="text-xs">{icon}</span>}
+      </motion.div>
 
       {/* Content */}
       <div className={clsx(
@@ -151,7 +152,6 @@ const TimelineItem: React.FC<TimelineItemProps & {
 const Timeline: React.FC<TimelineProps> = ({
   data,
   theme = 'light',
-  animated = true,
 }) => {
   return (
     <div className={clsx(
