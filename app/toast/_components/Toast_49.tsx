@@ -1,11 +1,18 @@
 import React, { useEffect } from "react";
 import { motion } from "framer-motion";
 import clsx from "clsx";
-import { animationVariants, ThemeClassesBorder, positionClasses, useToastTimer } from "./utils";
-import { ToastProps } from "./toast-context";
+import { 
+  positionClasses, 
+  useToastTimer,
+  ToastProps,
+  ToastAnimationType,
+  ToastTheme
+} from "./utils";
 
-interface ExtendedToastProps extends ToastProps {
+interface ExtendedToastProps extends Omit<ToastProps, 'theme' | 'animationType'> {
   audio?: string;
+  theme?: ToastTheme;
+  animationType?: ToastAnimationType;
 }
 
 const Toast_49: React.FC<ExtendedToastProps> = ({
@@ -31,212 +38,181 @@ const Toast_49: React.FC<ExtendedToastProps> = ({
 
   useEffect(() => {
     if (audio) {
-      const audioElement = new Audio(audio);
-      audioElement.play();
+      const sound = new Audio(audio);
+      sound.play().catch(error => console.log('Audio playback failed:', error));
     }
   }, [audio]);
 
+  const getAnimationConfig = () => {
+    switch (animationType) {
+      case "slide":
+        return {
+          initial: { x: 300, opacity: 0, rotate: -5 },
+          animate: { x: 0, opacity: 1, rotate: 0 },
+          exit: { x: 300, opacity: 0, rotate: 5 },
+          transition: { type: "spring", stiffness: 200, damping: 20 }
+        };
+      case "bounce":
+        return {
+          initial: { y: -50, opacity: 0, scale: 0.9 },
+          animate: { y: 0, opacity: 1, scale: 1 },
+          exit: { y: 50, opacity: 0, scale: 0.9 },
+          transition: { type: "spring", stiffness: 300, damping: 15 }
+        };
+      default:
+        return {
+          initial: { scale: 0.9, opacity: 0, rotate: -5 },
+          animate: { scale: 1, opacity: 1, rotate: 0 },
+          exit: { scale: 0.9, opacity: 0, rotate: 5 },
+          transition: { type: "spring", stiffness: 200, damping: 20 }
+        };
+    }
+  };
+
+  const animation = getAnimationConfig();
+
   return (
     <motion.div
-      initial={{ scale: 0.9, opacity: 0 }}
-      animate={{ scale: 1, opacity: 1 }}
-      exit={{ scale: 0.9, opacity: 0 }}
-      transition={{ type: "spring", stiffness: 300, damping: 25 }}
+      {...animation}
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       className={clsx(
         "relative z-50",
         "w-[320px]",
         positionClasses[position],
-        stack ? "static" : "fixed",
+        stack ? "static" : "fixed"
       )}
     >
+      {/* Gradient Container */}
       <div className={clsx(
-        "relative p-4 rounded-lg",
-        theme === 'dark' ? 'bg-gray-900' : 'bg-white',
-        "shadow-lg",
-        "overflow-hidden"
+        "relative p-4 rounded-2xl overflow-hidden",
+        theme === 'dark'
+          ? 'bg-gradient-to-br from-violet-600 via-fuchsia-500 to-pink-500'
+          : 'bg-gradient-to-br from-violet-400 via-fuchsia-300 to-pink-300',
+        "shadow-lg"
       )}>
-        {/* Ink Splatter Background */}
-        <div className="absolute inset-0">
-          <motion.div
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 0.1 }}
-            transition={{ duration: 0.5 }}
-            className={clsx(
-              "absolute -right-4 -top-4 w-32 h-32 rounded-full",
-              theme === 'dark'
-                ? 'bg-indigo-500'
-                : 'bg-indigo-400',
-              "filter blur-xl"
-            )}
-          />
-          <motion.div
-            initial={{ scale: 0, opacity: 0 }}
-            animate={{ scale: 1, opacity: 0.1 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
-            className={clsx(
-              "absolute -left-4 -bottom-4 w-32 h-32 rounded-full",
-              theme === 'dark'
-                ? 'bg-purple-500'
-                : 'bg-purple-400',
-              "filter blur-xl"
-            )}
-          />
-        </div>
-
-        {/* Ink Flow Animation */}
+        {/* Animated Gradient Overlay */}
         <motion.div
           animate={{
-            backgroundPosition: ["0% 0%", "100% 100%"],
+            backgroundPosition: ['0% 0%', '100% 100%'],
+            opacity: [0.7, 0.5, 0.7]
           }}
           transition={{
             duration: 8,
             repeat: Infinity,
-            ease: "linear",
+            ease: "linear"
           }}
           className={clsx(
-            "absolute inset-0 opacity-20",
-            "bg-[radial-gradient(circle,rgba(0,0,0,0.1)_1px,transparent_1px)]",
-            "bg-[length:16px_16px]"
+            "absolute inset-0",
+            "bg-gradient-to-tl",
+            theme === 'dark'
+              ? 'from-black/20 via-transparent to-white/10'
+              : 'from-black/10 via-transparent to-white/20',
+            "bg-[length:200%_200%]"
           )}
         />
 
-        <div className="relative flex items-start space-x-3">
-          {/* Icon with Ink Effect */}
-          <motion.div
-            whileHover={{
-              scale: 1.1,
-              transition: { duration: 0.2 },
-            }}
-            className={clsx(
-              "flex-shrink-0 w-10 h-10 rounded-lg",
-              "flex items-center justify-center",
-              theme === 'dark'
-                ? 'bg-gray-800 text-white'
-                : 'bg-gray-100 text-gray-900',
-              "relative overflow-hidden"
-            )}
-          >
-            <span className="relative z-10 text-xl">{icon}</span>
-            <motion.div
-              animate={{
-                y: [0, -100],
-                opacity: [0.5, 0],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-              className={clsx(
-                "absolute inset-0",
-                theme === 'dark'
-                  ? 'bg-gradient-to-t from-indigo-500/20 to-transparent'
-                  : 'bg-gradient-to-t from-indigo-400/20 to-transparent'
-              )}
-            />
-          </motion.div>
+        {/* Shimmer Effect */}
+        <motion.div
+          animate={{
+            x: ['-100%', '100%'],
+            opacity: [0, 0.1, 0]
+          }}
+          transition={{
+            duration: 3,
+            repeat: Infinity,
+            ease: "easeInOut"
+          }}
+          className={clsx(
+            "absolute inset-0 skew-x-12",
+            "bg-gradient-to-r from-transparent via-white to-transparent"
+          )}
+        />
 
-          {/* Content */}
-          <div className="flex-1">
-            <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
+        {/* Progress Bar */}
+        <motion.div
+          initial={{ scaleX: 1 }}
+          animate={{ scaleX: 0 }}
+          transition={{ duration: duration / 1000, ease: "linear" }}
+          style={{ originX: 0 }}
+          className={clsx(
+            "absolute bottom-0 left-0 right-0 h-1",
+            theme === 'dark'
+              ? 'bg-gradient-to-r from-white/30 via-white/20 to-white/30'
+              : 'bg-gradient-to-r from-black/20 via-black/10 to-black/20'
+          )}
+        />
+
+        <div className="relative flex items-start space-x-4">
+          {/* Icon */}
+          {icon && (
+            <motion.div
+              animate={{ 
+                scale: [1, 1.1, 1],
+                rotate: [0, 10, -10, 0]
+              }}
+              transition={{ 
+                duration: 4,
+                repeat: Infinity,
+                ease: "easeInOut"
+              }}
               className={clsx(
-                "text-sm",
-                theme === 'dark' ? 'text-white' : 'text-gray-900'
+                "flex-shrink-0 w-10 h-10 rounded-xl flex items-center justify-center",
+                theme === 'dark'
+                  ? 'bg-white/20 text-white'
+                  : 'bg-black/10 text-black',
+                "backdrop-blur-sm"
               )}
             >
-              {message}
-            </motion.p>
+              <span className="text-xl">{icon}</span>
+            </motion.div>
+          )}
 
+          {/* Content */}
+          <div className="flex-1 min-w-0 pt-1">
+            <p className={clsx(
+              "text-sm font-medium",
+              theme === 'dark' ? 'text-white' : 'text-black'
+            )}>
+              {message}
+            </p>
+
+            {/* Action Button */}
             {actionButton && (
               <motion.button
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={actionButton.onClick}
                 className={clsx(
-                  "mt-2 px-4 py-1.5 text-sm rounded-lg",
+                  "mt-3 px-4 py-1.5 text-xs font-medium rounded-lg",
                   theme === 'dark'
-                    ? 'bg-gray-800 text-white hover:bg-gray-700'
-                    : 'bg-gray-100 text-gray-900 hover:bg-gray-200',
-                  "relative overflow-hidden"
+                    ? 'bg-white/20 text-white hover:bg-white/30'
+                    : 'bg-black/10 text-black hover:bg-black/20',
+                  "backdrop-blur-sm",
+                  "transition-colors duration-200"
                 )}
               >
-                <span className="relative z-10">{actionButton.label}</span>
-                <motion.div
-                  animate={{
-                    y: [50, -50],
-                    opacity: [0.2, 0],
-                  }}
-                  transition={{
-                    duration: 1.5,
-                    repeat: Infinity,
-                    ease: "linear",
-                  }}
-                  className={clsx(
-                    "absolute inset-0",
-                    theme === 'dark'
-                      ? 'bg-gradient-to-t from-indigo-500/20 to-transparent'
-                      : 'bg-gradient-to-t from-indigo-400/20 to-transparent'
-                  )}
-                />
+                {actionButton.label}
               </motion.button>
             )}
           </div>
 
           {/* Close Button */}
           <motion.button
-            whileHover={{ rotate: 90 }}
-            whileTap={{ scale: 0.9 }}
             onClick={close}
+            whileHover={{ scale: 1.1, rotate: 90 }}
+            whileTap={{ scale: 0.9 }}
             className={clsx(
-              "flex-shrink-0 w-6 h-6",
-              "flex items-center justify-center",
-              theme === 'dark' ? 'text-white' : 'text-gray-900'
+              "flex-shrink-0 w-8 h-8 rounded-lg flex items-center justify-center",
+              theme === 'dark'
+                ? 'bg-white/20 text-white hover:bg-white/30'
+                : 'bg-black/10 text-black hover:bg-black/20',
+              "backdrop-blur-sm",
+              "transition-colors duration-200"
             )}
           >
             ×
           </motion.button>
-        </div>
-
-        {/* Ink Progress Bar */}
-        <div className="relative h-1 mt-3">
-          <div className={clsx(
-            "absolute inset-0 rounded-full",
-            theme === 'dark'
-              ? 'bg-gray-800'
-              : 'bg-gray-200'
-          )} />
-          <motion.div
-            initial={{ scaleX: 1 }}
-            animate={{ scaleX: 0 }}
-            transition={{ duration: duration / 1000, ease: "linear" }}
-            style={{ originX: 0 }}
-            className={clsx(
-              "absolute inset-0 rounded-full",
-              theme === 'dark'
-                ? 'bg-gradient-to-r from-indigo-500 to-purple-500'
-                : 'bg-gradient-to-r from-indigo-400 to-purple-400'
-            )}
-          >
-            {/* Ink Flow Effect */}
-            <motion.div
-              animate={{
-                x: ["0%", "100%"],
-              }}
-              transition={{
-                duration: 2,
-                repeat: Infinity,
-                ease: "linear",
-              }}
-              className={clsx(
-                "absolute inset-0",
-                "bg-gradient-to-r from-transparent via-white/30 to-transparent"
-              )}
-            />
-          </motion.div>
         </div>
       </div>
     </motion.div>

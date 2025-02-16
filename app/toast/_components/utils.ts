@@ -2,14 +2,19 @@
 import React, { useEffect, useState } from 'react';
 import { Variants } from "framer-motion";
 
+// Define the animation type explicitly
+export type ToastAnimationType = "slide" | "fade" | "zoom" | "bounce" | "zoomflip" | "PopOutIn" | "rotate" | "wobble" | "flip" | "staggeredZoom" | "drop" | "pulse" | "ripple" | "roll" | "twist";
+
+export type ToastTheme = "light" | "dark" | "custom" | "success" | "danger" | "warning" | "info" | "neutral" | "vibrant" | "pink" | "cyan" | "teal";
+
 export type ToastProps = {
   message: string | React.ReactNode;
   close: () => void;
   icon?: React.ReactNode;
   position?: "top-right" | "top-left" | "bottom-right" | "bottom-left" | "center";
-  theme?: "success" | "warn" | "info" | "danger"; // Themes
+  theme?: ToastTheme;
   duration?: number;
-  animationType?: "slide" | "fade" | "zoom" | "bounce";
+  animationType?: ToastAnimationType;
   autoDismiss?: boolean;
   onHoverPause?: boolean;
   actionButton?: { label: string; onClick: () => void };
