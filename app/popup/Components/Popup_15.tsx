@@ -5,7 +5,7 @@ interface MenuItem {
   onClick?: () => void; // Optional onClick handler for menu items
 }
 
-interface SpiralMenuProps {
+interface Popup15Props {
   menuItems: MenuItem[]; // Array of menu items
   distance?: number; // Optional: Distance of menu items from the center
   label?: ReactNode; // Optional: Content for the central toggle button
@@ -15,74 +15,93 @@ interface SpiralMenuProps {
   menuItemRadius?: string; // Optional: Custom radius for menu items
 }
 
-const SpiralMenu: React.FC<SpiralMenuProps> = ({
+const Popup_15: React.FC<Popup15Props> = ({
   menuItems,
-  distance = 120, // Default distance for menu items
-  label = "☰", // Default central button label
-  centerColor = "bg-purple-500",
-  menuColor = "bg-red-400",
+  distance = 150, // Default distance for menu items
+  label = "Menu", // Default central button label
+  centerColor = "bg-violet-500",
+  menuColor = "bg-fuchsia-400",
   centerRadius = "w-16 h-16", // Default radius for center button
   menuItemRadius = "w-12 h-12", // Default radius for menu items
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const handleToggle = () => {
+    setIsChecked(!isChecked);
+  };
+
+  const angles = Array.from({ length: menuItems.length }, (_, index) =>
+    (360 / menuItems.length) * index
+  );
 
   const menuStyles = (index: number) => {
-    const angle = (360 / menuItems.length) * index; // Equal spacing for items
-    const radian = (angle * Math.PI) / 180;
-    const x = Math.cos(radian) * distance * (1 + index * 0.1); // Add spiral effect
-    const y = Math.sin(radian) * distance * (1 + index * 0.1);
+    const angle = (angles[index] * Math.PI) / 180;
+    const x = Math.cos(angle) * distance;
+    const y = Math.sin(angle) * distance;
 
-    if (!isOpen) {
+    if (!isChecked) {
       return {
-        transform: `translate(0, 0) scale(0.5) rotate(0deg)`,
+        transform: `translate(0px, 0px) scale(0.5)`,
         opacity: 0,
-        Visibility:"hidden",
-        transition: `transform 0.5s ease-in, opacity 0.3s`,
+        visibility: "hidden" as const,
+        transition: "transform 0.5s ease-out, opacity 0.3s ease-out",
       };
     }
 
     return {
-      transform: `translate(${x}px, ${y}px) scale(1) rotate(${index * 45}deg)`,
+      transform: `translate(${x}px, ${y}px) scale(1)`,
       opacity: 1,
-      Visibility:"visible",
-      transition: `transform 0.7s ease-out ${index * 0.1}s, opacity 0.5s ease-out`,
+      visibility: "visible" as const,
+      transition: `transform 0.6s cubic-bezier(0.4, 0, 0.2, 1) ${0.1 * index}s, opacity 0.4s ease-out ${0.1 * index}s`,
     };
   };
 
   const handleMenuItemClick = (item: MenuItem) => {
-    item.onClick?.();
-    setIsOpen(false); // Close the menu after clicking an item
+    if (item.onClick) {
+      item.onClick();
+    }
+    setIsChecked(false);
   };
 
   return (
-    <div className="flex items-center justify-center w-full h-screen bg-gray-700">
+    <div className="flex items-center justify-center w-full h-screen bg-gray-800">
       <div className="relative flex items-center justify-center">
-        {/* Central Toggle Button */}
         <button
-          onClick={toggleMenu}
-          className={`${centerColor} ${centerRadius} rounded-full flex items-center justify-center text-white text-xl shadow-lg cursor-pointer transform transition-transform duration-300 ${
-            isOpen ? "rotate-180" : ""
-          }`}
+          onClick={handleToggle}
+          className={`${centerColor} ${centerRadius} rounded-full flex items-center justify-center text-white text-lg cursor-pointer relative z-10 transition-all duration-300`}
+          style={{
+            transform: isChecked ? "scale(1.1)" : "scale(1)",
+            animation: isChecked ? "float 2s infinite" : "none",
+          }}
         >
           {label}
         </button>
-
-        {/* Spiral Menu Items */}
         {menuItems.map((item, index) => (
           <div
-            key={item.label as string} // Use item.label as key, or another unique identifier
+            key={index}
             onClick={() => handleMenuItemClick(item)}
-            style={menuStyles(index)}
-            className={`absolute ${menuColor} ${menuItemRadius} rounded-full flex items-center justify-center text-xs text-black shadow-lg transition-all ease-in-out transform hover:scale-110`}
+            style={{
+              ...menuStyles(index),
+              animation: isChecked ? `float ${2 + index * 0.2}s infinite ${index * 0.1}s` : "none",
+            }}
+            className={`absolute ${menuColor} ${menuItemRadius} text-white rounded-full flex items-center justify-center text-sm cursor-pointer hover:brightness-110 shadow-lg`}
           >
             {item.label}
           </div>
         ))}
       </div>
+      <style jsx>{`
+        @keyframes float {
+          0%, 100% {
+            transform: translate(var(--x), var(--y)) translateY(0px);
+          }
+          50% {
+            transform: translate(var(--x), var(--y)) translateY(-10px);
+          }
+        }
+      `}</style>
     </div>
   );
 };
 
-export default SpiralMenu;
+export default Popup_15;

@@ -59,8 +59,10 @@ const RadialMenu: React.FC<RadialMenuProps> = ({
   };
 
   const handleMenuItemClick = (item: MenuItem) => {
-    item.onClick && item.onClick(); // Call the item's onClick handler if it exists
-    setIsChecked(false); // Close the menu after clicking an item
+    if (item.onClick) {
+      item.onClick();
+    }
+    setIsChecked(false);
   };
 
   return (

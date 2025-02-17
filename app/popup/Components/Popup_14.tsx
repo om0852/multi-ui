@@ -5,7 +5,7 @@ interface MenuItem {
   onClick?: () => void; // Optional onClick handler for menu items
 }
 
-interface FanMenuProps {
+interface Popup14Props {
   menuItems: MenuItem[]; // Array of menu items
   distance?: number; // Optional: Distance of menu items from the center
   label?: ReactNode; // Optional: Content for the central toggle button
@@ -15,75 +15,93 @@ interface FanMenuProps {
   menuItemRadius?: string; // Optional: Custom radius for menu items
 }
 
-const FanMenu: React.FC<FanMenuProps> = ({
+const Popup_14: React.FC<Popup14Props> = ({
   menuItems,
-  distance = 120, // Default distance for menu items
-  label = "☰", // Default central button label
-  centerColor = "bg-blue-500",
-  menuColor = "bg-yellow-400",
+  distance = 150, // Default distance for menu items
+  label = "Menu", // Default central button label
+  centerColor = "bg-amber-500",
+  menuColor = "bg-orange-400",
   centerRadius = "w-16 h-16", // Default radius for center button
-  menuItemRadius = "w-10 h-10", // Default radius for menu items
+  menuItemRadius = "w-12 h-12", // Default radius for menu items
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const handleToggle = () => {
+    setIsChecked(!isChecked);
+  };
+
+  const angles = Array.from({ length: menuItems.length }, (_, index) =>
+    (360 / menuItems.length) * index
+  );
 
   const menuStyles = (index: number) => {
-    const angle = (360 / menuItems.length) * index; // Equal spacing in a circular pattern
-    const radian = (angle * Math.PI) / 180;
-    const x = Math.cos(radian) * distance;
-    const y = Math.sin(radian) * distance;
+    const angle = (angles[index] * Math.PI) / 180;
+    const x = Math.cos(angle) * distance;
+    const y = Math.sin(angle) * distance;
 
-    if (!isOpen) {
+    if (!isChecked) {
       return {
-        transform: `translate(0, 0) scale(0)`,
+        transform: `translate(0px, 0px) scale(0.5)`,
         opacity: 0,
-     Visibility:"hidden",
-        transition: `transform 0.4s cubic-bezier(0.17, 0.67, 0.83, 0.67), opacity 0.3s`,
+        visibility: "hidden" as const,
+        transition: "transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55), opacity 0.3s ease-out",
       };
     }
 
     return {
       transform: `translate(${x}px, ${y}px) scale(1)`,
       opacity: 1,
-      Visibility:"visible",
-
-      transition: `transform 0.6s ease-out ${index * 0.1}s, opacity 0.4s ease-out ${index * 0.1}s`,
+      visibility: "visible" as const,
+      transition: `transform 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) ${0.1 * index}s, opacity 0.4s ease-out ${0.1 * index}s`,
     };
   };
 
   const handleMenuItemClick = (item: MenuItem) => {
-    item.onClick?.();
-    setIsOpen(false); // Close the menu after clicking an item
+    if (item.onClick) {
+      item.onClick();
+    }
+    setIsChecked(false);
   };
 
   return (
-    <div className="flex items-center justify-center w-full h-screen bg-gray-900">
+    <div className="flex items-center justify-center w-full h-screen bg-gray-800">
       <div className="relative flex items-center justify-center">
-        {/* Central Toggle Button */}
         <button
-          onClick={toggleMenu}
-          className={`${centerColor} ${centerRadius} rounded-full flex items-center justify-center text-white text-xl shadow-lg cursor-pointer transform transition-transform duration-300 ${
-            isOpen ? "rotate-180" : ""
-          }`}
+          onClick={handleToggle}
+          className={`${centerColor} ${centerRadius} rounded-full flex items-center justify-center text-white text-lg cursor-pointer relative z-10 transition-all duration-300`}
+          style={{
+            transform: isChecked ? "scale(1.1)" : "scale(1)",
+            animation: isChecked ? "elastic-bounce 1s infinite" : "none",
+          }}
         >
           {label}
         </button>
-
-        {/* Rotating Menu Items */}
         {menuItems.map((item, index) => (
           <div
-            key={item.label as string} // Use item.label as key, or another unique identifier
+            key={index}
             onClick={() => handleMenuItemClick(item)}
             style={menuStyles(index)}
-            className={`absolute ${menuColor} ${menuItemRadius} rounded-full flex items-center justify-center text-xs text-black shadow-md transition-all ease-in-out transform hover:scale-110`}
+            className={`absolute ${menuColor} ${menuItemRadius} text-white rounded-full flex items-center justify-center text-sm cursor-pointer hover:scale-110 transition-transform duration-200 shadow-lg`}
           >
             {item.label}
           </div>
         ))}
       </div>
+      <style jsx>{`
+        @keyframes elastic-bounce {
+          0%, 100% {
+            transform: scale(1);
+          }
+          50% {
+            transform: scale(1.2);
+          }
+          75% {
+            transform: scale(0.9);
+          }
+        }
+      `}</style>
     </div>
   );
 };
 
-export default FanMenu;
+export default Popup_14;

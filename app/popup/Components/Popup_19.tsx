@@ -5,109 +5,104 @@ interface MenuItem {
   onClick?: () => void; // Optional onClick handler for menu items
 }
 
-interface ZoomMenuProps {
-  menuItems: MenuItem[]; // Array of menu items
-  distance?: number; // Distance between menu items
-  direction?:
-    | "top"
-    | "left"
-    | "right"
-    | "bottom"
-    | "top-left"
-    | "top-right"
-    | "bottom-left"
-    | "bottom-right"; // Direction of menu expansion
-  label?: ReactNode; // Content for central button
-  centerColor?: string; // Optional: Custom color for the central button
-  menuColor?: string; // Optional: Custom color for the menu items
+interface Popup19Props {
+  menuItems: MenuItem[];
+  distance?: number;
+  label?: ReactNode;
+  centerColor?: string;
+  menuColor?: string;
+  centerRadius?: string;
+  menuItemRadius?: string;
 }
 
-const ZoomMenu: React.FC<ZoomMenuProps> = ({
+const Popup_19: React.FC<Popup19Props> = ({
   menuItems,
-  distance = 100,
-  direction = "top",
-  label = "🎯", // Default label for central button
-  centerColor = "bg-blue-600", // Default center button color
-  menuColor = "bg-orange-500", // Default menu item color
+  distance = 150,
+  label = "Menu",
+  centerColor = "bg-purple-500",
+  menuColor = "bg-violet-400",
+  centerRadius = "w-16 h-16",
+  menuItemRadius = "w-12 h-12",
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
-
-  const getPosition = (index: number) => {
-    const multiplier = index + 1;
-    switch (direction) {
-      case "top":
-        return { x: 0, y: -distance * multiplier };
-      case "bottom":
-        return { x: 0, y: distance * multiplier };
-      case "left":
-        return { x: -distance * multiplier, y: 0 };
-      case "right":
-        return { x: distance * multiplier, y: 0 };
-      case "top-left":
-        return { x: -distance * multiplier, y: -distance * multiplier };
-      case "top-right":
-        return { x: distance * multiplier, y: -distance * multiplier };
-      case "bottom-left":
-        return { x: -distance * multiplier, y: distance * multiplier };
-      case "bottom-right":
-        return { x: distance * multiplier, y: distance * multiplier };
-      default:
-        return { x: 0, y: 0 };
-    }
+  const handleToggle = () => {
+    setIsChecked(!isChecked);
   };
 
+  const angles = Array.from({ length: menuItems.length }, (_, index) =>
+    (360 / menuItems.length) * index
+  );
+
   const menuStyles = (index: number) => {
-    const position = getPosition(index);
+    const angle = (angles[index] * Math.PI) / 180;
+    const spiralFactor = isChecked ? 1 + (index * 0.2) : 1;
+    const x = Math.cos(angle) * distance * spiralFactor;
+    const y = Math.sin(angle) * distance * spiralFactor;
 
-    if (!isOpen) {
+    if (!isChecked) {
       return {
-        transform: `translate(0, 0) scale(0.5)`,
+        transform: `translate(0px, 0px) scale(0.5) rotate(0deg)`,
         opacity: 0,
-        Visibility:"hidden",
-
-        transition: `transform 0.4s ease-out, opacity 0.3s`,
+        visibility: "hidden" as const,
+        transition: "transform 0.5s ease-out, opacity 0.3s ease-out",
       };
     }
 
-return {
-      transform: `translate(${position.x}px, ${position.y}px) scale(1)`,
+    return {
+      transform: `translate(${x}px, ${y}px) scale(1) rotate(${360 + index * 45}deg)`,
       opacity: 1,
-      Visibility:"visible",      transition: `transform 0.5s ease-out ${index * 0.1}s, opacity 0.4s ease-out`,
+      visibility: "visible" as const,
+      transition: `transform 0.8s cubic-bezier(0.4, 0, 0.2, 1) ${0.1 * index}s, opacity 0.4s ease-out ${0.1 * index}s`,
     };
   };
 
   const handleMenuItemClick = (item: MenuItem) => {
-    item.onClick?.();
-    setIsOpen(false);
+    if (item.onClick) {
+      item.onClick();
+    }
+    setIsChecked(false);
   };
 
   return (
-    <div className="flex items-center justify-center w-full h-screen bg-gradient-to-b from-gray-700 to-black">
+    <div className="flex items-center justify-center w-full h-screen bg-gray-800">
       <div className="relative flex items-center justify-center">
-        {/* Center Toggle Button */}
         <button
-          onClick={toggleMenu}
-          className={`w-16 h-16 rounded-full flex items-center justify-center text-2xl font-bold ${centerColor} text-white shadow-lg hover:ring-4 hover:ring-offset-2 hover:ring-blue-300 transition-all duration-300 ease-in-out relative z-10`}
+          onClick={handleToggle}
+          className={`${centerColor} ${centerRadius} rounded-full flex items-center justify-center text-white text-lg cursor-pointer relative z-10 transition-all duration-300`}
+          style={{
+            transform: isChecked ? "scale(1.1) rotate(360deg)" : "scale(1) rotate(0deg)",
+            transition: "transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
+          }}
         >
           {label}
         </button>
-
-        {/* Directional Menu Items */}
         {menuItems.map((item, index) => (
           <div
-            key={item.label as string} // Use item.label as key or another unique identifier
+            key={index}
             onClick={() => handleMenuItemClick(item)}
-            style={menuStyles(index)}
-            className={`absolute w-12 h-12 rounded-full flex items-center justify-center text-sm font-semibold ${menuColor} text-white shadow-md hover:shadow-xl transition-all duration-300 ease-in-out cursor-pointer`}
+            style={{
+              ...menuStyles(index),
+              animation: isChecked ? `spiral-expand ${0.8 + index * 0.1}s cubic-bezier(0.4, 0, 0.2, 1) ${index * 0.1}s` : "none",
+            }}
+            className={`absolute ${menuColor} ${menuItemRadius} text-white rounded-full flex items-center justify-center text-sm cursor-pointer hover:brightness-110 shadow-lg backdrop-blur-sm bg-opacity-90`}
           >
             {item.label}
           </div>
         ))}
       </div>
+      <style jsx>{`
+        @keyframes spiral-expand {
+          0% {
+            transform: translate(0px, 0px) scale(0.5) rotate(0deg);
+          }
+          100% {
+            transform: translate(var(--x), var(--y)) scale(1) rotate(${360 + 45}deg);
+          }
+        }
+      `}</style>
     </div>
   );
 };
 
-export default ZoomMenu;
+export default Popup_19;

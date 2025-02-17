@@ -37,8 +37,8 @@ const Popup1: React.FC<Popup1Props> = ({
       return {
         transform: `translate(0px, 0px) rotate(360deg)`,
         opacity: 0,
-        Visibility: isChecked ? "visible" : "hidden",    
-            transitionDelay: `${0.1 * index}s`,
+        visibility: "hidden" as const,
+        transitionDelay: `${0.1 * index}s`,
       };
     }
 
@@ -49,8 +49,7 @@ const Popup1: React.FC<Popup1Props> = ({
     return {
       transform: `translate(${x}px, ${y}px) rotate(0deg)`,
       opacity: 1,
-      Visibility:"visible",
-
+      visibility: "visible" as const,
       transitionDelay: `${0.1 * index}s`,
     };
   };

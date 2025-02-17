@@ -5,7 +5,7 @@ interface MenuItem {
   onClick?: () => void; // Optional onClick handler for menu items
 }
 
-interface SpiralMenuProps {
+interface Popup13Props {
   menuItems: MenuItem[]; // Array of menu items
   distance?: number; // Optional: Distance of menu items from the center
   label?: ReactNode; // Optional: Content for the central toggle button
@@ -15,72 +15,93 @@ interface SpiralMenuProps {
   menuItemRadius?: string; // Optional: Custom radius for menu items
 }
 
-const SpiralMenu: React.FC<SpiralMenuProps> = ({
+const Popup_13: React.FC<Popup13Props> = ({
   menuItems,
-  distance = 100, // Default distance for menu items
-  label = "+", // Default central button label
-  centerColor = "bg-purple-500",
-  menuColor = "bg-red-400",
-  centerRadius = "w-16 h-16", // Default radius for center button
-  menuItemRadius = "w-12 h-12", // Default radius for menu items
+  distance = 150,
+  label = "Menu",
+  centerColor = "bg-cyan-500",
+  menuColor = "bg-teal-400",
+  centerRadius = "w-16 h-16",
+  menuItemRadius = "w-12 h-12",
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
+  const [isChecked, setIsChecked] = useState(false);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const handleToggle = () => {
+    setIsChecked(!isChecked);
+  };
+
+  const angles = Array.from({ length: menuItems.length }, (_, index) =>
+    (360 / menuItems.length) * index
+  );
 
   const menuStyles = (index: number) => {
-    const angle = (index * 40 * Math.PI) / 180; // Spiral effect with 40-degree increments
-    const radius = distance + index * 20; // Each item moves further out
-    const x = Math.cos(angle) * radius;
-    const y = Math.sin(angle) * radius;
+    const angle = (angles[index] * Math.PI) / 180;
+    const x = Math.cos(angle) * distance;
+    const y = Math.sin(angle) * distance;
 
-    if (!isOpen) {
+    if (!isChecked) {
       return {
-        transform: `translate(0, 0) scale(0)`,
+        transform: `translate(0px, 0px) scale(0.5)`,
         opacity: 0,
-        Visibility:"hidden",
-        transition: `transform 0.4s ease-in-out, opacity 0.3s ease-in-out`,
+        visibility: "hidden" as const,
+        transition: "transform 0.5s ease-out, opacity 0.5s ease-out",
       };
     }
 
     return {
       transform: `translate(${x}px, ${y}px) scale(1)`,
       opacity: 1,
-      Visibility:"visible",
-      transition: `transform 0.6s ease-in-out ${index * 0.1}s, opacity 0.5s ease-in-out ${index * 0.1}s`,
+      visibility: "visible" as const,
+      transition: `transform 0.8s cubic-bezier(0.4, 0, 0.2, 1) ${0.08 * index}s, opacity 0.6s ease-out ${0.08 * index}s`,
     };
   };
 
   const handleMenuItemClick = (item: MenuItem) => {
-    item.onClick?.();
-    setIsOpen(false); // Close the menu after clicking an item
+    if (item.onClick) {
+      item.onClick();
+    }
+    setIsChecked(false);
   };
 
   return (
-    <div className="flex items-center justify-center w-full h-screen bg-black">
+    <div className="flex items-center justify-center w-full h-screen bg-gray-800">
       <div className="relative flex items-center justify-center">
-        {/* Central Toggle Button */}
         <button
-          onClick={toggleMenu}
-          className={`${centerColor} ${centerRadius} rounded-full flex items-center justify-center text-white text-2xl relative z-10 cursor-pointer animate-pulse`}
+          onClick={handleToggle}
+          className={`${centerColor} ${centerRadius} rounded-full flex items-center justify-center text-white text-lg cursor-pointer relative z-10 transition-all duration-300`}
+          style={{
+            transform: isChecked ? "scale(1.1)" : "scale(1)",
+            boxShadow: isChecked ? "0 0 20px rgba(34, 211, 238, 0.6)" : "none",
+          }}
         >
           {label}
         </button>
-
-        {/* Spiral Menu Items */}
         {menuItems.map((item, index) => (
           <div
-            key={item.label as string} // Use item.label as key, or another unique identifier
+            key={index}
             onClick={() => handleMenuItemClick(item)}
-            style={menuStyles(index)}
-            className={`absolute ${menuColor} ${menuItemRadius} rounded-full flex items-center justify-center text-xs text-white shadow-md cursor-pointer transition-all`}
+            style={{
+              ...menuStyles(index),
+              animation: isChecked ? `wave 2s infinite ${index * 0.1}s` : "none",
+            }}
+            className={`absolute ${menuColor} ${menuItemRadius} text-white rounded-full flex items-center justify-center text-sm cursor-pointer hover:brightness-110 shadow-lg`}
           >
             {item.label}
           </div>
         ))}
       </div>
+      <style jsx>{`
+        @keyframes wave {
+          0%, 100% {
+            transform: translate(${Math.cos(angles[0] * Math.PI / 180) * distance}px, ${Math.sin(angles[0] * Math.PI / 180) * distance}px) scale(1);
+          }
+          50% {
+            transform: translate(${Math.cos(angles[0] * Math.PI / 180) * (distance + 20)}px, ${Math.sin(angles[0] * Math.PI / 180) * (distance + 20)}px) scale(1.1);
+          }
+        }
+      `}</style>
     </div>
   );
 };
 
-export default SpiralMenu;
+export default Popup_13;

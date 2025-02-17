@@ -57,8 +57,6 @@ export const StepsList: React.FC<{ steps: string[]; currentStep: number }> = ({
           <StepsItem
             isActive={index === currentStep}
             isCompleted={index < currentStep}
-            isFirst={index === 0}
-            isLast={index === steps.length - 1}
           >
             {step}
           </StepsItem>
@@ -79,10 +77,8 @@ export const StepsList: React.FC<{ steps: string[]; currentStep: number }> = ({
 export const StepsItem: React.FC<{
   isActive: boolean;
   isCompleted: boolean;
-  isFirst: boolean;
-  isLast: boolean;
   children: React.ReactNode;
-}> = ({ isActive, isCompleted, isFirst, isLast, children }) => {
+}> = ({ isActive, isCompleted, children }) => {
   return (
     <motion.div
       className="relative flex flex-col items-center"
