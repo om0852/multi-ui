@@ -8,7 +8,7 @@ type ShareProps = {
     name: string;
     icon: React.ReactNode;
     color: string;
-    shareUrl: string;
+    shareUrl: (url: string) => string;
   }[];
   onClose?: () => void;
   className?: string;
@@ -64,7 +64,13 @@ export function Share_17({
 }: ShareProps) {
   const [isOpen, setIsOpen] = React.useState(false);
 
-  const toggleMenu = () => setIsOpen(!isOpen);
+  const toggleMenu = () => {
+    const newIsOpen = !isOpen;
+    setIsOpen(newIsOpen);
+    if (!newIsOpen && onClose) {
+      onClose();
+    }
+  };
 
   const handleShare = (shareUrl: string) => {
     window.open(shareUrl, "_blank", "noopener,noreferrer");

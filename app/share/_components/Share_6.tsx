@@ -5,9 +5,9 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 // Define the Card component as a functional React component with TypeScript
-type ButtonProps = {}; // You can add props here if needed in the future
+type ShareProps = Record<string, never>;
 
-const Button: React.FC<ButtonProps> = () => {
+const Button: React.FC<ShareProps> = () => {
   const [mounted, setMounted] = useState(false);
 
   // Set mounted to true after the component is rendered on the client
