@@ -3,9 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
-type LoaderProps = {}; // You can add props here if needed in the future
-
-const Loader: React.FC<LoaderProps> = () => {
+const Loader = () => {
   const [mounted, setMounted] = useState(false);
 
   // Ensure the component only renders on the client after mount

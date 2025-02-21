@@ -1,18 +1,23 @@
 import React, { useState, useEffect, useRef, forwardRef, ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+// Define the props interface
+interface MenubarChildProps {
+  toggleMenu?: () => void;
+  isVisible?: boolean;
+}
+
 // Menubar Component
 export const Menubar: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [isVisible, setIsVisible] = useState(false);
   const menubarRef = useRef<HTMLDivElement>(null);
 
   const toggleMenu = () => setIsVisible((prev) => !prev);
-  const closeMenu = () => setIsVisible(false);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menubarRef.current && !menubarRef.current.contains(event.target as Node)) {
-        closeMenu();
+        setIsVisible(false);
       }
     };
 
@@ -27,13 +32,15 @@ export const Menubar: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   return (
     <div ref={menubarRef} className="relative inline-block">
-      {React.Children.map(children, (child) =>
-        React.cloneElement(child as React.ReactElement, {
-          toggleMenu,
-          isVisible,
-          closeMenu,
-        })
-      )}
+      {React.Children.map(children, (child) => {
+        if (React.isValidElement<MenubarChildProps>(child)) {
+          return React.cloneElement(child, {
+            toggleMenu,
+            isVisible,
+          });
+        }
+        return child;
+      })}
     </div>
   );
 };
@@ -54,10 +61,9 @@ export const MenubarTrigger = forwardRef<HTMLButtonElement, { children: ReactNod
 MenubarTrigger.displayName = "MenubarTrigger";
 
 // MenubarContent Component
-export const MenubarContent: React.FC<{ children: React.ReactNode; isVisible?: boolean; closeMenu?: () => void }> = ({
+export const MenubarContent: React.FC<{ children: React.ReactNode; isVisible?: boolean }> = ({
   children,
   isVisible = false,
-  closeMenu,
 }) => {
   return (
     <AnimatePresence>

@@ -3,10 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
-// Define the LoaderProps type
-interface LoaderProps {}
-
-const Loader: React.FC<LoaderProps> = () => {
+const Loader = () => {
   const [mounted, setMounted] = useState(false);
 
   // Ensure the component only renders after hydration

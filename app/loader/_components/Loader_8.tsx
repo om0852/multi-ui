@@ -4,9 +4,7 @@ import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';  // Import framer-motion
 import 'tailwindcss/tailwind.css';  // Import Tailwind CSS
 
-type LoaderProps = {};
-
-const Loader: React.FC<LoaderProps> = () => {
+const Loader = () => {
   const [mounted, setMounted] = useState(false);
 
   // Set mounted to true after the component is rendered on the client

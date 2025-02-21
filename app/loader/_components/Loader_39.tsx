@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
-const LoaderFive: React.FC = () => {
+const Loader = () => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -35,4 +35,4 @@ const LoaderFive: React.FC = () => {
   );
 };
 
-export default LoaderFive;
+export default Loader;

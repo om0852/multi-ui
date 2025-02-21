@@ -3,9 +3,7 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
-type LoaderProps = {};
-
-const PyramidLoader: React.FC<LoaderProps> = () => {
+const PyramidLoader = () => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {

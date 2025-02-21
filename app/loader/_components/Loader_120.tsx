@@ -158,11 +158,11 @@ const PlasmaLoader: React.FC<LoaderProps> = ({
   const sizeValue = getSizeValue(size);
   const numSize = parseInt(sizeValue);
 
-  const energyFields = Array.from({ length: 3 }, (_, i) => ({
-    reverse: i % 2 === 0
+  const energyFields = Array.from({ length: 3 }, (_, index) => ({
+    reverse: index % 2 === 0
   }));
 
-  const particles = Array.from({ length: 15 }, (_, i) => ({
+  const particles = Array.from({ length: 15 }, () => ({
     size: Math.random() * 4 + 2,
     tx: (Math.random() - 0.5) * numSize * 0.5,
     ty: (Math.random() - 0.5) * numSize * 0.5,
