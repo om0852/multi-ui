@@ -74,8 +74,8 @@ const ListItem = styled.li<{ $active: boolean; $disabled: boolean }>`
   gap: 16px;
   backdrop-filter: blur(8px);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  animation: ${props => css`${float} ${3 + Math.random() * 2}s ease-in-out infinite`};
-  animation-delay: ${props => Math.random() * 2}s;
+  animation: ${() => css`${float} ${3 + Math.random() * 2}s ease-in-out infinite`};
+  animation-delay: ${() => Math.random() * 2}s;
 
   ${props => props.$active && `
     background: linear-gradient(
