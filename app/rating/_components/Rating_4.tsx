@@ -47,7 +47,7 @@ const ThumbsRating: React.FC<RatingProps> = ({
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
-          fill={rating === 1 ? fillColor : "none"}
+          fill={rating === 1 || hoveredThumb === "up" ? fillColor : "none"}
           stroke={borderColor}
           strokeWidth="2"
           className="w-10 h-10"
@@ -79,7 +79,7 @@ const ThumbsRating: React.FC<RatingProps> = ({
         <svg
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
-          fill={rating === -1 ? "#DC3545" : "none"} // Red for thumbs down
+          fill={rating === -1 || hoveredThumb === "down" ? "#DC3545" : "none"} // Red for thumbs down
           stroke={borderColor}
           strokeWidth="2"
           className="w-10 h-10 rotate-180"
