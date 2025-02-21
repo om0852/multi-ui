@@ -30,11 +30,12 @@ const Container = styled.div`
   margin: 1rem 0;
 `;
 
-const InputWrapper = styled.div<{ $isFocused: boolean; $hasError: boolean; $color: string }>`
+const InputWrapper = styled.div<{ $isFocused: boolean; $hasError: boolean; $isSuccess: boolean; $color: string }>`
   position: relative;
   width: 100%;
   --glow-color: ${props => {
     if (props.$hasError) return '239, 68, 68';
+    if (props.$isSuccess) return '34, 197, 94';
     switch(props.$color) {
       case 'purple': return '147, 51, 234';
       case 'green': return '34, 197, 94';
@@ -48,7 +49,7 @@ const InputWrapper = styled.div<{ $isFocused: boolean; $hasError: boolean; $colo
   `}
 `;
 
-const StyledInput = styled.input<{ $hasIcon: boolean; $color: string }>`
+const StyledInput = styled.input<{ $hasIcon: boolean; $hasError: boolean; $isSuccess: boolean; $color: string }>`
   width: 100%;
   padding: 12px 16px;
   padding-left: ${props => props.$hasIcon ? '40px' : '16px'};
@@ -56,6 +57,8 @@ const StyledInput = styled.input<{ $hasIcon: boolean; $color: string }>`
   color: #fff;
   background: rgba(0, 0, 0, 0.8);
   border: 2px solid ${props => {
+    if (props.$hasError) return '#ef4444';
+    if (props.$isSuccess) return '#22c55e';
     switch(props.$color) {
       case 'purple': return '#9333ea';
       case 'green': return '#22c55e';
@@ -152,7 +155,7 @@ const NeonInput: React.FC<InputFieldProps> = ({
 
   return (
     <Container className={className}>
-      <InputWrapper $isFocused={isFocused} $hasError={!!error} $color={color}>
+      <InputWrapper $isFocused={isFocused} $hasError={!!error} $isSuccess={!!success} $color={color}>
         {icon && <IconWrapper $isFocused={isFocused} $color={color}>{icon}</IconWrapper>}
         {label && (
           <Label $isFocused={isFocused} $hasValue={!!localValue} $color={color}>
@@ -169,6 +172,8 @@ const NeonInput: React.FC<InputFieldProps> = ({
           disabled={disabled}
           required={required}
           $hasIcon={!!icon}
+          $hasError={!!error}
+          $isSuccess={!!success}
           $color={color}
         />
       </InputWrapper>

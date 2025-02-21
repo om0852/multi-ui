@@ -85,6 +85,7 @@ const StyledInput = styled.input<{ $hasIcon: boolean }>`
   
   &:focus {
     outline: none;
+    animation: ${writeIn} 0.5s ease-out forwards;
   }
 
   &::placeholder {
