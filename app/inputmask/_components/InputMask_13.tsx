@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 interface MaskedInputProps {
   label?: string;
   placeholder?: string;
-  mask: string;
   onChange?: (value: string) => void;
   className?: string;
 }
@@ -12,7 +11,6 @@ interface MaskedInputProps {
 const MaskedInput: React.FC<MaskedInputProps> = ({
   label = "Enter your input",
   placeholder = "Enter value",
-  mask,
   onChange,
   className = "",
 }) => {

@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled, { keyframes, css } from 'styled-components';
 
 interface InputMaskProps {
@@ -175,8 +175,6 @@ const DynamicMaskInput: React.FC<InputMaskProps> = ({
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [localValue, setLocalValue] = useState(value);
-  const [maskGuide, setMaskGuide] = useState(mask);
-  const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     setLocalValue(value);
@@ -236,7 +234,6 @@ const DynamicMaskInput: React.FC<InputMaskProps> = ({
       >
         {icon && <IconWrapper $isFocused={isFocused}>{icon}</IconWrapper>}
         <StyledInput
-          ref={inputRef}
           type="text"
           value={localValue}
           onChange={handleChange}
