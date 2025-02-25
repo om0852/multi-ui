@@ -7,6 +7,9 @@ import FlipPagination from './_components/FlipPagination';
 import MagneticPagination from './_components/MagneticPagination';
 import GlowPagination from './_components/GlowPagination';
 import LiquidPagination from './_components/LiquidPagination';
+import RainbowWavePagination from './_components/RainbowWavePagination';
+import PerspectivePagination from './_components/PerspectivePagination';
+import ElasticPagination from './_components/ElasticPagination';
 
 export default function PaginationDemo() {
   const [currentPage, setCurrentPage] = useState(1);
@@ -19,6 +22,9 @@ export default function PaginationDemo() {
       <MagneticPagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />
       <GlowPagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />
       <LiquidPagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />
+      <RainbowWavePagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />
+      <ElasticPagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />
+      <PerspectivePagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />
       <div className="space-y-4">
         <h2 className="text-xl font-bold text-center">Glass Pagination</h2>
         <GlassPagination
