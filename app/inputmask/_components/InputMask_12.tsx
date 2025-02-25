@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 interface MaskedInputProps {
   label?: string;
   placeholder?: string;
-  mask: string;
   onChange?: (value: string) => void;
   className?: string;
 }
@@ -12,7 +11,6 @@ interface MaskedInputProps {
 const MaskedInput: React.FC<MaskedInputProps> = ({
   label = "Enter your input",
   placeholder = "Enter value",
-  mask,
   onChange,
   className = "",
 }) => {
@@ -32,7 +30,7 @@ const MaskedInput: React.FC<MaskedInputProps> = ({
     cleanedValue = cleanedValue.substring(0, 32);
 
     // Insert the hyphens in the correct places
-    let uuid = cleanedValue
+    const uuid = cleanedValue
       .slice(0, 8) + '-'
       + cleanedValue.slice(8, 12) + '-'
       + cleanedValue.slice(12, 16) + '-'

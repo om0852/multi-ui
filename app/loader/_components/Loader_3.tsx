@@ -3,19 +3,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-type LoaderProps = {
-  size?: number; // Size of the loader
-  color?: string; // Hexagon color
-  speed?: number; // Animation speed in seconds
-  hexCount?: number; // Number of hexagonal layers
-};
-
-const Loader: React.FC<LoaderProps> = ({
-  size = 200,
-  color = "#000000",
-  speed = 2,
-  hexCount = 3,
-}) => {
+const Loader = () => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -24,13 +12,13 @@ const Loader: React.FC<LoaderProps> = ({
 
   if (!mounted) return null;
 
-  const hexArray = Array.from({ length: hexCount * 6 }, (_, index) => index);
+  const hexArray = Array.from({ length: 3 * 6 }, (_, index) => index);
 
   return (
-    <StyledWrapper size={size} color={color} speed={speed}>
+    <StyledWrapper size={200} color="#000000" speed={2}>
       <div className="socket">
         {hexArray.map((_, index) => (
-          <div key={index} className={`gel hex-${index % hexCount}`}>
+          <div key={index} className={`gel hex-${index % 3}`}>
             <div className="hex-brick h1" />
             <div className="hex-brick h2" />
             <div className="hex-brick h3" />

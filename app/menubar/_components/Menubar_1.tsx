@@ -58,10 +58,9 @@ export const MenubarTrigger = forwardRef<
 MenubarTrigger.displayName = "MenubarTrigger";
 
 // MenubarContent Component
-export const MenubarContent: React.FC<{ children: React.ReactNode; isVisible?: boolean; closeMenu?: () => void }> = ({
+export const MenubarContent: React.FC<{ children: React.ReactNode; isVisible?: boolean;  }> = ({
   children,
   isVisible = false,
-  closeMenu,
 }) => {
   return (
     <div className="relative">

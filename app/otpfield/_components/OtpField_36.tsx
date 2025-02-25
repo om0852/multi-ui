@@ -1,6 +1,6 @@
 'use client';
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion } from 'framer-motion';
 
 interface InputOTPSlotProps {
   index: number;
@@ -152,7 +152,7 @@ const InputOTP: React.FC<InputOTPProps> = ({
         setFocusedIndex(index + 1);
       }
     } else {
-      setErrorIndexes(prev => [...new Set([...prev, index])]);
+      setErrorIndexes(prev => Array.from(new Set([...prev, index])));
       
       setTimeout(() => {
         setErrorIndexes(prev => prev.filter(i => i !== index));

@@ -7,23 +7,23 @@ interface LoaderProps {
   className?: string;
 }
 
-const HeartLoader: React.FC<LoaderProps> = ({
+const DiamondLoader: React.FC<LoaderProps> = ({
   size = 'medium',
   color = '#5858FF',
   className
 }) => {
   return (
-    <StyledWrapper className={className}>
+    <StyledWrapper className={className} size={size} color={color}>
       <div className="loader" />
     </StyledWrapper>
   );
 };
 
-const StyledWrapper = styled.div`
+const StyledWrapper = styled.div<LoaderProps>`
   .loader {
     position: relative;
-    width: 120px;
-    height: 90px;
+    width: ${props => props.size === 'small' ? '80px' : props.size === 'large' ? '160px' : '120px'};
+    height: ${props => props.size === 'small' ? '60px' : props.size === 'large' ? '120px' : '90px'};
     margin: 0 auto;
   }
 
@@ -32,11 +32,11 @@ const StyledWrapper = styled.div`
     position: absolute;
     bottom: 30px;
     left: 50px;
-    height: 25px;
-    width: 25px;
-    background: #5858FF;
-    clip-path: path('M12.5 0C5.597 0 0 5.27 0 11.776c0 8.01 7.846 12.275 10.833 14.224 1.75 1.143 1.667 1.143 3.334 0C17.153 24.05 25 19.785 25 11.776 25 5.27 19.403 0 12.5 0z');
-    animation: loading-heart 0.5s ease-in-out infinite alternate;
+    height: ${props => props.size === 'small' ? '20px' : props.size === 'large' ? '30px' : '25px'};
+    width: ${props => props.size === 'small' ? '20px' : props.size === 'large' ? '30px' : '25px'};
+    background: ${props => props.color};
+    clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+    animation: loading-diamond 0.5s ease-in-out infinite alternate;
   }
 
   .loader:after {
@@ -47,48 +47,40 @@ const StyledWrapper = styled.div`
     height: 7px;
     width: 45px;
     border-radius: 4px;
-    box-shadow: 0 5px 0 #f2f2f2, -35px 50px 0 #f2f2f2, -70px 95px 0 #f2f2f2;
-    animation: loading-path 1s ease-in-out infinite;
+    box-shadow: 0 5px 0 ${props => props.color}33, -35px 50px 0 ${props => props.color}33, -70px 95px 0 ${props => props.color}33;
+    animation: loading-stairs 1s ease-in-out infinite;
   }
 
-  @keyframes loading-heart {
+  @keyframes loading-diamond {
     0% {
-      transform: scale(1, 0.7);
-      filter: brightness(1);
+      transform: scale(1, 0.7) rotate(0deg);
     }
-
     40% {
-      transform: scale(0.8, 1.2);
-      filter: brightness(1.5);
+      transform: scale(0.8, 1.2) rotate(45deg);
     }
-
     60% {
-      transform: scale(1.1, 0.9);
-      filter: brightness(1.2);
+      transform: scale(1, 1) rotate(90deg);
     }
-
     100% {
       bottom: 140px;
-      transform: scale(1);
-      filter: brightness(1);
+      transform: rotate(180deg);
     }
   }
 
-  @keyframes loading-path {
+  @keyframes loading-stairs {
     0% {
       box-shadow: 0 10px 0 rgba(0, 0, 0, 0),
-              0 10px 0 #f2f2f2,
-              -35px 50px 0 #f2f2f2,
-              -70px 90px 0 #f2f2f2;
+              0 10px 0 ${props => props.color}33,
+              -35px 50px 0 ${props => props.color}33,
+              -70px 90px 0 ${props => props.color}33;
     }
-
     100% {
-      box-shadow: 0 10px 0 #f2f2f2,
-              -35px 50px 0 #f2f2f2,
-              -70px 90px 0 #f2f2f2,
+      box-shadow: 0 10px 0 ${props => props.color}33,
+              -35px 50px 0 ${props => props.color}33,
+              -70px 90px 0 ${props => props.color}33,
               -70px 90px 0 rgba(0, 0, 0, 0);
     }
   }
 `;
 
-export default HeartLoader; 
+export default DiamondLoader; 

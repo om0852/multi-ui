@@ -19,8 +19,8 @@ const Popup_11: React.FC<Popup11Props> = ({
   menuItems,
   distance = 150, // Default distance for menu items
   label = "Menu", // Default central button content
-  centerColor = "bg-green-500",
-  menuColor = "bg-pink-500",
+  centerColor = "bg-indigo-500",
+  menuColor = "bg-pink-400",
   centerRadius = "w-16 h-16", // Default radius for center button
   menuItemRadius = "w-12 h-12", // Default radius for menu items
 }) => {
@@ -43,24 +43,24 @@ const Popup_11: React.FC<Popup11Props> = ({
       return {
         transform: `translate(0px, 0px) scale(0)`,
         opacity: 0,
-        Visibility:"hidden",
-
-        transition: `transform 0.5s ease-out, opacity 0.5s ease-out`,
+        visibility: "hidden" as const,
+        transition: "transform 0.5s ease-out, opacity 0.5s ease-out",
       };
     }
 
     return {
       transform: `translate(${x}px, ${y}px) scale(1)`,
       opacity: 1,
-      Visibility:"visible",
-
-      transition: `transform 0.5s ease-out ${0.1 * index}s, opacity 0.5s ease-out ${0.1 * index}s`,
+      visibility: "visible" as const,
+      transition: `transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) ${0.1 * index}s, opacity 0.5s ease-out ${0.1 * index}s`,
     };
   };
 
   const handleMenuItemClick = (item: MenuItem) => {
-    item.onClick && item.onClick(); // Call the item's onClick handler if it exists
-    setIsChecked(false); // Close the menu after clicking an item
+    if (item.onClick) {
+      item.onClick();
+    }
+    setIsChecked(false);
   };
 
   return (
@@ -69,17 +69,20 @@ const Popup_11: React.FC<Popup11Props> = ({
         {/* Center Toggle Button */}
         <button
           onClick={handleToggle}
-          className={`${centerColor} ${centerRadius} rounded-full flex items-center justify-center text-white text-lg cursor-pointer relative z-10`}
+          className={`${centerColor} ${centerRadius} rounded-full flex items-center justify-center text-white text-lg cursor-pointer relative z-10 transition-transform duration-300 hover:scale-110`}
+          style={{
+            animation: isChecked ? "ripple 1.5s infinite" : "none",
+          }}
         >
           {label}
         </button>
         {/* Ripple Menu Items */}
         {menuItems.map((item, index) => (
           <div
-            key={item.label as string} // Assumes label is unique, if not, use `item.id` instead
+            key={item.label as string}
             onClick={() => handleMenuItemClick(item)}
             style={menuStyles(index)}
-            className={`absolute ${menuColor} ${menuItemRadius} text-white rounded-full flex items-center justify-center text-sm no-underline transition-all duration-300 ease-in-out cursor-pointer`}
+            className={`absolute ${menuColor} ${menuItemRadius} text-white rounded-full flex items-center justify-center text-sm no-underline transition-all duration-300 ease-in-out cursor-pointer hover:scale-125`}
           >
             {item.label}
           </div>

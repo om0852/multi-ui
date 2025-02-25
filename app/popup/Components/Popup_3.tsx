@@ -43,7 +43,7 @@ const Popup_3: React.FC<Popup3Props> = ({
       return {
         transform: `scale(0) rotate(0deg)`,
         opacity: 0,
-        Visibility:"hidden",
+        visibility: "hidden" as const,
         transitionDelay: `${0.1 * index}s`,
       };
     }
@@ -55,14 +55,16 @@ const Popup_3: React.FC<Popup3Props> = ({
     return {
       transform: `translate(${x}px, ${y}px) scale(1)`,
       opacity: 1,
-      Visibility:"visible",
+      visibility: "visible" as const,
       transitionDelay: `${0.1 * index}s`,
     };
   };
 
   const handleMenuItemClick = (item: MenuItem) => {
-    item.onClick && item.onClick(); // Call the item's onClick handler if it exists
-    setIsChecked(false); // Close the menu after clicking an item
+    if (item.onClick) {
+      item.onClick();
+    }
+    setIsChecked(false);
   };
 
   return (

@@ -61,7 +61,7 @@ export const MenubarContent: React.FC<{
   children: React.ReactNode;
   isVisible?: boolean;
   closeMenu?: () => void;
-}> = ({ children, isVisible = false, closeMenu }) => {
+}> = ({ children, isVisible = false }) => {
   return (
     <AnimatePresence>
       {isVisible && (

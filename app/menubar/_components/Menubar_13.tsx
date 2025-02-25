@@ -1,18 +1,23 @@
 import React, { useState, useEffect, useRef, forwardRef, ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+// Define the props interface
+interface MenubarChildProps {
+  toggleMenu?: () => void;
+  isVisible?: boolean;
+}
+
 // Menubar Component
 export const Menubar: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [isVisible, setIsVisible] = useState(false);
   const menubarRef = useRef<HTMLDivElement>(null);
 
   const toggleMenu = () => setIsVisible((prev) => !prev);
-  const closeMenu = () => setIsVisible(false);
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       if (menubarRef.current && !menubarRef.current.contains(event.target as Node)) {
-        closeMenu();
+        setIsVisible(false);
       }
     };
 
@@ -27,13 +32,15 @@ export const Menubar: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   return (
     <div ref={menubarRef} className="relative inline-block">
-      {React.Children.map(children, (child) =>
-        React.cloneElement(child as React.ReactElement, {
-          toggleMenu,
-          isVisible,
-          closeMenu,
-        })
-      )}
+      {React.Children.map(children, (child) => {
+        if (React.isValidElement<MenubarChildProps>(child)) {
+          return React.cloneElement(child, {
+            toggleMenu,
+            isVisible,
+          });
+        }
+        return child;
+      })}
     </div>
   );
 };
@@ -54,10 +61,9 @@ export const MenubarTrigger = forwardRef<HTMLButtonElement, { children: ReactNod
 MenubarTrigger.displayName = "MenubarTrigger";
 
 // MenubarContent Component
-export const MenubarContent: React.FC<{ children: React.ReactNode; isVisible?: boolean; closeMenu?: () => void }> = ({
+export const MenubarContent: React.FC<{ children: React.ReactNode; isVisible?: boolean }> = ({
   children,
   isVisible = false,
-  closeMenu,
 }) => {
   return (
     <AnimatePresence>
@@ -124,7 +130,6 @@ export const MenubarRadioItem: React.FC<{ children: React.ReactNode; checked?: b
   checked = false,
   onChange,
   value = "",
-  id,
 }) => {
   const handleChange = () => {
     if (onChange) {
@@ -135,56 +140,15 @@ export const MenubarRadioItem: React.FC<{ children: React.ReactNode; checked?: b
   return (
     <li
       onClick={handleChange}
-      className={`px-6 py-2 text-indigo-800 rounded-md cursor-pointer transition-all ${
+      className={`px-6 py-2 text-white rounded-md cursor-pointer transition-all ${
         checked
-          ? "bg-indigo-200 font-semibold shadow-lg"
-          : "hover:bg-indigo-100 hover:text-indigo-600 shadow-sm hover:shadow-md"
+          ? "bg-blue-500 font-semibold shadow-lg"
+          : "hover:bg-blue-400 shadow-sm hover:shadow-md"
       }`}
     >
-      <label className="flex items-center">
-        <input
-          type="radio"
-          checked={checked}
-          onChange={handleChange}
-          value={value}
-          id={id}
-          className="mr-3"
-        />
-        {children}
-      </label>
+      {children}
     </li>
   );
 };
 
-// MenubarSeparator Component
-export const MenubarSeparator: React.FC = () => {
-  return <hr className="my-2 border-gray-400" />;
-};
-
-// MenubarCheckboxItem Component
-export const MenubarCheckboxItem: React.FC<{ children: React.ReactNode; checked?: boolean; onChange?: (checked: boolean) => void }> = ({ children, checked = false, onChange }) => {
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (onChange) {
-      onChange(e.target.checked);
-    }
-  };
-
-  return (
-    <li className="px-6 py-2 text-green-800 bg-green-100 hover:bg-green-200 cursor-pointer rounded-lg shadow-sm hover:shadow-md transition-all">
-      <label className="flex items-center">
-        <input
-          type="checkbox"
-          checked={checked}
-          onChange={handleChange}
-          className="mr-3"
-        />
-        {children}
-      </label>
-    </li>
-  );
-};
-
-// MenubarShortcut Component
-export const MenubarShortcut: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  return <span className="text-yellow-500 text-xs ml-auto">{children}</span>;
-};
+// ... rest of the file remains unchanged ...

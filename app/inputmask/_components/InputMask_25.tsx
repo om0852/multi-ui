@@ -4,7 +4,6 @@ import styled, { keyframes } from 'styled-components';
 
 interface InputMaskProps {
   label?: string;
-  placeholder?: string;
   value?: string;
   onChange?: (value: string) => void;
   error?: string;
@@ -13,7 +12,6 @@ interface InputMaskProps {
   required?: boolean;
   icon?: React.ReactNode;
   className?: string;
-  version?: 'ipv4' | 'ipv6';
 }
 
 const pulse = keyframes`
@@ -134,7 +132,6 @@ const ErrorMessage = styled.div`
 
 const IPAddressMaskInput: React.FC<InputMaskProps> = ({
   label,
-  placeholder,
   value = '',
   onChange,
   error,
@@ -143,7 +140,6 @@ const IPAddressMaskInput: React.FC<InputMaskProps> = ({
   required,
   icon,
   className,
-  version = 'ipv4',
 }) => {
   const [isFocused, setIsFocused] = useState(false);
   const [octets, setOctets] = useState(['', '', '', '']);

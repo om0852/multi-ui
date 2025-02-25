@@ -30,7 +30,6 @@ const PieRating: React.FC<RatingProps> = ({
 
   const center = size / 2;
   const radius = (size - 40) / 2;
-  const circumference = 2 * Math.PI * radius;
   const sliceAngle = (2 * Math.PI) / max;
 
   return (

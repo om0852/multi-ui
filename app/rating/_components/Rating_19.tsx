@@ -3,14 +3,12 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 
 interface RatingProps {
-  max?: number;
   onRatingChange?: (rating: number) => void;
   disabled?: boolean;
   initialRating?: number;
 }
 
 const WeatherRating: React.FC<RatingProps> = ({
-  max = 5,
   onRatingChange,
   disabled = false,
   initialRating = 0,

@@ -1,5 +1,5 @@
 import * as React from "react";
-import { motion } from "framer-motion";
+import { motion, HTMLMotionProps } from "framer-motion";
 
 const FancyPagination = ({
   className,
@@ -14,7 +14,7 @@ const FancyPagination = ({
   currentPage?: number;
   visibleCount?: number;
   onPageChange?: (page: number) => void;
-} & React.ComponentProps<"nav">) => {
+} & Omit<HTMLMotionProps<"nav">, "onSelect" | "onPageChange">) => {
   const handlePageChange = (page: number) => {
     if (onPageChange) onPageChange(page);
   };
@@ -57,6 +57,7 @@ const FancyPagination = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
       className={`flex justify-center items-center space-x-4 ${className || ""}`}
+      {...props}
     >
       <motion.button
         whileHover={{ scale: 1.2, backgroundColor: "#90cdf4" }}

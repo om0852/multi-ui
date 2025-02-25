@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 interface MaskedInputProps {
   label?: string;
   placeholder?: string;
-  mask: string;
   onChange?: (value: string) => void;
   className?: string;
 }
@@ -12,7 +11,6 @@ interface MaskedInputProps {
 const MaskedInput: React.FC<MaskedInputProps> = ({
   label = "Enter your input",
   placeholder = "Enter value",
-  mask,
   onChange,
   className = "",
 }) => {
@@ -26,7 +24,7 @@ const MaskedInput: React.FC<MaskedInputProps> = ({
 
   const applyMask = (value: string): string => {
     // Remove any non-numeric characters (except for the decimal point)
-    let cleanedValue = value.replace(/[^\d.]/g, '');
+    const cleanedValue = value.replace(/[^\d.]/g, '');
 
     // Add decimal point (if any)
     let [integerPart, decimalPart] = cleanedValue.split('.');
@@ -34,7 +32,7 @@ const MaskedInput: React.FC<MaskedInputProps> = ({
     decimalPart = decimalPart || '';
 
     // Add commas to the integer part
-    let integerWithCommas = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    const integerWithCommas = integerPart.replace(/\B(?=(\d{3})+(?!\d))/g, ',');
 
     // Limit the decimal part to 2 digits
     if (decimalPart.length > 2) {

@@ -1,12 +1,20 @@
 import React, { useState, useEffect, useRef, forwardRef, ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+// Define the props interface
+interface MenubarChildProps {
+  toggleMenu?: () => void;
+  isVisible?: boolean;
+  closeMenu?: () => void;
+}
+
 // Menubar Component
 export const Menubar: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [isVisible, setIsVisible] = useState(false);
   const menubarRef = useRef<HTMLDivElement>(null);
 
   const toggleMenu = () => setIsVisible((prev) => !prev);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const closeMenu = () => setIsVisible(false);
 
   useEffect(() => {
@@ -27,13 +35,16 @@ export const Menubar: React.FC<{ children: ReactNode }> = ({ children }) => {
 
   return (
     <div ref={menubarRef} className="relative inline-block">
-      {React.Children.map(children, (child) =>
-        React.cloneElement(child as React.ReactElement, {
-          toggleMenu,
-          isVisible,
-          closeMenu,
-        })
-      )}
+      {React.Children.map(children, (child) => {
+        if (React.isValidElement<MenubarChildProps>(child)) {
+          return React.cloneElement(child, {
+            toggleMenu,
+            isVisible,
+            closeMenu,
+          });
+        }
+        return child;
+      })}
     </div>
   );
 };
@@ -61,7 +72,7 @@ export const MenubarContent: React.FC<{
   children: React.ReactNode;
   isVisible?: boolean;
   closeMenu?: () => void;
-}> = ({ children, isVisible = false, closeMenu }) => {
+}> = ({ children, isVisible = false }) => {
   return (
     <AnimatePresence>
       {isVisible && (

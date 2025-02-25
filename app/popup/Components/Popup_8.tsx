@@ -45,7 +45,7 @@ const Popup_8: React.FC<Popup8Props> = ({
       return {
         transform: `translate(0px, 0px) rotate(360deg)`,
         opacity: 0,
-        Visibility:"hidden",
+        visibility: "hidden" as const,
         transition: "transform 0.4s ease-out, opacity 0.4s ease-out",
       };
     }
@@ -53,15 +53,16 @@ const Popup_8: React.FC<Popup8Props> = ({
     return {
       transform: `translate(${x}px, ${y}px) rotate(${angles[index]}deg)`,
       opacity: 1,
-      Visibility:"visible",
-
+      visibility: "visible" as const,
       transition: `transform 0.4s ease-out ${0.1 * index}s, opacity 0.4s ease-out ${0.1 * index}s`, // Staggered effect
     };
   };
 
   const handleMenuItemClick = (item: MenuItem) => {
-    item.onClick && item.onClick(); // Call the item's onClick handler if it exists
-    setIsChecked(false); // Close the menu after clicking an item
+    if (item.onClick) {
+      item.onClick();
+    }
+    setIsChecked(false);
   };
 
   return (

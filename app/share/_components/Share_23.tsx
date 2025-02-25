@@ -92,6 +92,14 @@ export function Share_23({
             exit={{ opacity: 0 }}
             className="absolute bottom-20 right-2"
           >
+            <motion.div 
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+              className="mb-4 text-center text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 px-3 py-2 rounded-lg shadow-lg"
+            >
+              {title}
+            </motion.div>
             {platforms.map((platform, index) => {
               const angle = (index * (360 / platforms.length) * Math.PI) / 180;
               const x = Math.cos(angle) * 80;

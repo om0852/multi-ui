@@ -4,7 +4,6 @@ import { motion } from 'framer-motion';
 interface MaskedInputProps {
   label?: string;
   placeholder?: string;
-  mask: string;
   onChange?: (value: string) => void;
   className?: string;
 }
@@ -12,7 +11,6 @@ interface MaskedInputProps {
 const MaskedInput: React.FC<MaskedInputProps> = ({
   label = "Enter your input",
   placeholder = "Enter value",
-  mask,
   onChange,
   className = "",
 }) => {
@@ -26,7 +24,7 @@ const MaskedInput: React.FC<MaskedInputProps> = ({
 
   const applyMask = (value: string): string => {
     // Remove non-numeric characters except for the periods (.)
-    let cleanedValue = value.replace(/[^0-9.]/g, '');
+    const cleanedValue = value.replace(/[^0-9.]/g, '');
 
     // Split the value into parts (by periods)
     let parts = cleanedValue.split('.');

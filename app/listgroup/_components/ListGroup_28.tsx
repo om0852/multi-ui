@@ -19,20 +19,6 @@ interface ListGroupItem {
   disabled?: boolean;
 }
 
-const snowfall = keyframes`
-  0% {
-    transform: translateY(-10px) rotate(0deg);
-    opacity: 0;
-  }
-  50% {
-    opacity: 1;
-  }
-  100% {
-    transform: translateY(10px) rotate(360deg);
-    opacity: 0;
-  }
-`;
-
 const frostGlow = keyframes`
   0%, 100% {
     opacity: 0.5;

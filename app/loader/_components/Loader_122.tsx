@@ -13,17 +13,17 @@ const SquareLoader: React.FC<LoaderProps> = ({
   className
 }) => {
   return (
-    <StyledWrapper className={className}>
+    <StyledWrapper className={className} size={size} color={color}>
       <div className="loader" />
     </StyledWrapper>
   );
 };
 
-const StyledWrapper = styled.div`
+const StyledWrapper = styled.div<LoaderProps>`
   .loader {
     position: relative;
-    width: 120px;
-    height: 90px;
+    width: ${props => props.size === 'small' ? '80px' : props.size === 'large' ? '160px' : '120px'};
+    height: ${props => props.size === 'small' ? '60px' : props.size === 'large' ? '120px' : '90px'};
     margin: 0 auto;
   }
 
@@ -32,9 +32,9 @@ const StyledWrapper = styled.div`
     position: absolute;
     bottom: 30px;
     left: 50px;
-    height: 25px;
-    width: 25px;
-    background: #5858FF;
+    height: ${props => props.size === 'small' ? '20px' : props.size === 'large' ? '30px' : '25px'};
+    width: ${props => props.size === 'small' ? '20px' : props.size === 'large' ? '30px' : '25px'};
+    background: ${props => props.color};
     animation: loading-square 0.5s ease-in-out infinite alternate;
   }
 

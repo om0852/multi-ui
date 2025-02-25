@@ -1,5 +1,5 @@
 "use client";
-import React  from "react";
+import React from "react";
 import { motion } from "framer-motion";
 
 const AnimatedPagination = ({
@@ -8,14 +8,13 @@ const AnimatedPagination = ({
   currentPage,
   visibleCount = 5,
   onPageChange,
-  ...props
 }: {
   className?: string;
   totalPages?: number;
   currentPage: number;
   visibleCount?: number;
   onPageChange: (page: number) => void;
-} & React.ComponentProps<"nav">) => {
+}) => {
   const handlePageChange = (page: number) => {
     if (onPageChange) onPageChange(page);
   };

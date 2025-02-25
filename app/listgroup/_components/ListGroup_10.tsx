@@ -83,7 +83,7 @@ const Container = styled.div`
     right: 0;
     height: 2px;
     background: rgba(0, 255, 255, 0.5);
-    animation: ${props => css`${scanline}`} 4s linear infinite;
+    animation: ${scanline} 4s linear infinite;
     opacity: 0.5;
   }
 `;
@@ -149,7 +149,7 @@ const IconWrapper = styled.div<{ $active: boolean }>`
   border: 1px solid ${props => props.$active ? '#0ff' : 'rgba(0, 255, 255, 0.3)'};
   color: ${props => props.$active ? '#0ff' : 'rgba(0, 255, 255, 0.7)'};
   transition: all 0.3s ease;
-  animation: ${props => css`${neonPulse}`} 2s infinite;
+  animation: ${neonPulse} 2s infinite;
 
   svg {
     width: 20px;
@@ -192,7 +192,7 @@ const Badge = styled.span<{ $color?: string }>`
   border: 1px solid ${props => props.$color || '#0ff'};
   text-shadow: 0 0 5px ${props => props.$color || '#0ff'};
   box-shadow: 0 0 10px rgba(0, 255, 255, 0.2);
-  animation: ${props => css`${neonPulse}`} 2s infinite;
+  animation: ${neonPulse} 2s infinite;
 `;
 
 const CyberpunkListGroup: React.FC<ListGroupProps> = ({

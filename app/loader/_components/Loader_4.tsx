@@ -3,9 +3,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 
-type LoaderProps = {}; // Extend this if additional props are needed
-
-const Loader: React.FC<LoaderProps> = () => {
+const Loader = () => {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
