@@ -1,183 +1,47 @@
-// "use client";
-// import React, { useState } from "react";
-// import FancyPagination from "./_components/Pagination_10";
-// import SliderPagination from "./_components/SliderPagination";
-// import CircularPagination from "./_components/CircularPagination";
-// import DotPagination from "./_components/DotPagination";
-// import MinimalPagination from "./_components/MinimalPagination";
-// import CardPagination from "./_components/CardPagination";
-// import GradientPagination from './_components/GradientPagination';
-// import NeumorphicPagination from './_components/NeumorphicPagination';
-// import BorderAnimationPagination from './_components/BorderAnimationPagination';
-// import FloatingPagination from './_components/FloatingPagination';
-// import StackedPagination from './_components/StackedPagination';
-// import RipplePagination from './_components/RipplePagination';
-// import GlassPagination from './_components/GlassPagination';
-// import ExpandingPagination from './_components/ExpandingPagination';
-// import OutlinePagination from './_components/OutlinePagination';
-// import MinimalistPagination from './_components/MinimalistPagination';
+'use client';
+import React, { useState } from 'react';
+import GlassPagination from './_components/GlassPagination';
+import ExpandingPagination from './_components/ExpandingPagination';
+import BubblePagination from './_components/BubblePagination';
+import FlipPagination from './_components/FlipPagination';
+import MagneticPagination from './_components/MagneticPagination';
+import GlowPagination from './_components/GlowPagination';
+import LiquidPagination from './_components/LiquidPagination';
+import RainbowWavePagination from './_components/RainbowWavePagination';
+import PerspectivePagination from './_components/PerspectivePagination';
+import ElasticPagination from './_components/ElasticPagination';
 
-// const App = () => {
-//   const [currentPage, setCurrentPage] = useState(1);
-//   const totalPages = 10;
+export default function PaginationDemo() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = 5;
 
-//   const handlePageChange = (page: number) => {
-//     setCurrentPage(page); // Update the state
-//     console.log("Page changed to:", page); // For debugging
-//   };
-
-//   return (
-//     <div className="flex min-h-screen flex-col items-center gap-16 p-24">
-//       <div className="space-y-4">
-//         <h2 className="text-xl font-bold text-center">Circular Pagination</h2>
-//         <CircularPagination
-//           totalPages={5}
-//           currentPage={currentPage}
-//           onPageChange={setCurrentPage}
-//         />
-//       </div>
-
-//       <div className="space-y-4">
-//         <h2 className="text-xl font-bold text-center">Slider Pagination</h2>
-//         <SliderPagination
-//           totalPages={5}
-//           currentPage={currentPage}
-//           onPageChange={setCurrentPage}
-//         />
-//       </div>
-
-//       <div className="space-y-4">
-//         <h2 className="text-xl font-bold text-center">Dot Pagination</h2>
-//         <DotPagination
-//           totalPages={5}
-//           currentPage={currentPage}
-//           onPageChange={setCurrentPage}
-//         />
-//       </div>
-
-//       <div className="space-y-4">
-//         <h2 className="text-xl font-bold text-center">Card Pagination</h2>
-//         <CardPagination
-//           totalPages={5}
-//           currentPage={currentPage}
-//           onPageChange={setCurrentPage}
-//         />
-//       </div>
-
-//       <div className="space-y-4">
-//         <h2 className="text-xl font-bold text-center">Minimal Pagination</h2>
-//         <MinimalPagination
-//           totalPages={5}
-//           currentPage={currentPage}
-//           onPageChange={setCurrentPage}
-//         />
-//       </div>
-
-//       <div className="space-y-4">
-//         <h2 className="text-xl font-bold text-center">Gradient Pagination</h2>
-//         <GradientPagination
-//           totalPages={5}
-//           currentPage={currentPage}
-//           onPageChange={setCurrentPage}
-//         />
-//       </div>
-
-//       <div className="space-y-4">
-//         <h2 className="text-xl font-bold text-center">Neumorphic Pagination</h2>
-//         <NeumorphicPagination
-//           totalPages={5}
-//           currentPage={currentPage}
-//           onPageChange={setCurrentPage}
-//         />
-//       </div>
-
-//       <div className="space-y-4">
-//         <h2 className="text-xl font-bold text-center">Border Animation Pagination</h2>
-//         <BorderAnimationPagination
-//           totalPages={5}
-//           currentPage={currentPage}
-//           onPageChange={setCurrentPage}
-//         />
-//       </div>
-
-//       <div className="space-y-4">
-//         <h2 className="text-xl font-bold text-center">Floating Pagination</h2>
-//         <FloatingPagination
-//           totalPages={5}
-//           currentPage={currentPage}
-//           onPageChange={setCurrentPage}
-//         />
-//       </div>
-
-//       <div className="space-y-4">
-//         <h2 className="text-xl font-bold text-center">Stacked Pagination</h2>
-//         <StackedPagination
-//           totalPages={5}
-//           currentPage={currentPage}
-//           onPageChange={setCurrentPage}
-//         />
-//       </div>
-
-//       <div className="space-y-4">
-//         <h2 className="text-xl font-bold text-center">Ripple Pagination</h2>
-//         <RipplePagination
-//           totalPages={5}
-//           currentPage={currentPage}
-//           onPageChange={setCurrentPage}
-//         />
-//       </div>
-
-//       <div className="space-y-4">
-//         <h2 className="text-xl font-bold text-center">Glass Pagination</h2>
-//         <GlassPagination
-//           totalPages={5}
-//           currentPage={currentPage}
-//           onPageChange={setCurrentPage}
-//         />
-//       </div>
-
-//       <div className="space-y-4">
-//         <h2 className="text-xl font-bold text-center">Expanding Pagination</h2>
-//         <ExpandingPagination
-//           totalPages={5}
-//           currentPage={currentPage}
-//           onPageChange={setCurrentPage}
-//         />
-//       </div>
-
-//       <div className="space-y-4">
-//         <h2 className="text-xl font-bold text-center">Outline Pagination</h2>
-//         <OutlinePagination
-//           totalPages={5}
-//           currentPage={currentPage}
-//           onPageChange={setCurrentPage}
-//         />
-//       </div>
-
-//       <div className="space-y-4">
-//         <h2 className="text-xl font-bold text-center">Minimalist Pagination</h2>
-//         <MinimalistPagination
-//           totalPages={5}
-//           currentPage={currentPage}
-//           onPageChange={setCurrentPage}
-//         />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default App;
-
-
-
-import React from 'react'
-
-const page = () => {
   return (
-    <div>
-      <h1>Pagination</h1>
-    </div>
-  )
-}
+    <div className="min-h-screen p-8 space-y-16">
+      <BubblePagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />
+      <FlipPagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />
+      <MagneticPagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />
+      <GlowPagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />
+      <LiquidPagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />
+      <RainbowWavePagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />
+      <ElasticPagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />
+      <PerspectivePagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />
+      <div className="space-y-4">
+        <h2 className="text-xl font-bold text-center">Glass Pagination</h2>
+        <GlassPagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
+      </div>
 
-export default page
+      <div className="space-y-4">
+        <h2 className="text-xl font-bold text-center">Expanding Pagination</h2>
+        <ExpandingPagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          onPageChange={setCurrentPage}
+        />
+      </div>
+    </div>
+  );
+}
