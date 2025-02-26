@@ -229,7 +229,10 @@ const Dropdown_79: React.FC<DropdownProps> = ({
             )}
           </div>
           <span className="font-medium text-gray-900 dark:text-white">
-            {placeholder}
+            {selectedValue 
+              ? options.find(opt => opt.value === selectedValue)?.label || 'Recent Notifications'
+              : 'Recent Notifications'
+            }
           </span>
         </div>
         <motion.div
@@ -277,7 +280,10 @@ const Dropdown_79: React.FC<DropdownProps> = ({
             <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
               <div className="flex items-center justify-between">
                 <h3 className="font-medium text-gray-900 dark:text-white">
-                  Recent Notifications
+                  {selectedValue 
+                    ? options.find(opt => opt.value === selectedValue)?.label || 'Recent Notifications'
+                    : 'Recent Notifications'
+                  }
                 </h3>
                 {unreadCount > 0 && (
                   <button className="text-sm text-violet-500 hover:text-violet-600 dark:hover:text-violet-400">
@@ -294,8 +300,13 @@ const Dropdown_79: React.FC<DropdownProps> = ({
                   onHoverStart={() => setHoveredId(option.id)}
                   onHoverEnd={() => setHoveredId(null)}
                   className={`w-full p-4 rounded-lg cursor-pointer ${
-                    option.isUnread ? 'bg-violet-50 dark:bg-violet-900/10' :
-                    hoveredId === option.id ? 'bg-gray-50 dark:bg-gray-900/50' : ''
+                    option.isUnread 
+                      ? 'bg-violet-50 dark:bg-violet-900/10' 
+                      : selectedValue === option.value 
+                        ? 'bg-violet-100 dark:bg-violet-900/20' 
+                        : hoveredId === option.id 
+                          ? 'bg-gray-50 dark:bg-gray-900/50' 
+                          : ''
                   }`}
                 >
                   <div className="flex items-start gap-3">

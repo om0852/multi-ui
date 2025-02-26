@@ -339,38 +339,6 @@ const Dropdown_85: React.FC<DropdownProps> = ({
     );
   };
 
-  const getStatusInfo = (status?: string) => {
-    if (!status) {
-      return {
-        color: 'text-gray-500 bg-gray-100 dark:bg-gray-900/30',
-        label: 'Unknown'
-      };
-    }
-
-    switch (status) {
-      case 'available':
-        return {
-          color: 'text-emerald-500 bg-emerald-100 dark:bg-emerald-900/30',
-          label: 'Available'
-        };
-      case 'busy':
-        return {
-          color: 'text-amber-500 bg-amber-100 dark:bg-amber-900/30',
-          label: 'Busy'
-        };
-      case 'offline':
-        return {
-          color: 'text-gray-500 bg-gray-100 dark:bg-gray-900/30',
-          label: 'Offline'
-        };
-      default:
-        return {
-          color: 'text-gray-500 bg-gray-100 dark:bg-gray-900/30',
-          label: 'Unknown'
-        };
-    }
-  };
-
   return (
     <div className="relative w-[32rem]">
       <motion.button
@@ -381,15 +349,20 @@ const Dropdown_85: React.FC<DropdownProps> = ({
         <div className="flex items-center gap-3">
           {getSelectedOption() ? (
             <>
-              <div className={`w-10 h-10 rounded-lg ${getWeatherColor(getSelectedOption()?.type!)} flex items-center justify-center`}>
+              <div className={`w-10 h-10 rounded-lg ${
+                getSelectedOption()?.type ? getWeatherColor(getSelectedOption()?.type) : ''
+              } flex items-center justify-center`}>
                 {getWeatherIcon(getSelectedOption()?.type!)}
               </div>
               <div>
                 <span className="font-medium text-gray-900 dark:text-white block">
-                  {getSelectedOption()?.label}
+                  {getSelectedOption()?.label || 'Unknown'}
                 </span>
                 <span className="text-sm text-gray-500 dark:text-gray-400">
-                  {formatTemp(getSelectedOption()?.current.temp!)}
+                  {getSelectedOption()?.current !== undefined && getSelectedOption()?.type
+                    ? formatTemp(getSelectedOption().current.temp)
+                    : '--'
+                  }
                 </span>
               </div>
             </>
