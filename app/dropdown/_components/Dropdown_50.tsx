@@ -94,7 +94,17 @@ const Dropdown_50: React.FC<DropdownProps> = ({
           className="flex-1 px-4 py-2 bg-violet-500 hover:bg-violet-600 text-white font-medium rounded-l-lg flex items-center justify-center gap-2 transition-colors duration-200"
         >
           {options[0].icon}
-          {options[0].label}
+          <div className="flex items-center gap-3">
+            {selectedOption ? (
+              <span className="font-medium">
+                {selectedOption}
+              </span>
+            ) : (
+              <span className="font-medium text-gray-500 dark:text-gray-400">
+                {placeholder}
+              </span>
+            )}
+          </div>
         </motion.button>
         <motion.button
           onClick={() => setIsOpen(!isOpen)}

@@ -231,13 +231,13 @@ const Dropdown_72: React.FC<DropdownProps> = ({
         <div className="flex items-center gap-3">
           {getSelectedOption() ? (
             <>
-              {getWeatherIcon(getSelectedOption()?.weather!)}
+              {getSelectedOption()?.weather && getWeatherIcon(getSelectedOption().weather)}
               <div>
                 <span className="font-medium text-gray-900 dark:text-white block">
-                  {getSelectedOption()?.label}
+                  {getSelectedOption()?.label || 'Unknown'}
                 </span>
                 <span className="text-sm text-gray-500 dark:text-gray-400">
-                  {getSelectedOption()?.temperature.current}°F
+                  {getSelectedOption()?.temperature?.current ?? '--'}°F
                 </span>
               </div>
             </>

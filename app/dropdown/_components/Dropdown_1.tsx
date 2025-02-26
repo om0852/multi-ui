@@ -1,6 +1,6 @@
 "use client";
 import { motion, AnimatePresence } from "framer-motion";
-import React, { useEffect, useRef, useState } from "react";
+import React, {  useRef, useState } from "react";
 
 interface DropdownOption {
   id: number;

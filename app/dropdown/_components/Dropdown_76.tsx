@@ -183,7 +183,8 @@ const Dropdown_76: React.FC<DropdownProps> = ({
 
   const formatDate = (dateString?: string) => {
     if (!dateString) return '';
-    return new Date(dateString).toLocaleDateString('en-US', {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
       month: 'short',
       day: 'numeric'
     });

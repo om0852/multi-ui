@@ -136,9 +136,9 @@ const Dropdown_66: React.FC<DropdownProps> = ({
         <div className="flex items-center gap-3">
           {getSelectedOption() ? (
             <>
-              <span className={getFileColor(getSelectedOption()?.fileType!)}>
-                {getFileIcon(getSelectedOption()?.fileType!)}
-              </span>
+              <div className={getSelectedOption()?.fileType ? getFileColor(getSelectedOption()?.fileType) : ''}>
+                {getSelectedOption()?.fileType && getFileIcon(getSelectedOption()?.fileType)}
+              </div>
               <div>
                 <span className="font-medium text-gray-900 dark:text-white block">
                   {getSelectedOption()?.label}

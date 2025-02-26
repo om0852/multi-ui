@@ -190,17 +190,17 @@ const Dropdown_68: React.FC<DropdownProps> = ({
         <div className="flex items-center gap-3">
           {getSelectedOption() ? (
             <>
-              <div className={`w-10 h-10 rounded-lg ${getCategoryColor(getSelectedOption()?.category!)} bg-opacity-10 dark:bg-opacity-20 flex items-center justify-center`}>
-                <span className={`text-${getSelectedOption()?.category === 'meeting' ? 'purple' : getSelectedOption()?.category === 'event' ? 'pink' : getSelectedOption()?.category === 'task' ? 'blue' : 'orange'}-500`}>
-                  {getCategoryIcon(getSelectedOption()?.category!)}
-                </span>
+              <div className={`w-10 h-10 rounded-lg ${
+                getSelectedOption()?.type ? getTypeInfo(getSelectedOption().type).color : ''
+              } flex items-center justify-center`}>
+                {getSelectedOption()?.type && getTypeInfo(getSelectedOption().type).icon}
               </div>
               <div>
                 <span className="font-medium text-gray-900 dark:text-white block">
-                  {getSelectedOption()?.label}
+                  {getSelectedOption()?.label || 'Unknown'}
                 </span>
                 <span className="text-sm text-gray-500 dark:text-gray-400">
-                  {formatTime(getSelectedOption()?.startTime!)}
+                  {getSelectedOption()?.value || '--'}
                 </span>
               </div>
             </>
