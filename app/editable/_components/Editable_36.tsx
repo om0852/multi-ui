@@ -14,6 +14,13 @@ interface Message {
   isSent: boolean
 }
 
+interface Comment {
+  id: string;
+  content: string;
+  timestamp: string;
+  author: string;
+}
+
 interface Editable_36Props {
   initialContent: string
   onSave: (content: string) => void
@@ -61,9 +68,10 @@ export const Editable_36: React.FC<Editable_36Props> = ({
   isTyping = false,
 }) => {
   const [content, setContent] = useState(initialContent)
-  const [newComment, setNewComment] = useState('')
   const [chatMessages, setChatMessages] = useState<Message[]>(messages)
   const [isEmojiPickerOpen, setIsEmojiPickerOpen] = useState(false)
+  const [newComment, setNewComment] = useState('')
+  const [comments, setComments] = useState<Comment[]>([])
 
   const handleSave = () => {
     if (content.trim()) {
@@ -79,6 +87,21 @@ export const Editable_36: React.FC<Editable_36Props> = ({
       onSave(content)
       setContent('')
     }
+  }
+
+  const handleAddComment = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!newComment.trim()) return
+    
+    const comment: Comment = {
+      id: Date.now().toString(),
+      content: newComment,
+      timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      author: 'You' // Or get from props/context
+    }
+    
+    setComments(prev => [...prev, comment])
+    setNewComment('')
   }
 
   const getStatusIcon = (status: Message['status']) => {
@@ -252,6 +275,52 @@ export const Editable_36: React.FC<Editable_36Props> = ({
             </motion.button>
           </div>
         </div>
+      </div>
+
+      {/* Comment form */}
+      <div className="mt-4 border-t border-gray-100 pt-4">
+        <h3 className="text-sm font-medium text-gray-900 mb-4">Comments</h3>
+        
+        {/* Comments list */}
+        <div className="space-y-4 mb-4">
+          {comments.map(comment => (
+            <div key={comment.id} className="flex space-x-3">
+              <div className="flex-shrink-0">
+                <div className="w-8 h-8 rounded-full bg-gray-200 flex items-center justify-center">
+                  <span className="text-sm font-medium text-gray-600">
+                    {comment.author[0]}
+                  </span>
+                </div>
+              </div>
+              <div>
+                <div className="flex items-center space-x-2">
+                  <span className="text-sm font-medium text-gray-900">{comment.author}</span>
+                  <span className="text-xs text-gray-500">{comment.timestamp}</span>
+                </div>
+                <p className="text-sm text-gray-600">{comment.content}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Comment form */}
+        <form onSubmit={handleAddComment}>
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+              placeholder="Add a comment..."
+              className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+            />
+            <button
+              type="submit"
+              className="px-4 py-2 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+            >
+              Comment
+            </button>
+          </div>
+        </form>
       </div>
     </motion.div>
   )

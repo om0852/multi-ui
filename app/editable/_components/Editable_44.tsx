@@ -113,7 +113,6 @@ export const Editable_44: React.FC<Editable_44Props> = ({
   spacing = 16,
 }) => {
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null)
-  const [selectedTag] = useState<string | null>(null)
   const [content] = useState(initialContent)
 
   const handleSave = () => {
@@ -121,17 +120,7 @@ export const Editable_44: React.FC<Editable_44Props> = ({
     setSelectedImage(null)
   }
 
-  const handleTagClick = (tag: string) => {
-    // Implementation of handleTagClick function
-  }
-
-  const allTags = Array.from(
-    new Set(images.flatMap(image => image.tags))
-  ).sort()
-
-  const filteredImages = selectedTag
-    ? images.filter(image => image.tags.includes(selectedTag))
-    : images
+  const filteredImages = images;
 
   const getColumnImages = (columnIndex: number) => {
     return filteredImages.filter((_, index) => index % columns === columnIndex)

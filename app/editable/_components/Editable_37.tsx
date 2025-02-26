@@ -53,7 +53,6 @@ export const Editable_37: React.FC<Editable_37Props> = ({
   ],
   reminderTime = '15min',
 }) => {
-  const [isEditing, setIsEditing] = useState(false)
   const [title, setTitle] = useState(eventTitle)
   const [start, setStart] = useState(startDate)
   const [end, setEnd] = useState(endDate)
@@ -229,7 +228,16 @@ export const Editable_37: React.FC<Editable_37Props> = ({
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            onClick={() => setIsEditing(false)}
+            onClick={() => {
+              setTitle(eventTitle)
+              setStart(startDate)
+              setEnd(endDate)
+              setEventLocation(location)
+              setOnline(isOnline)
+              setLink(meetingLink)
+              setContent(initialContent)
+              setReminder(reminderTime)
+            }}
             className="px-4 py-2 text-sm text-gray-600 hover:text-gray-800"
           >
             Cancel
