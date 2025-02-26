@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 interface ChartData {
   id: string
@@ -122,12 +122,10 @@ export const Editable_45: React.FC<Editable_45Props> = ({
   ],
 }) => {
   const [selectedPeriod, setSelectedPeriod] = useState<ChartData['period']>('30d')
-  const [isEditing, setIsEditing] = useState(false)
-  const [content, setContent] = useState(initialContent)
+  const [content] = useState(initialContent)
 
   const handleSave = () => {
     onSave(content)
-    setIsEditing(false)
   }
 
   const periods = [
@@ -173,8 +171,8 @@ export const Editable_45: React.FC<Editable_45Props> = ({
       transition={{ duration: 0.3 }}
     >
       {/* Dashboard header */}
-      <div className="p-4 border-b border-gray-100">
-        <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between p-4 border-b border-gray-100">
+        <div className="flex items-center space-x-4">
           <h2 className="text-lg font-medium text-gray-900">Analytics Dashboard</h2>
           <div className="flex items-center space-x-2">
             <select
@@ -188,14 +186,14 @@ export const Editable_45: React.FC<Editable_45Props> = ({
                 </option>
               ))}
             </select>
-            <button
-              onClick={() => setIsEditing(true)}
-              className="px-4 py-2 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-            >
-              Export Data
-            </button>
           </div>
         </div>
+        <button
+          onClick={handleSave}
+          className="px-4 py-2 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+        >
+          Save Changes
+        </button>
       </div>
 
       {/* Charts grid */}

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 interface DataPoint {
   date: string
@@ -17,13 +17,16 @@ interface Metric {
   data: DataPoint[]
 }
 
+interface ChartData {
+  period: '1d' | '7d' | '30d' | '90d' | '1y'
+}
+
 interface Editable_40Props {
   initialContent: string
   onSave: (content: string) => void
   className?: string
   title?: string
   metrics?: Metric[]
-  period?: '7d' | '30d' | '90d' | '1y'
   chartType?: 'line' | 'bar' | 'area'
 }
 
@@ -67,19 +70,12 @@ export const Editable_40: React.FC<Editable_40Props> = ({
       })),
     },
   ],
-  period = '30d',
   chartType = 'line',
 }) => {
   const [selectedMetric, setSelectedMetric] = useState<Metric>(metrics[0])
-  const [selectedPeriod, setSelectedPeriod] = useState(period)
+  const [selectedPeriod, setSelectedPeriod] = useState<ChartData['period']>('30d')
   const [selectedChartType, setSelectedChartType] = useState(chartType)
-  const [isEditing, setIsEditing] = useState(false)
-  const [content, setContent] = useState(initialContent)
-
-  const handleSave = () => {
-    onSave(content)
-    setIsEditing(false)
-  }
+  const [content] = useState(initialContent)
 
   const formatNumber = (num: number) => {
     if (num >= 1000000) {
@@ -123,6 +119,10 @@ export const Editable_40: React.FC<Editable_40Props> = ({
     { value: 'area', label: 'Area' },
   ]
 
+  const handleSave = () => {
+    onSave(content)
+  }
+
   return (
     <motion.div
       className={`bg-white rounded-xl border border-gray-200 shadow-sm ${className}`}
@@ -130,9 +130,8 @@ export const Editable_40: React.FC<Editable_40Props> = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      {/* Card header */}
-      <div className="p-4 border-b border-gray-100">
-        <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between p-4 border-b border-gray-100">
+        <div className="flex items-center space-x-4">
           <h2 className="text-lg font-medium text-gray-900">{title}</h2>
           <div className="flex items-center space-x-2">
             <select
@@ -159,6 +158,12 @@ export const Editable_40: React.FC<Editable_40Props> = ({
             </select>
           </div>
         </div>
+        <button
+          onClick={handleSave}
+          className="px-4 py-2 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+        >
+          Save Changes
+        </button>
       </div>
 
       {/* Metrics grid */}

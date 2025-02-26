@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+import Image from 'next/image'
 
 interface GalleryImage {
   id: string
@@ -112,22 +113,14 @@ export const Editable_44: React.FC<Editable_44Props> = ({
   spacing = 16,
 }) => {
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null)
-  const [selectedTag, setSelectedTag] = useState<string | null>(null)
-  const [isEditing, setIsEditing] = useState(false)
-  const [content, setContent] = useState(initialContent)
+  const [content] = useState(initialContent)
 
   const handleSave = () => {
     onSave(content)
-    setIsEditing(false)
+    setSelectedImage(null)
   }
 
-  const allTags = Array.from(
-    new Set(images.flatMap(image => image.tags))
-  ).sort()
-
-  const filteredImages = selectedTag
-    ? images.filter(image => image.tags.includes(selectedTag))
-    : images
+  const filteredImages = images;
 
   const getColumnImages = (columnIndex: number) => {
     return filteredImages.filter((_, index) => index % columns === columnIndex)
@@ -141,102 +134,67 @@ export const Editable_44: React.FC<Editable_44Props> = ({
       transition={{ duration: 0.3 }}
     >
       {/* Gallery header */}
-      <div className="p-4 border-b border-gray-100">
-        <div className="flex items-center justify-between mb-4">
-          <h2 className="text-lg font-medium text-gray-900">Image Gallery</h2>
-          <button
-            onClick={() => setIsEditing(true)}
-            className="px-4 py-2 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-          >
-            Upload Images
-          </button>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          <button
-            onClick={() => setSelectedTag(null)}
-            className={`px-3 py-1.5 text-sm rounded-lg ${
-              !selectedTag
-                ? 'bg-blue-500 text-white'
-                : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-            }`}
-          >
-            All
-          </button>
-          {allTags.map(tag => (
-            <button
-              key={tag}
-              onClick={() => setSelectedTag(tag)}
-              className={`px-3 py-1.5 text-sm rounded-lg ${
-                selectedTag === tag
-                  ? 'bg-blue-500 text-white'
-                  : 'bg-gray-100 text-gray-600 hover:bg-gray-200'
-              }`}
-            >
-              {tag}
-            </button>
-          ))}
-        </div>
+      <div className="flex items-center justify-between p-4 border-b border-gray-100">
+        <h2 className="text-lg font-medium text-gray-900">Gallery</h2>
+        <button
+          onClick={handleSave}
+          className="px-4 py-2 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+        >
+          Save Changes
+        </button>
       </div>
 
       {/* Gallery grid */}
-      <div className="p-4">
-        <div
-          className="grid gap-4"
-          style={{
-            gridTemplateColumns: `repeat(${columns}, 1fr)`,
-          }}
-        >
-          {Array.from({ length: columns }, (_, i) => (
-            <div key={i} className="space-y-4">
-              {getColumnImages(i).map(image => (
-                <motion.div
-                  key={image.id}
-                  layoutId={image.id}
-                  className="relative group"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  exit={{ opacity: 0 }}
-                >
-                  <motion.img
-                    src={image.src}
-                    alt={image.alt}
-                    onClick={() => setSelectedImage(image)}
-                    className="w-full h-auto rounded-lg cursor-pointer"
-                    whileHover={{ scale: 1.02 }}
-                    transition={{ duration: 0.2 }}
-                  />
-                  <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-opacity rounded-lg" />
-                  <div className="absolute inset-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-between text-white">
-                    <div className="flex items-start justify-between">
-                      <div className="flex items-center space-x-2">
-                        {image.photographer && (
-                          <>
-                            <img
-                              src={image.photographer.avatar}
-                              alt={image.photographer.name}
-                              className="w-8 h-8 rounded-full border-2 border-white"
-                            />
-                            <span className="text-sm font-medium">
-                              {image.photographer.name}
-                            </span>
-                          </>
-                        )}
-                      </div>
-                      <button className="p-2 hover:bg-black hover:bg-opacity-20 rounded-full">
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                        </svg>
-                      </button>
+      <div className={`grid grid-cols-${columns} gap-${spacing} p-4`}>
+        {Array.from({ length: columns }, (_, i) => (
+          <div key={i} className="space-y-4">
+            {getColumnImages(i).map(image => (
+              <motion.div
+                key={image.id}
+                layoutId={image.id}
+                className="relative group"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+              >
+                <Image
+                  src={image.src}
+                  alt={image.alt}
+                  width={image.width}
+                  height={image.height}
+                  className="w-full h-auto rounded-lg cursor-pointer"
+                />
+                <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-opacity rounded-lg" />
+                <div className="absolute inset-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-between text-white">
+                  <div className="flex items-start justify-between">
+                    <div className="flex items-center space-x-2">
+                      {image.photographer && (
+                        <>
+                          <img
+                            src={image.photographer.avatar}
+                            alt={image.photographer.name}
+                            className="w-8 h-8 rounded-full border-2 border-white"
+                          />
+                          <span className="text-sm font-medium">
+                            {image.photographer.name}
+                          </span>
+                        </>
+                      )}
                     </div>
-                    {image.caption && (
-                      <p className="text-sm">{image.caption}</p>
-                    )}
+                    <button className="p-2 hover:bg-black hover:bg-opacity-20 rounded-full">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                      </svg>
+                    </button>
                   </div>
-                </motion.div>
-              ))}
-            </div>
-          ))}
-        </div>
+                  {image.caption && (
+                    <p className="text-sm">{image.caption}</p>
+                  )}
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        ))}
       </div>
 
       {/* Lightbox */}
@@ -256,9 +214,11 @@ export const Editable_44: React.FC<Editable_44Props> = ({
               exit={{ scale: 0.9 }}
               onClick={(e) => e.stopPropagation()}
             >
-              <img
+              <Image
                 src={selectedImage.src}
                 alt={selectedImage.alt}
+                width={selectedImage.width}
+                height={selectedImage.height}
                 className="w-full h-auto rounded-lg"
               />
               <div className="absolute top-4 right-4">

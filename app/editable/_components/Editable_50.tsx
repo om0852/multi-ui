@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useMemo } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 interface SearchFilter {
   id: string
@@ -146,12 +146,10 @@ export const Editable_50: React.FC<Editable_50Props> = ({
     [key: string]: string | string[] | number[]
   }>({})
   const [sortBy, setSortBy] = useState<'relevance' | 'date' | 'rating'>('relevance')
-  const [isEditing, setIsEditing] = useState(false)
-  const [content, setContent] = useState(initialContent)
+  const [content] = useState(initialContent)
 
   const handleSave = () => {
     onSave(content)
-    setIsEditing(false)
   }
 
   const handleFilterChange = (filterId: string, value: string | string[] | number[]) => {
@@ -386,6 +384,12 @@ export const Editable_50: React.FC<Editable_50Props> = ({
             <option value="date">Sort by Date</option>
             <option value="rating">Sort by Rating</option>
           </select>
+          <button
+            onClick={handleSave}
+            className="px-4 py-2 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+          >
+            Save Changes
+          </button>
         </div>
       </div>
 
@@ -461,7 +465,7 @@ export const Editable_50: React.FC<Editable_50Props> = ({
                 No results found
               </h3>
               <p className="text-sm text-gray-500">
-                Try adjusting your search or filters to find what you're looking for.
+                Try adjusting your search or filters to find what you&apos;re looking for.
               </p>
             </div>
           )}

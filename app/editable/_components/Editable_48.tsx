@@ -144,12 +144,10 @@ export const Editable_48: React.FC<Editable_48Props> = ({
   const [currentStep, setCurrentStep] = useState(0)
   const [formData, setFormData] = useState<FormData>({})
   const [errors, setErrors] = useState<FormErrors>({})
-  const [isEditing, setIsEditing] = useState(false)
-  const [content, setContent] = useState(initialContent)
+  const [content] = useState(initialContent)
 
   const handleSave = () => {
     onSave(content)
-    setIsEditing(false)
   }
 
   const validateField = (field: FormField, value: string | string[]) => {

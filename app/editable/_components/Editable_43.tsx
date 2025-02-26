@@ -106,12 +106,10 @@ export const Editable_43: React.FC<DataTableProps<SampleData>> = ({
   const [filters, setFilters] = useState<Partial<Record<keyof SampleData, string>>>({})
   const [currentPage, setCurrentPage] = useState(1)
   const [selectedRows, setSelectedRows] = useState<string[]>([])
-  const [isEditing, setIsEditing] = useState(false)
-  const [content, setContent] = useState(initialContent)
+  const [content] = useState(initialContent)
 
   const handleSave = () => {
     onSave(content)
-    setIsEditing(false)
   }
 
   const handleSort = (key: keyof SampleData) => {
@@ -170,7 +168,7 @@ export const Editable_43: React.FC<DataTableProps<SampleData>> = ({
       }
       return 0
     })
-  }, [filteredData, sortConfig])
+  }, [filteredData, sortConfig, filters])
 
   const paginatedData = useMemo(() => {
     const startIndex = (currentPage - 1) * itemsPerPage
@@ -187,25 +185,14 @@ export const Editable_43: React.FC<DataTableProps<SampleData>> = ({
       transition={{ duration: 0.3 }}
     >
       {/* Table header */}
-      <div className="p-4 border-b border-gray-100">
-        <div className="flex items-center justify-between">
-          <div>
-            <h2 className="text-lg font-medium text-gray-900">Users</h2>
-            <p className="text-sm text-gray-500 mt-1">
-              {selectedRows.length} of {data.length} selected
-            </p>
-          </div>
-          {selectedRows.length > 0 && (
-            <div className="flex items-center space-x-2">
-              <button className="px-3 py-1.5 text-sm text-red-600 hover:text-red-700">
-                Delete Selected
-              </button>
-              <button className="px-3 py-1.5 text-sm text-gray-600 hover:text-gray-700">
-                Export Selected
-              </button>
-            </div>
-          )}
-        </div>
+      <div className="flex items-center justify-between p-4 border-b border-gray-100">
+        <h2 className="text-lg font-medium text-gray-900">Data Table</h2>
+        <button
+          onClick={handleSave}
+          className="px-4 py-2 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+        >
+          Save Changes
+        </button>
       </div>
 
       {/* Table filters */}

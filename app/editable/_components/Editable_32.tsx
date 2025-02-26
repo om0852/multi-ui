@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 interface Editable_32Props {
   initialContent: string
@@ -24,14 +24,12 @@ export const Editable_32: React.FC<Editable_32Props> = ({
   likes = 12,
   avatar = 'https://api.dicebear.com/7.x/avataaars/svg?seed=John',
 }) => {
-  const [isEditing, setIsEditing] = useState(false)
-  const [content, setContent] = useState(initialContent)
+  const [content] = useState(initialContent)
   const [isLiked, setIsLiked] = useState(false)
   const [likeCount, setLikeCount] = useState(likes)
 
   const handleSave = () => {
     onSave(content)
-    setIsEditing(false)
   }
 
   const handleLike = () => {
@@ -46,6 +44,17 @@ export const Editable_32: React.FC<Editable_32Props> = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
+      {/* Add save button in header */}
+      <div className="flex items-center justify-between p-4 border-b border-gray-100">
+        <h2 className="text-lg font-medium text-gray-900">Review</h2>
+        <button
+          onClick={handleSave}
+          className="px-4 py-2 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+        >
+          Save Changes
+        </button>
+      </div>
+
       {/* Comment header */}
       <div className="p-4 border-b border-gray-100">
         <div className="flex items-start space-x-4">
@@ -84,60 +93,24 @@ export const Editable_32: React.FC<Editable_32Props> = ({
         </div>
       </div>
 
-      <AnimatePresence mode="wait">
-        {isEditing ? (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="p-4"
-          >
-            <textarea
-              value={content}
-              onChange={(e) => setContent(e.target.value)}
-              className="w-full min-h-[100px] p-3 bg-gray-50 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
-              placeholder="Write your review..."
-            />
-            <div className="flex justify-end space-x-2 mt-3">
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={() => setIsEditing(false)}
-                className="px-4 py-2 text-sm text-gray-600 hover:text-gray-800"
-              >
-                Cancel
-              </motion.button>
-              <motion.button
-                whileHover={{ scale: 1.02 }}
-                whileTap={{ scale: 0.98 }}
-                onClick={handleSave}
-                className="px-4 py-2 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600"
-              >
-                Save Review
-              </motion.button>
-            </div>
-          </motion.div>
-        ) : (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setIsEditing(true)}
-            className="p-4 cursor-pointer group"
-          >
-            <p className="text-gray-700">
-              {content || 'Click to add your review...'}
-            </p>
-            <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
-              <div className="p-2 bg-blue-50 rounded-full">
-                <svg className="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-                </svg>
-              </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={() => setIsEditing(true)}
+        className="p-4 cursor-pointer group"
+      >
+        <p className="text-gray-700">
+          {content || 'Click to add your review...'}
+        </p>
+        <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
+          <div className="p-2 bg-blue-50 rounded-full">
+            <svg className="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+            </svg>
+          </div>
+        </div>
+      </motion.div>
 
       {/* Comment footer */}
       <div className="px-4 py-3 bg-gray-50 border-t border-gray-100 rounded-b-xl">

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useRef } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 interface FileItem {
   id: string
@@ -66,6 +66,11 @@ export const Editable_38: React.FC<Editable_38Props> = ({
   const [isDragging, setIsDragging] = useState(false)
   const [selectedFiles, setSelectedFiles] = useState<string[]>([])
   const fileInputRef = useRef<HTMLInputElement>(null)
+  const [content] = useState(initialContent)
+
+  const handleSaveChanges = () => {
+    onSave(content)
+  }
 
   const handleDragEnter = (e: React.DragEvent) => {
     e.preventDefault()
@@ -182,6 +187,12 @@ export const Editable_38: React.FC<Editable_38Props> = ({
                 Delete Selected
               </motion.button>
             )}
+            <button
+              onClick={handleSaveChanges}
+              className="px-4 py-2 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+            >
+              Save Changes
+            </button>
             <button
               onClick={() => fileInputRef.current?.click()}
               className="px-4 py-2 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600"
