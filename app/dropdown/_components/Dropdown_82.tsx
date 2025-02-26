@@ -151,7 +151,7 @@ const Dropdown_82: React.FC<DropdownProps> = ({
   };
 
   const getSelectedOption = () => {
-    return options.find(option => option.value === selectedValue);
+    return options.find(option => option.value === selectedValue) || null;
   };
 
   const getStatusInfo = (status: MilestoneOption['status']) => {
@@ -254,15 +254,17 @@ const Dropdown_82: React.FC<DropdownProps> = ({
         <div className="flex items-center gap-3">
           {getSelectedOption() ? (
             <>
-              <div className={`w-10 h-10 rounded-lg ${getStatusInfo(getSelectedOption()?.status!).color} flex items-center justify-center`}>
-                {getStatusInfo(getSelectedOption()?.status!).icon}
+              <div className={`w-10 h-10 rounded-lg ${
+                getSelectedOption()?.status ? getStatusInfo(getSelectedOption()?.status).color : ''
+              } flex items-center justify-center`}>
+                {getSelectedOption()?.status && getStatusInfo(getSelectedOption()?.status).icon}
               </div>
               <div>
                 <span className="font-medium text-gray-900 dark:text-white block">
-                  {getSelectedOption()?.label}
+                  {getSelectedOption()?.label || 'Unknown'}
                 </span>
                 <span className="text-sm text-gray-500 dark:text-gray-400">
-                  {formatDate(getSelectedOption()?.startDate!)} - {formatDate(getSelectedOption()?.endDate!)}
+                  {getSelectedOption()?.value || '--'}
                 </span>
               </div>
             </>

@@ -122,10 +122,17 @@ const Dropdown_89: React.FC<DropdownProps> = ({
   };
 
   const getSelectedOption = () => {
-    return options.find(option => option.value === selectedValue);
+    return options.find(option => option.value === selectedValue) || null;
   };
 
   const getStatusInfo = (status: TeamMemberOption['status']) => {
+    if (!status) {
+      return {
+        color: 'text-gray-500 bg-gray-100 dark:bg-gray-900/30',
+        label: 'Unknown'
+      };
+    }
+
     switch (status) {
       case 'available':
         return {
@@ -141,6 +148,11 @@ const Dropdown_89: React.FC<DropdownProps> = ({
         return {
           color: 'text-gray-500 bg-gray-100 dark:bg-gray-900/30',
           label: 'Offline'
+        };
+      default:
+        return {
+          color: 'text-gray-500 bg-gray-100 dark:bg-gray-900/30',
+          label: 'Unknown'
         };
     }
   };
@@ -184,33 +196,29 @@ const Dropdown_89: React.FC<DropdownProps> = ({
         className="w-full px-4 py-2.5 flex items-center justify-between rounded-lg bg-white dark:bg-gray-800 shadow-sm border border-gray-200 dark:border-gray-700 hover:border-indigo-500 dark:hover:border-indigo-500 transition-colors duration-200"
       >
         <div className="flex items-center gap-3">
-          {getSelectedOption() ? (
+          {getSelectedOption() && (
             <>
               <div className="relative">
                 <div className="w-10 h-10 rounded-full overflow-hidden">
                   <img
-                    src={getSelectedOption()?.avatar}
-                    alt={getSelectedOption()?.label}
+                    src={getSelectedOption()?.avatar || ''}
+                    alt={getSelectedOption()?.label || ''}
                     className="w-full h-full object-cover"
                   />
                 </div>
                 <div className={`absolute -bottom-1 -right-1 w-3.5 h-3.5 rounded-full border-2 border-white dark:border-gray-800 ${
-                  getStatusInfo(getSelectedOption()?.status!).color
+                  getStatusInfo(getSelectedOption()?.status).color
                 }`} />
               </div>
               <div>
                 <span className="font-medium text-gray-900 dark:text-white block">
-                  {getSelectedOption()?.label}
+                  {getSelectedOption()?.label || 'Unknown'}
                 </span>
                 <span className="text-sm text-gray-500 dark:text-gray-400">
-                  {getSelectedOption()?.role}
+                  {getSelectedOption()?.role || ''}
                 </span>
               </div>
             </>
-          ) : (
-            <span className="font-medium text-gray-500 dark:text-gray-400">
-              {placeholder}
-            </span>
           )}
         </div>
         <motion.div

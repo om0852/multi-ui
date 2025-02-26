@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import React, { useState } from "react";
+import Image from 'next/image';
 
 interface RecipeOption {
   id: number;
@@ -110,7 +111,7 @@ const Dropdown_74: React.FC<DropdownProps> = ({
   };
 
   const getSelectedOption = () => {
-    return options.find(option => option.value === selectedValue);
+    return options.find(option => option.value === selectedValue) || null;
   };
 
   const getDifficultyColor = (difficulty: RecipeOption['difficulty']) => {
@@ -143,18 +144,20 @@ const Dropdown_74: React.FC<DropdownProps> = ({
           {getSelectedOption() ? (
             <>
               <div className="w-10 h-10 rounded-lg overflow-hidden">
-                <img
-                  src={getSelectedOption()?.image}
-                  alt={getSelectedOption()?.label}
+                <Image
+                  src={getSelectedOption()?.image || '/placeholder-image.jpg'}
+                  alt={getSelectedOption()?.label || 'Selected option'}
+                  width={40}
+                  height={40}
                   className="w-full h-full object-cover"
                 />
               </div>
               <div>
                 <span className="font-medium text-gray-900 dark:text-white block">
-                  {getSelectedOption()?.label}
+                  {getSelectedOption()?.label || 'Unknown'}
                 </span>
                 <span className="text-sm text-gray-500 dark:text-gray-400">
-                  {formatTime(getSelectedOption()?.cookingTime.prep! + getSelectedOption()?.cookingTime.cook!)} total
+                  {getSelectedOption()?.value || '--'}
                 </span>
               </div>
             </>
@@ -220,10 +223,12 @@ const Dropdown_74: React.FC<DropdownProps> = ({
                   }`}
                 >
                   {/* Recipe Image */}
-                  <div className="flex-shrink-0 w-20 h-20 rounded-lg overflow-hidden">
-                    <img
+                  <div className="flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden">
+                    <Image
                       src={option.image}
                       alt={option.label}
+                      width={48}
+                      height={48}
                       className="w-full h-full object-cover"
                     />
                   </div>

@@ -181,7 +181,7 @@ const Dropdown_81: React.FC<DropdownProps> = ({
   };
 
   const getSelectedOption = () => {
-    return options.find(option => option.value === selectedValue);
+    return options.find(option => option.value === selectedValue) || null;
   };
 
   const getTypeInfo = (type: FileOption['type']) => {
@@ -253,7 +253,9 @@ const Dropdown_81: React.FC<DropdownProps> = ({
     }
   };
 
-  const formatSize = (bytes: number) => {
+  const formatSize = (bytes?: number) => {
+    if (bytes === undefined) return '--';
+    
     const units = ['B', 'KB', 'MB', 'GB'];
     let size = bytes;
     let unitIndex = 0;
@@ -295,16 +297,18 @@ const Dropdown_81: React.FC<DropdownProps> = ({
                   />
                 </div>
               ) : (
-                <div className={`w-10 h-10 rounded-lg ${getTypeInfo(getSelectedOption()?.type!).color} flex items-center justify-center`}>
-                  {getTypeInfo(getSelectedOption()?.type!).icon}
+                <div className={`w-10 h-10 rounded-lg ${
+                  getSelectedOption()?.type ? getTypeInfo(getSelectedOption()?.type).color : ''
+                } flex items-center justify-center`}>
+                  {getSelectedOption()?.type && getTypeInfo(getSelectedOption()?.type).icon}
                 </div>
               )}
               <div>
                 <span className="font-medium text-gray-900 dark:text-white block">
-                  {getSelectedOption()?.label}
+                  {getSelectedOption()?.label || 'Unknown'}
                 </span>
                 <span className="text-sm text-gray-500 dark:text-gray-400">
-                  {formatSize(getSelectedOption()?.size!)}
+                  {getSelectedOption()?.value || '--'}
                 </span>
               </div>
             </>

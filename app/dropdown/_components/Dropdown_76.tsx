@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import React, { useState } from "react";
+import Image from 'next/image';
 
 interface ApplicationOption {
   id: number;
@@ -118,7 +119,7 @@ const Dropdown_76: React.FC<DropdownProps> = ({
   };
 
   const getSelectedOption = () => {
-    return options.find(option => option.value === selectedValue);
+    return options.find(option => option.value === selectedValue) || null;
   };
 
   const getStatusColor = (status: ApplicationOption['status']) => {
@@ -231,18 +232,20 @@ const Dropdown_76: React.FC<DropdownProps> = ({
           {getSelectedOption() ? (
             <>
               <div className="w-10 h-10 rounded-lg overflow-hidden">
-                <img
-                  src={getSelectedOption()?.logo}
-                  alt={getSelectedOption()?.company}
+                <Image
+                  src={getSelectedOption()?.logo || '/placeholder-image.jpg'}
+                  alt={getSelectedOption()?.company || 'Company logo'}
+                  width={40}
+                  height={40}
                   className="w-full h-full object-cover"
                 />
               </div>
               <div>
                 <span className="font-medium text-gray-900 dark:text-white block">
-                  {getSelectedOption()?.label}
+                  {getSelectedOption()?.label || 'Unknown'}
                 </span>
                 <span className="text-sm text-gray-500 dark:text-gray-400">
-                  {getSelectedOption()?.company}
+                  {getSelectedOption()?.company || '--'}
                 </span>
               </div>
             </>
@@ -310,9 +313,11 @@ const Dropdown_76: React.FC<DropdownProps> = ({
                   {/* Header */}
                   <div className="flex items-start gap-3">
                     <div className="flex-shrink-0 w-12 h-12 rounded-lg overflow-hidden">
-                      <img
+                      <Image
                         src={option.logo}
                         alt={option.company}
+                        width={48}
+                        height={48}
                         className="w-full h-full object-cover"
                       />
                     </div>
@@ -340,46 +345,46 @@ const Dropdown_76: React.FC<DropdownProps> = ({
                   {/* Timeline */}
                   <div className="mt-4 grid grid-cols-5 gap-2">
                     <TimelineStep 
-                      date={option.timeline.applied} 
+                      date={option.timeline?.applied || ''}
                       isActive={true}
                       isLast={false}
                     />
                     <TimelineStep 
-                      date={option.timeline.screening} 
+                      date={option.timeline?.screening}
                       isActive={['screening', 'interview', 'offer'].includes(option.status)}
                       isLast={false}
                     />
                     <TimelineStep 
-                      date={option.timeline.interview} 
+                      date={option.timeline?.interview}
                       isActive={['interview', 'offer'].includes(option.status)}
                       isLast={false}
                     />
                     <TimelineStep 
-                      date={option.timeline.offer} 
+                      date={option.timeline?.offer}
                       isActive={option.status === 'offer'}
                       isLast={false}
                     />
                     <TimelineStep 
-                      date={option.timeline.rejected} 
+                      date={option.timeline?.rejected}
                       isActive={option.status === 'rejected'}
                       isLast={true}
                     />
                   </div>
                   <div className="mt-1 grid grid-cols-5 gap-2">
                     <div className="text-xs text-gray-500 dark:text-gray-400">
-                      {formatDate(option.timeline.applied)}
+                      {formatDate(option.timeline?.applied)}
                     </div>
                     <div className="text-xs text-gray-500 dark:text-gray-400">
-                      {formatDate(option.timeline.screening)}
+                      {formatDate(option.timeline?.screening)}
                     </div>
                     <div className="text-xs text-gray-500 dark:text-gray-400">
-                      {formatDate(option.timeline.interview)}
+                      {formatDate(option.timeline?.interview)}
                     </div>
                     <div className="text-xs text-gray-500 dark:text-gray-400">
-                      {formatDate(option.timeline.offer)}
+                      {formatDate(option.timeline?.offer)}
                     </div>
                     <div className="text-xs text-gray-500 dark:text-gray-400">
-                      {formatDate(option.timeline.rejected)}
+                      {formatDate(option.timeline?.rejected)}
                     </div>
                   </div>
 

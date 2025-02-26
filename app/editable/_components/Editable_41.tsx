@@ -186,7 +186,7 @@ export const Editable_41: React.FC<Editable_41Props> = ({
       {/* Header */}
       <div className="p-6 text-center">
         <h2 className="text-2xl font-semibold text-gray-900 mb-2">Simple, transparent pricing</h2>
-        <p className="text-gray-500 mb-6">Choose the plan that's right for you</p>
+        <p className="text-gray-500 mb-6">Choose the plan that&apos;s right for you</p>
         <div className="inline-flex items-center p-1 bg-gray-100 rounded-lg">
           <button
             onClick={() => setIsYearly(false)}

@@ -111,10 +111,6 @@ const Dropdown_79: React.FC<DropdownProps> = ({
     if (onChange) onChange(value);
   };
 
-  const getSelectedOption = () => {
-    return options.find(option => option.value === selectedValue);
-  };
-
   const getTypeInfo = (type: NotificationOption['type']) => {
     switch (type) {
       case 'alert':

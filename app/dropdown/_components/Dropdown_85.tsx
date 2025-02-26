@@ -195,7 +195,7 @@ const Dropdown_85: React.FC<DropdownProps> = ({
   };
 
   const getSelectedOption = () => {
-    return options.find(option => option.value === selectedValue);
+    return options.find(option => option.value === selectedValue) || null;
   };
 
   const getWeatherIcon = (type: WeatherOption['type']) => {
@@ -337,6 +337,38 @@ const Dropdown_85: React.FC<DropdownProps> = ({
         </div>
       </div>
     );
+  };
+
+  const getStatusInfo = (status?: string) => {
+    if (!status) {
+      return {
+        color: 'text-gray-500 bg-gray-100 dark:bg-gray-900/30',
+        label: 'Unknown'
+      };
+    }
+
+    switch (status) {
+      case 'available':
+        return {
+          color: 'text-emerald-500 bg-emerald-100 dark:bg-emerald-900/30',
+          label: 'Available'
+        };
+      case 'busy':
+        return {
+          color: 'text-amber-500 bg-amber-100 dark:bg-amber-900/30',
+          label: 'Busy'
+        };
+      case 'offline':
+        return {
+          color: 'text-gray-500 bg-gray-100 dark:bg-gray-900/30',
+          label: 'Offline'
+        };
+      default:
+        return {
+          color: 'text-gray-500 bg-gray-100 dark:bg-gray-900/30',
+          label: 'Unknown'
+        };
+    }
   };
 
   return (

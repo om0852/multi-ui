@@ -113,12 +113,16 @@ export const Editable_44: React.FC<Editable_44Props> = ({
   spacing = 16,
 }) => {
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null)
-  const [selectedTag, setSelectedTag] = useState<string | null>(null)
+  const [selectedTag] = useState<string | null>(null)
   const [content] = useState(initialContent)
 
   const handleSave = () => {
     onSave(content)
     setSelectedImage(null)
+  }
+
+  const handleTagClick = (tag: string) => {
+    // Implementation of handleTagClick function
   }
 
   const allTags = Array.from(

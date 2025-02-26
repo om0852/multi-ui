@@ -60,7 +60,7 @@ console.log(result);`,
 }) => {
   const [editorContent, setEditorContent] = useState(code)
   const [selectedLines, setSelectedLines] = useState<number[]>([])
-  const [cursor, setCursor] = useState<{ line: number; column: number }>({ line: 1, column: 0 })
+  const [cursor] = useState<number | null>(null)
   const editorRef = useRef<HTMLTextAreaElement>(null)
   const [content] = useState(initialContent)
 
@@ -273,7 +273,7 @@ console.log(result);`,
       <div className="p-2 border-t border-gray-200 dark:border-gray-700 text-xs text-gray-500 dark:text-gray-400">
         <div className="flex items-center justify-between">
           <div>
-            Ln {cursor.line}, Col {cursor.column}
+            Ln {cursor}, Col {cursor}
           </div>
           <div>
             {selectedLines.length > 0 && (

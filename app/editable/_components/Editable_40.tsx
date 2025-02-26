@@ -27,7 +27,6 @@ interface Editable_40Props {
   className?: string
   title?: string
   metrics?: Metric[]
-  period?: '7d' | '30d' | '90d' | '1y'
   chartType?: 'line' | 'bar' | 'area'
 }
 
@@ -71,7 +70,6 @@ export const Editable_40: React.FC<Editable_40Props> = ({
       })),
     },
   ],
-  period = '30d',
   chartType = 'line',
 }) => {
   const [selectedMetric, setSelectedMetric] = useState<Metric>(metrics[0])

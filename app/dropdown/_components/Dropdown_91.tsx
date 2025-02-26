@@ -23,6 +23,7 @@ interface NotificationOption {
     category?: string;
     link?: string;
   };
+  status?: 'available' | 'busy' | 'offline';
 }
 
 interface DropdownProps {
@@ -122,16 +123,13 @@ const Dropdown_91: React.FC<DropdownProps> = ({
     }
   ],
   placeholder = "Notifications",
-  value,
   onSelect,
   onChange,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedId, setSelectedId] = useState<number | undefined>(undefined);
   const [hoveredId, setHoveredId] = useState<number | null>(null);
 
   const handleSelect = (id: number) => {
-    setSelectedId(id);
     setIsOpen(false);
     if (onSelect) onSelect(id);
     if (onChange) onChange(id);
@@ -213,6 +211,38 @@ const Dropdown_91: React.FC<DropdownProps> = ({
 
   const unreadCount = options.filter(option => !option.read).length;
 
+  const getStatusInfo = (status: NotificationOption['status']) => {
+    if (!status) {
+      return {
+        color: 'text-gray-500 bg-gray-100 dark:bg-gray-900/30',
+        label: 'Unknown'
+      };
+    }
+
+    switch (status) {
+      case 'available':
+        return {
+          color: 'text-emerald-500 bg-emerald-100 dark:bg-emerald-900/30',
+          label: 'Available'
+        };
+      case 'busy':
+        return {
+          color: 'text-amber-500 bg-amber-100 dark:bg-amber-900/30',
+          label: 'Busy'
+        };
+      case 'offline':
+        return {
+          color: 'text-gray-500 bg-gray-100 dark:bg-gray-900/30',
+          label: 'Offline'
+        };
+      default:
+        return {
+          color: 'text-gray-500 bg-gray-100 dark:bg-gray-900/30',
+          label: 'Unknown'
+        };
+    }
+  };
+
   return (
     <div className="relative w-[32rem]">
       <motion.button
@@ -291,6 +321,7 @@ const Dropdown_91: React.FC<DropdownProps> = ({
               {options.map((option) => (
                 <motion.div
                   key={option.id}
+                  onClick={() => handleSelect(option.id)}
                   onHoverStart={() => setHoveredId(option.id)}
                   onHoverEnd={() => setHoveredId(null)}
                   className={`w-full p-4 rounded-lg cursor-pointer ${
@@ -387,6 +418,16 @@ const Dropdown_91: React.FC<DropdownProps> = ({
                         )}
                       </div>
                     )}
+
+                    {/* Status */}
+                    <div className="flex items-center justify-between">
+                      <span className="text-xs text-gray-500 dark:text-gray-400">
+                        Status:
+                      </span>
+                      <span className={`px-2.5 py-1 text-xs font-medium text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-900/50 rounded-full ${getStatusInfo(option.status).color}`}>
+                        {getStatusInfo(option.status).label}
+                      </span>
+                    </div>
                   </div>
                 </motion.div>
               ))}

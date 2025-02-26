@@ -129,7 +129,7 @@ const Dropdown_80: React.FC<DropdownProps> = ({
   };
 
   const getSelectedOption = () => {
-    return options.find(option => option.value === selectedValue);
+    return options.find(option => option.value === selectedValue) || null;
   };
 
   const ColorPreview = ({ colors }: { colors: ColorTheme['colors'] }) => {
@@ -194,18 +194,18 @@ const Dropdown_80: React.FC<DropdownProps> = ({
         <div className="flex items-center gap-3">
           {getSelectedOption() ? (
             <>
-              <div className="w-10 h-10 rounded-lg overflow-hidden">
-                <img
-                  src={isDarkPreview ? getSelectedOption()?.preview.dark : getSelectedOption()?.preview.light}
-                  alt={getSelectedOption()?.label}
-                  className="w-full h-full object-cover"
-                />
+              <div className={`w-10 h-10 rounded-lg ${
+                getSelectedOption()?.type ? getTypeInfo(getSelectedOption()?.type).color : ''
+              } flex items-center justify-center`}>
+                {getSelectedOption()?.type && getTypeInfo(getSelectedOption()?.type).icon}
               </div>
               <div>
                 <span className="font-medium text-gray-900 dark:text-white block">
-                  {getSelectedOption()?.label}
+                  {getSelectedOption()?.label || 'Unknown'}
                 </span>
-                <ColorPreview colors={getSelectedOption()?.colors!} />
+                <span className="text-sm text-gray-500 dark:text-gray-400">
+                  {getSelectedOption()?.value || '--'}
+                </span>
               </div>
             </>
           ) : (

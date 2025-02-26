@@ -120,7 +120,6 @@ export const Editable_46: React.FC<Editable_46Props> = ({
   const getEventsForDate = (date: Date) => {
     return events.filter(event => {
       const eventStart = new Date(event.start)
-      const eventEnd = new Date(event.end)
       return (
         eventStart.getFullYear() === date.getFullYear() &&
         eventStart.getMonth() === date.getMonth() &&
