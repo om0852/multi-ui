@@ -1,6 +1,6 @@
 'use client'
 import { motion, AnimatePresence } from "framer-motion";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef, useState } from "react";
 
 interface DropdownOption {
   id: number;
@@ -122,6 +122,18 @@ const Dropdown_45: React.FC<DropdownProps> = ({
           </motion.div>
         )}
       </AnimatePresence>
+
+      <div className="flex items-center gap-3">
+        {selectedOption ? (
+          <span className="font-medium">
+            {selectedOption}
+          </span>
+        ) : (
+          <span className="font-medium text-gray-500 dark:text-gray-400">
+            {placeholder}
+          </span>
+        )}
+      </div>
     </div>
   );
 };

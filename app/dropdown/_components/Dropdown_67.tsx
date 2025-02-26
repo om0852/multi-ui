@@ -170,9 +170,22 @@ const Dropdown_67: React.FC<DropdownProps> = ({
               </span>
             )}
           </div>
-          <span className="font-medium text-gray-900 dark:text-white">
-            {placeholder}
-          </span>
+          {getSelectedOption() ? (
+            <>
+              <div className="flex-shrink-0">
+                <span className="font-medium text-gray-900 dark:text-white">
+                  {getSelectedOption()?.label || 'Unknown'}
+                </span>
+                <span className="text-sm text-gray-500 dark:text-gray-400">
+                  {getSelectedOption()?.message || ''}
+                </span>
+              </div>
+            </>
+          ) : (
+            <span className="font-medium text-gray-500 dark:text-gray-400">
+              {placeholder}
+            </span>
+          )}
         </div>
         <motion.div
           animate={{ rotate: isOpen ? 180 : 0 }}

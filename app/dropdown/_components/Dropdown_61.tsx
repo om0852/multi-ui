@@ -176,7 +176,7 @@ const Dropdown_61: React.FC<DropdownProps> = ({
             }}
             className="absolute w-[600px] right-0 mt-2 p-4 bg-white dark:bg-gray-800 shadow-xl rounded-xl border border-gray-200 dark:border-gray-700 grid grid-cols-3 gap-4 z-50"
           >
-            {categories.map((category, index) => (
+            {categories.map((category) => (
               <div key={category} className="space-y-2">
                 <h3 className="text-sm font-semibold text-gray-500 dark:text-gray-400 px-2">
                   {category}

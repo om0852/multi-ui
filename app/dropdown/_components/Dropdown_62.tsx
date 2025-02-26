@@ -102,7 +102,7 @@ const Dropdown_62: React.FC<DropdownProps> = ({
           {getSelectedOption() ? (
             <>
               <div className={`w-2.5 h-2.5 rounded-full ${
-                getStatusColor(getSelectedOption()?.status!)
+                getSelectedOption()?.status ? getStatusColor(getSelectedOption().status) : ''
               }`} />
               <span className="font-medium text-gray-900 dark:text-white">
                 {getSelectedOption()?.label}

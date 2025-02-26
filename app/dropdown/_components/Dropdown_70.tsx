@@ -181,6 +181,19 @@ const Dropdown_70: React.FC<DropdownProps> = ({
     return checkboxCount + rangeCount;
   };
 
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    // ...
+  };
+
+  interface CustomEventData {
+    value: string;
+    label: string;
+    // Add other properties that your custom event might have
+  }
+  const handleCustomEvent = (data: CustomEventData) => {
+    // ...
+  };
+
   return (
     <div className="relative w-[320px]">
       <motion.button
