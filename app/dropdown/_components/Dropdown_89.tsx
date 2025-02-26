@@ -196,7 +196,7 @@ const Dropdown_89: React.FC<DropdownProps> = ({
         className="w-full px-4 py-2.5 flex items-center justify-between rounded-lg bg-white dark:bg-gray-800 shadow-sm border border-gray-200 dark:border-gray-700 hover:border-indigo-500 dark:hover:border-indigo-500 transition-colors duration-200"
       >
         <div className="flex items-center gap-3">
-          {getSelectedOption() && (
+          {getSelectedOption() ? (
             <>
               <div className="relative">
                 <div className="w-10 h-10 rounded-full overflow-hidden">
@@ -219,6 +219,10 @@ const Dropdown_89: React.FC<DropdownProps> = ({
                 </span>
               </div>
             </>
+          ) : (
+            <span className="font-medium text-gray-500 dark:text-gray-400">
+              {placeholder}
+            </span>
           )}
         </div>
         <motion.div

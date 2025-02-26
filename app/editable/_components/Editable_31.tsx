@@ -22,12 +22,10 @@ export const Editable_31: React.FC<Editable_31Props> = ({
   fileSize = '2.5 MB',
   lastModified = new Date().toLocaleDateString(),
 }) => {
-  const [isEditing, setIsEditing] = useState(false)
   const [content] = useState(initialContent)
 
   const handleSave = () => {
     onSave(content)
-    setIsEditing(false)
   }
 
   const fileTypeIcons = {
@@ -107,7 +105,7 @@ export const Editable_31: React.FC<Editable_31Props> = ({
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
-        onClick={() => setIsEditing(true)}
+        onClick={() => handleSave()}
         className="p-4 cursor-pointer group"
       >
         <p className="text-gray-700">
