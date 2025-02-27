@@ -1,7 +1,7 @@
 'use client'
 
-import React, { useState, useRef, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import React, { useState, useRef } from 'react'
+import { motion } from 'framer-motion'
 
 interface CodeLine {
   number: number
@@ -60,14 +60,18 @@ console.log(result);`,
 }) => {
   const [editorContent, setEditorContent] = useState(code)
   const [selectedLines, setSelectedLines] = useState<number[]>([])
-  const [cursor, setCursor] = useState<{ line: number; column: number }>({ line: 1, column: 0 })
-  const [isEditing, setIsEditing] = useState(false)
-  const [content, setContent] = useState(initialContent)
+  const [cursor] = useState<number | null>(null)
   const editorRef = useRef<HTMLTextAreaElement>(null)
+  const [content] = useState(initialContent)
+
+  const themeStyles = {
+    background: theme === 'dark' ? 'bg-gray-900' : 'bg-white',
+    text: theme === 'dark' ? 'text-gray-100' : 'text-gray-900',
+  }
+
 
   const handleSave = () => {
     onSave(content)
-    setIsEditing(false)
   }
 
   const lines: CodeLine[] = editorContent.split('\n').map((line, index) => ({
@@ -111,7 +115,6 @@ console.log(result);`,
 
       setEditorContent(beforeTab + '  ' + afterTab)
       
-      // Set cursor position after update
       setTimeout(() => {
         target.selectionStart = cursorPos
         target.selectionEnd = cursorPos
@@ -120,7 +123,6 @@ console.log(result);`,
   }
 
   const getTokenType = (token: string): string => {
-    // Basic syntax highlighting rules
     if (/^(function|interface|const|let|var|return|if|else|for|while)$/.test(token)) {
       return 'keyword'
     }
@@ -149,7 +151,6 @@ console.log(result);`,
   }
 
   const renderLine = (line: CodeLine) => {
-    // Simple tokenization (this could be improved with a proper parser)
     const tokens = line.content.split(/(\s+|[{}()[\];,.]|\/\/.*$)/).filter(Boolean)
     
     return tokens.map((token, index) => {
@@ -177,12 +178,11 @@ console.log(result);`,
 
   return (
     <motion.div
-      className={`bg-white dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700 shadow-sm ${className}`}
+      className={`${themeStyles.background} rounded-xl border border-gray-200 shadow-sm ${className}`}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
-      {/* Editor header */}
       <div className="p-4 border-b border-gray-200 dark:border-gray-700">
         <div className="flex items-center justify-between">
           <div className="flex items-center space-x-2">
@@ -195,7 +195,7 @@ console.log(result);`,
           </div>
           <div className="flex items-center space-x-2">
             <button
-              onClick={() => setIsEditing(true)}
+              onClick={() => setEditorContent(code)}
               className="p-1.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -214,11 +214,9 @@ console.log(result);`,
         </div>
       </div>
 
-      {/* Editor content */}
       <div className="relative overflow-hidden">
         <div className="absolute inset-0 overflow-auto">
           <div className="flex min-h-full font-mono text-sm">
-            {/* Line numbers */}
             {showLineNumbers && (
               <div className="flex-none w-12 py-4 text-right text-gray-400 dark:text-gray-600 select-none bg-gray-50 dark:bg-gray-900">
                 {lines.map((line) => (
@@ -234,7 +232,6 @@ console.log(result);`,
               </div>
             )}
 
-            {/* Code */}
             <div className="flex-grow p-4 overflow-auto">
               {readOnly ? (
                 <div className="space-y-0">
@@ -273,11 +270,10 @@ console.log(result);`,
         </div>
       </div>
 
-      {/* Status bar */}
       <div className="p-2 border-t border-gray-200 dark:border-gray-700 text-xs text-gray-500 dark:text-gray-400">
         <div className="flex items-center justify-between">
           <div>
-            Ln {cursor.line}, Col {cursor.column}
+            Ln {cursor}, Col {cursor}
           </div>
           <div>
             {selectedLines.length > 0 && (
@@ -285,6 +281,15 @@ console.log(result);`,
             )}
           </div>
         </div>
+      </div>
+
+      <div className="p-4 border-t border-gray-100">
+        <button
+          onClick={handleSave}
+          className="px-4 py-2 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+        >
+          Save Changes
+        </button>
       </div>
     </motion.div>
   )

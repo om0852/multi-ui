@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 interface Feature {
   id: string
@@ -140,12 +140,10 @@ export const Editable_41: React.FC<Editable_41Props> = ({
 }) => {
   const [isYearly, setIsYearly] = useState(false)
   const [hoveredFeature, setHoveredFeature] = useState<string | null>(null)
-  const [isEditing, setIsEditing] = useState(false)
-  const [content, setContent] = useState(initialContent)
+  const [content] = useState(initialContent)
 
   const handleSave = () => {
     onSave(content)
-    setIsEditing(false)
   }
 
   const getFeatureValue = (value: boolean | string | number) => {
@@ -170,10 +168,25 @@ export const Editable_41: React.FC<Editable_41Props> = ({
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}
     >
+      {/* Add save button */}
+      <div className="flex items-center justify-end p-4 border-b border-gray-100">
+        <button
+          onClick={handleSave}
+          className="px-4 py-2 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+        >
+          Save Changes
+        </button>
+      </div>
+
+      {/* Fix unescaped apostrophe */}
+      <div>
+        <span>Don&apos;t see what you&apos;re looking for?</span>
+      </div>
+
       {/* Header */}
       <div className="p-6 text-center">
         <h2 className="text-2xl font-semibold text-gray-900 mb-2">Simple, transparent pricing</h2>
-        <p className="text-gray-500 mb-6">Choose the plan that's right for you</p>
+        <p className="text-gray-500 mb-6">Choose the plan that&apos;s right for you</p>
         <div className="inline-flex items-center p-1 bg-gray-100 rounded-lg">
           <button
             onClick={() => setIsYearly(false)}

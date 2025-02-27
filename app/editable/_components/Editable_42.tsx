@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { motion, AnimatePresence, Reorder } from 'framer-motion'
+import { motion,AnimatePresence } from 'framer-motion'
 
 interface KanbanTask {
   id: string
@@ -103,12 +103,10 @@ export const Editable_42: React.FC<Editable_42Props> = ({
 }) => {
   const [boardColumns, setBoardColumns] = useState(columns)
   const [draggedTask, setDraggedTask] = useState<KanbanTask | null>(null)
-  const [isEditing, setIsEditing] = useState(false)
-  const [content, setContent] = useState(initialContent)
+  const [content] = useState(initialContent)
 
   const handleSave = () => {
     onSave(content)
-    setIsEditing(false)
   }
 
   const handleDragStart = (task: KanbanTask) => {

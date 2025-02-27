@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 interface Notification {
   id: string
@@ -111,16 +111,14 @@ export const Editable_47: React.FC<Editable_47Props> = ({
     },
   ],
 }) => {
-  const [selectedFilter, setSelectedFilter] = useState<Notification['type'] | 'all'>('all')
-  const [isEditing, setIsEditing] = useState(false)
-  const [content, setContent] = useState(initialContent)
+  const [selectedFilter, setSelectedFilter] = useState<string>('all')
+  const [content] = useState(initialContent)
 
   const handleSave = () => {
     onSave(content)
-    setIsEditing(false)
   }
 
-  const filters: { value: typeof selectedFilter; label: string; icon: JSX.Element }[] = [
+  const filters: { value: typeof selectedFilter; label: string; icon: React.ReactNode }[] = [
     {
       value: 'all',
       label: 'All',
@@ -246,7 +244,7 @@ export const Editable_47: React.FC<Editable_47Props> = ({
           </div>
           <div className="flex items-center space-x-2">
             <button
-              onClick={() => setIsEditing(true)}
+              onClick={() => handleSave()}
               className="p-2 text-gray-400 hover:text-gray-600 rounded-lg hover:bg-gray-100"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -365,7 +363,7 @@ export const Editable_47: React.FC<Editable_47Props> = ({
             No notifications
           </h3>
           <p className="text-sm text-gray-500">
-            You're all caught up! Check back later for new notifications.
+            Youre all caught up! Check back later for new notifications.
           </p>
         </div>
       )}

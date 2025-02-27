@@ -85,12 +85,11 @@ export const Editable_46: React.FC<Editable_46Props> = ({
   const [selectedView, setSelectedView] = useState(view)
   const [selectedDate, setSelectedDate] = useState(new Date())
   const [selectedEvent, setSelectedEvent] = useState<CalendarEvent | null>(null)
-  const [isEditing, setIsEditing] = useState(false)
-  const [content, setContent] = useState(initialContent)
+  const [content] = useState(initialContent)
 
-  const handleSave = () => {
+  const handleSaveEvent = () => {
     onSave(content)
-    setIsEditing(false)
+    setSelectedEvent(null)
   }
 
   const views = [
@@ -105,31 +104,22 @@ export const Editable_46: React.FC<Editable_46Props> = ({
     const firstDay = new Date(year, month, 1)
     const lastDay = new Date(year, month + 1, 0)
     const days = []
-
-    // Add days from previous month
-    const firstDayOfWeek = firstDay.getDay()
-    for (let i = firstDayOfWeek - 1; i >= 0; i--) {
-      days.push(new Date(year, month, -i))
+    
+    for (let day = new Date(firstDay); day <= lastDay; day.setDate(day.getDate() + 1)) {
+      days.push({
+        date: new Date(day),
+        events: events.filter(event => {
+          const eventStart = new Date(event.start)
+          return eventStart.toDateString() === day.toDateString()
+        })
+      })
     }
-
-    // Add days of current month
-    for (let i = 1; i <= lastDay.getDate(); i++) {
-      days.push(new Date(year, month, i))
-    }
-
-    // Add days from next month
-    const remainingDays = 42 - days.length // 6 weeks * 7 days
-    for (let i = 1; i <= remainingDays; i++) {
-      days.push(new Date(year, month + 1, i))
-    }
-
     return days
   }
 
   const getEventsForDate = (date: Date) => {
     return events.filter(event => {
       const eventStart = new Date(event.start)
-      const eventEnd = new Date(event.end)
       return (
         eventStart.getFullYear() === date.getFullYear() &&
         eventStart.getMonth() === date.getMonth() &&
@@ -230,7 +220,14 @@ export const Editable_46: React.FC<Editable_46Props> = ({
               ))}
             </div>
             <button
-              onClick={() => setIsEditing(true)}
+              onClick={() => setSelectedEvent({
+                id: '',
+                title: '',
+                start: '',
+                end: '',
+                type: 'meeting',
+                color: '#3B82F6',
+              })}
               className="px-4 py-2 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600"
             >
               Add Event
@@ -247,10 +244,10 @@ export const Editable_46: React.FC<Editable_46Props> = ({
               {day}
             </div>
           ))}
-          {getDaysInMonth(selectedDate).map((date, index) => {
-            const isToday = date.toDateString() === new Date().toDateString()
-            const isCurrentMonth = date.getMonth() === selectedDate.getMonth()
-            const dayEvents = getEventsForDate(date)
+          {getDaysInMonth(selectedDate).map((dateObj, index) => {
+            const isToday = dateObj.date.toDateString() === new Date().toDateString()
+            const isCurrentMonth = dateObj.date.getMonth() === selectedDate.getMonth()
+            const dayEvents = getEventsForDate(dateObj.date)
 
             return (
               <motion.div
@@ -272,7 +269,7 @@ export const Editable_46: React.FC<Editable_46Props> = ({
                         : 'text-gray-400'
                     }`}
                   >
-                    {date.getDate()}
+                    {dateObj.date.getDate()}
                   </span>
                   {dayEvents.length > 0 && (
                     <span className="text-xs text-gray-500">{dayEvents.length} events</span>
@@ -393,13 +390,10 @@ export const Editable_46: React.FC<Editable_46Props> = ({
                   Close
                 </button>
                 <button
-                  onClick={() => {
-                    setSelectedEvent(null)
-                    setIsEditing(true)
-                  }}
+                  onClick={handleSaveEvent}
                   className="px-4 py-2 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600"
                 >
-                  Edit Event
+                  Save Changes
                 </button>
               </div>
             </motion.div>

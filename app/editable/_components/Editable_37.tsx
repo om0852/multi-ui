@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 interface Attendee {
   id: string
@@ -53,21 +53,18 @@ export const Editable_37: React.FC<Editable_37Props> = ({
   ],
   reminderTime = '15min',
 }) => {
-  const [isEditing, setIsEditing] = useState(false)
-  const [content, setContent] = useState(initialContent)
   const [title, setTitle] = useState(eventTitle)
   const [start, setStart] = useState(startDate)
   const [end, setEnd] = useState(endDate)
   const [eventLocation, setEventLocation] = useState(location)
   const [online, setOnline] = useState(isOnline)
   const [link, setLink] = useState(meetingLink)
-  const [eventAttendees, setEventAttendees] = useState<Attendee[]>(attendees)
+  const [eventAttendees] = useState<Attendee[]>(attendees)
   const [reminder, setReminder] = useState(reminderTime)
-  const [showDatePicker, setShowDatePicker] = useState(false)
+  const [content, setContent] = useState(initialContent)
 
   const handleSave = () => {
     onSave(content)
-    setIsEditing(false)
   }
 
   const getStatusColor = (status: Attendee['status']) => {
@@ -231,7 +228,16 @@ export const Editable_37: React.FC<Editable_37Props> = ({
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
-            onClick={() => setIsEditing(false)}
+            onClick={() => {
+              setTitle(eventTitle)
+              setStart(startDate)
+              setEnd(endDate)
+              setEventLocation(location)
+              setOnline(isOnline)
+              setLink(meetingLink)
+              setContent(initialContent)
+              setReminder(reminderTime)
+            }}
             className="px-4 py-2 text-sm text-gray-600 hover:text-gray-800"
           >
             Cancel

@@ -122,16 +122,14 @@ export const Editable_52: React.FC<Editable_52Props> = ({
   ],
   currentPath = '/',
   viewMode = 'grid',
-}): JSX.Element => {
-  const [isEditing, setIsEditing] = useState(false)
-  const [content, setContent] = useState(initialContent)
+}) => {
   const [selectedPath, setSelectedPath] = useState(currentPath)
   const [view, setView] = useState(viewMode)
-  const [selectedItems, setSelectedItems] = useState<string[]>([])
+  const [selectedItems] = useState<string[]>([])
+  const [content] = useState(initialContent)
 
   const handleSave = () => {
     onSave(content)
-    setIsEditing(false)
   }
 
   const getCurrentFolder = () => {
@@ -181,46 +179,58 @@ export const Editable_52: React.FC<Editable_52Props> = ({
   }
 
   return (
-    <div className={`bg-white rounded-lg shadow-lg ${className}`}>
-      {/* Toolbar */}
-      <div className="flex items-center justify-between p-4 border-b border-gray-200">
-        <div className="flex items-center space-x-4">
-          <button className="p-2 hover:bg-gray-100 rounded-lg">
-            <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-            </svg>
-          </button>
-          <div className="flex items-center space-x-2 text-sm text-gray-600">
-            {getBreadcrumbs().map((crumb, index) => (
-              <React.Fragment key={index}>
-                {index > 0 && <span>/</span>}
-                <button
-                  className="hover:text-blue-500"
-                  onClick={() => setSelectedPath(index === 0 ? '/' : '/' + getBreadcrumbs().slice(1, index + 1).join('/'))}
-                >
-                  {crumb}
-                </button>
-              </React.Fragment>
-            ))}
+    <motion.div
+      className={`bg-white rounded-xl border border-gray-200 shadow-sm ${className}`}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
+      <div className="p-4 border-b border-gray-100">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center space-x-4">
+            <button className="p-2 hover:bg-gray-100 rounded-lg">
+              <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+              </svg>
+            </button>
+            <div className="flex items-center space-x-2 text-sm text-gray-600">
+              {getBreadcrumbs().map((crumb, index) => (
+                <React.Fragment key={index}>
+                  {index > 0 && <span>/</span>}
+                  <button
+                    className="hover:text-blue-500"
+                    onClick={() => setSelectedPath(index === 0 ? '/' : '/' + getBreadcrumbs().slice(1, index + 1).join('/'))}
+                  >
+                    {crumb}
+                  </button>
+                </React.Fragment>
+              ))}
+            </div>
           </div>
-        </div>
-        <div className="flex items-center space-x-2">
-          <button
-            className={`p-2 rounded-lg ${view === 'grid' ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
-            onClick={() => setView('grid')}
-          >
-            <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
-            </svg>
-          </button>
-          <button
-            className={`p-2 rounded-lg ${view === 'list' ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
-            onClick={() => setView('list')}
-          >
-            <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
+          <div className="flex items-center space-x-2">
+            <button
+              onClick={handleSave}
+              className="px-4 py-2 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+            >
+              Save Changes
+            </button>
+            <button
+              className={`p-2 rounded-lg ${view === 'grid' ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
+              onClick={() => setView('grid')}
+            >
+              <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z" />
+              </svg>
+            </button>
+            <button
+              className={`p-2 rounded-lg ${view === 'list' ? 'bg-gray-100' : 'hover:bg-gray-100'}`}
+              onClick={() => setView('list')}
+            >
+              <svg className="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
 
@@ -291,6 +301,6 @@ export const Editable_52: React.FC<Editable_52Props> = ({
           {selectedItems.length} selected
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 } 

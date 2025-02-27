@@ -96,18 +96,16 @@ export const Editable_53: React.FC<Editable_53Props> = ({
   volume = 80,
   repeat = 'off',
   shuffle = false,
-}): JSX.Element => {
-  const [isEditing, setIsEditing] = useState(false)
-  const [content, setContent] = useState(initialContent)
+})  => {
   const [selectedPlaylist, setSelectedPlaylist] = useState<string | null>(null)
   const [currentVolume, setCurrentVolume] = useState(volume)
   const [isShuffled, setIsShuffled] = useState(shuffle)
   const [repeatMode, setRepeatMode] = useState(repeat)
   const [isPlaying_, setIsPlaying_] = useState(isPlaying)
+  const [content] = useState(initialContent)
 
   const handleSave = () => {
     onSave(content)
-    setIsEditing(false)
   }
 
   const formatDuration = (seconds: number) => {
@@ -142,7 +140,12 @@ export const Editable_53: React.FC<Editable_53Props> = ({
   }
 
   return (
-    <div className={`bg-gray-900 text-white rounded-lg shadow-xl ${className}`}>
+    <motion.div
+      className={`bg-white rounded-xl border border-gray-200 shadow-sm ${className}`}
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.3 }}
+    >
       {/* Now Playing */}
       <div className="p-6 border-b border-gray-800">
         <div className="flex items-center space-x-4">
@@ -296,6 +299,14 @@ export const Editable_53: React.FC<Editable_53Props> = ({
           ))}
         </div>
       </div>
-    </div>
+
+      {/* Add save button somewhere appropriate in the UI */}
+      <button
+        onClick={handleSave}
+        className="px-4 py-2 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+      >
+        Save Changes
+      </button>
+    </motion.div>
   )
 } 

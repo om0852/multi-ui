@@ -110,15 +110,14 @@ export const Editable_49: React.FC<Editable_49Props> = ({
     },
   ],
 }) => {
+  const [newComment, setNewComment] = useState('')
   const [expandedReplies, setExpandedReplies] = useState<string[]>([])
   const [replyingTo, setReplyingTo] = useState<string | null>(null)
-  const [newComment, setNewComment] = useState('')
-  const [isEditing, setIsEditing] = useState(false)
-  const [content, setContent] = useState(initialContent)
+  const [content] = useState(initialContent)
 
   const handleSave = () => {
     onSave(content)
-    setIsEditing(false)
+    setReplyingTo(null)
   }
 
   const toggleReply = (commentId: string) => {
@@ -303,11 +302,7 @@ export const Editable_49: React.FC<Editable_49Props> = ({
                       Cancel
                     </button>
                     <button
-                      onClick={() => {
-                        // Handle reply submission
-                        console.log('Submit reply:', newComment)
-                        toggleReply(comment.id)
-                      }}
+                      onClick={handleSave}
                       className="px-3 py-1.5 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600"
                       disabled={!newComment.trim()}
                     >
@@ -395,11 +390,7 @@ export const Editable_49: React.FC<Editable_49Props> = ({
                 </button>
               </div>
               <button
-                onClick={() => {
-                  // Handle comment submission
-                  console.log('Submit comment:', newComment)
-                  setNewComment('')
-                }}
+                onClick={handleSave}
                 className="px-4 py-2 text-sm bg-blue-500 text-white rounded-lg hover:bg-blue-600"
                 disabled={!newComment.trim()}
               >

@@ -92,15 +92,13 @@ export const Editable_39: React.FC<Editable_39Props> = ({
   ],
 }) => {
   const [activeTab, setActiveTab] = useState('profile')
-  const [notificationPrefs, setNotificationPrefs] = useState(notifications)
   const [selectedTheme, setSelectedTheme] = useState(theme)
+  const [notificationPrefs, setNotificationPrefs] = useState(notifications)
   const [privacy, setPrivacy] = useState(privacySettings)
-  const [isEditing, setIsEditing] = useState(false)
-  const [content, setContent] = useState(initialContent)
+  const [content] = useState(initialContent)
 
   const handleSave = () => {
     onSave(content)
-    setIsEditing(false)
   }
 
   const tabs = [
@@ -367,14 +365,6 @@ export const Editable_39: React.FC<Editable_39Props> = ({
       {/* Settings footer */}
       <div className="p-4 border-t border-gray-100">
         <div className="flex justify-end space-x-2">
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => setIsEditing(false)}
-            className="px-4 py-2 text-sm text-gray-600 hover:text-gray-800"
-          >
-            Cancel
-          </motion.button>
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
