@@ -95,7 +95,7 @@ export function StyledDialogContent({
               >
                 {/* Month navigation */}
                 <div className="absolute top-4 right-4 flex items-center gap-2">
-                  {["<", ">"].map((arrow, index) => (
+                  {["<", ">"].map((arrow) => (
                     <motion.button
                       key={arrow}
                       whileHover={{ scale: 1.1 }}
