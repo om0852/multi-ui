@@ -1,5 +1,5 @@
 "use client"
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 
 const collapsibleAnimationKeyframes = `
   @keyframes slideDown {
@@ -55,14 +55,7 @@ const Collapsible_1: React.FC<CollapsibleProps> = ({
   defaultOpen = false,
 }) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
-  const [contentHeight, setContentHeight] = useState<number>(0);
   const contentRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (contentRef.current) {
-      setContentHeight(contentRef.current.scrollHeight);
-    }
-  }, [children]);
 
   const toggleCollapsible = () => {
     setIsOpen(!isOpen);

@@ -19,6 +19,10 @@ const taskAnimation = `
   }
 `;
 
+interface ProgressBarStyle extends React.CSSProperties {
+  '--progress-width': string;
+}
+
 const Collapsible_45: React.FC<{ title: string; children: React.ReactNode; defaultOpen?: boolean }> = ({
   title,
   children,
@@ -110,7 +114,7 @@ const Collapsible_45: React.FC<{ title: string; children: React.ReactNode; defau
               transition: 'width 0.3s ease',
               animation: 'progressFill 0.5s ease-out',
               '--progress-width': `${progress}%`,
-            } as any}
+            } as ProgressBarStyle}
           />
         </div>
 

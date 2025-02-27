@@ -91,7 +91,7 @@ const Collapsible_40: React.FC<{ title: string; children: React.ReactNode; defau
               opacity: 0.9,
               marginTop: '4px',
             }}>
-              Today's Forecast
+              Today&apos;s Forecast
             </div>
           </div>
           <div style={{
@@ -101,7 +101,7 @@ const Collapsible_40: React.FC<{ title: string; children: React.ReactNode; defau
             alignItems: 'center',
             gap: '4px',
           }}>
-            24°
+            24&deg;
             <span style={{
               transform: `rotate(${isOpen ? '180deg' : '0deg'})`,
               transition: 'transform 0.3s ease',
@@ -135,22 +135,22 @@ const Collapsible_40: React.FC<{ title: string; children: React.ReactNode; defau
             <div style={{ textAlign: 'center' }}>
               <div>🌅</div>
               <div style={{ fontSize: '0.8rem', marginTop: '4px' }}>Morning</div>
-              <div style={{ fontSize: '1.1rem' }}>19°</div>
+              <div style={{ fontSize: '1.1rem' }}>19&deg;</div>
             </div>
             <div style={{ textAlign: 'center' }}>
               <div>☀️</div>
               <div style={{ fontSize: '0.8rem', marginTop: '4px' }}>Noon</div>
-              <div style={{ fontSize: '1.1rem' }}>24°</div>
+              <div style={{ fontSize: '1.1rem' }}>24&deg;</div>
             </div>
             <div style={{ textAlign: 'center' }}>
               <div>🌅</div>
               <div style={{ fontSize: '0.8rem', marginTop: '4px' }}>Evening</div>
-              <div style={{ fontSize: '1.1rem' }}>21°</div>
+              <div style={{ fontSize: '1.1rem' }}>21&deg;</div>
             </div>
             <div style={{ textAlign: 'center' }}>
               <div>🌙</div>
               <div style={{ fontSize: '0.8rem', marginTop: '4px' }}>Night</div>
-              <div style={{ fontSize: '1.1rem' }}>17°</div>
+              <div style={{ fontSize: '1.1rem' }}>17&deg;</div>
             </div>
           </div>
           <div style={{

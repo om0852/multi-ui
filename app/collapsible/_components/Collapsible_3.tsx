@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 
 const glassAnimationKeyframes = `
   @keyframes blurIn {
@@ -70,14 +70,7 @@ const Collapsible_3: React.FC<CollapsibleProps> = ({
   glowColor = 'rgba(147, 51, 234, 0.5)',
 }) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
-  const [contentHeight, setContentHeight] = useState<number>(0);
   const contentRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (contentRef.current) {
-      setContentHeight(contentRef.current.scrollHeight);
-    }
-  }, [children]);
 
   const toggleCollapsible = () => {
     setIsOpen(!isOpen);

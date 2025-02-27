@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 
 const neumorphicAnimationKeyframes = `
   @keyframes scaleIn {
@@ -63,14 +63,7 @@ const Collapsible_2: React.FC<CollapsibleProps> = ({
   accentColor = '#4f46e5',
 }) => {
   const [isOpen, setIsOpen] = useState(defaultOpen);
-  const [contentHeight, setContentHeight] = useState<number>(0);
   const contentRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (contentRef.current) {
-      setContentHeight(contentRef.current.scrollHeight);
-    }
-  }, [children]);
 
   const toggleCollapsible = () => {
     setIsOpen(!isOpen);
