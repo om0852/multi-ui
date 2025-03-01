@@ -1,9 +1,10 @@
 'use client';
 import React, { useState } from 'react';
-import HolographicPagination from './_components/HolographicPagination';
-import PerspectiveCardPagination from './_components/PerspectiveCardPagination';
-import PortalPagination from './_components/PortalPagination';
-import ParallaxPagination from './_components/ParallaxPagination';
+
+import LiquidBubblePagination from './_components/LiquidBubblePagination';
+import CrystalPagination from './_components/CrystalPagination';
+import MagneticPulsePagination from './_components/MagneticPulsePagination';
+import CosmicGlowPagination from './_components/CosmicGlowPagination';
 
 
 
@@ -13,25 +14,27 @@ export default function PaginationDemo() {
 
   return (
     <div className="min-h-screen p-8 space-y-16">
-              <div className="space-y-4">
-        <h2 className="text-xl font-bold text-center">Holographic Pagination</h2>
-        <HolographicPagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />
+             
+             <div className="space-y-4">
+        <h2 className="text-xl font-bold text-center">Liquid Bubble Pagination</h2>
+        <LiquidBubblePagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />
       </div>
 
       <div className="space-y-4">
-        <h2 className="text-xl font-bold text-center">Perspective Card Pagination</h2>
-        <PerspectiveCardPagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />
-      </div>
-
-
-      <div className="space-y-4">
-        <h2 className="text-xl font-bold text-center">Portal Pagination</h2>
-        <PortalPagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />
+        <h2 className="text-xl font-bold text-center">Crystal Pagination</h2>
+        <CrystalPagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />
       </div>
 
       <div className="space-y-4">
-        <h2 className="text-xl font-bold text-center">Parallax Depth Pagination</h2>
-        <ParallaxPagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />
+        <h2 className="text-xl font-bold text-center">Magnetic Pulse Pagination</h2>
+        <MagneticPulsePagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />
+      </div>
+
+      
+     
+      <div className="space-y-4">
+        <h2 className="text-xl font-bold text-center">Cosmic Glow Pagination</h2>
+        <CosmicGlowPagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />
       </div>
      
     </div>
