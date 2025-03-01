@@ -11,7 +11,6 @@ interface AvatarProps {
 
 const FlipAvatar: React.FC<AvatarProps> = ({
   src,
-  alt,
   size = "md",
   className = "",
 }) => {

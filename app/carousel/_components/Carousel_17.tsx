@@ -20,6 +20,14 @@ const Carousel: React.FC<CarouselProps> = ({
   const [isHovered, setIsHovered] = useState(false)
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
 
+  const nextSlide = () => {
+    setCurrentIndex((prev) => (prev + 1) % children.length)
+  }
+
+  const prevSlide = () => {
+    setCurrentIndex((prev) => (prev - 1 + children.length) % children.length)
+  }
+
   useEffect(() => {
     if (autoPlay && !isHovered) {
       const timer = setInterval(() => {
@@ -28,15 +36,7 @@ const Carousel: React.FC<CarouselProps> = ({
 
       return () => clearInterval(timer)
     }
-  }, [currentIndex, autoPlay, interval, isHovered])
-
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % children.length)
-  }
-
-  const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + children.length) % children.length)
-  }
+  }, [currentIndex, autoPlay, interval, nextSlide])
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     const rect = e.currentTarget.getBoundingClientRect()
@@ -111,23 +111,16 @@ const Carousel: React.FC<CarouselProps> = ({
                 custom={index}
                 variants={floatAnimation}
                 initial="initial"
-                animate="animate"
                 exit="exit"
                 style={{
                   zIndex: style.zIndex,
-                }}
-                animate={{
-                  x: style.x,
-                  y: style.y,
-                  scale: style.scale,
-                  opacity: style.opacity,
                 }}
                 transition={{
                   type: "spring",
                   stiffness: 150,
                   damping: 20,
                 }}
-                whileHover={{ scale: style.scale * 1.05 }}
+                whileHover={{ scale: style.scale ? style.scale * 1.05 : 1 }}
               >
                 <div className="relative rounded-2xl overflow-hidden shadow-2xl">
                   {/* Glass Panel Effect */}

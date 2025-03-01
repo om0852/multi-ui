@@ -84,7 +84,7 @@ const Card_49: React.FC = () => {
         {/* Static content for SSR */}
         <div className="relative p-6">
           <h3 className="text-xl font-bold text-teal-800">Organic Growth</h3>
-          <p className="text-teal-600">Nature's wisdom</p>
+          <p className="text-teal-600">Nature&apos;s wisdom</p>
         </div>
       </div>
     );
@@ -138,7 +138,7 @@ const Card_49: React.FC = () => {
             Organic Growth
           </motion.h3>
           <motion.p className="text-teal-600">
-            Nature's wisdom
+            Nature&apos;s wisdom
           </motion.p>
         </motion.div>
 

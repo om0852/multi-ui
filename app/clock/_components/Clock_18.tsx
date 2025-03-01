@@ -5,9 +5,6 @@ import { motion } from "framer-motion";
 export interface FlipDigitalClockProps {
   size?: number; // Clock size in pixels (default: 200)
   borderColor?: string; // Border color of the clock
-  hourColor?: string; // Color of the hour hand
-  minuteColor?: string; // Color of the minute hand
-  secondColor?: string; // Color of the second hand
   backgroundColor?: string; // Background color of the clock
   containerClass?: string; // Custom class for the container
 }
@@ -15,9 +12,6 @@ export interface FlipDigitalClockProps {
 const FlipDigitalClock: React.FC<FlipDigitalClockProps> = ({
   size = 200,
   borderColor = "border-gray-400",
-  hourColor = "bg-gray-800",
-  minuteColor = "bg-gray-600",
-  secondColor = "bg-red-500",
   backgroundColor = "bg-gray-900",
   containerClass = "", // Default to an empty string
 }) => {

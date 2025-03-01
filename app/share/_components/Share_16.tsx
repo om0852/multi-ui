@@ -10,7 +10,7 @@ type ShareProps = {
     name: string;
     icon: React.ReactNode;
     gradient: string;
-    shareUrl: string;
+    shareUrl: (url: string) => string;
   }[];
   onClose?: () => void;
   className?: string;

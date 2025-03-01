@@ -82,13 +82,12 @@ const IconWrapper = styled(motion.div)`
 const RainCharacter = styled(motion.div)<{ delay: number; speed: number }>`
   position: absolute;
   font-family: monospace;
-  font-size: ${props => Math.random() * 8 + 8}px;
+  font-size: 8px;
   color: #0f0;
   opacity: 0;
   white-space: nowrap;
-  animation: ${rain} ${props => props.speed}s linear infinite;
-  animation-delay: ${props => props.delay}s;
-  text-shadow: 0 0 5px #0f0;
+  animation: ${rain} ${({ speed }) => speed}s linear infinite;
+  animation-delay: ${({ delay }) => delay}s;
 `;
 
 const RainContainer = styled.div`
@@ -98,7 +97,6 @@ const RainContainer = styled.div`
   overflow: hidden;
 `;
 
-const characters = '日ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ012345789Z';
 
 interface AccordionItemProps {
   title: string;
@@ -108,11 +106,11 @@ interface AccordionItemProps {
 }
 
 function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) {
-  const rainDrops = Array.from({ length: 30 }, (_, i) => ({
-    char: characters[Math.floor(Math.random() * characters.length)],
+  const rainCharacters = Array.from({ length: 50 }, () => ({
+    char: String.fromCharCode(0x30A0 + Math.random() * 96),
     x: Math.random() * 100,
-    delay: Math.random() * 5,
-    speed: Math.random() * 3 + 2
+    delay: Math.random() * 2,
+    speed: Math.random() * 2 + 1
   }));
 
   return (
@@ -123,7 +121,7 @@ function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) 
         whileTap={{ scale: 0.99 }}
       >
         <RainContainer>
-          {rainDrops.map((drop, index) => (
+          {rainCharacters.map((drop, index) => (
             <RainCharacter
               key={index}
               delay={drop.delay}

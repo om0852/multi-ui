@@ -193,7 +193,7 @@ export default function Checkbox_97({ value, onChange, disabled = false, size = 
               style={{
                 '--x': `${mousePosition.x}%`,
                 '--y': `${mousePosition.y}%`
-              } as any}
+              } as React.CSSProperties}
             />
             {ripples.map((_, index) => (
               <MetalRipple

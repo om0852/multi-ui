@@ -187,8 +187,8 @@ const StyledWrapper = styled.div<StyledWrapperProps>`
   ${[...Array(5)].map((_, i) => `
     .strength-bar:nth-child(${i + 1}) {
       height: ${6 + i * 2}px;
-      background: ${props => props.$isChecked && i < 4 ? '#4ade80' : '#95a5a6'};
-      opacity: ${props => props.$isChecked ? '1' : '0.5'};
+      background: ${(props: StyledWrapperProps) => props.$isChecked && i < 4 ? '#4ade80' : '#95a5a6'};
+      opacity: ${(props: StyledWrapperProps) => props.$isChecked ? '1' : '0.5'};
       transition-delay: ${i * 0.1}s;
     }
   `).join('')}

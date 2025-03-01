@@ -50,7 +50,8 @@ const generatePixels = (size: number) => {
       pixels.push({
         x: (x * 100) / grid,
         y: (y * 100) / grid,
-        delay: (x + y) * 0.05
+        delay: (x + y) * 0.05,
+        size,
       });
     }
   }

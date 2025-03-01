@@ -24,7 +24,6 @@ export function WaterfallBarChart({ data, config, className }: WaterfallBarProps
   const height = 400;
   const margin = { top: 20, right: 60, bottom: 40, left: 60 };
 
-  const keys = Object.keys(config);
   const values = data.map((item) => Number(item.value || 0));
   const runningTotal = values.reduce((acc, val, i) => {
     const prev = i > 0 ? acc[i - 1] : 0;

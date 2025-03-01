@@ -199,7 +199,13 @@ const Confetti_17: React.FC = () => {
                 0 0 10px rgba(255, 255, 255, 0.2),
                 inset 0 0 10px rgba(255, 255, 255, 0.1)
               `,
-            } as React.CSSProperties}
+            } as React.CSSProperties & {
+              '--start-x': string;
+              '--start-y': string;
+              '--end-x': string;
+              '--end-y': string;
+              '--rotation': string;
+            }}
           />
         ))}
       </div>

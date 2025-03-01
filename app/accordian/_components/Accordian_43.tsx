@@ -126,14 +126,14 @@ interface AccordionItemProps {
 }
 
 function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) {
-  const frostEffects = Array.from({ length: 10 }, (_, i) => ({
+  const frostEffects = Array.from({ length: 10 }, () => ({
     size: Math.random() * 40 + 20,
     delay: Math.random() * 2,
     x: Math.random() * 100,
     y: Math.random() * 100
   }));
 
-  const snowflakes = Array.from({ length: 20 }, (_, i) => ({
+  const snowflakes = Array.from({ length: 20 }, () => ({
     size: Math.random() * 4 + 2,
     delay: Math.random() * 5,
     x: Math.random() * 100

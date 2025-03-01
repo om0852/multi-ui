@@ -47,7 +47,7 @@ const Counter_48: React.FC<CounterProps> = ({
               animate={{ rotateX: 0 }}
               exit={{ rotateX: 90 }}
               transition={{ duration: 0.3 }}
-              className="bg-white rounded-lg p-8 shadow-lg transform-style-preserve-3d relative"
+              className={`bg-white rounded-lg p-8 shadow-lg transform-style-preserve-3d relative ${isFlipping ? 'flipping' : ''}`}
               style={{
                 boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)",
               }}

@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { motion, useMotionValue, useTransform, useSpring } from 'framer-motion';
 
@@ -70,8 +70,6 @@ const checkVariants = {
 };
 
 export default function Checkbox_49({ value, onChange, disabled = false, size = "medium" }: CheckboxProps) {
-  const x = useMotionValue(0);
-  const y = useMotionValue(0);
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
 

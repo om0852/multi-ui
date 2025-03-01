@@ -33,7 +33,7 @@ export const Editable_30: React.FC<Editable_30Props> = ({
 }) => {
   const [isEditing, setIsEditing] = useState(false)
   const [cardLabels] = useState<Label[]>(labels)
-  const [content] = useState(initialContent)
+  const [content, setContent] = useState(initialContent)
 
   const handleSave = () => {
     onSave(content)

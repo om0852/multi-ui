@@ -119,15 +119,15 @@ interface AccordionItemProps {
 }
 
 function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) {
-  const particles = Array.from({ length: 15 }, (_, i) => ({
+  const particles = Array.from({ length: 15 }, () => ({
     size: Math.random() * 6 + 2,
     color: `hsla(${Math.random() * 60 + 220}, 70%, 50%, 0.8)`,
     x: Math.random() * 100,
     y: Math.random() * 100
   }));
 
-  const orbitals = Array.from({ length: 5 }, (_, i) => ({
-    size: (i + 1) * 80,
+  const orbitals = Array.from({ length: 5 }, (_, index) => ({
+    size: (index + 1) * 80,
     rotation: Math.random() * 360
   }));
 

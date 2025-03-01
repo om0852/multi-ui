@@ -1,7 +1,7 @@
-'use client';
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import styled from 'styled-components';
+"use client";
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import styled from "styled-components";
 
 const StyledCard = styled.div`
   .card {
@@ -16,9 +16,11 @@ const StyledCard = styled.div`
   .quantum-field {
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at 50% 50%,
+    background: radial-gradient(
+      circle at 50% 50%,
       rgba(56, 189, 248, 0.1) 0%,
-      transparent 50%);
+      transparent 50%
+    );
     opacity: 0.3;
     transform-origin: center;
   }
@@ -42,7 +44,7 @@ const StyledCard = styled.div`
   }
 
   .brand {
-    font-family: 'JetBrains Mono', monospace;
+    font-family: "JetBrains Mono", monospace;
     color: #38bdf8;
     font-size: 14px;
     margin-bottom: 20px;
@@ -71,10 +73,14 @@ const StyledCard = styled.div`
   }
 
   .icon-wrapper::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
-    background: radial-gradient(circle at center, rgba(255,255,255,0.8) 0%, transparent 70%);
+    background: radial-gradient(
+      circle at center,
+      rgba(255, 255, 255, 0.8) 0%,
+      transparent 70%
+    );
     opacity: 0;
     transition: opacity 0.5s ease;
   }
@@ -88,7 +94,7 @@ const StyledCard = styled.div`
     font-size: 24px;
     font-weight: 600;
     margin-bottom: 4px;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: "JetBrains Mono", monospace;
   }
 
   .subtitle {
@@ -125,7 +131,7 @@ const StyledCard = styled.div`
     color: white;
     font-size: 18px;
     font-weight: 600;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: "JetBrains Mono", monospace;
   }
 
   .actions {
@@ -140,7 +146,7 @@ const StyledCard = styled.div`
     font-weight: 500;
     transition: all 0.3s ease;
     cursor: pointer;
-    font-family: 'JetBrains Mono', monospace;
+    font-family: "JetBrains Mono", monospace;
   }
 
   .primary-button {
@@ -196,11 +202,12 @@ const StyledCard = styled.div`
   }
 
   @keyframes quantumPulse {
-    0%, 100% { 
+    0%,
+    100% {
       transform: scale(1);
       opacity: 0.5;
     }
-    50% { 
+    50% {
       transform: scale(1.2);
       opacity: 0.7;
     }
@@ -246,48 +253,70 @@ const Card_109: React.FC = () => {
         transition={{ duration: 0.5 }}
       >
         <div className="quantum-field" />
-        {isHovered && [...Array(3)].map((_, i) => (
-          <div
-            key={`wave-${i}`}
-            className="quantum-wave"
-            style={{
-              animationDelay: `${i * 0.5}s`,
-            }}
-          />
-        ))}
-        {isHovered && [...Array(10)].map((_, i) => (
-          <div
-            key={`particle-${i}`}
-            className="particle"
-            style={{
+        {isHovered &&
+          [...Array(3)].map((_, i) => (
+            <div
+              key={`wave-${i}`}
+              className="quantum-wave"
+              style={{
+                animationDelay: `${i * 0.5}s`,
+              }}
+            />
+          ))}
+        {isHovered &&
+          [...Array(10)].map((_, i) => {
+            const particleStyle: React.CSSProperties = {
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
-              '--tx': `${(Math.random() - 0.5) * 100}px`,
-              '--ty': `${(Math.random() - 0.5) * 100}px`,
+              transform: `translate(${(Math.random() - 0.5) * 100}px, ${
+                (Math.random() - 0.5) * 100
+              }px)`,
               animationDelay: `${Math.random() * 2}s`,
-            } as any}
-          />
-        ))}
+            };
+
+            return (
+              <div
+                key={`particle-${i}`}
+                className="particle"
+                style={particleStyle}
+              />
+            );
+          })}
+
         <div className="brand">multi-ui</div>
-        
+
         <div className="header">
           <motion.div
             className="icon-wrapper"
-            animate={isHovered ? {
-              rotateY: [0, 360],
-              scale: [1, 1.2, 1],
-            } : {}}
+            animate={
+              isHovered
+                ? {
+                    rotateY: [0, 360],
+                    scale: [1, 1.2, 1],
+                  }
+                : {}
+            }
             transition={{ duration: 2, repeat: Infinity }}
           >
-            <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+            <svg
+              className="w-6 h-6 text-white"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M13 10V3L4 14h7v7l9-11h-7z"
+              />
             </svg>
           </motion.div>
-          
+
           <div className="title-group">
             <motion.div
               className="title"
-              animate={isHovered ? { color: '#38bdf8' } : { color: 'white' }}
+              animate={isHovered ? { color: "#38bdf8" } : { color: "white" }}
             >
               Quantum Stats
             </motion.div>
@@ -301,19 +330,23 @@ const Card_109: React.FC = () => {
           transition={{ duration: 0.3 }}
         >
           {[
-            { label: 'Qubits', value: '128' },
-            { label: 'Coherence', value: '99.9%' },
-            { label: 'Entanglement', value: '0.92' },
-            { label: 'Gates', value: '2,048' },
+            { label: "Qubits", value: "128" },
+            { label: "Coherence", value: "99.9%" },
+            { label: "Entanglement", value: "0.92" },
+            { label: "Gates", value: "2,048" },
           ].map((stat, index) => (
             <motion.div
               key={stat.label}
               className="stat-item"
               initial={false}
-              animate={isHovered ? {
-                scale: 1.02,
-                transition: { delay: index * 0.1 },
-              } : { scale: 1 }}
+              animate={
+                isHovered
+                  ? {
+                      scale: 1.02,
+                      transition: { delay: index * 0.1 },
+                    }
+                  : { scale: 1 }
+              }
             >
               <div className="stat-label">{stat.label}</div>
               <div className="stat-value">{stat.value}</div>
@@ -342,4 +375,4 @@ const Card_109: React.FC = () => {
   );
 };
 
-export default Card_109; 
+export default Card_109;

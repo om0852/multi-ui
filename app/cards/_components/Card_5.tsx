@@ -4,9 +4,8 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 
 // Define the Card component as a functional React component with TypeScript
-type CardProps = {}; // You can add props here if needed in the future
 
-const Card: React.FC<CardProps> = () => {
+const Card= () => {
   const [mounted, setMounted] = useState(false);
 
   // Only run on the client-side

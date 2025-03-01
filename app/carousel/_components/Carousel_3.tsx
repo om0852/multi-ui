@@ -1,7 +1,7 @@
 "use client"
 import { motion } from 'framer-motion'
 import { AnimatePresence } from 'framer-motion'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 
 interface CarouselProps {
   children: React.ReactNode[]
@@ -43,6 +43,11 @@ const Carousel: React.FC<CarouselProps> = ({ children, autoPlay = false, interva
     },
   }
 
+  const nextSlide = useCallback(() => {
+    setDirection(1)
+    setCurrentIndex((prevIndex) => (prevIndex + 1 === children.length ? 0 : prevIndex + 1))
+  }, [children.length])
+
   useEffect(() => {
     if (autoPlay) {
       const timer = setInterval(() => {
@@ -51,17 +56,7 @@ const Carousel: React.FC<CarouselProps> = ({ children, autoPlay = false, interva
 
       return () => clearInterval(timer)
     }
-  }, [currentIndex, autoPlay, interval])
-
-  const nextSlide = () => {
-    setDirection(1)
-    setCurrentIndex((prevIndex) => (prevIndex + 1 === children.length ? 0 : prevIndex + 1))
-  }
-
-  const prevSlide = () => {
-    setDirection(-1)
-    setCurrentIndex((prevIndex) => (prevIndex - 1 < 0 ? children.length - 1 : prevIndex - 1))
-  }
+  }, [currentIndex, autoPlay, interval, nextSlide])
 
   const goToSlide = (index: number) => {
     setDirection(index > currentIndex ? 1 : -1)

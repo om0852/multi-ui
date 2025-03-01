@@ -15,7 +15,6 @@ const Carousel34 = ({
   children,
   autoPlay = false,
   interval = 3000,
-  kaleidoscopeSegments = 8,
   rotationSpeed = 1,
 }: Carousel34Props) => {
   const [currentIndex, setCurrentIndex] = useState(0)

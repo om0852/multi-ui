@@ -21,7 +21,7 @@ const CircularProgressBar: React.FC<CircularProgressBarProps> = ({
 
   // Generate flame particles
   const numParticles = 20;
-  const particles = Array.from({ length: numParticles }).map((_, i) => ({
+  const particles = Array.from({ length: numParticles }).map(() => ({
     x: Math.random() * size,
     y: Math.random() * size,
     size: Math.random() * 4 + 2,

@@ -24,9 +24,10 @@ export const Editable_32: React.FC<Editable_32Props> = ({
   likes = 12,
   avatar = 'https://api.dicebear.com/7.x/avataaars/svg?seed=John',
 }) => {
-  const [content] = useState(initialContent)
+  const [content, setContent] = useState(initialContent)
   const [isLiked, setIsLiked] = useState(false)
   const [likeCount, setLikeCount] = useState(likes)
+  const [isEditing, setIsEditing] = useState(false)
 
   const handleSave = () => {
     onSave(content)
@@ -100,9 +101,21 @@ export const Editable_32: React.FC<Editable_32Props> = ({
         onClick={() => setIsEditing(true)}
         className="p-4 cursor-pointer group"
       >
-        <p className="text-gray-700">
-          {content || 'Click to add your review...'}
-        </p>
+        <div className="flex-grow">
+          {isEditing ? (
+            <textarea
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              className="w-full min-h-[100px] p-3 bg-gray-50 rounded-lg border border-gray-200 focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
+              placeholder="Add your review..."
+            />
+          ) : (
+            <p className="text-gray-700">{content || 'Click to add your review...'}</p>
+          )}
+          <button onClick={() => setIsEditing(!isEditing)} className="text-blue-500">
+            {isEditing ? 'Cancel' : 'Edit'}
+          </button>
+        </div>
         <div className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity">
           <div className="p-2 bg-blue-50 rounded-full">
             <svg className="w-4 h-4 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">

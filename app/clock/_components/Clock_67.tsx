@@ -237,4 +237,4 @@ const Clock_67 = () => {
   );
 };
 
- 
+ export default Clock_67;

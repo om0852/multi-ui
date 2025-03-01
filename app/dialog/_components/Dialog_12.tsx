@@ -202,7 +202,7 @@ export function DialogExample() {
             Level Complete!
           </StyledDialogHeader>
           <StyledDialogDescription>
-            Congratulations! You've cleared the stage with a perfect score.
+            Congratulations! You&apos;ve cleared the stage with a perfect score.
             Ready to take on the next challenge?
           </StyledDialogDescription>
           <StyledDialogFooter>

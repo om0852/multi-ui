@@ -1,6 +1,6 @@
 "use client";
 import { motion } from "framer-motion";
-import React, { useState, useEffect } from "react";
+import React from "react";
 
 type CircularProgressBarProps = {
   progress: number; // Progress value (0 to 100)

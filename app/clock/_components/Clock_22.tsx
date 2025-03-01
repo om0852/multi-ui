@@ -1,7 +1,7 @@
 'use client';
 import React, { useEffect, useState } from 'react';
 
-const FlipCard = ({ digit, prevDigit }: { digit: string; prevDigit: string }) => {
+const FlipCard = ({ digit }: { digit: string }) => {
   return (
     <div className="relative w-16 h-24 bg-gray-800 rounded-lg mx-1 overflow-hidden">
       {/* Top half (static) */}
@@ -25,11 +25,9 @@ const FlipCard = ({ digit, prevDigit }: { digit: string; prevDigit: string }) =>
 
 const Clock_22 = () => {
   const [time, setTime] = useState(new Date());
-  const [prevTime, setPrevTime] = useState(new Date());
 
   useEffect(() => {
     const timer = setInterval(() => {
-      setPrevTime(time);
       setTime(new Date());
     }, 1000);
 
@@ -40,21 +38,18 @@ const Clock_22 = () => {
   const minutes = time.getMinutes().toString().padStart(2, '0');
   const seconds = time.getSeconds().toString().padStart(2, '0');
 
-  const prevHours = prevTime.getHours().toString().padStart(2, '0');
-  const prevMinutes = prevTime.getMinutes().toString().padStart(2, '0');
-  const prevSeconds = prevTime.getSeconds().toString().padStart(2, '0');
-
+  
   return (
     <div className="bg-gradient-to-br from-gray-800 to-gray-900 p-8 rounded-xl shadow-2xl">
       <div className="flex items-center">
-        <FlipCard digit={hours[0]} prevDigit={prevHours[0]} />
-        <FlipCard digit={hours[1]} prevDigit={prevHours[1]} />
+        <FlipCard digit={hours[0]} />
+        <FlipCard digit={hours[1]} />
         <div className="text-4xl font-bold text-white/80 mx-2">:</div>
-        <FlipCard digit={minutes[0]} prevDigit={prevMinutes[0]} />
-        <FlipCard digit={minutes[1]} prevDigit={prevMinutes[1]} />
+        <FlipCard digit={minutes[0]} />
+        <FlipCard digit={minutes[1]} />
         <div className="text-4xl font-bold text-white/80 mx-2">:</div>
-        <FlipCard digit={seconds[0]} prevDigit={prevSeconds[0]} />
-        <FlipCard digit={seconds[1]} prevDigit={prevSeconds[1]} />
+        <FlipCard digit={seconds[0]} />
+        <FlipCard digit={seconds[1]} />
       </div>
     </div>
   );

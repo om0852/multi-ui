@@ -111,7 +111,7 @@ interface AccordionItemProps {
 }
 
 function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) {
-  const orbs = Array.from({ length: 5 }, (_, i) => ({
+  const orbs = Array.from({ length: 5 }, () => ({
     size: Math.random() * 100 + 50,
     delay: Math.random() * 2,
     x: Math.random() * 100,

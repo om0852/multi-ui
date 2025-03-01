@@ -125,7 +125,7 @@ const StyledWrapper = styled.div<StyledWrapperProps>`
   ${[...Array(10)].map((_, i) => `
     .freq-bar:nth-child(${i + 1}) .bar-fill {
       animation-delay: ${i * 0.1}s;
-      height: ${props => props.$isChecked ? `${30 + Math.random() * 70}%` : '10%'};
+      height: ${(props: StyledWrapperProps) => props.$isChecked ? `${30 + Math.random() * 70}%` : '10%'};
     }
   `).join('')}
 
@@ -220,6 +220,16 @@ const StyledWrapper = styled.div<StyledWrapperProps>`
   .toggle-label:active .volume-knob {
     transform: rotate(${props => props.$isChecked ? '-30deg' : '30deg'});
   }
+
+  ${[...Array(6)].map((_, i) => `
+    .blade:nth-child(${i + 1}) {
+      transform: 
+        rotate(${60 * i}deg)
+        ${(props: StyledWrapperProps) => props.$isChecked ? 
+          'translate(-50%, -50%) rotate(60deg)' : 
+          'translate(0, 0)'};
+    }
+  `).join('')}
 `;
 
 export default Toggle; 

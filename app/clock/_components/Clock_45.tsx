@@ -13,6 +13,7 @@ const ShatterDigit = ({ digit, prevDigit }: { digit: string; prevDigit: string }
     }
   }, [digit, prevDigit]);
 
+
   return (
     <div className="relative w-16 h-24 bg-gradient-to-br from-slate-800 to-slate-900 rounded-lg overflow-hidden">
       {/* Glass background */}
@@ -29,8 +30,6 @@ const ShatterDigit = ({ digit, prevDigit }: { digit: string; prevDigit: string }
 
       {/* Shattered pieces */}
       {isShattered && shards.map((_, index) => {
-        const angle = (index / shards.length) * Math.PI * 2;
-        const distance = 50;
         const delay = (index / shards.length) * 0.2;
         
         return (

@@ -11,7 +11,7 @@ type ShareProps = {
     icon: React.ReactNode;
     color: string;
     hoverColor: string;
-    shareUrl: string;
+    shareUrl: (url: string) => string;
   }[];
   onClose?: () => void;
   className?: string;

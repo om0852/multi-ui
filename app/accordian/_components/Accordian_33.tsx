@@ -21,46 +21,16 @@ const StackedButton = styled(motion.button)`
   width: 100%;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
-  border: none;
-  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 1rem;
   color: white;
   position: relative;
-  overflow: visible;
-  border-radius: 12px;
-  text-align: left;
-  margin-bottom: 1rem;
-  
-  &::before,
-  &::after {
-    content: '';
-    position: absolute;
-    left: 5%;
-    width: 90%;
-    height: 100%;
-    background: inherit;
-    border-radius: inherit;
-    z-index: -1;
-    transition: transform 0.3s ease;
-  }
-  
-  &::before {
-    bottom: -4px;
-    opacity: 0.7;
-    transform-origin: bottom;
-  }
-  
-  &::after {
-    bottom: -8px;
-    opacity: 0.5;
-    transform-origin: bottom;
-  }
-  
-  &:hover::before {
-    transform: translateY(-2px) scale(0.98);
-  }
-  
-  &:hover::after {
-    transform: translateY(-4px) scale(0.96);
+  overflow: hidden;
+  border-radius: 8px;
+  animation: ${float} 3s ease-in-out infinite;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
   }
 `;
 

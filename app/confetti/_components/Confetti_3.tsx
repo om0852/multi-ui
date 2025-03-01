@@ -69,8 +69,21 @@ const ConfettiPiece: React.FC<ConfettiPieceProps> = ({
   );
 };
 
+interface PiecesProps{
+  id: number;
+  delay: number;
+  duration: number;
+  startX: number;
+  endX: number;
+  endY: number;
+  size: number;
+  color: string;
+  shape: string;
+
+}
 const Confetti: React.FC = () => {
-  const [confettiPieces, setConfettiPieces] = useState<any[]>([]);
+
+  const [confettiPieces, setConfettiPieces] = useState<PiecesProps[]>([]);
 
   useEffect(() => {
     const screenWidth = window.innerWidth;

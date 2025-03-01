@@ -78,7 +78,7 @@ const Tooth = styled(motion.div)<{ $angle: number; $color: string }>`
 const gearColors = ['#90A4AE', '#78909C', '#607D8B', '#455A64'];
 
 const gearVariants = {
-  unchecked: (isMain: boolean) => ({
+  unchecked: () => ({
     rotate: 0,
     scale: 0.8,
     opacity: 0.6

@@ -111,7 +111,7 @@ interface AccordionItemProps {
 }
 
 function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) {
-  const nodes = Array.from({ length: 6 }, (_, i) => ({
+  const nodes = Array.from({ length: 6 }, () => ({
     size: Math.random() * 6 + 4,
     x: Math.random() * 100,
     y: Math.random() * 100

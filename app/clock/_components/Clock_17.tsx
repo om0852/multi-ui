@@ -3,7 +3,6 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
 export interface BinaryDigitalClockProps {
-    size?: number; // Clock size in pixels (default: 200)
     borderColor?: string; // Border color of the clock
     hourColor?: string; // Color of the hour hand
     minuteColor?: string; // Color of the minute hand
@@ -13,7 +12,6 @@ export interface BinaryDigitalClockProps {
 }
 
 const BinaryDigitalClock: React.FC<BinaryDigitalClockProps> = ({
-    size = 200,
     borderColor = "border-gray-400",
     hourColor = "bg-gray-800",
     minuteColor = "bg-gray-600",
@@ -39,14 +37,14 @@ const BinaryDigitalClock: React.FC<BinaryDigitalClockProps> = ({
             <div className="text-center">
                 {/* Binary Digital Clock Display */}
                 <motion.div
-                    className={`text-4xl font-bold text-green-400 drop-shadow-lg ${borderColor}`}
+                    className={`text-4xl font-bold ${hourColor} drop-shadow-lg ${borderColor}`}
                     initial={{ opacity: 0.8 }}
                     animate={{ opacity: [0.8, 1, 0.8] }}
                     transition={{ repeat: Infinity, duration: 2 }}
                 >
                     <div>{hours}</div>
-                    <div>{minutes}</div>
-                    <div>{seconds}</div>
+                    <div className={`${minuteColor}`}>{minutes}</div>
+                    <div className={`${secondColor}`}>{seconds}</div>
                 </motion.div>
             </div>
         </div>

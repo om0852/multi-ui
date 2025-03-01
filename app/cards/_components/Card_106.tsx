@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState,CSSProperties } from 'react';
 import { motion } from 'framer-motion';
 import styled from 'styled-components';
 
@@ -189,7 +189,16 @@ const Card_106: React.FC = () => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        <div className="starfield" style={{ '--x': Math.random(), '--y': Math.random() } as any} />
+
+<div
+  className="starfield"
+  style={
+    {
+      '--x': `${Math.random()}`,
+      '--y': `${Math.random()}`
+    } as CSSProperties
+  }
+/>
         {[1, 2, 3].map((i) => (
           <div
             key={i}

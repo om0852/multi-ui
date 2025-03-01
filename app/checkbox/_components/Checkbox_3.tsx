@@ -13,16 +13,17 @@ type CheckboxProps = {
 const Checkbox: React.FC<CheckboxProps> = ({ value=false, onChange, disabled = false }) => {
   const [mounted, setMounted] = useState(false);
 
+  // Controlled or uncontrolled checkbox
+  const [checked, setChecked] = useState<boolean>(value);
+
   // Set mounted to true after the component is rendered on the client
   useEffect(() => {
     setMounted(true);
-  }, []);
+    setChecked(value); // Update checked state on mount
+  }, [value]);
 
   // Don't render on the server during hydration
   if (!mounted) return null;
-
-  // Controlled or uncontrolled checkbox
-  const [checked, setChecked] = useState<boolean>(value);
 
   const handleChange = () => {
     if (disabled) return; // Prevent changes if disabled

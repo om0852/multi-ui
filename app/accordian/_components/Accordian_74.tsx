@@ -113,7 +113,7 @@ const DigitalCharacter = styled(motion.div)<{ delay: number }>`
   color: #00ff00;
   font-family: 'Courier New', monospace;
   font-size: 12px;
-  animation: ${digitFlicker} ${props => 1 + Math.random()}s ease-in-out infinite;
+  animation: ${digitFlicker} ${() => 1 + Math.random()}s ease-in-out infinite;
   animation-delay: ${props => props.delay}s;
   opacity: 0.5;
 `;

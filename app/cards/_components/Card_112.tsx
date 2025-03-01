@@ -1,8 +1,7 @@
-'use client';
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
-import styled from 'styled-components';
-
+"use client";
+import React, { useState } from "react";
+import { motion } from "framer-motion";
+import styled from "styled-components";
 const StyledCard = styled.div`
   .card {
     width: 380px;
@@ -55,7 +54,7 @@ const StyledCard = styled.div`
   }
 
   .brand {
-    font-family: 'Raleway', sans-serif;
+    font-family: "Raleway", sans-serif;
     color: #6366f1;
     font-size: 14px;
     margin-bottom: 20px;
@@ -84,10 +83,15 @@ const StyledCard = styled.div`
   }
 
   .icon-wrapper::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+    background: linear-gradient(
+      45deg,
+      transparent,
+      rgba(255, 255, 255, 0.6),
+      transparent
+    );
     transform: translateX(-100%);
     transition: transform 0.5s ease;
   }
@@ -101,7 +105,7 @@ const StyledCard = styled.div`
     font-size: 24px;
     font-weight: 600;
     margin-bottom: 4px;
-    font-family: 'Raleway', sans-serif;
+    font-family: "Raleway", sans-serif;
   }
 
   .subtitle {
@@ -128,10 +132,15 @@ const StyledCard = styled.div`
   }
 
   .stat-item::before {
-    content: '';
+    content: "";
     position: absolute;
     inset: 0;
-    background: linear-gradient(45deg, transparent, rgba(99, 102, 241, 0.1), transparent);
+    background: linear-gradient(
+      45deg,
+      transparent,
+      rgba(99, 102, 241, 0.1),
+      transparent
+    );
     transform: translateX(-100%);
     transition: transform 0.5s ease;
   }
@@ -149,7 +158,7 @@ const StyledCard = styled.div`
     color: #1e293b;
     font-size: 18px;
     font-weight: 600;
-    font-family: 'Raleway', sans-serif;
+    font-family: "Raleway", sans-serif;
   }
 
   .actions {
@@ -164,7 +173,7 @@ const StyledCard = styled.div`
     font-weight: 500;
     transition: all 0.3s ease;
     cursor: pointer;
-    font-family: 'Raleway', sans-serif;
+    font-family: "Raleway", sans-serif;
   }
 
   .primary-button {
@@ -225,7 +234,8 @@ const StyledCard = styled.div`
   }
 
   @keyframes prismRotate {
-    0%, 100% {
+    0%,
+    100% {
       transform: rotate(0deg) scale(1);
       opacity: 0.5;
     }
@@ -266,7 +276,7 @@ const StyledCard = styled.div`
 
 const Card_112: React.FC = () => {
   const [isHovered, setIsHovered] = useState(false);
-
+  
   return (
     <StyledCard>
       <motion.div
@@ -278,50 +288,77 @@ const Card_112: React.FC = () => {
         transition={{ duration: 0.5 }}
       >
         <div className="prism-effect" />
-        {isHovered && [...Array(5)].map((_, i) => (
-          <div
-            key={`refraction-${i}`}
-            className="refraction"
-            style={{
-              top: `${20 + i * 20}%`,
-              animationDelay: `${i * 0.6}s`,
-            }}
-          />
-        ))}
-        {isHovered && [...Array(10)].map((_, i) => (
-          <div
-            key={`sparkle-${i}`}
-            className="sparkle"
-            style={{
+        {isHovered &&
+          [...Array(5)].map((_, i) => (
+            <div
+              key={`refraction-${i}`}
+              className="refraction"
+              style={{
+                top: `${20 + i * 20}%`,
+                animationDelay: `${i * 0.6}s`,
+              }}
+            />
+          ))}
+        {isHovered &&
+          [...Array(10)].map((_, i) => {
+            const sparkleStyle: React.CSSProperties = {
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
-              '--tx': `${(Math.random() - 0.5) * 100}px`,
-              '--ty': `${(Math.random() - 0.5) * 100}px`,
+              transform: `translate(${(Math.random() - 0.5) * 100}px, ${
+                (Math.random() - 0.5) * 100
+              }px)`,
               animationDelay: `${Math.random() * 2}s`,
-            } as any}
-          />
-        ))}
+            };
+
+            return (
+              <div
+                key={`sparkle-${i}`}
+                className="sparkle"
+                style={sparkleStyle}
+              />
+            );
+          })}
+
         <div className="brand">multi-ui</div>
-        
+
         <div className="header">
           <motion.div
             className="icon-wrapper"
-            animate={isHovered ? {
-              rotateY: [0, 360],
-              scale: [1, 1.2, 1],
-            } : {}}
+            animate={
+              isHovered
+                ? {
+                    rotateY: [0, 360],
+                    scale: [1, 1.2, 1],
+                  }
+                : {}
+            }
             transition={{ duration: 2, repeat: Infinity }}
           >
-            <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z" />
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z" />
+            <svg
+              className="w-6 h-6 text-white"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M11 3.055A9.001 9.001 0 1020.945 13H11V3.055z"
+              />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M20.488 9H15V3.512A9.025 9.025 0 0120.488 9z"
+              />
             </svg>
           </motion.div>
-          
+
           <div className="title-group">
             <motion.div
               className="title"
-              animate={isHovered ? { color: '#6366f1' } : { color: '#1e293b' }}
+              animate={isHovered ? { color: "#6366f1" } : { color: "#1e293b" }}
             >
               Prism Stats
             </motion.div>
@@ -335,19 +372,23 @@ const Card_112: React.FC = () => {
           transition={{ duration: 0.3 }}
         >
           {[
-            { label: 'Refraction', value: '1.52' },
-            { label: 'Dispersion', value: '98%' },
-            { label: 'Clarity', value: '99.9%' },
-            { label: 'Spectrum', value: '380-700nm' },
+            { label: "Refraction", value: "1.52" },
+            { label: "Dispersion", value: "98%" },
+            { label: "Clarity", value: "99.9%" },
+            { label: "Spectrum", value: "380-700nm" },
           ].map((stat, index) => (
             <motion.div
               key={stat.label}
               className="stat-item"
               initial={false}
-              animate={isHovered ? {
-                scale: 1.02,
-                transition: { delay: index * 0.1 },
-              } : { scale: 1 }}
+              animate={
+                isHovered
+                  ? {
+                      scale: 1.02,
+                      transition: { delay: index * 0.1 },
+                    }
+                  : { scale: 1 }
+              }
             >
               <div className="stat-label">{stat.label}</div>
               <div className="stat-value">{stat.value}</div>
@@ -376,4 +417,4 @@ const Card_112: React.FC = () => {
   );
 };
 
-export default Card_112; 
+export default Card_112;

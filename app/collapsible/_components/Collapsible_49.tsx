@@ -19,34 +19,34 @@ const Collapsible_49: React.FC<{ title: string; children: React.ReactNode; defau
     }}>
       <div
         onClick={() => setIsOpen(!isOpen)}
-        style={{
-          padding: '16px',
-          cursor: 'pointer',
-          background: '#4263eb',
-          color: 'white',
-          position: 'relative',
-        }}
+        className="cursor-pointer bg-[#4263eb] text-white relative transition-all duration-200 hover:bg-[#f8f9fa]"
       >
         <div style={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'space-between',
+          padding: '16px',
+          cursor: 'pointer',
+          position: 'relative',
         }}>
           <div style={{
             display: 'flex',
             alignItems: 'center',
-            gap: '12px',
+            justifyContent: 'space-between',
           }}>
-            <span style={{ fontSize: '1.2rem' }}>🔔</span>
-            <div>
-              <div style={{ fontWeight: 500 }}>{title}</div>
-              <div style={{ fontSize: '0.85rem', opacity: 0.9, marginTop: '4px' }}>3 new notifications</div>
+            <div style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '12px',
+            }}>
+              <span style={{ fontSize: '1.2rem' }}>🔔</span>
+              <div>
+                <div style={{ fontWeight: 500 }}>{title}</div>
+                <div style={{ fontSize: '0.85rem', opacity: 0.9, marginTop: '4px' }}>3 new notifications</div>
+              </div>
             </div>
+            <span style={{
+              transform: `rotate(${isOpen ? '180deg' : '0deg'})`,
+              transition: 'transform 0.3s ease',
+            }}>▼</span>
           </div>
-          <span style={{
-            transform: `rotate(${isOpen ? '180deg' : '0deg'})`,
-            transition: 'transform 0.3s ease',
-          }}>▼</span>
         </div>
       </div>
 
@@ -66,7 +66,6 @@ const Collapsible_49: React.FC<{ title: string; children: React.ReactNode; defau
               borderBottom: '1px solid #e9ecef',
               cursor: 'pointer',
               transition: 'background 0.2s',
-              ':hover': { background: '#f8f9fa' },
             }}>
               <div style={{
                 display: 'flex',

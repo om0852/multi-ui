@@ -1,6 +1,6 @@
 "use client"
 
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 import React, { useState, useEffect } from "react"
 
 interface CarouselProps {
@@ -9,6 +9,29 @@ interface CarouselProps {
   interval?: number
   spread?: number
   tilt?: number
+}
+
+const floatAnimation = {
+  initial: (index: number) => ({
+    y: 50 + index * 10,
+    opacity: 0,
+  }),
+  animate: (index: number) => ({
+    y: 0,
+    opacity: 1,
+    transition: {
+      duration: 0.8,
+      delay: index * 0.1,
+      ease: [0.4, 0, 0.2, 1],
+    },
+  }),
+  exit: (index: number) => ({
+    y: -50 - index * 10,
+    opacity: 0,
+    transition: {
+      duration: 0.5,
+    },
+  }),
 }
 
 const Carousel: React.FC<CarouselProps> = ({
@@ -56,22 +79,26 @@ const Carousel: React.FC<CarouselProps> = ({
     const absPosition = Math.abs(position)
     const isVisible = absPosition <= Math.floor(visibleItems / 2)
 
-    if (!isVisible) return { display: "none" }
+    if (!isVisible) return { display: "none", scale: 1 }
 
     const x = position * spread
     const scale = 1 - absPosition * 0.2
-    const rotateY = position * -tilt
-    const zIndex = visibleItems - absPosition
     const opacity = 1 - absPosition * 0.3
 
     return {
-      position: "absolute",
-      left: "50%",
-      transform: `translateX(-50%) translateX(${x}px) rotateY(${rotateY}deg) scale(${scale})`,
-      zIndex,
+      x,
+      scale: scale >= 0 ? scale : 1,
       opacity,
     }
   }
+
+  const handleDragStart = () => {
+    setIsDragging(true);
+  };
+
+  const handleDragEnd = () => {
+    setIsDragging(false);
+  };
 
   return (
     <div
@@ -87,25 +114,24 @@ const Carousel: React.FC<CarouselProps> = ({
         {getVisibleIndices().map((index) => (
           <motion.div
             key={index}
-            className="absolute top-1/2 left-1/2 w-96 h-96 -translate-y-1/2"
-            initial={false}
-            animate={getItemStyle(index)}
-            transition={{ duration: 0.5 }}
-            drag="x"
-            dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={0.2}
-            onDragStart={() => setIsDragging(true)}
-            onDragEnd={(e, info) => {
-              setIsDragging(false)
-              if (Math.abs(info.offset.x) > 100) {
-                if (info.offset.x > 0) {
-                  prevSlide()
-                } else {
-                  nextSlide()
-                }
-              }
+            className="absolute w-[80%] max-w-3xl"
+            custom={index}
+            variants={floatAnimation}
+            initial="initial"
+            exit="exit"
+            animate={{
+              x: getItemStyle(index).x,
+              scale: getItemStyle(index).scale,
+              opacity: getItemStyle(index).opacity,
             }}
-            whileTap={{ cursor: "grabbing" }}
+            transition={{
+              type: "spring",
+              stiffness: 150,
+              damping: 20,
+            }}
+            whileHover={{ scale: getItemStyle(index).scale !== undefined ? getItemStyle(index).scale * 1.05 : 1 }}
+            onDragStart={handleDragStart}
+            onDragEnd={handleDragEnd}
           >
             <div className="relative w-full h-full rounded-2xl overflow-hidden shadow-2xl cursor-grab bg-white/10 backdrop-blur-sm">
               {/* Main Content */}

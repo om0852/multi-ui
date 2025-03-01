@@ -117,7 +117,7 @@ const FileUpload: React.FC<FileUploadProps> = ({
                 <div className="flex items-center space-x-2">
                   {file.type.startsWith('image/') ? (
                     <img
-                      src={URL.createObjectURL(file)}
+                      src={getFilePreview(file) || ''}
                       alt={file.name}
                       className="w-10 h-10 object-cover rounded"
                     />

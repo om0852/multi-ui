@@ -19,10 +19,6 @@ const rainbowBorder = keyframes`
   100% { border-color: #ff0000; }
 `;
 
-const shine = keyframes`
-  0% { transform: translateX(-100%) rotate(45deg); }
-  100% { transform: translateX(100%) rotate(45deg); }
-`;
 
 const Container = styled.div`
   padding: 1rem;
@@ -32,50 +28,19 @@ const Container = styled.div`
   overflow: hidden;
 `;
 
-const HoloButton = styled(motion.button)`
+const AccordionButton = styled(motion.button)`
   width: 100%;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
+  padding: 1rem;
   border: 2px solid transparent;
   border-radius: 0.5rem;
-  padding: 1rem;
+  background: rgba(255, 255, 255, 0.1);
   color: white;
-  position: relative;
-  overflow: hidden;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    inset: -2px;
-    background: linear-gradient(
-      90deg,
-      #ff0000, #ff00ff, #0000ff,
-      #00ffff, #00ff00, #ffff00, #ff0000
-    );
-    background-size: 200% 100%;
-    animation: ${holographicShimmer} 3s linear infinite;
-    -webkit-mask: 
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-    mask: 
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-  }
-  
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      90deg,
-      transparent,
-      rgba(255, 255, 255, 0.4),
-      transparent
-    );
-    transform: translateX(-100%) rotate(45deg);
-    animation: ${shine} 3s ease-in-out infinite;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  animation: ${rainbowBorder} 10s linear infinite;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
   }
 `;
 
@@ -171,7 +136,7 @@ interface AccordionItemProps {
 function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) {
   return (
     <div className="mb-4">
-      <HoloButton
+      <AccordionButton
         onClick={onClick}
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}
@@ -188,7 +153,7 @@ function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) 
             ▼
           </IconWrapper>
         </div>
-      </HoloButton>
+      </AccordionButton>
       <AnimatePresence>
         {isOpen && (
           <ContentWrapper
@@ -247,7 +212,7 @@ export default function Accordion({ items, allowMultiple = false }: AccordionPro
 
 // Export individual components
 export { Container as HoloContainer };
-export { HoloButton };
+export { AccordionButton };
 export { Content as HoloContent };
 export { AccordionItem as HoloAccordionItem };
 export { HoloPrism };

@@ -31,10 +31,8 @@ const Carousel63 = ({
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isHovered, setIsHovered] = useState(false)
   const [tiles, setTiles] = useState<MosaicTile[]>([])
-  const [direction, setDirection] = useState<"left" | "right">("right")
 
   const nextSlide = useCallback(() => {
-    setDirection("right")
     setCurrentIndex((prevIndex) =>
       prevIndex === children.length - 1 ? 0 : prevIndex + 1
     )
@@ -42,7 +40,6 @@ const Carousel63 = ({
   }, [children.length])
 
   const prevSlide = () => {
-    setDirection("left")
     setCurrentIndex((prevIndex) =>
       prevIndex === 0 ? children.length - 1 : prevIndex - 1
     )

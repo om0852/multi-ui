@@ -22,7 +22,6 @@ const SegmentedCircularProgressBar: React.FC<SegmentedCircularProgressBarProps> 
   segments = 12,
 }) => {
   const radius = (size - strokeWidth) / 2;
-  const circumference = 2 * Math.PI * radius;
   const segmentAngle = (2 * Math.PI) / segments;
   const totalOffset = (progress / 100) * segments;
 

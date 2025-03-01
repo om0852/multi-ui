@@ -1,6 +1,5 @@
 "use client"
-import { motion } from 'framer-motion'
-import { AnimatePresence } from 'framer-motion'
+import { motion, AnimatePresence, PanInfo } from 'framer-motion'
 import React, { useEffect, useState } from 'react'
 
 interface SliderPaginationProps {
@@ -61,6 +60,16 @@ const Carousel: React.FC<CarouselProps> = ({ children, autoPlay = false, interva
     },
   }
 
+  const nextSlide = () => {
+    setDirection(1)
+    setCurrentIndex((prevIndex) => (prevIndex + 1 === children.length ? 0 : prevIndex + 1))
+  }
+
+  const prevSlide = () => {
+    setDirection(-1)
+    setCurrentIndex((prevIndex) => (prevIndex - 1 < 0 ? children.length - 1 : prevIndex - 1))
+  }
+
   useEffect(() => {
     if (autoPlay) {
       const timer = setInterval(() => {
@@ -69,23 +78,9 @@ const Carousel: React.FC<CarouselProps> = ({ children, autoPlay = false, interva
 
       return () => clearInterval(timer)
     }
-  }, [currentIndex, autoPlay, interval])
+  }, [currentIndex, autoPlay, interval, nextSlide])
 
-  const nextSlide = () => {
-    setDirection(1)
-    setCurrentIndex((prevIndex) =>
-      prevIndex + 1 === children.length ? 0 : prevIndex + 1
-    )
-  }
-
-  const prevSlide = () => {
-    setDirection(-1)
-    setCurrentIndex((prevIndex) =>
-      prevIndex - 1 < 0 ? children.length - 1 : prevIndex - 1
-    )
-  }
-
-  const handleDragEnd = (event: any, info: any) => {
+  const handleDragEnd = (event: PointerEvent, info: PanInfo) => {
     if (info.offset.x < -100) {
       nextSlide()
     } else if (info.offset.x > 100) {

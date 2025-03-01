@@ -1,6 +1,14 @@
 import React, { useState, useEffect, useRef, forwardRef, ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
+interface MenubarChildProps {
+  toggleMenu?: () => void;
+  isVisible?: boolean;
+  closeMenu?: () => void;
+  onClick?: () => void;
+}
+
+
 // Menubar Component
 export const Menubar: React.FC<{ children: ReactNode }> = ({ children }) => {
   const [isVisible, setIsVisible] = useState(false);
@@ -28,7 +36,7 @@ export const Menubar: React.FC<{ children: ReactNode }> = ({ children }) => {
   return (
     <div ref={menubarRef} className="relative inline-block">
       {React.Children.map(children, (child) =>
-        React.cloneElement(child as React.ReactElement, {
+        React.cloneElement(child as React.ReactElement<MenubarChildProps>, {
           toggleMenu,
           isVisible,
           closeMenu,
@@ -61,7 +69,7 @@ export const MenubarContent: React.FC<{
   children: React.ReactNode;
   isVisible?: boolean;
   closeMenu?: () => void;
-}> = ({ children, isVisible = false }) => {
+}> = ({ children, isVisible = false, closeMenu }) => {
   return (
     <AnimatePresence>
       {isVisible && (
@@ -74,8 +82,8 @@ export const MenubarContent: React.FC<{
         >
           <ul className="py-2 px-3 space-y-2">
             {React.Children.map(children, (child) =>
-              React.cloneElement(child as React.ReactElement, {
-                onClick: closeMenu,
+              React.cloneElement(child as React.ReactElement<MenubarChildProps>, {
+                onClick: () => closeMenu?.(),
               })
             )}
           </ul>
