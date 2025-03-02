@@ -48,11 +48,46 @@
   50% { transform: scale(1.1); }
 }
 
+@keyframes matrix-rain {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100%); }
+}
+
+@keyframes quantum {
+  0% { transform: scale(0) rotate(0deg); }
+  100% { transform: scale(1) rotate(360deg); }
+}
+
+@keyframes plasma {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes prism-shift {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+
 .animate-float {
   animation: float 3s ease-in-out infinite;
 }
+
+.animate-matrix-rain {
+  animation: matrix-rain 2s linear infinite;
+  background: linear-gradient(180deg, transparent 0%, #00ff00 50%, transparent 100%);
+}
+
+.animate-plasma {
+  animation: plasma 3s ease infinite;
+  background-size: 200% 200%;
+}
+
+.animate-prism-shift {
+  animation: prism-shift 3s linear infinite;
+  background-size: 200% 200%;
+}
+
 body {
-  
   color: var(--foreground);
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
