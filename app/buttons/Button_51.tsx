@@ -1,0 +1,87 @@
+// components/Button.tsx
+'use client';
+
+import React, { ElementType } from 'react';
+import { motion } from 'framer-motion';
+import clsx from 'clsx';
+
+interface ButtonProps {
+  as?: ElementType;
+  children: React.ReactNode;
+  filled?: boolean;
+  secondary?: boolean;
+  onClick?: () => void;
+}
+
+const Button: React.FC<ButtonProps> = ({
+  as: Component = 'button',
+  children,
+  filled = false,
+  secondary = false,
+  onClick,
+}) => {
+  const baseStyles =
+    'relative inline-flex items-center justify-center overflow-hidden rounded-lg font-bold text-white transition-all duration-300 focus:outline-none';
+
+  // Base style for the liquid wave effect with sunset orange-to-yellow gradient
+  const liquidBaseStyles = filled
+    ? 'bg-gradient-to-r from-orange-500 to-yellow-500 text-white'
+    : 'bg-transparent border-2 border-gradient-to-r from-orange-500 to-yellow-500 text-orange-500';
+
+  // Secondary button style
+  const secondaryStyles = secondary
+    ? 'text-gray-500 border-gray-500 hover:bg-gray-500 hover:text-white'
+    : '';
+
+  // Custom liquid wave animation keyframes
+  const liquidWaveKeyframes = `
+    @keyframes liquidWave {
+      0% {
+        transform: scaleX(0);
+        transform-origin: left center;
+      }
+      50% {
+        transform: scaleX(1.3);
+        transform-origin: right center;
+      }
+      100% {
+        transform: scaleX(0);
+        transform-origin: left center;
+      }
+    }
+  `;
+
+  const spanVariants = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1 },
+  };
+
+  return (
+    <>
+      <style>{liquidWaveKeyframes}</style>
+      <motion.div
+        initial="hidden"
+        whileHover="visible"
+        className="relative"
+      >
+        <Component
+          className={clsx(baseStyles, liquidBaseStyles, secondaryStyles)}
+          onClick={onClick}
+        >
+          <motion.span
+            variants={spanVariants}
+            className="absolute inset-0 bg-gradient-to-r from-orange-500 to-yellow-500"
+            style={{
+              zIndex: -1,
+              transformOrigin: 'center',
+              animation: 'liquidWave 1.2s ease-in-out infinite',
+            }}
+          />
+          <span className="relative z-10">{children}</span>
+        </Component>
+      </motion.div>
+    </>
+  );
+};
+
+export default Button;
