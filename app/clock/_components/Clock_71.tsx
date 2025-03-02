@@ -24,38 +24,6 @@ const arcadeAnimationKeyframes = `
 `;
 
 // Pixel art numbers (8x12 grid)
-const pixelNumbers = {
-  '0': [
-    '  ████  ',
-    ' ██  ██ ',
-    '██    ██',
-    '██    ██',
-    '██    ██',
-    '██    ██',
-    '██    ██',
-    '██    ██',
-    '██    ██',
-    '██    ██',
-    ' ██  ██ ',
-    '  ████  '
-  ],
-  '1': [
-    '   ██   ',
-    '  ███   ',
-    ' ████   ',
-    '   ██   ',
-    '   ██   ',
-    '   ██   ',
-    '   ██   ',
-    '   ██   ',
-    '   ██   ',
-    '   ██   ',
-    '   ██   ',
-    ' ██████ '
-  ],
-  // ... Add patterns for other numbers similarly
-};
-
 const ArcadeDigit = ({ value }: { value: string }) => {
   const [isGlitching, setIsGlitching] = useState(false);
 

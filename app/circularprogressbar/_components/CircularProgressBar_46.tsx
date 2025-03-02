@@ -21,7 +21,7 @@ const CircularProgressBar: React.FC<CircularProgressBarProps> = ({
 
   // Generate quantum particles
   const numParticles = 30;
-  const particles = Array.from({ length: numParticles }).map((_, i) => ({
+  const particles = Array.from({ length: numParticles }).map(() => ({
     x: Math.random() * size,
     y: Math.random() * size,
     size: Math.random() * 3 + 1,

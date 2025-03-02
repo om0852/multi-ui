@@ -3,12 +3,12 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 interface CardFaceProps {
-  isVisible: boolean;
   children: React.ReactNode;
   rotateY: number;
+  isVisible?:boolean
 }
 
-const CardFace: React.FC<CardFaceProps> = ({ isVisible, children, rotateY }) => (
+const CardFace: React.FC<CardFaceProps> = ({  children, rotateY }) => (
   <motion.div
     className="absolute inset-0 w-full h-full backface-hidden"
     initial={{ rotateY }}

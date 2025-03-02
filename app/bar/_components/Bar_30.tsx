@@ -57,7 +57,7 @@ export function PolarBarChart({ data, config, className }: PolarBarProps) {
 
         {/* Bars */}
         {data.map((item, index) =>
-          keys.map((key, keyIndex) => {
+          keys.map((key) => {
             const value = Number(item[key] || 0);
             const angle = index * angleStep;
             const r = (value / maxValue) * radius;

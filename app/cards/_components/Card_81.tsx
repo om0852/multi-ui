@@ -1,5 +1,5 @@
 'use client';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const CyberEffect: React.FC<{ isHovered: boolean }> = ({ isHovered }) => {

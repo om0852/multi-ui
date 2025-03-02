@@ -122,25 +122,13 @@ const IconWrapper = styled(motion.div)`
     0 0 10px rgba(255, 255, 255, 0.3);
 `;
 
-const Star = styled.div<{ size: number; delay: number }>`
+const Star = styled.div`
   position: absolute;
-  width: ${props => props.size}px;
-  height: ${props => props.size}px;
+  width: 2px;
+  height: 2px;
   background: white;
   border-radius: 50%;
-  animation: ${twinkle} ${props => 2 + props.delay}s ease-in-out infinite;
-  animation-delay: ${props => props.delay}s;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 200%;
-    height: 200%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.3), transparent 70%);
-    transform: translate(-50%, -50%);
-  }
+  animation: ${twinkle} 1.5s ease-in-out infinite, ${starFloat} 3s ease-in-out infinite;
 `;
 
 const Nebula = styled.div<{ color: string }>`
@@ -208,6 +196,13 @@ interface AccordionProps {
 export default function Accordion({ items, allowMultiple = false }: AccordionProps) {
   const [openIndexes, setOpenIndexes] = useState<number[]>([]);
 
+  // Add some stars for decoration
+  const stars = Array.from({ length: 50 }).map(() => ({
+    top: `${Math.random() * 100}%`,
+    left: `${Math.random() * 100}%`,
+    delay: Math.random() * 2
+  }));
+
   const handleClick = (index: number) => {
     if (allowMultiple) {
       setOpenIndexes(openIndexes.includes(index)
@@ -221,14 +216,19 @@ export default function Accordion({ items, allowMultiple = false }: AccordionPro
 
   return (
     <Container>
+      {stars.map((star, i) => (
+        <Star
+          key={i}
+          style={{
+            top: star.top,
+            left: star.left,
+            animationDelay: `${star.delay}s`
+          }}
+        />
+      ))}
       <Nebula color="#ff00cc" style={{ top: '10%', left: '10%' }} />
       <Nebula color="#3333ff" style={{ top: '40%', right: '20%' }} />
       <Nebula color="#00ffff" style={{ bottom: '20%', left: '30%' }} />
-      <Star size={2} delay={0} style={{ top: '20%', left: '30%' }} />
-      <Star size={3} delay={1} style={{ top: '40%', right: '20%' }} />
-      <Star size={2} delay={2} style={{ bottom: '30%', left: '40%' }} />
-      <Star size={3} delay={3} style={{ bottom: '20%', right: '35%' }} />
-      <Star size={2} delay={4} style={{ top: '50%', left: '50%' }} />
       {items.map((item, index) => (
         <AccordionItem
           key={index}

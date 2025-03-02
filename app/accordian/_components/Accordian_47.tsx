@@ -133,15 +133,15 @@ interface AccordionItemProps {
 }
 
 function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) {
-  const stars = Array.from({ length: 20 }, (_, i) => ({
+  const stars = Array.from({ length: 20 }, () => ({
     size: Math.random() * 3 + 1,
     x: Math.random() * 100,
     y: Math.random() * 100,
     delay: Math.random() * 2
   }));
 
-  const galaxyArms = Array.from({ length: 6 }, (_, i) => ({
-    rotation: (i * 60) + Math.random() * 10
+  const galaxyArms = Array.from({ length: 6 }, (_: unknown, index: number) => ({
+    rotation: (index * 60) + Math.random() * 10
   }));
 
   return (

@@ -45,23 +45,6 @@ const Bar = styled(motion.div)<{ $color: string }>`
 
 const barColors = ['#90CAF9', '#64B5F6', '#42A5F5', '#2196F3', '#1E88E5'];
 
-const barVariants = {
-  unchecked: {
-    scaleY: 0.2,
-    opacity: 0.5
-  },
-  checked: (i: number) => ({
-    scaleY: [0.2, 1, 0.2],
-    opacity: [0.5, 1, 0.5],
-    transition: {
-      duration: 0.8,
-      repeat: Infinity,
-      repeatType: "reverse",
-      delay: i * 0.1,
-      ease: "easeInOut"
-    }
-  })
-};
 
 export default function Checkbox_63({ value, onChange, disabled = false, size = "medium" }: CheckboxProps) {
   const [isClient, setIsClient] = useState(false);
@@ -98,7 +81,6 @@ export default function Checkbox_63({ value, onChange, disabled = false, size = 
           <Bar
             key={index}
             $color={barColors[index]}
-            variants={barVariants}
             custom={index}
             initial="unchecked"
             animate={value ? "checked" : "unchecked"}

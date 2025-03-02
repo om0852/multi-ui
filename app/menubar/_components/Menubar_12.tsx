@@ -1,5 +1,12 @@
 import React, { useState, useEffect, useRef, forwardRef, ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+interface MenubarChildProps {
+  toggleMenu?: () => void;
+  isVisible?: boolean;
+  closeMenu?: () => void;
+  onClick?: () => void;
+}
+
 
 // Define the props interface
 interface MenubarChildProps {

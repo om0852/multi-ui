@@ -80,10 +80,14 @@ interface AccordionContentProps {
   loadOnOpen?: () => Promise<ReactNode>; // Async loading
 }
 
+interface AccordionItemContextProps {
+  isCollapsible: boolean;
+}
+
 // Context for Accordion state
-const AccordionContext = createContext<AccordionContextProps | undefined>(
-  undefined
-);
+const AccordionContext = createContext<AccordionContextProps | null>(null);
+
+const AccordionItemContext = createContext<AccordionItemContextProps | null>(null);
 
 const Container = styled.div`
   padding: 1rem;
@@ -91,64 +95,7 @@ const Container = styled.div`
   min-height: 100%;
 `;
 
-const AccordionButton = styled(motion.button)`
-  width: 100%;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 1rem;
-  padding: 1rem;
-  color: white;
-  position: relative;
-  overflow: hidden;
 
-  &:hover {
-    border-color: rgba(255, 255, 255, 0.4);
-  }
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(
-      45deg,
-      transparent,
-      rgba(255, 255, 255, 0.1),
-      transparent
-    );
-    transform: translateX(-100%);
-    transition: transform 0.5s ease;
-  }
-
-  &:hover::before {
-    transform: translateX(100%);
-  }
-`;
-
-const Title = styled.span`
-  font-size: 1.125rem;
-  font-weight: 500;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-`;
-
-const ContentWrapper = styled(motion.div)`
-  overflow: hidden;
-  margin-top: 0.5rem;
-`;
-
-const Content = styled.div`
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 1rem;
-  padding: 1rem;
-  color: rgba(255, 255, 255, 0.9);
-`;
-
-const IconWrapper = styled(motion.div)`
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 1.25rem;
-`;
 
 export function Accordion({
   children,
@@ -200,7 +147,6 @@ export function Accordion({
 
 export function AccordionItem({
   children,
-  id,
   className = "",
   isCollapsible = true,
 }: AccordionItemProps) {
@@ -209,43 +155,12 @@ export function AccordionItem({
     throw new Error("AccordionItem must be used within an Accordion");
   }
 
-  const isOpen = context.openItems.includes(id);
-
   return (
-    <div className={`mb-4 ${className}`}>
-      <AccordionButton
-        onClick={() => context.toggleItem(id)}
-        whileHover={{ scale: 1.01 }}
-        whileTap={{ scale: 0.99 }}
-      >
-        <div className="flex justify-between items-center">
-          <Title>{children}</Title>
-          <IconWrapper
-            animate={{ 
-              rotate: isOpen ? 180 : 0,
-              scale: isOpen ? 1.2 : 1
-            }}
-            transition={{ type: "spring", stiffness: 200 }}
-          >
-            ▼
-          </IconWrapper>
-        </div>
-      </AccordionButton>
-      <AnimatePresence>
-        {isOpen && (
-          <ContentWrapper
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <Content>
-              {children}
-            </Content>
-          </ContentWrapper>
-        )}
-      </AnimatePresence>
-    </div>
+    <AccordionItemContext.Provider value={{ isCollapsible }}>
+      <div className={`accordion-item ${className}`}>
+        {children}
+      </div>
+    </AccordionItemContext.Provider>
   );
 }
 
@@ -258,14 +173,19 @@ export function AccordionTrigger({
   closeIcon,
 }: AccordionTriggerProps) {
   const context = useContext(AccordionContext);
-  if (!context) {
-    throw new Error("AccordionTrigger must be used within an Accordion");
+  const itemContext = useContext(AccordionItemContext);
+
+  if (!context || !itemContext) {
+    throw new Error("AccordionTrigger must be used within an AccordionItem");
   }
 
-  const isOpen = context.openItems.includes(id);
+  const { toggleItem, openItems } = context;
+  const { isCollapsible } = itemContext;
+  const isOpen = openItems.includes(id);
 
   const handleClick = () => {
-    context.toggleItem(id);
+    if (!isCollapsible) return;
+    toggleItem(id);
     onClick?.();
   };
 

@@ -7,146 +7,154 @@ interface CarouselProps {
   children: React.ReactNode[]
   autoPlay?: boolean
   interval?: number
-  radius?: number
-  rotationAngle?: number
+  flipDirection?: "horizontal" | "vertical"
 }
 
 const Carousel: React.FC<CarouselProps> = ({
   children,
   autoPlay = true,
   interval = 5000,
-  radius = 400,
-  rotationAngle = 45,
+  flipDirection = "horizontal",
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0)
   const [isHovered, setIsHovered] = useState(false)
-  const [rotation, setRotation] = useState(0)
+  const [isFlipping, setIsFlipping] = useState(false)
 
-  const itemCount = children.length
-  const angleStep = 360 / itemCount
+  const flipVariants = {
+    initial: {
+      rotateX: flipDirection === "vertical" ? -90 : 0,
+      rotateY: flipDirection === "horizontal" ? 90 : 0,
+      opacity: 0,
+    },
+    animate: {
+      rotateX: 0,
+      rotateY: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.8,
+        ease: [0.4, 0, 0.2, 1],
+      },
+    },
+    exit: {
+      rotateX: flipDirection === "vertical" ? 90 : 0,
+      rotateY: flipDirection === "horizontal" ? -90 : 0,
+      opacity: 0,
+      transition: {
+        duration: 0.6,
+      },
+    },
+  }
 
   useEffect(() => {
-    if (autoPlay && !isHovered) {
+    if (autoPlay && !isHovered && !isFlipping) {
       const timer = setInterval(() => {
         nextSlide()
       }, interval)
 
       return () => clearInterval(timer)
     }
-  }, [currentIndex, autoPlay, interval, isHovered])
+  }, [currentIndex, autoPlay, interval, isHovered, isFlipping])
 
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % itemCount)
-    setRotation((prev) => prev - angleStep)
+  const nextSlide = async () => {
+    if (isFlipping) return
+    setIsFlipping(true)
+    setCurrentIndex((prev) => (prev + 1) % children.length)
+    setTimeout(() => setIsFlipping(false), 800)
   }
 
-  const prevSlide = () => {
-    setCurrentIndex((prev) => (prev - 1 + itemCount) % itemCount)
-    setRotation((prev) => prev + angleStep)
+  const prevSlide = async () => {
+    if (isFlipping) return
+    setIsFlipping(true)
+    setCurrentIndex((prev) => (prev - 1 + children.length) % children.length)
+    setTimeout(() => setIsFlipping(false), 800)
   }
 
-  const getItemStyle = (index: number) => {
-    const angle = (index * angleStep + rotation) * (Math.PI / 180)
-    const x = Math.sin(angle) * radius
-    const z = Math.cos(angle) * radius
-    const scale = (z + radius) / (2 * radius)
-    const opacity = scale
-
-    return {
-      position: "absolute",
-      transform: `translate3d(${x}px, 0, ${z}px) rotateY(${-angle * (180 / Math.PI)}deg)`,
-      zIndex: Math.floor(scale * 100),
-      opacity,
-      filter: `brightness(${scale * 100}%)`,
-    }
+  const goToSlide = async (index: number) => {
+    if (isFlipping || index === currentIndex) return
+    setIsFlipping(true)
+    setCurrentIndex(index)
+    setTimeout(() => setIsFlipping(false), 800)
   }
 
   return (
     <div
-      className="relative w-full h-[600px] mx-auto overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900"
+      className="relative w-full max-w-4xl h-96 mx-auto"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
-      style={{ perspective: "1000px" }}
+      style={{ perspective: "1500px" }}
     >
-      <motion.div
-        className="relative w-full h-full"
-        style={{
-          transformStyle: "preserve-3d",
-          transform: "translateZ(400px)",
-        }}
-      >
-        {children.map((child, index) => (
+      <div className="relative w-full h-full bg-gradient-to-br from-emerald-900 via-teal-900 to-cyan-900 rounded-2xl shadow-2xl overflow-hidden">
+        <AnimatePresence mode="wait">
           <motion.div
-            key={index}
-            className="absolute left-1/2 top-1/2 w-80 h-80"
-            style={{
-              ...getItemStyle(index),
-              transformOrigin: "center center",
-              marginLeft: "-160px",
-              marginTop: "-160px",
-            }}
-            whileHover={{ scale: 1.05 }}
-            transition={{ duration: 0.3 }}
+            key={currentIndex}
+            variants={flipVariants}
+            initial="initial"
+            animate="animate"
+            exit="exit"
+            className="absolute inset-0"
+            style={{ transformStyle: "preserve-3d" }}
           >
-            <div className="w-full h-full rounded-2xl overflow-hidden shadow-2xl bg-white/10 backdrop-blur-sm">
-              {child}
+            <div className="absolute inset-0 backface-hidden">
+              {children[currentIndex]}
             </div>
           </motion.div>
-        ))}
-      </motion.div>
+        </AnimatePresence>
 
-      {/* Controls */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 flex items-center space-x-6">
-        <button
-          onClick={prevSlide}
-          className="bg-white/10 backdrop-blur-sm text-white rounded-full p-4 hover:bg-white/20 transition-all duration-300 hover:scale-110"
-          aria-label="Previous Slide"
-        >
-          ←
-        </button>
-        <div className="flex space-x-2">
+        {/* Gradient Overlays */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent pointer-events-none" />
+
+        {/* Controls */}
+        <div className="absolute inset-0 flex items-center justify-between px-4">
+          <button
+            onClick={prevSlide}
+            disabled={isFlipping}
+            className={`transform -translate-y-1/2 bg-white/10 backdrop-blur-sm text-white rounded-lg p-3 hover:bg-white/20 transition-all duration-300 ${
+              isFlipping ? "opacity-50 cursor-not-allowed" : "hover:scale-110"
+            }`}
+            aria-label="Previous Slide"
+          >
+            ←
+          </button>
+          <button
+            onClick={nextSlide}
+            disabled={isFlipping}
+            className={`transform -translate-y-1/2 bg-white/10 backdrop-blur-sm text-white rounded-lg p-3 hover:bg-white/20 transition-all duration-300 ${
+              isFlipping ? "opacity-50 cursor-not-allowed" : "hover:scale-110"
+            }`}
+            aria-label="Next Slide"
+          >
+            →
+          </button>
+        </div>
+
+        {/* Navigation Dots */}
+        <div className="absolute bottom-6 left-1/2 transform -translate-x-1/2 flex items-center space-x-3">
           {children.map((_, index) => (
             <button
               key={index}
-              onClick={() => {
-                const diff = index - currentIndex
-                setCurrentIndex(index)
-                setRotation((prev) => prev - diff * angleStep)
-              }}
-              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+              onClick={() => goToSlide(index)}
+              disabled={isFlipping}
+              className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${
                 currentIndex === index
-                  ? "bg-white scale-125"
+                  ? "w-8 bg-white"
                   : "bg-white/50 hover:bg-white/80"
-              }`}
+              } ${isFlipping ? "cursor-not-allowed" : ""}`}
               aria-label={`Go to slide ${index + 1}`}
             />
           ))}
         </div>
-        <button
-          onClick={nextSlide}
-          className="bg-white/10 backdrop-blur-sm text-white rounded-full p-4 hover:bg-white/20 transition-all duration-300 hover:scale-110"
-          aria-label="Next Slide"
-        >
-          →
-        </button>
-      </div>
 
-      {/* Rotation Angle Control */}
-      <div className="absolute top-8 right-8 flex items-center space-x-4 bg-black/20 backdrop-blur-sm rounded-full px-4 py-2">
+        {/* Flip Direction Toggle */}
         <button
-          onClick={() => setRotation((prev) => prev + rotationAngle)}
-          className="text-white hover:text-blue-300 transition-colors"
-          aria-label="Rotate Left"
+          onClick={() =>
+            flipDirection === "horizontal"
+              ? "vertical"
+              : "horizontal"
+          }
+          className="absolute top-6 right-6 bg-black/20 backdrop-blur-sm text-white rounded-full px-4 py-2 hover:bg-black/30 transition-colors text-sm"
+          aria-label="Toggle flip direction"
         >
-          ↺
-        </button>
-        <span className="text-white/80 text-sm">Rotate</span>
-        <button
-          onClick={() => setRotation((prev) => prev - rotationAngle)}
-          className="text-white hover:text-blue-300 transition-colors"
-          aria-label="Rotate Right"
-        >
-          ↻
+          {flipDirection === "horizontal" ? "↔" : "↕"}
         </button>
       </div>
     </div>

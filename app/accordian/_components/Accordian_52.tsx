@@ -125,8 +125,8 @@ interface AccordionItemProps {
 }
 
 function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) {
-  const bubbles = Array.from({ length: 10 }, (_, i) => ({
-    size: Math.random() * 40 + 20,
+  const particles = Array.from({ length: 20 }, () => ({
+    size: Math.random() * 3 + 1,
     x: Math.random() * 100,
     y: Math.random() * 100,
     delay: Math.random() * 2
@@ -140,13 +140,13 @@ function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) 
         whileTap={{ scale: 0.99 }}
       >
         <LiquidEffect />
-        {bubbles.map((bubble, index) => (
+        {particles.map((particle, index) => (
           <Bubble
-            key={`bubble-${index}`}
-            size={bubble.size}
+            key={`particle-${index}`}
+            size={particle.size}
             style={{
-              left: `${bubble.x}%`,
-              top: `${bubble.y}%`
+              left: `${particle.x}%`,
+              top: `${particle.y}%`
             }}
             animate={{
               y: [0, -30],
@@ -155,7 +155,7 @@ function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) 
               scale: [1, 1.2]
             }}
             transition={{
-              duration: 2 + bubble.delay,
+              duration: 2 + particle.delay,
               repeat: Infinity,
               ease: "easeInOut"
             }}

@@ -26,11 +26,13 @@ const oscilloscopeAnimationKeyframes = `
 `;
 
 const OscilloscopeDigit = ({ value }: { value: string }) => {
-  const [isDrawing, setIsDrawing] = useState(false);
+  // const [isDrawing, setIsDrawing] = useState(false); // Removed unused state
 
   useEffect(() => {
-    setIsDrawing(true);
-    const timer = setTimeout(() => setIsDrawing(false), 100);
+    // setIsDrawing(true);
+    const timer = setTimeout(() => {
+      // setIsDrawing(false);
+    }, 100);
     return () => clearTimeout(timer);
   }, [value]);
 

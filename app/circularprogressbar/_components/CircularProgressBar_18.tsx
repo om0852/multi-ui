@@ -5,14 +5,12 @@ interface CircularProgressBarProps {
   value: number;
   max: number;
   size?: number;
-  strokeWidth?: number;
 }
 
 const CircularProgressBar: React.FC<CircularProgressBarProps> = ({
   value,
   max,
   size = 100,
-  strokeWidth = 8,
 }) => {
   const percentage = (value / max) * 100;
   const waveHeight = size * (1 - percentage / 100);

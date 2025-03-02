@@ -148,6 +148,11 @@ const GlowEffect = styled(motion.div)`
   transition: opacity 0.3s;
 `;
 
+interface CSSPropertiesWithCustomProps extends React.CSSProperties {
+  '--x': string;
+  '--y': string;
+}
+
 interface AccordionItemProps {
   title: string;
   content: string;
@@ -166,21 +171,19 @@ function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) 
   };
 
   return (
-    <div>
+    <div className="mb-4">
       <GlowButton
         onClick={onClick}
-        whileHover={{ scale: 1.01 }}
-        whileTap={{ scale: 0.99 }}
         onMouseMove={handleMouseMove}
-        onMouseEnter={() => {}}
-        onMouseLeave={() => {}}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
       >
         <GlowEffect
-          animate={{
+          style={{
             opacity: 1,
             '--x': `${mousePosition.x}%`,
             '--y': `${mousePosition.y}%`
-          } as any}
+          } as CSSPropertiesWithCustomProps}
         />
         <Title>
           {title}

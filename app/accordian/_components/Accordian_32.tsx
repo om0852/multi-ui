@@ -9,10 +9,6 @@ const shine = keyframes`
   100% { background-position: 200% center; }
 `;
 
-const pulse = keyframes`
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); }
-`;
 
 const Container = styled.div`
   padding: 1rem;
@@ -123,6 +119,7 @@ const Highlight = styled(motion.div)`
   background: rgba(255, 255, 255, 0.1);
   transform-origin: left;
 `;
+
 
 interface AccordionItemProps {
   title: string;

@@ -17,7 +17,6 @@ const Carousel: React.FC<CarouselProps> = ({
   stackCount = 3,
 }) => {
   const [currentIndex, setCurrentIndex] = useState(0)
-  const [direction, setDirection] = useState(0)
   const [isHovered, setIsHovered] = useState(false)
   const controls = useAnimation()
 
@@ -44,6 +43,14 @@ const Carousel: React.FC<CarouselProps> = ({
     }
   }
 
+  const nextSlide = () => {
+    setCurrentIndex((prev) => wrap(prev + 1, children.length))
+  }
+
+  const prevSlide = () => {
+    setCurrentIndex((prev) => wrap(prev - 1, children.length))
+  }
+
   useEffect(() => {
     if (autoPlay && !isHovered) {
       const timer = setInterval(() => {
@@ -52,17 +59,7 @@ const Carousel: React.FC<CarouselProps> = ({
 
       return () => clearInterval(timer)
     }
-  }, [currentIndex, autoPlay, interval, isHovered])
-
-  const nextSlide = () => {
-    setDirection(1)
-    setCurrentIndex((prev) => wrap(prev + 1, children.length))
-  }
-
-  const prevSlide = () => {
-    setDirection(-1)
-    setCurrentIndex((prev) => wrap(prev - 1, children.length))
-  }
+  }, [currentIndex, autoPlay, interval, isHovered, nextSlide])
 
   const handleDragEnd = (event: MouseEvent | TouchEvent | PointerEvent, info: PanInfo) => {
     const threshold = 50

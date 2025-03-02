@@ -45,9 +45,6 @@ type DialogHeaderProps = {
   children: React.ReactNode;
 };
 
-type DialogTitleProps = {
-  children: React.ReactNode;
-};
 
 type DialogDescriptionProps = {
   children: React.ReactNode;

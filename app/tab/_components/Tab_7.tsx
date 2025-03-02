@@ -99,7 +99,7 @@ const TabsContent: React.FC<TabsContentProps> = ({ value, children, activeTab, c
   const [direction, setDirection] = useState(0);
   
   React.useEffect(() => {
-    setDirection(value > activeTab ? 1 : -1);
+    setDirection(value > (activeTab ?? '') ? 1 : -1);
   }, [value, activeTab]);
 
   return (

@@ -130,7 +130,7 @@ const StyledWrapper = styled.div<StyledWrapperProps>`
     .blade:nth-child(${i + 1}) {
       transform: 
         rotate(${60 * i}deg)
-        ${props => props.$isChecked ? 
+        ${(props:StyledWrapperProps) => props.$isChecked ? 
           'translate(-50%, -50%) rotate(60deg)' : 
           'translate(0, 0)'};
     }

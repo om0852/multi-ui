@@ -207,7 +207,7 @@ const ColorPicker_37: React.FC<{ onChange?: (color: string) => void }> = ({ onCh
         gap: '12px',
         marginBottom: '24px',
       }}>
-        {musicGenres[selectedGenre].colors.map((color, index) => (
+        {musicGenres[selectedGenre].colors.map((color) => (
           <button
             key={color.value}
             onClick={() => handleColorSelect(color.value)}

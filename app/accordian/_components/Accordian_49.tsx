@@ -144,7 +144,7 @@ function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) 
     delay: i * 0.5
   }));
 
-  const sparks = Array.from({ length: 10 }, (_, i) => ({
+  const sparks = Array.from({ length: 10 }, () => ({
     size: Math.random() * 4 + 2,
     x: Math.random() * 100,
     y: Math.random() * 100,

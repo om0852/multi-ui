@@ -58,9 +58,19 @@ const ConfettiPiece: React.FC<ConfettiPieceProps> = ({
     </motion.div>
   );
 };
-
+interface PiecesProps{
+  id: number;
+  delay: number;
+  duration: number;
+  startX: number;
+  endX: number;
+  endY: number;
+  size: number;
+  imageUrl: string;
+}
 const Confetti: React.FC = () => {
-  const [confettiPieces, setConfettiPieces] = useState<any[]>([]);
+
+  const [confettiPieces, setConfettiPieces] = useState<PiecesProps[]>([]);
 
   useEffect(() => {
     const screenWidth = window.innerWidth;

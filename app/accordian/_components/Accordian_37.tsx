@@ -9,13 +9,6 @@ const wave = keyframes`
   50% { transform: translateY(-15px); }
 `;
 
-const float = keyframes`
-  0%, 100% { transform: translate(0, 0); }
-  25% { transform: translate(5px, -5px); }
-  50% { transform: translate(10px, 0); }
-  75% { transform: translate(5px, 5px); }
-`;
-
 const Container = styled.div`
   padding: 1rem;
   background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
@@ -28,26 +21,17 @@ const WaveButton = styled(motion.button)`
   width: 100%;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
-  border: 1px solid rgba(147, 197, 253, 0.3);
-  padding: 1.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 1rem;
   color: white;
   position: relative;
   overflow: hidden;
-  border-radius: 16px;
-  text-align: left;
-  margin: 1rem 0;
-  
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(90deg, transparent, rgba(147, 197, 253, 0.2), transparent);
-    transform: translateX(-100%);
-    transition: transform 0.5s ease;
-  }
-  
-  &:hover::before {
-    transform: translateX(100%);
+  border-radius: 8px;
+
+  &:hover {
+    .wave-icon {
+      animation: ${wave} 1s ease-in-out infinite;
+    }
   }
 `;
 
@@ -82,31 +66,15 @@ const Title = styled.span`
 const IconWrapper = styled(motion.div)`
   color: white;
   font-size: 1.25rem;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  position: relative;
+  z-index: 1;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+  
+  &.wave-icon {
+    animation: ${wave} 1s ease-in-out infinite;
+  }
 `;
 
-const Particle = styled(motion.div)<{ size: number; delay: number; color: string }>`
-  position: absolute;
-  width: ${props => props.size}px;
-  height: ${props => props.size}px;
-  background: ${props => props.color};
-  border-radius: 50%;
-  animation: ${float} ${props => 3 + props.delay}s ease-in-out infinite;
-  animation-delay: ${props => props.delay}s;
-  opacity: 0.5;
-  pointer-events: none;
-`;
-
-const WaveContainer = styled(motion.div)`
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-`;
 
 interface AccordionItemProps {
   title: string;
@@ -116,59 +84,24 @@ interface AccordionItemProps {
 }
 
 function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) {
-  const particles = Array.from({ length: 15 }, (_, i) => ({
-    size: Math.random() * 4 + 2,
-    delay: Math.random() * 2,
-    color: `rgba(147, 197, 253, ${Math.random() * 0.5 + 0.3})`,
-    x: Math.random() * 100,
-    y: Math.random() * 100
-  }));
-
   return (
-    <div>
+    <div className="mb-4">
       <WaveButton
         onClick={onClick}
-        whileHover={{ scale: 1.01 }}
-        whileTap={{ scale: 0.99 }}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
       >
-        <WaveContainer>
-          {particles.map((particle, index) => (
-            <Particle
-              key={index}
-              size={particle.size}
-              delay={particle.delay}
-              color={particle.color}
-              style={{
-                left: `${particle.x}%`,
-                top: `${particle.y}%`
-              }}
-              animate={{
-                y: [0, -15, 0],
-                transition: {
-                  duration: 2 + particle.delay,
-                  repeat: Infinity,
-                  ease: "easeInOut"
-                }
-              }}
-            />
-          ))}
-        </WaveContainer>
-        <Title>
-          {title}
-          <IconWrapper
-            animate={{ 
-              rotate: isOpen ? 180 : 0,
-              scale: isOpen ? 1.2 : 1
-            }}
-            transition={{ 
-              type: "spring",
-              stiffness: 200,
-              damping: 15
-            }}
-          >
-            ▾
-          </IconWrapper>
-        </Title>
+        <Title>{title}</Title>
+        <IconWrapper
+          className="wave-icon"
+          animate={{ 
+            rotate: isOpen ? 180 : 0,
+            scale: isOpen ? 1.2 : 1
+          }}
+          transition={{ type: "spring", stiffness: 200 }}
+        >
+          ▼
+        </IconWrapper>
       </WaveButton>
       <AnimatePresence>
         {isOpen && (

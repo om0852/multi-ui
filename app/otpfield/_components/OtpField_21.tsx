@@ -108,7 +108,7 @@ const InputOTP: React.FC<InputOTPProps> = ({ maxLength = 6, onComplete, validati
         setFocusedIndex(index + 1);
       }
     } else {
-      setInvalidIndexes((prev) => [...new Set([...prev, index])]);
+      setInvalidIndexes((prev) => Array.from(new Set([...prev, index])));
     }
   };
 

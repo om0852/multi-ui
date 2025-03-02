@@ -136,8 +136,7 @@ export const Editable_40: React.FC<Editable_40Props> = ({
           <div className="flex items-center space-x-2">
             <select
               value={selectedPeriod}
-              onChange={(e) => setSelectedPeriod(e.target.value as typeof period)}
-              className="px-3 py-1.5 text-sm bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
+              onChange={(e) => setSelectedPeriod(e.target.value as ChartData['period'])} // Correctly cast to the period type              className="px-3 py-1.5 text-sm bg-gray-50 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
             >
               {periods.map((p) => (
                 <option key={p.value} value={p.value}>

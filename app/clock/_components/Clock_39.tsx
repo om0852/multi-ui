@@ -35,7 +35,7 @@ const ParticleDigit = ({ digit, prevDigit }: { digit: string; prevDigit: string 
 
       {/* Particles */}
       {isExploding && particles.map((_, i) => {
-        const angle = (i / particles.length) * 360;
+        // const angle = (i / particles.length) * 360;
         const delay = (i / particles.length) * 0.2;
         return (
           <div

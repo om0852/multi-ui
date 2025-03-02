@@ -22,12 +22,6 @@ const Counter_46: React.FC<CounterProps> = ({
   const dragThreshold = 50;
 
   // Transform drag distance to opacity for visual feedback
-  const dragOpacity = useTransform(
-    dragX,
-    [-dragThreshold, 0, dragThreshold],
-    [0.5, 0, 0.5]
-  );
-
   const handleDragEnd = () => {
     const x = dragX.get();
     if (x > dragThreshold) {

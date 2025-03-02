@@ -1,7 +1,6 @@
 import React, { useState, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import styled from 'styled-components';
-import clsx from 'clsx';
 
 interface FileInputProps {
   onFilesSelected: (files: FileList | null) => void;

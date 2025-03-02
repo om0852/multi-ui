@@ -137,7 +137,7 @@ const spiralArms = [
   { color: cosmicColors.accent, rotation: 240 }
 ];
 
-const stars = Array.from({ length: 15 }, (_, i) => ({
+const stars = Array.from({ length: 15 }, () => ({
   size: Math.random() * 2 + 1,
   x: `${Math.random() * 100}%`,
   y: `${Math.random() * 100}%`,

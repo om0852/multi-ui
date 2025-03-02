@@ -10,10 +10,9 @@ const matrixRain = keyframes`
   100% { transform: translateY(1000%); opacity: 0; }
 `;
 
-const digitFlicker = keyframes`
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 1; }
-`;
+
+
+
 
 const Container = styled.div`
   padding: 1rem;

@@ -54,8 +54,19 @@ const ConfettiPiece: React.FC<ConfettiPieceProps> = ({
   );
 };
 
+interface PiecesProps{
+  id: number;
+  delay: number;
+  duration: number;
+  startX: number;
+  endX: number;
+  endY: number;
+  size: number;
+  imageUrl: string;
+}
 const Confetti: React.FC = () => {
-  const [confettiPieces, setConfettiPieces] = useState<any[]>([]);
+
+  const [confettiPieces, setConfettiPieces] = useState<PiecesProps[]>([]);
 
   useEffect(() => {
     const screenWidth = window.innerWidth;
@@ -79,7 +90,7 @@ const Confetti: React.FC = () => {
 
   return (
     <div className="relative w-full h-screen overflow-hidden">
-      {confettiPieces.map(({ id, delay, duration, startX, endX, endY, size, color, imageUrl }) => (
+      {confettiPieces.map(({ id, delay, duration, startX, endX, endY, size, imageUrl }) => (
         <ConfettiPiece
           key={id}
           delay={delay}

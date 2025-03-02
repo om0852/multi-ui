@@ -21,7 +21,7 @@ const CircularProgressBar: React.FC<CircularProgressBarProps> = ({
 
   // Generate bubbles
   const numBubbles = 20;
-  const bubbles = Array.from({ length: numBubbles }).map((_, i) => ({
+  const bubbles = Array.from({ length: numBubbles }).map(() => ({
     x: Math.random() * size,
     y: size + Math.random() * 20,
     size: Math.random() * 6 + 2,

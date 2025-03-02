@@ -26,11 +26,6 @@ const Checkbox: React.FC<CheckboxProps> = ({ value, onChange, disabled = false, 
     large: "w-16 h-16",
   };
 
-  const squareSize = {
-    small: { width: "32px", height: "32px" },
-    medium: { width: "48px", height: "48px" },
-    large: { width: "64px", height: "64px" },
-  };
 
   return (
     <label

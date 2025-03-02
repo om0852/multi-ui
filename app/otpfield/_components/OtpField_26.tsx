@@ -139,7 +139,7 @@ const InputOTP: React.FC<InputOTPProps> = ({
         setFocusedIndex(index + 1);
       }
     } else {
-      setErrorIndexes(prev => [...new Set([...prev, index])]);
+      setErrorIndexes(prev => Array.from(new Set([...prev, index])));
       
       // Clear error after animation
       setTimeout(() => {

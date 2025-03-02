@@ -126,7 +126,7 @@ function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) 
     angle: (i * 360) / 8
   }));
 
-  const particles = Array.from({ length: 10 }, (_, i) => ({
+  const particles = Array.from({ length: 10 }, () => ({
     size: Math.random() * 4 + 2,
     x: Math.random() * 100,
     y: Math.random() * 100

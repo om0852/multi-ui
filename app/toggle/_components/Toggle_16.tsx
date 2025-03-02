@@ -113,7 +113,11 @@ const StyledWrapper = styled.div`
 
   /* Active State */
   .toggle-label:active .card {
-    transform: scale(0.95) translateX(${props => props.checked ? '50px' : '0'});
+    transform: scale(0.95);
+  }
+
+  .toggle-input:checked + .toggle-label .card {
+    transform: translateX(50px);
   }
 `;
 

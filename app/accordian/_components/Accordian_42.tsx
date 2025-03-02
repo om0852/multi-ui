@@ -93,22 +93,42 @@ const Title = styled.span`
   position: relative;
 `;
 
-const IconWrapper = styled(motion.div)`
-  color: #fff;
-  font-size: 1.25rem;
-  width: 24px;
-  height: 24px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-`;
 
 const RippleEffect = styled(motion.div)`
   position: absolute;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.4);
+  background: rgba(255, 255, 255, 0.3);
   pointer-events: none;
-  transform-origin: center;
+  animation: ${ripple} 0.8s ease-out forwards;
+`;
+
+const ShimmerButton = styled(motion.button)`
+  width: 100%;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 1.5rem;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px;
+  cursor: pointer;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+    animation: ${shimmer} 2s linear infinite;
+  }
 `;
 
 interface AccordionItemProps {
@@ -123,24 +143,28 @@ function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) 
   let rippleCount = 0;
 
   const handleRipple = (e: React.MouseEvent) => {
-    const button = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - button.left;
-    const y = e.clientY - button.top;
+    const rect = e.currentTarget.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
     
-    setRipples([...ripples, { x, y, id: rippleCount++ }]);
+    rippleCount += 1;
+    const newRipple = { x, y, id: rippleCount };
+    
+    setRipples(prev => [...prev, newRipple]);
     setTimeout(() => {
-      setRipples(prev => prev.filter(r => r.id !== rippleCount - 1));
-    }, 1000);
-    
-    onClick();
+      setRipples(prev => prev.filter(r => r.id !== newRipple.id));
+    }, 800);
   };
 
   return (
-    <div>
-      <MetalButton
-        onClick={handleRipple}
-        whileHover={{ scale: 1.01 }}
-        whileTap={{ scale: 0.99 }}
+    <div className="mb-4">
+      <ShimmerButton
+        onClick={(e) => {
+          handleRipple(e);
+          onClick();
+        }}
+        whileHover={{ scale: 1.02 }}
+        whileTap={{ scale: 0.98 }}
       >
         {ripples.map(ripple => (
           <RippleEffect
@@ -148,32 +172,12 @@ function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) 
             style={{
               left: ripple.x,
               top: ripple.y,
-            }}
-            initial={{ scale: 0, opacity: 1 }}
-            animate={{ scale: 4, opacity: 0 }}
-            transition={{ duration: 1 }}
-            onAnimationComplete={() => {
-              setRipples(prev => prev.filter(r => r.id !== ripple.id));
+              transform: 'translate(-50%, -50%)'
             }}
           />
         ))}
-        <Title>
-          {title}
-          <IconWrapper
-            animate={{ 
-              rotate: isOpen ? 180 : 0,
-              scale: isOpen ? 1.2 : 1
-            }}
-            transition={{ 
-              type: "spring",
-              stiffness: 200,
-              damping: 15
-            }}
-          >
-            ▾
-          </IconWrapper>
-        </Title>
-      </MetalButton>
+        <Title>{title}</Title>
+      </ShimmerButton>
       <AnimatePresence>
         {isOpen && (
           <ContentWrapper

@@ -104,6 +104,7 @@ export const Editable_42: React.FC<Editable_42Props> = ({
   const [boardColumns, setBoardColumns] = useState(columns)
   const [draggedTask, setDraggedTask] = useState<KanbanTask | null>(null)
   const [content] = useState(initialContent)
+  const [isEditing, setIsEditing] = useState(false)
 
   const handleSave = () => {
     onSave(content)

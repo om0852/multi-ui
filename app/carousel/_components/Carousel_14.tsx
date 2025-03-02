@@ -24,7 +24,6 @@ const Carousel: React.FC<CarouselProps> = ({
 }) => {
   const [currentPage, setCurrentPage] = useState(0)
   const [isHovered, setIsHovered] = useState(false)
-  const [hoveredItem, setHoveredItem] = useState<string | number | null>(null)
   const [layout, setLayout] = useState<"grid" | "focus">("grid")
 
   const itemsPerPage = columns * 2
@@ -94,7 +93,6 @@ const Carousel: React.FC<CarouselProps> = ({
                 exit={{ opacity: 0, scale: 0.8 }}
                 transition={{ duration: 0.5 }}
                 onClick={() => {
-                  setHoveredItem(item.id)
                   setLayout(layout === "grid" ? "focus" : "grid")
                 }}
               >
@@ -156,7 +154,6 @@ const Carousel: React.FC<CarouselProps> = ({
       <button
         onClick={() => {
           setLayout(layout === "grid" ? "focus" : "grid")
-          setHoveredItem(null)
         }}
         className="absolute top-4 right-4 bg-black/20 backdrop-blur-sm text-white rounded-full px-4 py-2 hover:bg-black/30 transition-colors"
         aria-label="Toggle layout"

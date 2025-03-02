@@ -269,7 +269,7 @@ export function Example() {
                 onClick={() => alert("Yay! 🎉")}
                 className="px-6 py-2 rounded-full text-white font-medium bg-gradient-to-r from-pink-500 to-purple-500 hover:from-pink-600 hover:to-purple-600 shadow-md shadow-purple-500/30"
               >
-                Let's Go! 🚀
+                Let&apos;s Go! 🚀
               </motion.button>
             </div>
           </div>

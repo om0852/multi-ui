@@ -26,11 +26,6 @@ const Checkbox: React.FC<CheckboxProps> = ({ value, onChange, disabled = false, 
     large: "w-14 h-14",
   };
 
-  const ballSize = {
-    small: "12px",  // Adjusted size for small
-    medium: "18px",
-    large: "24px",
-  };
 
   return (
     <label

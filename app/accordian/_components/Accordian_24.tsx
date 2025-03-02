@@ -30,6 +30,7 @@ const LayerButton = styled(motion.button)`
   overflow: hidden;
   transform-style: preserve-3d;
   transition: transform 0.3s ease;
+  animation: ${float} 3s ease-in-out infinite;
   
   &::before {
     content: '';

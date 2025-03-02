@@ -134,7 +134,7 @@ interface AccordionItemProps {
 }
 
 function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) {
-  const crystals = Array.from({ length: 8 }, (_, i) => ({
+  const crystals = Array.from({ length: 8 }, () => ({
     size: Math.random() * 60 + 40,
     rotation: Math.random() * 360,
     x: Math.random() * 100,

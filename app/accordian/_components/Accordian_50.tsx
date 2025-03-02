@@ -123,7 +123,7 @@ function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) 
     'rgba(0, 191, 255, 0.2)'
   ];
 
-  const stars = Array.from({ length: 20 }, (_, i) => ({
+  const stars = Array.from({ length: 20 }, () => ({
     size: Math.random() * 2 + 1,
     x: Math.random() * 100,
     y: Math.random() * 100,

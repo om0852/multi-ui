@@ -167,7 +167,6 @@ const AnimatedFileInput: React.FC<FileInputProps> = ({
   const [isDragActive, setIsDragActive] = useState(false);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
   const [uploadProgress, setUploadProgress] = useState(0);
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
 
   const handleFiles = useCallback((files: File[]) => {
     const validFiles = files.slice(0, maxFiles);
@@ -226,7 +225,6 @@ const AnimatedFileInput: React.FC<FileInputProps> = ({
     const y = ((e.clientY - rect.top) / rect.height) * 100;
     e.currentTarget.style.setProperty('--x', `${x}%`);
     e.currentTarget.style.setProperty('--y', `${y}%`);
-    setMousePosition({ x, y });
   };
 
   return (

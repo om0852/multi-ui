@@ -21,7 +21,7 @@ const CircularProgressBar: React.FC<CircularProgressBarProps> = ({
 
   // Generate stars
   const numStars = 20;
-  const stars = Array.from({ length: numStars }).map((_, i) => ({
+  const stars = Array.from({ length: numStars }).map(() => ({
     x: Math.random() * size,
     y: Math.random() * size,
     size: Math.random() * 2 + 1,
