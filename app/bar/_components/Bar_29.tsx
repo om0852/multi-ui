@@ -3,166 +3,212 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 
-type WaterfallBarConfig = {
-  [key: string]: {
-    label: string;
-    color: string;
-    type: "increase" | "decrease" | "total";
-  };
-};
+interface CirclePackingNode {
+  id: string;
+  label: string;
+  value: number;
+  color?: string;
+  children?: CirclePackingNode[];
+}
 
-type WaterfallBarProps = {
-  data: { [key: string]: string | number }[];
-  config: WaterfallBarConfig;
-  className?: string;
-};
+interface CirclePackingChartProps {
+  data: CirclePackingNode;
+  width?: number;
+  height?: number;
+  padding?: number;
+  animationDuration?: number;
+  colorPalette?: string[];
+}
 
-export function WaterfallBarChart({ data, config, className }: WaterfallBarProps) {
-  const [hoveredBar, setHoveredBar] = useState<number | null>(null);
+interface Circle {
+  x: number;
+  y: number;
+  r: number;
+  node: CirclePackingNode;
+  children?: Circle[];
+}
 
-  const width = 800;
-  const height = 400;
-  const margin = { top: 20, right: 60, bottom: 40, left: 60 };
-
-  const values = data.map((item) => Number(item.value || 0));
-  const runningTotal = values.reduce((acc, val, i) => {
-    const prev = i > 0 ? acc[i - 1] : 0;
-    acc.push(prev + val);
-    return acc;
-  }, [] as number[]);
-
-  const maxValue = Math.max(...runningTotal, 0);
-  const minValue = Math.min(...runningTotal, 0);
-  const range = maxValue - minValue;
-
-  const xScale = (index: number) =>
-    margin.left + index * ((width - margin.left - margin.right) / data.length);
-  const yScale = (value: number) =>
-    height - margin.bottom - ((value - minValue) / range) * (height - margin.top - margin.bottom);
-  const barWidth = ((width - margin.left - margin.right) / data.length) * 0.6;
-
-  return (
-    <div className="bg-white p-4 rounded-lg">
-      <svg className={`w-full ${className}`} viewBox={`0 0 ${width} ${height}`}>
-        {/* Grid Lines */}
-        {Array.from({ length: 5 }).map((_, i) => {
-          const value = minValue + (range / 5) * (i + 1);
-          const y = yScale(value);
-          return (
-            <g key={i}>
-              <line
-                x1={margin.left}
-                y1={y}
-                x2={width - margin.right}
-                y2={y}
-                stroke="#e2e8f0"
-                strokeWidth="1"
-                strokeDasharray="4 2"
-              />
-              <text x={margin.left - 10} y={y} fontSize="12" textAnchor="end" fill="#64748b">
-                {Math.round(value)}
-              </text>
-            </g>
-          );
-        })}
-
-        {/* Bars */}
-        {data.map((item, index) => {
-          const value = Number(item.value || 0);
-          const start = index > 0 ? runningTotal[index - 1] : 0;
-          const end = runningTotal[index];
-          const y1 = yScale(Math.max(start, end));
-          const y2 = yScale(Math.min(start, end));
-          const isHovered = hoveredBar === index;
-
-          return (
-            <g key={index}>
-              <motion.rect
-                x={xScale(index) - barWidth / 2}
-                y={y1}
-                width={barWidth}
-                height={Math.abs(y2 - y1)}
-                fill={config[item.type as keyof WaterfallBarConfig].color}
-                onMouseEnter={() => setHoveredBar(index)}
-                onMouseLeave={() => setHoveredBar(null)}
-                initial={{ scaleY: 0 }}
-                animate={{ scaleY: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-              />
-              {isHovered && (
-                <motion.g
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                >
-                  <rect
-                    x={xScale(index) - 45}
-                    y={y1 - 30}
-                    width="90"
-                    height="24"
-                    fill="white"
-                    rx="4"
-                    filter="drop-shadow(0 1px 2px rgb(0 0 0 / 0.1))"
-                  />
-                  <text
-                    x={xScale(index)}
-                    y={y1 - 14}
-                    fontSize="12"
-                    textAnchor="middle"
-                    fill="#1e293b"
-                  >
-                    {`${item.label}: ${value}`}
-                  </text>
-                </motion.g>
-              )}
-            </g>
-          );
-        })}
-
-        {/* X-axis labels */}
-        {data.map((item, index) => (
-          <text
-            key={index}
-            x={xScale(index)}
-            y={height - margin.bottom + 20}
-            fontSize="12"
+export default function CirclePackingChart({
+  data,
+  width = 800,
+  height = 800,
+  padding = 2,
+  animationDuration = 0.8,
+  colorPalette = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899', '#6366F1']
+}: CirclePackingChartProps) {
+  const [hoveredCircle, setHoveredCircle] = useState<Circle | null>(null);
+  
+  // Pack circles algorithm
+  function packCircles(node: CirclePackingNode, availableRadius: number): Circle {
+    if (!node.children || node.children.length === 0) {
+      return {
+        x: 0,
+        y: 0,
+        r: Math.sqrt(node.value),
+        node
+      };
+    }
+    
+    // Pack children first
+    const children = node.children.map(child => 
+      packCircles(child, Math.sqrt(child.value))
+    );
+    
+    // Calculate total area needed
+    const totalArea = children.reduce((sum, circle) => 
+      sum + Math.PI * circle.r * circle.r, 0
+    );
+    
+    // Scale children to fit available space
+    const scale = Math.sqrt(node.value / totalArea);
+    children.forEach(circle => {
+      circle.r *= scale;
+      circle.x *= scale;
+      circle.y *= scale;
+    });
+    
+    // Position circles
+    let currentX = 0;
+    let currentY = 0;
+    let rowHeight = 0;
+    
+    children.forEach(circle => {
+      if (currentX + 2 * circle.r > availableRadius) {
+        currentX = 0;
+        currentY += rowHeight + padding;
+        rowHeight = 0;
+      }
+      
+      circle.x = currentX + circle.r;
+      circle.y = currentY + circle.r;
+      
+      currentX += 2 * circle.r + padding;
+      rowHeight = Math.max(rowHeight, 2 * circle.r);
+    });
+    
+    return {
+      x: 0,
+      y: 0,
+      r: availableRadius,
+      node,
+      children
+    };
+  }
+  
+  // Pack the circles starting from root
+  const rootRadius = Math.min(width, height) / 2 - 40;
+  const packedData = packCircles(data, rootRadius);
+  
+  // Center the visualization
+  const centerX = width / 2;
+  const centerY = height / 2;
+  
+  // Recursive function to render circles
+  function renderCircle(circle: Circle, depth: number = 0) {
+    const color = circle.node.color || colorPalette[depth % colorPalette.length];
+    const isHovered = hoveredCircle === circle;
+    
+    return (
+      <g key={circle.node.id}>
+        <motion.circle
+          cx={centerX + circle.x}
+          cy={centerY + circle.y}
+          r={circle.r}
+          fill={color}
+          fillOpacity={isHovered ? 0.9 : 0.7}
+          stroke={color}
+          strokeWidth={isHovered ? 2 : 1}
+          initial={{ scale: 0, opacity: 0 }}
+          animate={{ 
+            scale: 1,
+            opacity: 1,
+            transform: isHovered ? 'scale(1.02)' : 'scale(1)'
+          }}
+          transition={{ 
+            duration: animationDuration,
+            delay: depth * 0.1,
+            type: 'spring',
+            stiffness: 100
+          }}
+          onMouseEnter={() => setHoveredCircle(circle)}
+          onMouseLeave={() => setHoveredCircle(null)}
+        />
+        
+        {/* Label for larger circles */}
+        {circle.r > 30 && (
+          <motion.text
+            x={centerX + circle.x}
+            y={centerY + circle.y}
             textAnchor="middle"
-            fill="#64748b"
+            dominantBaseline="middle"
+            className={`text-sm ${isHovered ? 'font-semibold' : 'font-normal'} fill-white`}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.3, delay: animationDuration + depth * 0.1 }}
           >
-            {item.label}
-          </text>
-        ))}
+            {circle.node.label}
+          </motion.text>
+        )}
+        
+        {/* Render children */}
+        {circle.children?.map(child => renderCircle(child, depth + 1))}
+      </g>
+    );
+  }
+  
+  return (
+    <div className="relative" style={{ width, height }}>
+      <svg width={width} height={height}>
+        {renderCircle(packedData)}
       </svg>
+      
+      {/* Tooltip */}
+      {hoveredCircle && (
+        <div
+          className="absolute bg-white p-3 rounded shadow-lg text-sm z-10"
+          style={{
+            left: centerX + hoveredCircle.x,
+            top: centerY + hoveredCircle.y - hoveredCircle.r - 20,
+            transform: 'translate(-50%, -100%)'
+          }}
+        >
+          <div className="font-medium">{hoveredCircle.node.label}</div>
+          <div>Value: {hoveredCircle.node.value.toLocaleString()}</div>
+          {hoveredCircle.children && (
+            <div className="text-xs text-gray-500 mt-1">
+              Children: {hoveredCircle.children.length}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
 
 // Example Usage
-const exampleData = [
-  { label: "Start", value: 1000, type: "total" },
-  { label: "Sales", value: 500, type: "increase" },
-  { label: "Refunds", value: -200, type: "decrease" },
-  { label: "Fees", value: -100, type: "decrease" },
-  { label: "End", value: 1200, type: "total" },
-];
-
-const exampleConfig = {
-  increase: {
-    label: "Increase",
-    color: "#10b981",
-    type: "increase",
-  },
-  decrease: {
-    label: "Decrease",
-    color: "#ef4444",
-    type: "decrease",
-  },
-  total: {
-    label: "Total",
-    color: "#3b82f6",
-    type: "total",
-  },
-} satisfies WaterfallBarConfig;
+const exampleData: CirclePackingNode = {
+  id: "root",
+  label: "Root",
+  value: 1000,
+  children: [
+    {
+      id: "sales",
+      label: "Sales",
+      value: 500,
+    },
+    {
+      id: "refunds",
+      label: "Refunds",
+      value: -200,
+    },
+    {
+      id: "fees",
+      label: "Fees",
+      value: -100,
+    },
+  ],
+};
 
 export function Component() {
-  return <WaterfallBarChart data={exampleData} config={exampleConfig} className="" />;
+  return <CirclePackingChart data={exampleData} />;
 } 

@@ -3,195 +3,234 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 
-type RadialBarConfig = {
-  [key: string]: {
-    label: string;
-    color: string;
+interface WaterfallDataItem {
+  label: string;
+  value: number;
+  color?: string;
+  isTotal?: boolean;
+}
+
+interface WaterfallChartProps {
+  data: WaterfallDataItem[];
+  width?: number;
+  height?: number;
+  barWidth?: number;
+  animationDuration?: number;
+  showConnectors?: boolean;
+  colorPalette?: {
+    positive: string;
+    negative: string;
+    total: string;
   };
-};
+}
 
-type RadialBarProps = {
-  data: { [key: string]: string | number }[];
-  config: RadialBarConfig;
-  className?: string;
-};
-
-export function RadialBarChart({ data, config, className }: RadialBarProps) {
-  const [hoveredSegment, setHoveredSegment] = useState<{ key: string; index: number } | null>(null);
-
-  const width = 800;
-  const height = 500;
-  const centerX = width / 2;
-  const centerY = height / 2;
-  const radius = Math.min(width, height) / 3;
-  const keys = Object.keys(config);
-
-  // Find max value for scaling
-  const maxValue = Math.max(
-    ...data.flatMap((item) => keys.map((key) => Number(item[key] || 0)))
-  );
-
-  // Calculate angles for each data point
-  const angleStep = (2 * Math.PI) / data.length;
-
-  const getCoordinates = (angle: number, value: number) => {
-    const r = (value / maxValue) * radius;
+export default function WaterfallChart({
+  data,
+  width = 800,
+  height = 500,
+  barWidth = 40,
+  animationDuration = 0.8,
+  showConnectors = true,
+  colorPalette = {
+    positive: '#10B981',
+    negative: '#EF4444',
+    total: '#3B82F6'
+  }
+}: WaterfallChartProps) {
+  const [hoveredBar, setHoveredBar] = useState<number | null>(null);
+  
+  const margin = { top: 40, right: 40, bottom: 60, left: 60 };
+  const chartWidth = width - margin.left - margin.right;
+  const chartHeight = height - margin.top - margin.bottom;
+  
+  // Calculate running total and find min/max values
+  let runningTotal = 0;
+  const totals = data.map(item => {
+    if (item.isTotal) {
+      return item.value;
+    }
+    runningTotal += item.value;
+    return runningTotal;
+  });
+  
+  const minValue = Math.min(0, ...totals);
+  const maxValue = Math.max(...totals);
+  const valueRange = maxValue - minValue;
+  
+  // Calculate bar positions and dimensions
+  const bars = data.map((item, index) => {
+    const previousTotal = index === 0 ? 0 : totals[index - 1];
+    const x = margin.left + (chartWidth / (data.length + 1)) * (index + 1);
+    
+    let y, barHeight;
+    if (item.isTotal) {
+      y = margin.top + chartHeight - ((item.value - minValue) / valueRange) * chartHeight;
+      barHeight = ((item.value - minValue) / valueRange) * chartHeight;
+    } else {
+      const start = previousTotal;
+      const end = start + item.value;
+      const startY = margin.top + chartHeight - ((start - minValue) / valueRange) * chartHeight;
+      const endY = margin.top + chartHeight - ((end - minValue) / valueRange) * chartHeight;
+      y = item.value >= 0 ? endY : startY;
+      barHeight = Math.abs(startY - endY);
+    }
+    
     return {
-      x: centerX + r * Math.cos(angle - Math.PI / 2),
-      y: centerY + r * Math.sin(angle - Math.PI / 2),
+      x,
+      y,
+      width: barWidth,
+      height: barHeight,
+      item,
+      previousTotal,
+      total: item.isTotal ? item.value : previousTotal + item.value
     };
-  };
-
+  });
+  
   return (
-    <div className="bg-white p-4 rounded-lg">
-      <svg className={`w-full ${className}`} viewBox={`0 0 ${width} ${height}`}>
-        {/* Background circles */}
-        {[0.2, 0.4, 0.6, 0.8, 1].map((scale) => (
-          <circle
-            key={scale}
-            cx={centerX}
-            cy={centerY}
-            r={radius * scale}
-            fill="none"
-            stroke="#e2e8f0"
-            strokeWidth="1"
-            strokeDasharray="4 2"
-          />
-        ))}
-
-        {/* Value indicators */}
-        {[0.2, 0.4, 0.6, 0.8, 1].map((scale) => (
-          <text
-            key={scale}
-            x={centerX + 10}
-            y={centerY - radius * scale}
-            fontSize="12"
-            fill="#64748b"
-          >
-            {Math.round(maxValue * scale)}
-          </text>
-        ))}
-
-        {/* Data points */}
-        {keys.map((key) => (
-          <g key={key}>
-            {data.map((item, index) => {
-              const angle = index * angleStep;
-              const value = Number(item[key] || 0);
-              const coords = getCoordinates(angle, value);
-              const nextIndex = (index + 1) % data.length;
-              const nextValue = Number(data[nextIndex][key] || 0);
-              const nextCoords = getCoordinates(nextIndex * angleStep, nextValue);
-              const isHovered = hoveredSegment?.key === key && hoveredSegment?.index === index;
-
-              return (
-                <g key={index}>
-                  <motion.path
-                    d={`
-                      M ${centerX} ${centerY}
-                      L ${coords.x} ${coords.y}
-                      A ${radius} ${radius} 0 0 1 ${nextCoords.x} ${nextCoords.y}
-                      Z
-                    `}
-                    fill={config[key].color}
-                    fillOpacity={0.2}
-                    stroke={config[key].color}
-                    strokeWidth="2"
-                    onMouseEnter={() => setHoveredSegment({ key, index })}
-                    onMouseLeave={() => setHoveredSegment(null)}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 0.5, delay: index * 0.1 }}
-                  />
-                  {isHovered && (
-                    <motion.g
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                    >
-                      <rect
-                        x={coords.x - 45}
-                        y={coords.y - 25}
-                        width="90"
-                        height="24"
-                        fill="white"
-                        rx="4"
-                        filter="drop-shadow(0 1px 2px rgb(0 0 0 / 0.1))"
-                      />
-                      <text
-                        x={coords.x}
-                        y={coords.y - 8}
-                        fontSize="12"
-                        textAnchor="middle"
-                        fill="#1e293b"
-                      >
-                        {`${config[key].label}: ${value}`}
-                      </text>
-                    </motion.g>
-                  )}
-                </g>
-              );
-            })}
-          </g>
-        ))}
-
-        {/* Month labels */}
-        {data.map((item, index) => {
-          const angle = index * angleStep;
-          const labelRadius = radius + 30;
-          const x = centerX + labelRadius * Math.cos(angle - Math.PI / 2);
-          const y = centerY + labelRadius * Math.sin(angle - Math.PI / 2);
+    <div className="relative" style={{ width, height }}>
+      <svg width={width} height={height}>
+        {/* Grid lines */}
+        {Array.from({ length: 6 }).map((_, i) => {
+          const y = margin.top + (chartHeight / 5) * i;
+          const value = maxValue - (valueRange / 5) * i;
+          
           return (
-            <text
-              key={index}
-              x={x}
-              y={y}
-              fontSize="12"
-              textAnchor="middle"
-              fill="#64748b"
-              dominantBaseline="middle"
-            >
-              {item.month}
-            </text>
-          );
-        })}
-
-        {/* Legend */}
-        <g transform={`translate(${width - 120}, 20)`}>
-          {keys.map((key, index) => (
-            <g key={key} transform={`translate(0, ${index * 25})`}>
-              <rect width="12" height="12" fill={config[key].color} rx="2" />
-              <text x="20" y="10" fontSize="12" fill="#64748b">
-                {config[key].label}
+            <g key={i}>
+              <line
+                x1={margin.left}
+                y1={y}
+                x2={width - margin.right}
+                y2={y}
+                stroke="#e2e8f0"
+                strokeWidth="1"
+                strokeDasharray="4 2"
+              />
+              <text
+                x={margin.left - 10}
+                y={y}
+                textAnchor="end"
+                dominantBaseline="middle"
+                className="text-xs fill-gray-500"
+              >
+                {value.toFixed(0)}
               </text>
             </g>
-          ))}
-        </g>
+          );
+        })}
+        
+        {/* Connectors */}
+        {showConnectors && bars.map((bar, index) => {
+          if (index === 0) return null;
+          const previousBar = bars[index - 1];
+          
+          return (
+            <motion.line
+              key={`connector-${index}`}
+              x1={previousBar.x + barWidth}
+              y1={previousBar.y}
+              x2={bar.x}
+              y2={bar.y}
+              stroke="#94A3B8"
+              strokeWidth="1"
+              strokeDasharray="4 2"
+              initial={{ pathLength: 0, opacity: 0 }}
+              animate={{ pathLength: 1, opacity: 1 }}
+              transition={{ duration: animationDuration, delay: index * 0.1 }}
+            />
+          );
+        })}
+        
+        {/* Bars */}
+        {bars.map((bar, index) => {
+          const isHovered = hoveredBar === index;
+          const color = bar.item.color || (
+            bar.item.isTotal ? colorPalette.total :
+            bar.item.value >= 0 ? colorPalette.positive :
+            colorPalette.negative
+          );
+          
+          return (
+            <g key={index}>
+              <motion.rect
+                x={bar.x}
+                y={bar.y}
+                width={bar.width}
+                height={bar.height}
+                fill={color}
+                fillOpacity={isHovered ? 0.9 : 0.7}
+                stroke={color}
+                strokeWidth={isHovered ? 2 : 1}
+                initial={{ scaleY: 0, opacity: 0 }}
+                animate={{ scaleY: 1, opacity: 1 }}
+                transition={{ 
+                  duration: animationDuration,
+                  delay: index * 0.1,
+                  type: 'spring',
+                  stiffness: 100
+                }}
+                onMouseEnter={() => setHoveredBar(index)}
+                onMouseLeave={() => setHoveredBar(null)}
+              />
+              
+              {/* Bar value */}
+              <motion.text
+                x={bar.x + barWidth / 2}
+                y={bar.y - 8}
+                textAnchor="middle"
+                className={`text-xs ${isHovered ? 'font-semibold' : 'font-normal'} fill-gray-700`}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3, delay: animationDuration + index * 0.1 }}
+              >
+                {bar.item.value >= 0 ? '+' : ''}{bar.item.value}
+              </motion.text>
+              
+              {/* X-axis labels */}
+              <motion.text
+                x={bar.x + barWidth / 2}
+                y={height - margin.bottom + 20}
+                textAnchor="middle"
+                className="text-xs fill-gray-500"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.3, delay: animationDuration + index * 0.1 }}
+              >
+                {bar.item.label}
+              </motion.text>
+            </g>
+          );
+        })}
       </svg>
+      
+      {/* Tooltip */}
+      {hoveredBar !== null && (
+        <div
+          className="absolute bg-white p-2 rounded shadow-lg text-sm z-10"
+          style={{
+            left: bars[hoveredBar].x + barWidth / 2,
+            top: bars[hoveredBar].y - 40,
+            transform: 'translateX(-50%)'
+          }}
+        >
+          <div className="font-medium">{bars[hoveredBar].item.label}</div>
+          <div>Change: {bars[hoveredBar].item.value >= 0 ? '+' : ''}{bars[hoveredBar].item.value}</div>
+          <div>Total: {bars[hoveredBar].total}</div>
+        </div>
+      )}
     </div>
   );
 }
 
 // Example Usage
-const exampleData = [
-  { month: "Jan", users: 1200, sessions: 1800 },
-  { month: "Feb", users: 1400, sessions: 2100 },
-  { month: "Mar", users: 1100, sessions: 1600 },
-  { month: "Apr", users: 1600, sessions: 2400 },
-  { month: "May", users: 1800, sessions: 2700 },
-  { month: "Jun", users: 2000, sessions: 3000 },
+const exampleData: WaterfallDataItem[] = [
+  { label: "Jan", value: 1200, isTotal: true },
+  { label: "Feb", value: 1400, isTotal: true },
+  { label: "Mar", value: 1100, isTotal: true },
+  { label: "Apr", value: 1600, isTotal: true },
+  { label: "May", value: 1800, isTotal: true },
+  { label: "Jun", value: 2000, isTotal: true },
 ];
 
-const exampleConfig = {
-  users: {
-    label: "Users",
-    color: "#3b82f6",
-  },
-  sessions: {
-    label: "Sessions",
-    color: "#10b981",
-  },
-} satisfies RadialBarConfig;
-
 export function Component() {
-  return <RadialBarChart data={exampleData} config={exampleConfig} className="" />;
+  return <WaterfallChart data={exampleData} width={800} height={500} />;
 } 

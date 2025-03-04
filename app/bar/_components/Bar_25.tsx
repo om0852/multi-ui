@@ -3,190 +3,242 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 
-type IsometricBarChartConfig = {
-  [key: string]: {
+interface BubbleDataItem {
     label: string;
-    color: string;
-    sideColor: string;
-    topColor: string;
-  };
-};
+  value: number;
+  category: string;
+  color?: string;
+}
 
-type IsometricBarChartProps = {
-  data: { [key: string]: string | number }[];
-  config: IsometricBarChartConfig;
-  className?: string;
-};
+interface BubbleChartProps {
+  data: BubbleDataItem[];
+  width?: number;
+  height?: number;
+  minRadius?: number;
+  maxRadius?: number;
+  animationDuration?: number;
+  showLabels?: boolean;
+  colorMap?: Record<string, string>;
+}
 
-export function IsometricBarChart({ data, config, className }: IsometricBarChartProps) {
-  const [hoveredBar, setHoveredBar] = useState<{ key: string; index: number } | null>(null);
-
-  const width = 800;
-  const height = 500;
-  const margin = { top: 40, right: 40, bottom: 60, left: 60 };
-
-  const keys = Object.keys(config);
-  const maxValue = Math.max(
-    ...data.flatMap((item) => keys.map((key) => Number(item[key] || 0)))
-  );
-
-  const xScale = (index: number) =>
-    margin.left + index * ((width - margin.left - margin.right) / data.length);
-  const yScale = (value: number) =>
-    height - margin.bottom - (value / maxValue) * (height - margin.top - margin.bottom);
-  const barWidth = ((width - margin.left - margin.right) / (data.length * keys.length)) * 0.8;
-
-  const createIsometricPath = (x: number, y: number, w: number, h: number, depth: number) => {
-    const isoX = (x: number, y: number) => x - y * 0.5;
-    const isoY = (x: number, y: number) => y * 0.866 + x * 0.289;
-
-    // Front face
-    const front = `M ${isoX(x, 0)} ${isoY(x, 0)}
-                   L ${isoX(x + w, 0)} ${isoY(x + w, 0)}
-                   L ${isoX(x + w, h)} ${isoY(x + w, h)}
-                   L ${isoX(x, h)} ${isoY(x, h)} Z`;
-
-    // Right side
-    const right = `M ${isoX(x + w, 0)} ${isoY(x + w, 0)}
-                   L ${isoX(x + w, h)} ${isoY(x + w, h)}
-                   L ${isoX(x + w, h)} ${isoY(x + w, h) - depth}
-                   L ${isoX(x + w, 0)} ${isoY(x + w, 0) - depth} Z`;
-
-    // Top face
-    const top = `M ${isoX(x, 0)} ${isoY(x, 0)}
-                 L ${isoX(x + w, 0)} ${isoY(x + w, 0)}
-                 L ${isoX(x + w, 0)} ${isoY(x + w, 0) - depth}
-                 L ${isoX(x, 0)} ${isoY(x, 0) - depth} Z`;
-
-    return { front, right, top };
-  };
+export default function BubbleChart({
+  data,
+  width = 700,
+  height = 500,
+  minRadius = 20,
+  maxRadius = 80,
+  animationDuration = 1.2,
+  showLabels = true,
+  colorMap = {
+    'Category A': '#3B82F6',
+    'Category B': '#10B981',
+    'Category C': '#F59E0B',
+    'Category D': '#8B5CF6',
+    'Category E': '#EC4899'
+  }
+}: BubbleChartProps) {
+  const [hoveredBubble, setHoveredBubble] = useState<number | null>(null);
+  
+  const padding = 40;
+  const chartWidth = width - padding * 2;
+  const chartHeight = height - padding * 2;
+  
+  // Find min and max values for scaling
+  const minValue = Math.min(...data.map(item => item.value));
+  const maxValue = Math.max(...data.map(item => item.value));
+  
+  // Group data by category
+  const categorizedData = data.reduce((acc, item) => {
+    if (!acc[item.category]) {
+      acc[item.category] = [];
+    }
+    acc[item.category].push(item);
+    return acc;
+  }, {} as Record<string, BubbleDataItem[]>);
+  
+  // Calculate positions for each bubble
+  const bubblePositions = data.map((item) => {
+    // Scale the value to a radius between minRadius and maxRadius
+    const radius = minRadius + ((item.value - minValue) / (maxValue - minValue)) * (maxRadius - minRadius);
+    
+    // Calculate position based on category
+    const categories = Object.keys(categorizedData);
+    const categoryIndex = categories.indexOf(item.category);
+    const categoryCount = categories.length;
+    
+    // Calculate x position based on category
+    const xSection = chartWidth / categoryCount;
+    const xBase = padding + (categoryIndex + 0.5) * xSection;
+    
+    // Calculate y position with some randomness but keep within bounds
+    const itemsInCategory = categorizedData[item.category].length;
+    const itemIndex = categorizedData[item.category].indexOf(item);
+    const ySection = chartHeight / (itemsInCategory + 1);
+    const yBase = padding + (itemIndex + 1) * ySection;
+    
+    // Add some randomness to x position within the section
+    const xRandom = (Math.random() - 0.5) * (xSection * 0.5);
+    const x = Math.max(padding + radius, Math.min(width - padding - radius, xBase + xRandom));
+    
+    // Add some randomness to y position
+    const yRandom = (Math.random() - 0.5) * (ySection * 0.5);
+    const y = Math.max(padding + radius, Math.min(height - padding - radius, yBase + yRandom));
+    
+    return { x, y, radius };
+  });
+  
+  // Extract unique categories for the legend
+  const categories = Array.from(new Set(data.map(item => item.category)));
 
   return (
-    <div className="bg-white p-4 rounded-lg">
-      <svg className={`w-full ${className}`} viewBox={`0 0 ${width} ${height}`}>
-        {/* Grid and Labels */}
-        {Array.from({ length: 5 }).map((_, i) => {
-          const value = (maxValue / 5) * (i + 1);
-          const y = yScale(value);
+    <div className="relative" style={{ width, height }}>
+      <svg width={width} height={height}>
+        {/* Background grid */}
+        <rect
+          x={padding}
+          y={padding}
+          width={chartWidth}
+          height={chartHeight}
+          fill="#f9fafb"
+          stroke="#e5e7eb"
+          strokeWidth="1"
+          rx="8"
+        />
+        
+        {/* Category labels */}
+        {Object.keys(categorizedData).map((category, index) => {
+          const xSection = chartWidth / Object.keys(categorizedData).length;
+          const x = padding + (index + 0.5) * xSection;
+          
           return (
-            <g key={i} opacity={0.3}>
-              <line
-                x1={margin.left}
-                y1={y}
-                x2={width - margin.right}
-                y2={y}
-                stroke="#94a3b8"
-                strokeDasharray="4 2"
-              />
-              <text x={margin.left - 10} y={y + 5} fontSize="12" textAnchor="end">
-                {Math.round(value)}
+            <text
+              key={category}
+              x={x}
+              y={height - 10}
+              textAnchor="middle"
+              className="text-sm font-medium fill-gray-700"
+            >
+              {category}
               </text>
-            </g>
           );
         })}
 
-        {/* Bars */}
-        {data.map((item, index) =>
-          keys.map((key, keyIndex) => {
-            const value = Number(item[key] || 0);
-            const barHeight = height - margin.bottom - yScale(value);
-            const x = xScale(index) + keyIndex * barWidth;
-            const y = yScale(value);
-            const isHovered = hoveredBar?.key === key && hoveredBar?.index === index;
-            const depth = 20;
-
-            const paths = createIsometricPath(x, y, barWidth - 4, barHeight, depth);
+        {/* Bubbles */}
+        {data.map((item, index) => {
+          const { x, y, radius } = bubblePositions[index];
+          const isHovered = hoveredBubble === index;
+          const color = item.color || colorMap[item.category] || '#3B82F6';
 
             return (
-              <g
-                key={`${index}-${key}`}
-                onMouseEnter={() => setHoveredBar({ key, index })}
-                onMouseLeave={() => setHoveredBar(null)}
-              >
-                <motion.g
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
+            <g key={index}>
+              <motion.circle
+                cx={x}
+                cy={y}
+                r={radius}
+                fill={color}
+                fillOpacity={isHovered ? 0.9 : 0.7}
+                stroke={color}
+                strokeWidth={isHovered ? 3 : 1}
+                initial={{ r: 0, opacity: 0 }}
+                animate={{ r: radius, opacity: 1 }}
+                transition={{ 
+                  duration: animationDuration,
+                  delay: index * 0.05,
+                  type: 'spring',
+                  stiffness: 100
+                }}
+                onMouseEnter={() => setHoveredBubble(index)}
+                onMouseLeave={() => setHoveredBubble(null)}
+              />
+              
+              {/* Label */}
+              {showLabels && (
+                <motion.text
+                  x={x}
+                  y={y}
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  className={`text-xs ${isHovered ? 'font-semibold' : 'font-normal'} fill-white`}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ 
+                    duration: 0.3,
+                    delay: animationDuration + index * 0.05
+                  }}
                 >
-                  <path d={paths.front} fill={config[key].color} />
-                  <path d={paths.right} fill={config[key].sideColor} />
-                  <path d={paths.top} fill={config[key].topColor} />
-                </motion.g>
-
+                  {item.label}
+                </motion.text>
+              )}
+              
+              {/* Value */}
                 {isHovered && (
-                  <motion.g
+                <motion.text
+                  x={x}
+                  y={y + 15}
+                  textAnchor="middle"
+                  dominantBaseline="middle"
+                  className="text-xs fill-white"
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.2 }}
                   >
-                    <rect
-                      x={x - 20}
-                      y={y - 30}
-                      width="80"
-                      height="20"
-                      fill="white"
-                      rx="4"
-                      filter="drop-shadow(0 1px 2px rgb(0 0 0 / 0.1))"
-                    />
-                    <text
-                      x={x + 20}
-                      y={y - 16}
-                      fontSize="12"
-                      textAnchor="middle"
-                      fill="#1e293b"
-                    >
-                      {`${config[key].label}: ${value}`}
-                    </text>
-                  </motion.g>
+                  {item.value}
+                </motion.text>
                 )}
               </g>
             );
-          })
-        )}
-
-        {/* X-axis labels */}
-        {data.map((item, index) => (
-          <text
-            key={index}
-            x={xScale(index) + (keys.length * barWidth) / 2}
-            y={height - margin.bottom + 20}
-            textAnchor="middle"
-            fontSize="12"
-            fill="#475569"
-          >
-            {item["month"]}
-          </text>
-        ))}
+        })}
       </svg>
+      
+      {/* Legend */}
+      <div className="absolute top-2 right-2 bg-white bg-opacity-90 p-2 rounded-md shadow-sm">
+        <div className="text-sm font-medium text-gray-700 mb-1">Categories</div>
+        <div className="flex flex-col gap-1">
+          {categories.map((category, i) => (
+            <div key={i} className="flex items-center gap-2">
+              <div 
+                className="w-3 h-3 rounded-full" 
+                style={{ backgroundColor: colorMap[category] || '#3B82F6' }}
+              />
+              <span className="text-xs text-gray-600">{category}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      {/* Tooltip */}
+      {hoveredBubble !== null && (
+        <div
+          className="absolute bg-white p-2 rounded shadow-lg text-sm z-10"
+          style={{
+            left: bubblePositions[hoveredBubble].x,
+            top: bubblePositions[hoveredBubble].y - bubblePositions[hoveredBubble].radius - 40,
+            transform: 'translateX(-50%)'
+          }}
+        >
+          <div className="font-medium">{data[hoveredBubble].label}</div>
+          <div>Value: {data[hoveredBubble].value}</div>
+          <div>Category: {data[hoveredBubble].category}</div>
+        </div>
+      )}
     </div>
   );
 }
 
 // Example Usage
 const exampleData = [
-  { month: "Jan", revenue: 2500, profit: 1200 },
-  { month: "Feb", revenue: 3200, profit: 1800 },
-  { month: "Mar", revenue: 2800, profit: 1400 },
-  { month: "Apr", revenue: 3800, profit: 2200 },
-  { month: "May", revenue: 4200, profit: 2600 },
-  { month: "Jun", revenue: 3600, profit: 2000 },
+  { label: "Product A", value: 85, category: "Category A" },
+  { label: "Product B", value: 65, category: "Category A" },
+  { label: "Product C", value: 120, category: "Category B" },
+  { label: "Product D", value: 45, category: "Category B" },
+  { label: "Product E", value: 90, category: "Category C" },
+  { label: "Product F", value: 70, category: "Category C" },
+  { label: "Product G", value: 110, category: "Category D" },
+  { label: "Product H", value: 55, category: "Category D" },
+  { label: "Product I", value: 75, category: "Category E" },
+  { label: "Product J", value: 100, category: "Category E" },
 ];
 
-const exampleConfig = {
-  revenue: {
-    label: "Revenue",
-    color: "#3b82f6",
-    sideColor: "#2563eb",
-    topColor: "#60a5fa",
-  },
-  profit: {
-    label: "Profit",
-    color: "#10b981",
-    sideColor: "#059669",
-    topColor: "#34d399",
-  },
-} satisfies IsometricBarChartConfig;
-
 export function Component() {
-  return <IsometricBarChart data={exampleData} config={exampleConfig} className="" />;
+  return <BubbleChart data={exampleData} width={700} height={500} />;
 } 
