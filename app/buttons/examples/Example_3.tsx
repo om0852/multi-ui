@@ -16,8 +16,6 @@ export default function ButtonExample3() {
           <Button3 
             text={`Switch to ${theme === 'light' ? 'Dark' : 'Light'}`}
             onClick={() => setTheme(prev => prev === 'light' ? 'dark' : 'light')}
-            color={theme === 'dark' ? 'bg-yellow-500' : 'bg-gray-800'}
-            textColor={theme === 'dark' ? 'text-gray-900' : 'text-white'}
           />
         </div>
         <p className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} mb-4`}>
@@ -36,13 +34,10 @@ export default function ButtonExample3() {
             />
             <Button3 
               text="Success" 
-              color="bg-green-500"
               onClick={() => alert('Success clicked!')}
             />
             <Button3 
               text="Warning" 
-              color="bg-yellow-500"
-              textColor="text-gray-900"
               onClick={() => alert('Warning clicked!')}
             />
           </div>
@@ -79,17 +74,14 @@ export default function ButtonExample3() {
           <div className="flex flex-wrap gap-4">
             <Button3 
               text="Purple Glow" 
-              color="bg-purple-600"
               onClick={() => {}}
             />
             <Button3 
               text="Teal Glow" 
-              color="bg-teal-500"
               onClick={() => {}}
             />
             <Button3 
               text="Pink Glow" 
-              color="bg-pink-500"
               onClick={() => {}}
             />
           </div>
@@ -108,7 +100,6 @@ export default function ButtonExample3() {
               <Button3 
                 text="Get Started Now" 
                 size="text-lg"
-                color="bg-gradient-to-r from-purple-500 to-pink-500"
                 onClick={() => alert('Welcome aboard!')}
               />
             </div>
