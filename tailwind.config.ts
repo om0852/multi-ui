@@ -30,6 +30,12 @@ export default {
     },
     rotate: {
       'y-60': 'rotateY(60deg)',
-    }
+    },
+    transformStyle: {
+      'preserve-3d': 'preserve-3d',
+    },
+    backfaceVisibility: {
+      'hidden': 'hidden',
+    },
   },
 } satisfies Config;
