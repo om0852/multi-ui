@@ -3,173 +3,184 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 
-type BubbleBarConfig = {
-  [key: string]: {
-    label: string;
-    color: string;
-  };
-};
+interface FunnelDataItem {
+  label: string;
+  value: number;
+  color?: string;
+  description?: string;
+}
 
-type BubbleBarProps = {
-  data: { [key: string]: string | number }[];
-  config: BubbleBarConfig;
-  className?: string;
-};
+interface FunnelChartProps {
+  data: FunnelDataItem[];
+  width?: number;
+  height?: number;
+  gapBetweenLevels?: number;
+  animationDuration?: number;
+  showPercentages?: boolean;
+  colorPalette?: string[];
+}
 
-export function BubbleBarChart({ data, config, className }: BubbleBarProps) {
-  const [hoveredBubble, setHoveredBubble] = useState<{ key: string; index: number } | null>(null);
-
-  const width = 800;
-  const height = 400;
-  const margin = { top: 20, right: 120, bottom: 40, left: 60 };
-
-  const keys = Object.keys(config);
-  const maxValue = Math.max(
-    ...data.flatMap((item) => keys.map((key) => Number(item[key] || 0)))
-  );
-
-  const xScale = (index: number) =>
-    margin.left + index * ((width - margin.left - margin.right) / data.length);
-  const yScale = (value: number) =>
-    height - margin.bottom - (value / maxValue) * (height - margin.top - margin.bottom);
-  const bubbleSize = (value: number) => Math.max(20, (value / maxValue) * 60);
-
+export default function FunnelChart({
+  data,
+  width = 800,
+  height = 500,
+  gapBetweenLevels = 4,
+  animationDuration = 0.8,
+  showPercentages = true,
+  colorPalette = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899', '#6366F1']
+}: FunnelChartProps) {
+  const [hoveredLevel, setHoveredLevel] = useState<number | null>(null);
+  
+  const margin = { top: 40, right: 160, bottom: 40, left: 160 };
+  const chartWidth = width - margin.left - margin.right;
+  const chartHeight = height - margin.top - margin.bottom;
+  
+  // Sort data by value in descending order
+  const sortedData = [...data].sort((a, b) => b.value - a.value);
+  const maxValue = sortedData[0].value;
+  
+  // Calculate dimensions for each level
+  const levels = sortedData.map((item, index) => {
+    const percentage = (item.value / maxValue) * 100;
+    const levelHeight = (chartHeight - (data.length - 1) * gapBetweenLevels) / data.length;
+    const y = margin.top + index * (levelHeight + gapBetweenLevels);
+    const topWidth = chartWidth * (percentage / 100);
+    const bottomWidth = index < data.length - 1 
+      ? chartWidth * (sortedData[index + 1].value / maxValue)
+      : topWidth * 0.2;
+    
+    return {
+      item,
+      y,
+      height: levelHeight,
+      topWidth,
+      bottomWidth,
+      percentage,
+      dropoff: index > 0 ? ((sortedData[index - 1].value - item.value) / sortedData[index - 1].value) * 100 : 0
+    };
+  });
+  
   return (
-    <div className="bg-white p-4 rounded-lg">
-      <svg className={`w-full ${className}`} viewBox={`0 0 ${width} ${height}`}>
-        {/* Grid Lines */}
-        {Array.from({ length: 5 }).map((_, i) => {
-          const value = (maxValue / 5) * (i + 1);
-          const y = yScale(value);
+    <div className="relative" style={{ width, height }}>
+      <svg width={width} height={height}>
+        {/* Funnel levels */}
+        {levels.map((level, index) => {
+          const isHovered = hoveredLevel === index;
+          const color = level.item.color || colorPalette[index % colorPalette.length];
+          
+          // Calculate trapezoid points
+          const points = [
+            // Top left
+            `${margin.left + (chartWidth - level.topWidth) / 2},${level.y}`,
+            // Top right
+            `${margin.left + (chartWidth + level.topWidth) / 2},${level.y}`,
+            // Bottom right
+            `${margin.left + (chartWidth + level.bottomWidth) / 2},${level.y + level.height}`,
+            // Bottom left
+            `${margin.left + (chartWidth - level.bottomWidth) / 2},${level.y + level.height}`
+          ].join(' ');
+          
           return (
-            <g key={i}>
-              <line
-                x1={margin.left}
-                y1={y}
-                x2={width - margin.right}
-                y2={y}
-                stroke="#e2e8f0"
-                strokeWidth="1"
-                strokeDasharray="4 2"
+            <g key={index}>
+              <motion.polygon
+                points={points}
+                fill={color}
+                fillOpacity={isHovered ? 0.9 : 0.7}
+                stroke={color}
+                strokeWidth={isHovered ? 2 : 1}
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ 
+                  opacity: 1,
+                  scale: 1,
+                  transform: isHovered ? 'scale(1.02)' : 'scale(1)'
+                }}
+                transition={{ 
+                  duration: animationDuration,
+                  delay: index * 0.1,
+                  type: 'spring',
+                  stiffness: 100
+                }}
+                onMouseEnter={() => setHoveredLevel(index)}
+                onMouseLeave={() => setHoveredLevel(null)}
               />
-              <text x={margin.left - 10} y={y} fontSize="12" textAnchor="end" fill="#64748b">
-                {Math.round(value)}
-              </text>
+              
+              {/* Left label */}
+              <motion.text
+                x={margin.left - 20}
+                y={level.y + level.height / 2}
+                textAnchor="end"
+                dominantBaseline="middle"
+                className={`text-sm ${isHovered ? 'font-semibold' : 'font-normal'} fill-gray-700`}
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: margin.left - 20 }}
+                transition={{ duration: 0.3, delay: animationDuration + index * 0.1 }}
+              >
+                {level.item.label}
+              </motion.text>
+              
+              {/* Right value and percentage */}
+              <motion.text
+                x={width - margin.right + 20}
+                y={level.y + level.height / 2}
+                textAnchor="start"
+                dominantBaseline="middle"
+                className="text-sm fill-gray-600"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: width - margin.right + 20 }}
+                transition={{ duration: 0.3, delay: animationDuration + index * 0.1 }}
+              >
+                <tspan className={isHovered ? 'font-semibold' : 'font-normal'}>
+                  {level.item.value.toLocaleString()}
+                </tspan>
+                {showPercentages && (
+                  <tspan dx="8" className="text-xs fill-gray-400">
+                    ({level.percentage.toFixed(1)}%)
+                  </tspan>
+                )}
+              </motion.text>
             </g>
           );
         })}
-
-        {/* Bubbles */}
-        {data.map((item, index) =>
-          keys.map((key, keyIndex) => {
-            const value = Number(item[key] || 0);
-            const x = xScale(index) + keyIndex * 60;
-            const y = yScale(value);
-            const size = bubbleSize(value);
-            const isHovered = hoveredBubble?.key === key && hoveredBubble?.index === index;
-
-            return (
-              <g key={`${index}-${key}`}>
-                <motion.circle
-                  cx={x}
-                  cy={y}
-                  r={size / 2}
-                  fill={config[key].color}
-                  fillOpacity={0.6}
-                  stroke={config[key].color}
-                  strokeWidth="2"
-                  onMouseEnter={() => setHoveredBubble({ key, index })}
-                  onMouseLeave={() => setHoveredBubble(null)}
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 300,
-                    damping: 20,
-                    delay: index * 0.1,
-                  }}
-                />
-                {isHovered && (
-                  <motion.g
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                  >
-                    <rect
-                      x={x - 45}
-                      y={y - size - 30}
-                      width="90"
-                      height="24"
-                      fill="white"
-                      rx="4"
-                      filter="drop-shadow(0 1px 2px rgb(0 0 0 / 0.1))"
-                    />
-                    <text
-                      x={x}
-                      y={y - size - 14}
-                      fontSize="12"
-                      textAnchor="middle"
-                      fill="#1e293b"
-                    >
-                      {`${config[key].label}: ${value}`}
-                    </text>
-                  </motion.g>
-                )}
-              </g>
-            );
-          })
-        )}
-
-        {/* X-axis labels */}
-        {data.map((item, index) => (
-          <text
-            key={index}
-            x={xScale(index) + 30}
-            y={height - margin.bottom + 20}
-            fontSize="12"
-            textAnchor="middle"
-            fill="#64748b"
-          >
-            {item.month}
-          </text>
-        ))}
-
-        {/* Legend */}
-        <g transform={`translate(${width - 100}, 20)`}>
-          {keys.map((key, index) => (
-            <g key={key} transform={`translate(0, ${index * 25})`}>
-              <circle r="6" fill={config[key].color} />
-              <text x="15" y="4" fontSize="12" fill="#64748b">
-                {config[key].label}
-              </text>
-            </g>
-          ))}
-        </g>
       </svg>
+      
+      {/* Tooltip */}
+      {hoveredLevel !== null && (
+        <div
+          className="absolute bg-white p-3 rounded shadow-lg text-sm z-10"
+          style={{
+            left: width / 2,
+            top: levels[hoveredLevel].y + levels[hoveredLevel].height / 2,
+            transform: 'translate(-50%, -50%)'
+          }}
+        >
+          <div className="font-medium">{levels[hoveredLevel].item.label}</div>
+          <div>Value: {levels[hoveredLevel].item.value.toLocaleString()}</div>
+          <div>Conversion: {levels[hoveredLevel].percentage.toFixed(1)}%</div>
+          {hoveredLevel > 0 && (
+            <div className="text-red-500">
+              Dropoff: {levels[hoveredLevel].dropoff.toFixed(1)}%
+            </div>
+          )}
+          {levels[hoveredLevel].item.description && (
+            <div className="mt-1 text-xs text-gray-500">
+              {levels[hoveredLevel].item.description}
+            </div>
+          )}
+        </div>
+      )}
     </div>
   );
 }
 
 // Example Usage
-const exampleData = [
-  { month: "Jan", active: 800, new: 200 },
-  { month: "Feb", active: 1000, new: 300 },
-  { month: "Mar", active: 1200, new: 400 },
-  { month: "Apr", active: 1100, new: 350 },
-  { month: "May", active: 1300, new: 450 },
-  { month: "Jun", active: 1500, new: 500 },
+const exampleData: FunnelDataItem[] = [
+  { label: "Visitors", value: 1000 },
+  { label: "Leads", value: 200 },
+  { label: "Proposals", value: 100 },
+  { label: "Negotiations", value: 50 },
+  { label: "Closed Deals", value: 20 },
 ];
 
-const exampleConfig = {
-  active: {
-    label: "Active Users",
-    color: "#3b82f6",
-  },
-  new: {
-    label: "New Users",
-    color: "#10b981",
-  },
-} satisfies BubbleBarConfig;
-
 export function Component() {
-  return <BubbleBarChart data={exampleData} config={exampleConfig} className="" />;
+  return <FunnelChart data={exampleData} width={800} height={500} />;
 } 

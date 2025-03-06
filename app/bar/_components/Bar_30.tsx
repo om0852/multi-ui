@@ -3,179 +3,235 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 
-type PolarBarConfig = {
-  [key: string]: {
-    label: string;
-    color: string;
-  };
-};
+interface RadialProgressRing {
+  label: string;
+  value: number;
+  maxValue?: number;
+  color?: string;
+  thickness?: number;
+}
 
-type PolarBarProps = {
-  data: { [key: string]: string | number }[];
-  config: PolarBarConfig;
-  className?: string;
-};
+interface RadialProgressChartProps {
+  data: RadialProgressRing[];
+  width?: number;
+  height?: number;
+  innerRadius?: number;
+  gap?: number;
+  animationDuration?: number;
+  showLabels?: boolean;
+  colorPalette?: string[];
+  gradientOffset?: number;
+}
 
-export function PolarBarChart({ data, config, className }: PolarBarProps) {
-  const [hoveredBar, setHoveredBar] = useState<{ key: string; index: number } | null>(null);
-
-  const width = 800;
-  const height = 500;
-  const centerX = width / 2;
-  const centerY = height / 2;
-  const radius = Math.min(width, height) / 3;
-
-  const keys = Object.keys(config);
-  const maxValue = Math.max(
-    ...data.flatMap((item) => keys.map((key) => Number(item[key] || 0)))
-  );
-
-  const angleStep = (2 * Math.PI) / data.length;
-  const barWidth = (2 * Math.PI * radius) / (data.length * 4);
-
-  const polarToCartesian = (angle: number, r: number) => ({
-    x: centerX + r * Math.cos(angle - Math.PI / 2),
-    y: centerY + r * Math.sin(angle - Math.PI / 2),
+export default function RadialProgressChart({
+  data,
+  width = 400,
+  height = 400,
+  innerRadius = 60,
+  gap = 4,
+  animationDuration = 1.2,
+  showLabels = true,
+  colorPalette = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899', '#6366F1'],
+  gradientOffset = 0.2
+}: RadialProgressChartProps) {
+  const [hoveredRing, setHoveredRing] = useState<number | null>(null);
+  
+  const center = { x: width / 2, y: height / 2 };
+  const maxRadius = Math.min(width, height) / 2 - 40;
+  
+  // Calculate dimensions for each ring
+  const rings = data.map((ring, index) => {
+    const thickness = ring.thickness || (maxRadius - innerRadius - (data.length - 1) * gap) / data.length;
+    const radius = innerRadius + index * (thickness + gap);
+    const color = ring.color || colorPalette[index % colorPalette.length];
+    const maxValue = ring.maxValue || 100;
+    const percentage = (ring.value / maxValue) * 100;
+    
+    // Calculate path for the ring
+    const circumference = 2 * Math.PI * radius;
+    const dashArray = `${(percentage * circumference) / 100} ${circumference}`;
+    
+    // Create gradient IDs
+    const gradientId = `gradient-${index}`;
+    const gradientIdHover = `gradient-hover-${index}`;
+    
+    return {
+      ...ring,
+      radius,
+      thickness,
+      color,
+      maxValue,
+      percentage,
+      circumference,
+      dashArray,
+      gradientId,
+      gradientIdHover
+    };
   });
-
+  
   return (
-    <div className="bg-white p-4 rounded-lg">
-      <svg className={`w-full ${className}`} viewBox={`0 0 ${width} ${height}`}>
-        {/* Background circles */}
-        {[0.2, 0.4, 0.6, 0.8, 1].map((scale) => (
-          <circle
-            key={scale}
-            cx={centerX}
-            cy={centerY}
-            r={radius * scale}
-            fill="none"
-            stroke="#e2e8f0"
-            strokeWidth="1"
-            strokeDasharray="4 2"
-          />
-        ))}
-
-        {/* Bars */}
-        {data.map((item, index) =>
-          keys.map((key) => {
-            const value = Number(item[key] || 0);
-            const angle = index * angleStep;
-            const r = (value / maxValue) * radius;
-            const isHovered = hoveredBar?.key === key && hoveredBar?.index === index;
-
-            const startAngle = angle - barWidth / 2;
-            const endAngle = angle + barWidth / 2;
-
-            const path = [
-              `M ${polarToCartesian(startAngle, 0).x} ${polarToCartesian(startAngle, 0).y}`,
-              `L ${polarToCartesian(startAngle, r).x} ${polarToCartesian(startAngle, r).y}`,
-              `A ${r} ${r} 0 0 1 ${polarToCartesian(endAngle, r).x} ${polarToCartesian(endAngle, r).y}`,
-              `L ${polarToCartesian(endAngle, 0).x} ${polarToCartesian(endAngle, 0).y}`,
-              "Z",
-            ].join(" ");
-
-            return (
-              <g key={`${index}-${key}`}>
-                <motion.path
-                  d={path}
-                  fill={config[key].color}
-                  opacity={0.7}
-                  onMouseEnter={() => setHoveredBar({ key, index })}
-                  onMouseLeave={() => setHoveredBar(null)}
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  transition={{
-                    type: "spring",
-                    stiffness: 300,
-                    damping: 20,
-                    delay: index * 0.1,
-                  }}
+    <div className="relative" style={{ width, height }}>
+      <svg width={width} height={height}>
+        {/* Gradients */}
+        <defs>
+          {rings.map((ring, index) => (
+            <g key={`gradients-${index}`}>
+              <linearGradient
+                id={ring.gradientId}
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="0%"
+              >
+                <stop
+                  offset="0%"
+                  style={{ stopColor: ring.color, stopOpacity: 0.7 }}
                 />
-                {isHovered && (
-                  <motion.g
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                  >
-                    <rect
-                      x={polarToCartesian(angle, r).x - 45}
-                      y={polarToCartesian(angle, r).y - 30}
-                      width="90"
-                      height="24"
-                      fill="white"
-                      rx="4"
-                      filter="drop-shadow(0 1px 2px rgb(0 0 0 / 0.1))"
-                    />
-                    <text
-                      x={polarToCartesian(angle, r).x}
-                      y={polarToCartesian(angle, r).y - 14}
-                      fontSize="12"
-                      textAnchor="middle"
-                      fill="#1e293b"
-                    >
-                      {`${config[key].label}: ${value}`}
-                    </text>
-                  </motion.g>
-                )}
-              </g>
-            );
-          })
-        )}
-
-        {/* Labels */}
-        {data.map((item, index) => {
-          const angle = index * angleStep;
-          const labelPos = polarToCartesian(angle, radius + 30);
-          return (
-            <text
-              key={index}
-              x={labelPos.x}
-              y={labelPos.y}
-              fontSize="12"
-              textAnchor="middle"
-              fill="#64748b"
-            >
-              {item.month}
-            </text>
-          );
-        })}
-
-        {/* Legend */}
-        <g transform={`translate(${width - 100}, 20)`}>
-          {keys.map((key, index) => (
-            <g key={key} transform={`translate(0, ${index * 25})`}>
-              <rect width="12" height="12" fill={config[key].color} rx="2" />
-              <text x="20" y="10" fontSize="12" fill="#64748b">
-                {config[key].label}
-              </text>
+                <stop
+                  offset={`${100 - gradientOffset * 100}%`}
+                  style={{ stopColor: ring.color, stopOpacity: 0.9 }}
+                />
+              </linearGradient>
+              <linearGradient
+                id={ring.gradientIdHover}
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="0%"
+              >
+                <stop
+                  offset="0%"
+                  style={{ stopColor: ring.color, stopOpacity: 0.8 }}
+                />
+                <stop
+                  offset={`${100 - gradientOffset * 100}%`}
+                  style={{ stopColor: ring.color, stopOpacity: 1 }}
+                />
+              </linearGradient>
             </g>
           ))}
+        </defs>
+        
+        {/* Background rings */}
+        {rings.map((ring, index) => (
+          <circle
+            key={`bg-${index}`}
+            cx={center.x}
+            cy={center.y}
+            r={ring.radius}
+            fill="none"
+            stroke="#e2e8f0"
+            strokeWidth={ring.thickness}
+            opacity={0.2}
+          />
+        ))}
+        
+        {/* Progress rings */}
+        {rings.map((ring, index) => {
+          const isHovered = hoveredRing === index;
+          
+          return (
+            <g key={`progress-${index}`}>
+              <motion.circle
+                cx={center.x}
+                cy={center.y}
+                r={ring.radius}
+                fill="none"
+                stroke={`url(#${isHovered ? ring.gradientIdHover : ring.gradientId})`}
+                strokeWidth={ring.thickness}
+                strokeDasharray={ring.dashArray}
+                strokeDashoffset={ring.circumference * 0.25}
+                transform={`rotate(-90 ${center.x} ${center.y})`}
+                strokeLinecap="round"
+                initial={{ strokeDasharray: `0 ${ring.circumference}` }}
+                animate={{ strokeDasharray: ring.dashArray }}
+                transition={{ 
+                  duration: animationDuration,
+                  delay: index * 0.2,
+                  type: 'spring',
+                  stiffness: 60
+                }}
+                onMouseEnter={() => setHoveredRing(index)}
+                onMouseLeave={() => setHoveredRing(null)}
+              />
+              
+              {/* Label */}
+              {showLabels && (
+                <g transform={`translate(${center.x}, ${center.y})`}>
+                  <motion.text
+                    y={-ring.radius}
+                    textAnchor="middle"
+                    className={`text-sm ${isHovered ? 'font-semibold' : 'font-normal'} fill-gray-700`}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.3, delay: animationDuration + index * 0.1 }}
+                  >
+                    {ring.label}
+                  </motion.text>
+                  <motion.text
+                    y={-ring.radius + 20}
+                    textAnchor="middle"
+                    className={`text-sm ${isHovered ? 'font-semibold' : 'font-normal'} fill-gray-900`}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.3, delay: animationDuration + index * 0.1 }}
+                  >
+                    {ring.percentage.toFixed(1)}%
+                  </motion.text>
+                </g>
+              )}
+            </g>
+          );
+        })}
+        
+        {/* Center text */}
+        <g transform={`translate(${center.x}, ${center.y})`}>
+          <text
+            textAnchor="middle"
+            className="text-lg font-semibold fill-gray-900"
+          >
+            Progress
+          </text>
+          <text
+            y={25}
+            textAnchor="middle"
+            className="text-sm fill-gray-500"
+          >
+            {rings.length} metrics
+          </text>
         </g>
       </svg>
+      
+      {/* Tooltip */}
+      {hoveredRing !== null && (
+        <div
+          className="absolute bg-white p-3 rounded shadow-lg text-sm z-10"
+          style={{
+            left: center.x,
+            top: center.y - rings[hoveredRing].radius,
+            transform: 'translate(-50%, -100%)'
+          }}
+        >
+          <div className="font-medium">{rings[hoveredRing].label}</div>
+          <div>Value: {rings[hoveredRing].value.toLocaleString()}</div>
+          <div>Target: {rings[hoveredRing].maxValue?.toLocaleString()}</div>
+          <div>Progress: {rings[hoveredRing].percentage.toFixed(1)}%</div>
+        </div>
+      )}
     </div>
   );
 }
 
 // Example Usage
 const exampleData = [
-  { month: "Jan", sales: 100, profit: 30 },
-  { month: "Feb", sales: 120, profit: 40 },
-  { month: "Mar", sales: 150, profit: 50 },
-  { month: "Apr", sales: 80, profit: 25 },
-  { month: "May", sales: 200, profit: 70 },
-  { month: "Jun", sales: 180, profit: 60 },
+  { label: "Sales", value: 100 },
+  { label: "Profit", value: 80 },
+  { label: "Customers", value: 90 },
+  { label: "Inventory", value: 70 },
+  { label: "Marketing", value: 60 },
+  { label: "Revenue", value: 120 },
 ];
 
-const exampleConfig = {
-  sales: {
-    label: "Sales",
-    color: "#3b82f6",
-  },
-  profit: {
-    label: "Profit",
-    color: "#10b981",
-  },
-} satisfies PolarBarConfig;
-
 export function Component() {
-  return <PolarBarChart data={exampleData} config={exampleConfig} className="" />;
+  return <RadialProgressChart data={exampleData} />;
 } 
