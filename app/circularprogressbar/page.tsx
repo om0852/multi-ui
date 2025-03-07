@@ -150,11 +150,12 @@
 
 // export default page
 import React from 'react'
+import Example_1 from './examples/Example_40'
 
 const page = () => {
   return (
     <div>
-      
+      <Example_1 />
     </div>
   )
 }
