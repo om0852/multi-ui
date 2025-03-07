@@ -1,42 +1,29 @@
 'use client';
 import React, { useState } from 'react';
-
-import LiquidBubblePagination from './_components/LiquidBubblePagination';
-import CrystalPagination from './_components/CrystalPagination';
-import MagneticPulsePagination from './_components/MagneticPulsePagination';
-import CosmicGlowPagination from './_components/CosmicGlowPagination';
-
-
+import PlasmaFieldExample from './_examples/PlasmaFieldExample';
+import MatrixRainExample from './_examples/MatrixRainExample';
+import QuantumJumpExample from './_examples/QuantumJumpExample';
+import OrigamiExample from './_examples/OrigamiExample';
+import PrismExample from './_examples/PrismExample';
+import AuroraExample from './_examples/AuroraExample';
+import VortexExample from './_examples/VortexExample';
+import CrystalExample from './_examples/CrystalExample';
+import LiquidBubbleExample from './_examples/LiquidBubbleExample';
+import CosmicGlowExample from './_examples/CosmicGlowExample';
 
 export default function PaginationDemo() {
-  const [currentPage, setCurrentPage] = useState(1);
-  const totalPages = 5;
-
   return (
     <div className="min-h-screen p-8 space-y-16">
-             
-             <div className="space-y-4">
-        <h2 className="text-xl font-bold text-center">Liquid Bubble Pagination</h2>
-        <LiquidBubblePagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />
-      </div>
-
-      <div className="space-y-4">
-        <h2 className="text-xl font-bold text-center">Crystal Pagination</h2>
-        <CrystalPagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />
-      </div>
-
-      <div className="space-y-4">
-        <h2 className="text-xl font-bold text-center">Magnetic Pulse Pagination</h2>
-        <MagneticPulsePagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />
-      </div>
-
-      
-     
-      <div className="space-y-4">
-        <h2 className="text-xl font-bold text-center">Cosmic Glow Pagination</h2>
-        <CosmicGlowPagination totalPages={totalPages} currentPage={currentPage} onPageChange={setCurrentPage} />
-      </div>
-     
+      <PlasmaFieldExample/>
+      <MatrixRainExample/>
+      <QuantumJumpExample/>
+      <OrigamiExample/>
+      <PrismExample/>
+      <AuroraExample/>
+      <VortexExample />
+      <CrystalExample />
+      <LiquidBubbleExample />
+      <CosmicGlowExample />
     </div>
   );
 }
