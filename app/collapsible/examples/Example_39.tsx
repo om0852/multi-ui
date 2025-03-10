@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Collapsible_39 from '../_components/Collapsible_39';
-import { FaHeart, FaComment, FaShare, FaEllipsis } from 'react-icons/fa6';
+import { FaHeart, FaComment, FaShare, FaDumbbell } from 'react-icons/fa6';
 
 const Example_39: React.FC = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -21,7 +21,7 @@ const Example_39: React.FC = () => {
           
           <p className="text-gray-700 dark:text-gray-300">
             Just spent the most amazing week in Bali! The sunsets were absolutely breathtaking, the food was incredible, 
-            and the people were so welcoming. If you haven't been yet, add it to your bucket list ASAP! 
+            and the people were so welcoming. If you haven&apos;t been yet, add it to your bucket list ASAP! 
             #TravelGoals #Bali #Wanderlust
           </p>
           
@@ -58,7 +58,7 @@ const Example_39: React.FC = () => {
               <div className="w-8 h-8 rounded-full bg-gray-300 dark:bg-gray-700"></div>
               <div>
                 <p className="font-medium text-gray-800 dark:text-gray-200">Mike Chen</p>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">Great photos! I'm planning a trip there next month. Any recommendations?</p>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">Great photos! I&apos;m planning a trip there next month. Any recommendations?</p>
                 <div className="flex items-center gap-3 mt-1 text-xs text-gray-500 dark:text-gray-400">
                   <span>Like</span>
                   <span>Reply</span>
@@ -102,9 +102,9 @@ const Example_39: React.FC = () => {
           </div>
           
           <p className="text-gray-700 dark:text-gray-300">
-            Had the most incredible dining experience at Bistro Nouveau last night! The chef's tasting menu was 
+            Had the most incredible dining experience at Bistro Nouveau last night! The chef&apos;s tasting menu was 
             absolutely phenomenal - from the perfectly al dente carbonara to the refreshing salad with house vinaigrette, 
-            followed by the most decadent berry dessert. And don't even get me started on their signature cocktails! 
+            followed by the most decadent berry dessert. And don&apos;t even get me started on their signature cocktails! 
             #FoodieHeaven #FineDining #Yum
           </p>
           
@@ -152,8 +152,8 @@ const Example_39: React.FC = () => {
           </div>
           
           <p className="text-gray-700 dark:text-gray-300">
-            6 months into my fitness journey and I'm finally seeing real progress! Down 20 pounds and feeling 
-            stronger than ever. It hasn't been easy, but consistency is key. Huge thanks to my trainer 
+            6 months into my fitness journey and I&apos;m finally seeing real progress! Down 20 pounds and feeling 
+            stronger than ever. It hasn&apos;t been easy, but consistency is key. Huge thanks to my trainer 
             @FitnessCoach for pushing me to my limits every session. 
             #FitnessJourney #Transformation #HealthyLifestyle
           </p>
@@ -178,7 +178,7 @@ const Example_39: React.FC = () => {
               <div className="w-8 h-8 rounded-full bg-gray-300 dark:bg-gray-700"></div>
               <div>
                 <p className="font-medium text-gray-800 dark:text-gray-200">FitnessCoach</p>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">So proud of your progress! Keep up the amazing work! 💪</p>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">So proud of your progress! Keep up the amazing work! <FaDumbbell className="inline text-gray-600 dark:text-gray-400" /></p>
                 <div className="flex items-center gap-3 mt-1 text-xs text-gray-500 dark:text-gray-400">
                   <span>Like</span>
                   <span>Reply</span>
@@ -191,7 +191,7 @@ const Example_39: React.FC = () => {
               <div className="w-8 h-8 rounded-full bg-gray-300 dark:bg-gray-700"></div>
               <div>
                 <p className="font-medium text-gray-800 dark:text-gray-200">Emily Rodriguez</p>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">You look amazing! What's your workout routine like?</p>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">You look amazing! What&apos;s your workout routine like?</p>
                 <div className="flex items-center gap-3 mt-1 text-xs text-gray-500 dark:text-gray-400">
                   <span>Like</span>
                   <span>Reply</span>
@@ -215,7 +215,7 @@ const Example_39: React.FC = () => {
           </div>
           
           <p className="text-gray-700 dark:text-gray-300">
-            Just got my hands on the latest XYZ Pro smartphone and I'm blown away by the improvements! 
+            Just got my hands on the latest XYZ Pro smartphone and I&apos;m blown away by the improvements! 
             The camera quality is insane, battery life is significantly better, and the new AI features 
             are actually useful. Full review coming soon on my channel, but initial impressions are very positive! 
             #TechReview #XYZPro #Gadgets
@@ -241,7 +241,7 @@ const Example_39: React.FC = () => {
               <div className="w-8 h-8 rounded-full bg-gray-300 dark:bg-gray-700"></div>
               <div>
                 <p className="font-medium text-gray-800 dark:text-gray-200">TechGeek42</p>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">How's the camera performance in low light? That was an issue with the previous model.</p>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">How&apos;s the camera performance in low light? That was an issue with the previous model.</p>
                 <div className="flex items-center gap-3 mt-1 text-xs text-gray-500 dark:text-gray-400">
                   <span>Like</span>
                   <span>Reply</span>
@@ -254,7 +254,7 @@ const Example_39: React.FC = () => {
               <div className="w-8 h-8 rounded-full bg-gray-300 dark:bg-gray-700"></div>
               <div>
                 <p className="font-medium text-gray-800 dark:text-gray-200">SarahTech</p>
-                <p className="text-gray-600 dark:text-gray-400 text-sm">Looking forward to the full review! Is it worth upgrading from last year's model?</p>
+                <p className="text-gray-600 dark:text-gray-400 text-sm">Looking forward to the full review! Is it worth upgrading from last year&apos;s model?</p>
                 <div className="flex items-center gap-3 mt-1 text-xs text-gray-500 dark:text-gray-400">
                   <span>Like</span>
                   <span>Reply</span>
@@ -303,7 +303,7 @@ const Example_39: React.FC = () => {
             </div>
             <input 
               type="text" 
-              placeholder="What's on your mind?" 
+              placeholder="What&apos;s on your mind?" 
               className="flex-1 bg-gray-100 dark:bg-gray-700 border-none rounded-full py-2 px-4 text-gray-700 dark:text-gray-200"
               readOnly
             />

@@ -15,12 +15,12 @@ const Example_31: React.FC = () => {
           <div className="mb-4">
             <h4 className="font-bold underline mb-2">Quadratic Formula</h4>
             <div className="bg-yellow-100 p-3 rounded-lg border border-yellow-300">
-              <p className="text-center font-bold">x = (-b ± √(b² - 4ac)) / 2a</p>
-              <p className="mt-2">For any quadratic equation in the form: ax² + bx + c = 0</p>
+              <p className="text-center font-bold">x = (-b ± √(b&sup2; - 4ac)) / 2a</p>
+              <p className="mt-2">For any quadratic equation in the form: ax&sup2; + bx + c = 0</p>
               <ul className="list-disc pl-5 mt-2">
                 <li>a, b, and c are constants</li>
                 <li>a cannot equal zero</li>
-                <li>If b² - 4ac &lt; 0, there are no real solutions</li>
+                <li>If b&sup2; - 4ac &lt; 0, there are no real solutions</li>
               </ul>
             </div>
           </div>
@@ -29,7 +29,7 @@ const Example_31: React.FC = () => {
             <h4 className="font-bold underline mb-2">Example Problems</h4>
             <div className="space-y-3">
               <div className="bg-blue-50 p-3 rounded-lg border border-blue-200">
-                <p className="font-medium">Solve: 2x² - 4x - 6 = 0</p>
+                <p className="font-medium">Solve: 2x&sup2; - 4x - 6 = 0</p>
                 <p className="mt-2">a = 2, b = -4, c = -6</p>
                 <p className="mt-1">x = (4 ± √(16 + 48)) / 4</p>
                 <p className="mt-1">x = (4 ± √64) / 4</p>
@@ -137,7 +137,7 @@ const Example_31: React.FC = () => {
             <div className="bg-yellow-100 p-3 rounded-lg border border-yellow-300">
               <ul className="space-y-2">
                 <li><span className="font-bold">Tragedies:</span> Hamlet, Macbeth, Romeo and Juliet, Othello, King Lear</li>
-                <li><span className="font-bold">Comedies:</span> A Midsummer Night's Dream, Much Ado About Nothing, Twelfth Night</li>
+                <li><span className="font-bold">Comedies:</span> A Midsummer Night&apos;s Dream, Much Ado About Nothing, Twelfth Night</li>
                 <li><span className="font-bold">Histories:</span> Richard III, Henry V, Julius Caesar</li>
                 <li><span className="font-bold">Sonnets:</span> 154 sonnets published in 1609</li>
               </ul>
@@ -148,18 +148,18 @@ const Example_31: React.FC = () => {
             <h4 className="font-bold underline mb-2">Famous Quotes</h4>
             <div className="space-y-3">
               <div className="bg-blue-50 p-3 rounded-lg border border-blue-200 italic">
-                <p>"To be, or not to be, that is the question."</p>
+                <p>&quot;To be, or not to be, that is the question.&quot;</p>
                 <p className="text-right text-sm mt-1">- Hamlet</p>
               </div>
               
               <div className="bg-blue-50 p-3 rounded-lg border border-blue-200 italic">
-                <p>"All the world's a stage, and all the men and women merely players."</p>
+                <p>&quot;All the world&apos;s a stage, and all the men and women merely players.&quot;</p>
                 <p className="text-right text-sm mt-1">- As You Like It</p>
               </div>
               
               <div className="bg-blue-50 p-3 rounded-lg border border-blue-200 italic">
-                <p>"The course of true love never did run smooth."</p>
-                <p className="text-right text-sm mt-1">- A Midsummer Night's Dream</p>
+                <p>&quot;The course of true love never did run smooth.&quot;</p>
+                <p className="text-right text-sm mt-1">- A Midsummer Night&apos;s Dream</p>
               </div>
             </div>
           </div>

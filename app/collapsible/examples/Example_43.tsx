@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Collapsible_43 from '../_components/Collapsible_43';
-import { FaLeaf, FaWater, FaPaw, FaMountain, FaSun } from 'react-icons/fa6';
+import { FaLeaf, FaWater, FaPaw, FaMountain, FaSun, FaSeedling, FaPeopleGroup, FaMicroscope, FaFish, FaHippo, FaCat, FaSatelliteDish, FaCamera, FaDna, FaSatellite, FaMountainSun } from 'react-icons/fa6';
 
 const Example_43: React.FC = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -14,7 +14,7 @@ const Example_43: React.FC = () => {
       content: (
         <div className="space-y-4">
           <div className="aspect-video bg-gradient-to-br from-green-900 to-green-800 rounded-lg flex items-center justify-center mb-3 overflow-hidden">
-            <span className="text-6xl">🌳</span>
+            <span className="text-6xl"><FaLeaf /></span>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -22,7 +22,7 @@ const Example_43: React.FC = () => {
               <h4 className="font-medium text-green-800 dark:text-green-400 mb-2">Project Overview</h4>
               <p className="text-green-700 dark:text-green-300 text-sm">
                 Our flagship initiative focuses on protecting 50,000 acres of pristine Amazon rainforest 
-                from deforestation and illegal logging. Working with indigenous communities, we've established 
+                from deforestation and illegal logging. Working with indigenous communities, we&apos;ve established 
                 sustainable conservation practices that preserve biodiversity while supporting local economies.
               </p>
             </div>
@@ -54,17 +54,17 @@ const Example_43: React.FC = () => {
             <h4 className="font-medium text-green-800 dark:text-green-400 mb-2">How You Can Help</h4>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-center">
               <div className="bg-white dark:bg-green-900 dark:bg-opacity-30 p-3 rounded-lg shadow-sm">
-                <div className="text-3xl mb-2">🌱</div>
+                <div className="text-3xl mb-2"><FaSeedling /></div>
                 <h5 className="text-green-700 dark:text-green-300 font-medium text-sm mb-1">Sponsor an Acre</h5>
                 <p className="text-green-600 dark:text-green-400 text-xs">$25/month protects one acre of rainforest</p>
               </div>
               <div className="bg-white dark:bg-green-900 dark:bg-opacity-30 p-3 rounded-lg shadow-sm">
-                <div className="text-3xl mb-2">👥</div>
+                <div className="text-3xl mb-2"><FaPeopleGroup /></div>
                 <h5 className="text-green-700 dark:text-green-300 font-medium text-sm mb-1">Volunteer Program</h5>
                 <p className="text-green-600 dark:text-green-400 text-xs">Join our 2-week conservation expeditions</p>
               </div>
               <div className="bg-white dark:bg-green-900 dark:bg-opacity-30 p-3 rounded-lg shadow-sm">
-                <div className="text-3xl mb-2">🔬</div>
+                <div className="text-3xl mb-2"><FaMicroscope /></div>
                 <h5 className="text-green-700 dark:text-green-300 font-medium text-sm mb-1">Research Support</h5>
                 <p className="text-green-600 dark:text-green-400 text-xs">Fund biodiversity studies and monitoring</p>
               </div>
@@ -79,7 +79,7 @@ const Example_43: React.FC = () => {
       content: (
         <div className="space-y-4">
           <div className="aspect-video bg-gradient-to-br from-blue-900 to-blue-800 rounded-lg flex items-center justify-center mb-3 overflow-hidden">
-            <span className="text-6xl">🐋</span>
+            <span className="text-6xl"><FaFish /></span>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -88,7 +88,7 @@ const Example_43: React.FC = () => {
               <p className="text-blue-700 dark:text-blue-300 text-sm">
                 Our marine biologists are pioneering innovative techniques to restore damaged coral reefs 
                 in the Pacific Ocean. Using a combination of coral farming, transplantation, and artificial 
-                reef structures, we've successfully rehabilitated over 30 acres of reef habitat that now 
+                reef structures, we&apos;ve successfully rehabilitated over 30 acres of reef habitat that now 
                 supports thriving marine ecosystems.
               </p>
               <div className="mt-3 grid grid-cols-3 gap-2 text-center text-xs">
@@ -111,7 +111,7 @@ const Example_43: React.FC = () => {
               <h4 className="font-medium text-blue-800 dark:text-blue-400 mb-2">Ocean Cleanup</h4>
               <p className="text-blue-700 dark:text-blue-300 text-sm">
                 Our fleet of specialized vessels works to remove plastic pollution from critical marine habitats.
-                Using advanced collection systems, we've removed over 500 tons of plastic from the ocean.
+                Using advanced collection systems, we&apos;ve removed over 500 tons of plastic from the ocean.
               </p>
               <div className="mt-3 text-center bg-white dark:bg-blue-900 dark:bg-opacity-30 p-3 rounded">
                 <span className="block text-3xl text-blue-800 dark:text-blue-300 font-medium">500+</span>
@@ -148,14 +148,14 @@ const Example_43: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <div className="aspect-square bg-gradient-to-br from-amber-900 to-amber-800 rounded-lg flex items-center justify-center mb-3 overflow-hidden">
-                <span className="text-6xl">🐘</span>
+                <span className="text-6xl"><FaHippo /></span>
               </div>
               <div className="bg-amber-100 dark:bg-amber-900 dark:bg-opacity-20 p-4 rounded-lg">
                 <h4 className="font-medium text-amber-800 dark:text-amber-400 mb-2">Elephant Conservation</h4>
                 <p className="text-amber-700 dark:text-amber-300 text-sm">
                   Our anti-poaching units work alongside local authorities to protect elephant populations 
                   in Eastern Africa. Through community education and economic development programs, 
-                  we've reduced poaching incidents by 78% in our protected areas.
+                  we&apos;ve reduced poaching incidents by 78% in our protected areas.
                 </p>
                 <div className="mt-3 flex justify-between text-xs">
                   <div className="text-center">
@@ -172,13 +172,13 @@ const Example_43: React.FC = () => {
             
             <div>
               <div className="aspect-square bg-gradient-to-br from-amber-900 to-amber-800 rounded-lg flex items-center justify-center mb-3 overflow-hidden">
-                <span className="text-6xl">🐅</span>
+                <span className="text-6xl"><FaCat /></span>
               </div>
               <div className="bg-amber-100 dark:bg-amber-900 dark:bg-opacity-20 p-4 rounded-lg">
                 <h4 className="font-medium text-amber-800 dark:text-amber-400 mb-2">Tiger Recovery Project</h4>
                 <p className="text-amber-700 dark:text-amber-300 text-sm">
                   Our comprehensive approach to tiger conservation includes habitat protection, 
-                  anti-poaching patrols, and wildlife corridors. Since 2010, we've seen a 35% 
+                  anti-poaching patrols, and wildlife corridors. Since 2010, we&apos;ve seen a 35% 
                   increase in tiger populations across our project areas in Southeast Asia.
                 </p>
                 <div className="mt-3 flex justify-between text-xs">
@@ -203,19 +203,19 @@ const Example_43: React.FC = () => {
             </p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-center">
               <div className="bg-white dark:bg-amber-900 dark:bg-opacity-30 p-2 rounded">
-                <div className="text-2xl mb-1">📡</div>
+                <div className="text-2xl mb-1"><FaSatelliteDish /></div>
                 <span className="text-amber-700 dark:text-amber-300 text-xs">Satellite Tracking</span>
               </div>
               <div className="bg-white dark:bg-amber-900 dark:bg-opacity-30 p-2 rounded">
-                <div className="text-2xl mb-1">📸</div>
+                <div className="text-2xl mb-1"><FaCamera /></div>
                 <span className="text-amber-700 dark:text-amber-300 text-xs">Camera Traps</span>
               </div>
               <div className="bg-white dark:bg-amber-900 dark:bg-opacity-30 p-2 rounded">
-                <div className="text-2xl mb-1">🧬</div>
+                <div className="text-2xl mb-1"><FaDna /></div>
                 <span className="text-amber-700 dark:text-amber-300 text-xs">eDNA Sampling</span>
               </div>
               <div className="bg-white dark:bg-amber-900 dark:bg-opacity-30 p-2 rounded">
-                <div className="text-2xl mb-1">🛰️</div>
+                <div className="text-2xl mb-1"><FaSatellite /></div>
                 <span className="text-amber-700 dark:text-amber-300 text-xs">Drone Surveys</span>
               </div>
             </div>
@@ -229,7 +229,7 @@ const Example_43: React.FC = () => {
       content: (
         <div className="space-y-4">
           <div className="aspect-video bg-gradient-to-br from-slate-700 to-slate-600 rounded-lg flex items-center justify-center mb-3 overflow-hidden">
-            <span className="text-6xl">⛰️</span>
+            <span className="text-6xl"><FaMountainSun /></span>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -425,7 +425,7 @@ const Example_43: React.FC = () => {
           darkMode ? 'bg-gray-800 text-gray-300' : 'bg-white text-gray-700 shadow-sm'
         }`}>
           <p className="text-sm">
-            Join our global network of conservation partners and help protect our planet's most precious ecosystems.
+            Join our global network of conservation partners and help protect our planet&apos;s most precious ecosystems.
           </p>
           <button className={`mt-3 px-4 py-2 rounded-lg text-sm font-medium ${
             darkMode ? 'bg-green-700 text-white' : 'bg-green-600 text-white'

@@ -28,8 +28,8 @@ const Example_38: React.FC = () => {
             {'    '}<span className="text-blue-400">const</span> <span className="text-orange-400">processedData</span> <span className="text-gray-400">=</span> <span className="text-yellow-400">transformData</span><span className="text-gray-400">(</span><span className="text-orange-400">userData</span><span className="text-gray-400">);</span>
             {'    '}<span className="text-blue-400">return</span> <span className="text-orange-400">processedData</span><span className="text-gray-400">;</span>
             {'  '}<span className="text-gray-400">{'}'}</span> <span className="text-blue-400">catch</span> <span className="text-gray-400">(</span><span className="text-orange-400">error</span><span className="text-gray-400">) {'{'}</span>
-            {'    '}<span className="text-yellow-400">console</span><span className="text-gray-400">.</span><span className="text-yellow-400">error</span><span className="text-gray-400">(</span><span className="text-green-400">'Error processing user data:'</span><span className="text-gray-400">,</span> <span className="text-orange-400">error</span><span className="text-gray-400">);</span>
-            {'    '}<span className="text-blue-400">throw new</span> <span className="text-yellow-400">Error</span><span className="text-gray-400">(</span><span className="text-green-400">'Failed to process user data'</span><span className="text-gray-400">);</span>
+            {'    '}<span className="text-yellow-400">console</span><span className="text-gray-400">.</span><span className="text-yellow-400">error</span><span className="text-gray-400">(</span><span className="text-green-400">&apos;Error processing user data:&apos;</span><span className="text-gray-400">,</span> <span className="text-orange-400">error</span><span className="text-gray-400">);</span>
+            {'    '}<span className="text-blue-400">throw new</span> <span className="text-yellow-400">Error</span><span className="text-gray-400">(</span><span className="text-green-400">&apos;Failed to process user data&apos;</span><span className="text-gray-400">);</span>
             {'  '}<span className="text-gray-400">{'}'}</span>
             <span className="text-gray-400">{'}'}</span>
           </pre>
@@ -47,7 +47,7 @@ const Example_38: React.FC = () => {
             {'       '}SUM(o.total_amount) <span className="text-blue-400">AS</span> total_spent
             <span className="text-blue-400">FROM</span> users u
             <span className="text-blue-400">LEFT JOIN</span> orders o <span className="text-blue-400">ON</span> u.user_id = o.user_id
-            <span className="text-blue-400">WHERE</span> u.status = <span className="text-green-400">'active'</span>
+            <span className="text-blue-400">WHERE</span> u.status = <span className="text-green-400">&apos;active&apos;</span>
             <span className="text-blue-400">GROUP BY</span> u.user_id, u.username, u.email, u.created_at
             <span className="text-blue-400">HAVING</span> COUNT(o.order_id) <span className="text-blue-400">&gt;</span> 0
             <span className="text-blue-400">ORDER BY</span> total_spent <span className="text-blue-400">DESC</span>;
@@ -81,7 +81,7 @@ const Example_38: React.FC = () => {
       content: (
         <div className="font-mono text-sm">
           <pre className="whitespace-pre-wrap">
-            <span className="text-blue-400">version:</span> <span className="text-green-400">'3.8'</span>
+            <span className="text-blue-400">version:</span> <span className="text-green-400">&apos;3.8&apos;</span>
             
             <span className="text-blue-400">services:</span>
             {'  '}<span className="text-blue-400">app:</span>
@@ -89,7 +89,7 @@ const Example_38: React.FC = () => {
             {'      '}<span className="text-blue-400">context:</span> <span className="text-green-400">./</span>
             {'      '}<span className="text-blue-400">dockerfile:</span> <span className="text-green-400">Dockerfile</span>
             {'    '}<span className="text-blue-400">ports:</span>
-            {'      '}- <span className="text-green-400">'3000:3000'</span>
+            {'      '}- <span className="text-green-400">&apos;3000:3000&apos;</span>
             {'    '}<span className="text-blue-400">environment:</span>
             {'      '}<span className="text-blue-400">NODE_ENV:</span> <span className="text-green-400">production</span>
             {'      '}<span className="text-blue-400">DATABASE_URL:</span> <span className="text-green-400">postgres://user:password@db:5432/mydb</span>
@@ -112,7 +112,7 @@ const Example_38: React.FC = () => {
             {'  '}<span className="text-blue-400">redis:</span>
             {'    '}<span className="text-blue-400">image:</span> <span className="text-green-400">redis:6-alpine</span>
             {'    '}<span className="text-blue-400">ports:</span>
-            {'      '}- <span className="text-green-400">'6379:6379'</span>
+            {'      '}- <span className="text-green-400">&apos;6379:6379&apos;</span>
             
             <span className="text-blue-400">volumes:</span>
             {'  '}<span className="text-blue-400">postgres_data:</span>
@@ -150,7 +150,7 @@ const Example_38: React.FC = () => {
                     proxy_pass http://localhost:3000;
                     proxy_http_version 1.1;
                     proxy_set_header Upgrade \$http_upgrade;
-                    proxy_set_header Connection 'upgrade';
+                    proxy_set_header Connection &apos;upgrade&apos;;
                     proxy_set_header Host \$host;
                     proxy_cache_bypass \$http_upgrade;
                 {'}'}
@@ -170,12 +170,12 @@ const Example_38: React.FC = () => {
             
             <span className="text-pink-400"># Set up PM2 for process management</span>
             <span className="text-green-400">npm</span> install -g pm2
-            <span className="text-green-400">pm2</span> start npm --name "app" -- start
+            <span className="text-green-400">pm2</span> start npm --name &quot;app&quot; -- start
             <span className="text-green-400">pm2</span> startup
             <span className="text-green-400">pm2</span> save
             
             <span className="text-pink-400"># Print completion message</span>
-            <span className="text-green-400">echo</span> "Server setup complete!"
+            <span className="text-green-400">echo</span> &quot;Server setup complete!&quot;
           </pre>
         </div>
       )

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Collapsible_46 from '../_components/Collapsible_46';
-import { FaPlane, FaHotel, FaMapLocationDot, FaCompass, FaSuitcase } from 'react-icons/fa6';
+import { FaPlane, FaMapLocationDot, FaCompass, FaSuitcase } from 'react-icons/fa6';
 
 const Example_46: React.FC = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -56,7 +56,7 @@ const Example_46: React.FC = () => {
               <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm">
                 <h5 className="font-medium mb-1">Day 3-4: Art & Culture</h5>
                 <ul className="list-disc pl-5 text-sm text-gray-600 dark:text-gray-400">
-                  <li>Musée d'Orsay</li>
+                  <li>Musée d&apos;Orsay</li>
                   <li>Montmartre walking tour</li>
                   <li>Opera Garnier visit</li>
                 </ul>
@@ -154,7 +154,7 @@ const Example_46: React.FC = () => {
               <li>Get a JR Pass for trains</li>
               <li>Download offline maps</li>
               <li>Learn basic Japanese greetings</li>
-              <li>Carry cash (many places don't accept cards)</li>
+              <li>Carry cash (many places don&apos;t accept cards)</li>
             </ul>
           </div>
         </div>

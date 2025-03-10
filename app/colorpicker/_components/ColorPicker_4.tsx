@@ -1,248 +1,189 @@
-"use client";
-import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+'use client';
+import React, { useState } from 'react';
 
-interface ColorPickerProps {
-  initialColor?: string;
-  className?: string;
-}
-
-const schemeAnimation = `
-  @keyframes fadeSlide {
-    from { transform: translateX(-10px); opacity: 0; }
-    to { transform: translateX(0); opacity: 1; }
+const neumorphicAnimation = `
+  @keyframes pressIn {
+    from { 
+      box-shadow: 6px 6px 12px #a8b1c1,
+                 -6px -6px 12px #ffffff;
+    }
+    to { 
+      box-shadow: inset 2px 2px 5px #a8b1c1,
+                 inset -2px -2px 5px #ffffff;
+    }
   }
 
-  @keyframes colorPulse {
+  @keyframes pressOut {
+    from { 
+      box-shadow: inset 2px 2px 5px #a8b1c1,
+                 inset -2px -2px 5px #ffffff;
+    }
+    to { 
+      box-shadow: 6px 6px 12px #a8b1c1,
+                 -6px -6px 12px #ffffff;
+    }
+  }
+
+  @keyframes colorPop {
     0% { transform: scale(1); }
     50% { transform: scale(1.05); }
     100% { transform: scale(1); }
   }
 `;
 
-const ColorPicker: React.FC<ColorPickerProps> = ({ initialColor = "#ffffff", className = "" }) => {
-  const [baseColor, setBaseColor] = useState(initialColor);
-  const [schemes, setSchemes] = useState({
-    complementary: ['#6366f1', '#f16363'],
-    analogous: ['#6366f1', '#6363f1', '#6663f1'],
-    monochromatic: ['#6366f1', '#7c7ff3', '#9599f5', '#aeb1f7', '#c7c9f9'],
-  });
+const ColorPicker_15: React.FC<{ onChange?: (color: string) => void }> = ({ onChange }) => {
+  const [selectedColor, setSelectedColor] = useState('#6366f1');
+  const [activeButton, setActiveButton] = useState<string | null>(null);
 
-  // Convert hex to HSL
-  const hexToHSL = (hex: string): [number, number, number] => {
-    const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    if (!result) return [0, 0, 0];
-    
-    const r = parseInt(result[1], 16) / 255;
-    const g = parseInt(result[2], 16) / 255;
-    const b = parseInt(result[3], 16) / 255;
+  const colors = [
+    { name: 'Indigo', value: '#6366f1' },
+    { name: 'Rose', value: '#f43f5e' },
+    { name: 'Amber', value: '#f59e0b' },
+    { name: 'Emerald', value: '#10b981' },
+    { name: 'Sky', value: '#0ea5e9' },
+    { name: 'Violet', value: '#8b5cf6' },
+  ];
 
-    const max = Math.max(r, g, b);
-    const min = Math.min(r, g, b);
-    let h = 0, s;
-    const l = (max + min) / 2;
-
-    if (max === min) {
-      h = s = 0;
-    } else {
-      const d = max - min;
-      s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
-      switch (max) {
-        case r: h = (g - b) / d + (g < b ? 6 : 0); break;
-        case g: h = (b - r) / d + 2; break;
-        case b: h = (r - g) / d + 4; break;
-      }
-      h /= 6;
-    }
-
-    return [h * 360, s * 100, l * 100];
+  const handleColorChange = (color: string) => {
+    setSelectedColor(color);
+    onChange?.(color);
   };
-
-  // Convert HSL to hex
-  const hslToHex = (h: number, s: number, l: number): string => {
-    l /= 100;
-    const a = s * Math.min(l, 1 - l) / 100;
-    const f = (n: number) => {
-      const k = (n + h / 30) % 12;
-      const color = l - a * Math.max(Math.min(k - 3, 9 - k, 1), -1);
-      return Math.round(255 * color).toString(16).padStart(2, '0');
-    };
-    return `#${f(0)}${f(8)}${f(4)}`;
-  };
-
-  // Generate color schemes
-  useEffect(() => {
-    const [h, s, l] = hexToHSL(baseColor);
-    
-    // Complementary
-    const complementary = [
-      baseColor,
-      hslToHex((h + 180) % 360, s, l),
-    ];
-    
-    // Analogous
-    const analogous = [
-      hslToHex((h - 30 + 360) % 360, s, l),
-      baseColor,
-      hslToHex((h + 30) % 360, s, l),
-    ];
-    
-    // Monochromatic
-    const monochromatic = [
-      baseColor,
-      hslToHex(h, s, Math.min(l + 10, 100)),
-      hslToHex(h, s, Math.min(l + 20, 100)),
-      hslToHex(h, s, Math.min(l + 30, 100)),
-      hslToHex(h, s, Math.min(l + 40, 100)),
-    ];
-
-    setSchemes({ complementary, analogous, monochromatic });
-  }, [baseColor]);
-
-  const ColorSwatch = ({ color, onClick }: { color: string; onClick?: () => void }) => (
-    <button
-      onClick={onClick}
-      style={{
-        width: '40px',
-        height: '40px',
-        borderRadius: '8px',
-        background: color,
-        border: color === baseColor ? '2px solid #000' : 'none',
-        cursor: onClick ? 'pointer' : 'default',
-        transition: 'transform 0.2s ease',
-        animation: 'fadeSlide 0.3s ease-out',
-      }}
-    />
-  );
 
   return (
-    <div className={`flex flex-col items-center ${className}`}>
-      <style>{schemeAnimation}</style>
+    <div style={{
+      padding: '24px',
+      background: '#e0e5ec',
+      borderRadius: '20px',
+      boxShadow: `
+        8px 8px 16px #a8b1c1,
+        -8px -8px 16px #ffffff
+      `,
+      width: '300px',
+    }}>
+      <style>{neumorphicAnimation}</style>
 
-      <motion.div
-        className="relative mb-4"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        {/* Floating Color Box */}
-        <motion.div
-          className="w-32 h-32 rounded-xl"
+      {/* Color preview */}
+      <div style={{
+        marginBottom: '24px',
+        padding: '3px',
+        borderRadius: '16px',
+        background: '#e0e5ec',
+        boxShadow: `
+          inset 2px 2px 5px #a8b1c1,
+          inset -2px -2px 5px #ffffff
+        `,
+      }}>
+        <div style={{
+          height: '100px',
+          borderRadius: '14px',
+          background: selectedColor,
+          transition: 'all 0.3s ease',
+          animation: 'colorPop 0.3s ease',
+        }} />
+      </div>
+
+      {/* Color buttons */}
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(3, 1fr)',
+        gap: '16px',
+      }}>
+        {colors.map(({ name, value }) => (
+          <button
+            key={value}
+            onClick={() => handleColorChange(value)}
+            onMouseDown={() => setActiveButton(value)}
+            onMouseUp={() => setActiveButton(null)}
+            onMouseLeave={() => setActiveButton(null)}
+            style={{
+              padding: '16px',
+              background: '#e0e5ec',
+              border: 'none',
+              borderRadius: '12px',
+              color: selectedColor === value ? value : '#666',
+              fontSize: '0.9rem',
+              fontWeight: 500,
+              cursor: 'pointer',
+              transition: 'all 0.3s ease',
+              boxShadow: activeButton === value
+                ? `
+                    inset 2px 2px 5px #a8b1c1,
+                    inset -2px -2px 5px #ffffff
+                  `
+                : `
+                    6px 6px 12px #a8b1c1,
+                    -6px -6px 12px #ffffff
+                  `,
+              animation: activeButton === value
+                ? 'pressIn 0.2s ease forwards'
+                : activeButton === null
+                  ? 'pressOut 0.2s ease'
+                  : 'none',
+            }}
+          >
+            {name}
+          </button>
+        ))}
+      </div>
+
+      {/* Color input */}
+      <div style={{
+        marginTop: '24px',
+        padding: '3px',
+        borderRadius: '12px',
+        background: '#e0e5ec',
+        boxShadow: `
+          inset 2px 2px 5px #a8b1c1,
+          inset -2px -2px 5px #ffffff
+        `,
+      }}>
+        <input
+          type="text"
+          value={selectedColor}
+          onChange={(e) => handleColorChange(e.target.value)}
           style={{
-            backgroundColor: baseColor,
-          }}
-          animate={{
-            y: [0, -10, 0],
-            boxShadow: [
-              "0px 4px 20px rgba(0,0,0,0.1)",
-              "0px 8px 25px rgba(0,0,0,0.2)",
-              "0px 4px 20px rgba(0,0,0,0.1)",
-            ],
-          }}
-          transition={{
-            repeat: Infinity,
-            repeatType: "reverse",
-            duration: 2,
+            width: '100%',
+            padding: '12px',
+            background: 'transparent',
+            border: 'none',
+            borderRadius: '10px',
+            color: '#666',
+            fontSize: '0.9rem',
+            fontFamily: 'monospace',
+            textAlign: 'center',
+            outline: 'none',
           }}
         />
-      </motion.div>
+      </div>
 
-      {/* Color Input with Gradient Animation */}
-      <motion.input
-        type="color"
-        value={baseColor}
-        onChange={(e) => setBaseColor(e.target.value)}
-        className="w-16 h-16 cursor-pointer rounded-full border-4 border-transparent"
-        whileHover={{
-          scale: 1.2,
-          rotate: 360,
-          transition: { duration: 0.5 },
-        }}
-        whileTap={{
-          scale: 0.9,
-          rotate: -180,
-          transition: { duration: 0.2 },
-        }}
-        transition={{ duration: 0.3 }}
-      />
-
-      {/* Color schemes */}
+      {/* Color slider */}
       <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '24px',
+        marginTop: '24px',
+        padding: '3px',
+        borderRadius: '12px',
+        background: '#e0e5ec',
+        boxShadow: `
+          inset 2px 2px 5px #a8b1c1,
+          inset -2px -2px 5px #ffffff
+        `,
       }}>
-        {/* Complementary */}
-        <div>
-          <div style={{
-            fontSize: '0.9rem',
-            color: '#4b5563',
-            marginBottom: '12px',
-          }}>
-            Complementary
-          </div>
-          <div style={{
-            display: 'flex',
-            gap: '8px',
-          }}>
-            {schemes.complementary.map((color, index) => (
-              <ColorSwatch
-                key={index}
-                color={color}
-                onClick={() => setBaseColor(color)}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Analogous */}
-        <div>
-          <div style={{
-            fontSize: '0.9rem',
-            color: '#4b5563',
-            marginBottom: '12px',
-          }}>
-            Analogous
-          </div>
-          <div style={{
-            display: 'flex',
-            gap: '8px',
-          }}>
-            {schemes.analogous.map((color, index) => (
-              <ColorSwatch
-                key={index}
-                color={color}
-                onClick={() => setBaseColor(color)}
-              />
-            ))}
-          </div>
-        </div>
-
-        {/* Monochromatic */}
-        <div>
-          <div style={{
-            fontSize: '0.9rem',
-            color: '#4b5563',
-            marginBottom: '12px',
-          }}>
-            Monochromatic
-          </div>
-          <div style={{
-            display: 'flex',
-            gap: '8px',
-          }}>
-            {schemes.monochromatic.map((color, index) => (
-              <ColorSwatch
-                key={index}
-                color={color}
-                onClick={() => setBaseColor(color)}
-              />
-            ))}
-          </div>
-        </div>
+        <input
+          type="color"
+          value={selectedColor}
+          onChange={(e) => handleColorChange(e.target.value)}
+          style={{
+            width: '100%',
+            height: '40px',
+            padding: '0',
+            border: 'none',
+            borderRadius: '10px',
+            cursor: 'pointer',
+            background: 'transparent',
+          }}
+        />
       </div>
     </div>
   );
 };
 
-export default ColorPicker;
+export default ColorPicker_15; 

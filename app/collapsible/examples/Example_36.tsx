@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Collapsible_36 from '../_components/Collapsible_36';
-import { FaScroll, FaDragon, FaGem, FaCrown, FaShieldHalved } from 'react-icons/fa6';
+import { FaScroll, FaDragon, FaGem, FaCrown, FaShieldHalved, FaGun, FaCoins } from 'react-icons/fa6';
 
 const Example_36: React.FC = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -13,7 +13,9 @@ const Example_36: React.FC = () => {
       content: (
         <div className="space-y-4">
           <div className="flex items-start gap-3">
-            <div className="text-amber-800 mt-1">📜</div>
+            <div className="text-amber-800 mt-1">
+              <FaScroll />
+            </div>
             <div>
               <h4 className="font-bold text-amber-900">Quest Description</h4>
               <p className="text-amber-800 italic">
@@ -25,11 +27,13 @@ const Example_36: React.FC = () => {
           </div>
           
           <div className="flex items-start gap-3">
-            <div className="text-amber-800 mt-1">⚔️</div>
+            <div className="text-amber-800 mt-1">
+              <FaGun />
+            </div>
             <div>
               <h4 className="font-bold text-amber-900">Objectives</h4>
               <ul className="list-disc pl-5 space-y-1 text-amber-800">
-                <li>Locate Fyretalon's mountain lair in the Dragonspine Range</li>
+                <li>Locate Fyretalon&apos;s mountain lair in the Dragonspine Range</li>
                 <li>Defeat Fyretalon the Ancient Red Dragon</li>
                 <li>Collect a dragon scale as proof of your victory</li>
                 <li>Return to King Aldric with the scale</li>
@@ -38,7 +42,9 @@ const Example_36: React.FC = () => {
           </div>
           
           <div className="flex items-start gap-3">
-            <div className="text-amber-800 mt-1">💰</div>
+            <div className="text-amber-800 mt-1">
+              <FaCoins />
+            </div>
             <div>
               <h4 className="font-bold text-amber-900">Rewards</h4>
               <ul className="list-disc pl-5 space-y-1 text-amber-800">
@@ -61,7 +67,9 @@ const Example_36: React.FC = () => {
       content: (
         <div className="space-y-4">
           <div className="flex items-start gap-3">
-            <div className="text-amber-800 mt-1">📜</div>
+            <div className="text-amber-800 mt-1">
+              <FaScroll />
+            </div>
             <div>
               <h4 className="font-bold text-amber-900">Quest Description</h4>
               <p className="text-amber-800 italic">
@@ -73,7 +81,9 @@ const Example_36: React.FC = () => {
           </div>
           
           <div className="flex items-start gap-3">
-            <div className="text-amber-800 mt-1">⚔️</div>
+            <div className="text-amber-800 mt-1">
+              <FaGun />
+            </div>
             <div>
               <h4 className="font-bold text-amber-900">Objectives</h4>
               <ul className="list-disc pl-5 space-y-1 text-amber-800">
@@ -86,7 +96,9 @@ const Example_36: React.FC = () => {
           </div>
           
           <div className="flex items-start gap-3">
-            <div className="text-amber-800 mt-1">💰</div>
+            <div className="text-amber-800 mt-1">
+              <FaCoins />
+            </div>
             <div>
               <h4 className="font-bold text-amber-900">Rewards</h4>
               <ul className="list-disc pl-5 space-y-1 text-amber-800">
@@ -109,7 +121,9 @@ const Example_36: React.FC = () => {
       content: (
         <div className="space-y-4">
           <div className="flex items-start gap-3">
-            <div className="text-amber-800 mt-1">📜</div>
+            <div className="text-amber-800 mt-1">
+              <FaScroll />
+            </div>
             <div>
               <h4 className="font-bold text-amber-900">Quest Description</h4>
               <p className="text-amber-800 italic">
@@ -122,7 +136,9 @@ const Example_36: React.FC = () => {
           </div>
           
           <div className="flex items-start gap-3">
-            <div className="text-amber-800 mt-1">⚔️</div>
+            <div className="text-amber-800 mt-1">
+              <FaGun />
+            </div>
             <div>
               <h4 className="font-bold text-amber-900">Objectives</h4>
               <ul className="list-disc pl-5 space-y-1 text-amber-800">
@@ -135,7 +151,9 @@ const Example_36: React.FC = () => {
           </div>
           
           <div className="flex items-start gap-3">
-            <div className="text-amber-800 mt-1">💰</div>
+            <div className="text-amber-800 mt-1">
+              <FaCoins />
+            </div>
             <div>
               <h4 className="font-bold text-amber-900">Rewards</h4>
               <ul className="list-disc pl-5 space-y-1 text-amber-800">
@@ -158,19 +176,23 @@ const Example_36: React.FC = () => {
       content: (
         <div className="space-y-4">
           <div className="flex items-start gap-3">
-            <div className="text-amber-800 mt-1">📜</div>
+            <div className="text-amber-800 mt-1">
+              <FaScroll />
+            </div>
             <div>
               <h4 className="font-bold text-amber-900">Quest Description</h4>
               <p className="text-amber-800 italic">
                 The annual Tournament of Champions is being held in the capital city. Warriors, mages, and rogues from across 
                 the realm gather to test their skills in combat, magic, and cunning. The champion will receive glory, gold, and 
-                a magical weapon from the royal armory. Will you prove yourself worthy against the realm's finest?
+                a magical weapon from the royal armory. Will you prove yourself worthy against the realm&apos;s finest?
               </p>
             </div>
           </div>
           
           <div className="flex items-start gap-3">
-            <div className="text-amber-800 mt-1">⚔️</div>
+            <div className="text-amber-800 mt-1">
+              <FaGun />
+            </div>
             <div>
               <h4 className="font-bold text-amber-900">Objectives</h4>
               <ul className="list-disc pl-5 space-y-1 text-amber-800">
@@ -183,7 +205,9 @@ const Example_36: React.FC = () => {
           </div>
           
           <div className="flex items-start gap-3">
-            <div className="text-amber-800 mt-1">💰</div>
+            <div className="text-amber-800 mt-1">
+              <FaCoins />
+            </div>
             <div>
               <h4 className="font-bold text-amber-900">Rewards</h4>
               <ul className="list-disc pl-5 space-y-1 text-amber-800">
@@ -209,7 +233,7 @@ const Example_36: React.FC = () => {
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-serif flex items-center gap-3">
             <FaScroll className="text-amber-700" />
-            The Adventurer's Questbook
+            The Adventurer&apos;s Questbook
           </h1>
           <button
             onClick={() => setDarkMode(!darkMode)}

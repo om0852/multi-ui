@@ -2,193 +2,174 @@
 
 import React, { useState } from 'react';
 import Collapsible_25 from '../_components/Collapsible_25';
-import { FaCalendar, FaCheck, FaHourglassHalf, FaClock, FaUsers, FaFile } from 'react-icons/fa6';
+import { FaHeart, FaPersonWalking, FaChartLine, FaBed, FaCircleCheck, FaCircleXmark } from 'react-icons/fa6';
 
 const Example_25: React.FC = () => {
   const [darkMode, setDarkMode] = useState(false);
 
-  const projectPhases = [
+  const healthSections = [
     {
-      title: "Project Planning",
-      status: "Completed",
-      dates: "Jan 5 - Jan 20, 2023",
+      title: "Health Metrics",
+      icon: <FaHeart className="text-red-500" />,
       content: (
         <div className="space-y-4">
-          <div className="flex items-start gap-3">
-            <FaUsers className="text-purple-500 mt-1" />
-            <div>
-              <h4 className="font-medium">Team Formation</h4>
-              <p className="text-sm">Assembled cross-functional team of 8 members including designers, developers, and QA specialists.</p>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="bg-red-50 dark:bg-red-900/20 p-4 rounded-lg">
+              <div className="flex items-center gap-2 mb-2">
+                <FaHeart className="text-red-500" />
+                <span className="font-medium">Heart Rate</span>
+              </div>
+              <div className="text-2xl font-bold text-red-500">72 BPM</div>
+              <div className="text-sm text-gray-500">Resting</div>
+            </div>
+            <div className="bg-blue-50 dark:bg-blue-900/20 p-4 rounded-lg">
+              <div className="flex items-center gap-2 mb-2">
+                <FaBed className="text-blue-500" />
+                <span className="font-medium">Sleep</span>
+              </div>
+              <div className="text-2xl font-bold text-blue-500">7.5h</div>
+              <div className="text-sm text-gray-500">Last Night</div>
             </div>
           </div>
-          <div className="flex items-start gap-3">
-            <FaFile className="text-purple-500 mt-1" />
-            <div>
-              <h4 className="font-medium">Requirements Gathering</h4>
-              <p className="text-sm">Conducted stakeholder interviews and created detailed requirements documentation.</p>
-            </div>
-          </div>
-          <div className="flex items-start gap-3">
-            <FaClock className="text-purple-500 mt-1" />
-            <div>
-              <h4 className="font-medium">Timeline Development</h4>
-              <p className="text-sm">Created project roadmap with key milestones and delivery dates.</p>
+
+          <div className="bg-white dark:bg-gray-800 p-4 rounded-lg">
+            <h4 className="font-medium mb-3">Daily Stats</h4>
+            <div className="space-y-3">
+              <div>
+                <div className="flex justify-between text-sm mb-1">
+                  <span>Steps</span>
+                  <span>8,432 / 10,000</span>
+                </div>
+                <div className="w-full bg-gray-200 dark:bg-gray-700 h-2 rounded-full overflow-hidden">
+                  <div className="bg-green-500 h-full" style={{ width: '84%' }}></div>
+                </div>
+              </div>
+              <div>
+                <div className="flex justify-between text-sm mb-1">
+                  <span>Water Intake</span>
+                  <span>1.8L / 2.5L</span>
+                </div>
+                <div className="w-full bg-gray-200 dark:bg-gray-700 h-2 rounded-full overflow-hidden">
+                  <div className="bg-blue-500 h-full" style={{ width: '72%' }}></div>
+                </div>
+              </div>
+              <div>
+                <div className="flex justify-between text-sm mb-1">
+                  <span>Calories</span>
+                  <span>1,850 / 2,200</span>
+                </div>
+                <div className="w-full bg-gray-200 dark:bg-gray-700 h-2 rounded-full overflow-hidden">
+                  <div className="bg-orange-500 h-full" style={{ width: '84%' }}></div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       )
     },
     {
-      title: "Design Phase",
-      status: "Completed",
-      dates: "Jan 21 - Feb 15, 2023",
+      title: "Activity Log",
+      icon: <FaPersonWalking className="text-green-500" />,
       content: (
-        <div className="space-y-4">
-          <div className="flex items-start gap-3">
-            <FaFile className="text-purple-500 mt-1" />
-            <div>
-              <h4 className="font-medium">User Research</h4>
-              <p className="text-sm">Conducted user interviews and created personas to guide design decisions.</p>
+        <div className="space-y-3">
+          {[
+            { activity: "Morning Run", duration: "30 mins", calories: 320, time: "7:00 AM" },
+            { activity: "Yoga Session", duration: "45 mins", calories: 180, time: "12:30 PM" },
+            { activity: "Evening Walk", duration: "20 mins", calories: 120, time: "6:00 PM" }
+          ].map((activity, i) => (
+            <div key={i} className="bg-white dark:bg-gray-800 p-4 rounded-lg">
+              <div className="flex justify-between items-start">
+                <div>
+                  <h4 className="font-medium">{activity.activity}</h4>
+                  <div className="flex items-center gap-2 text-sm text-gray-500">
+                    <span>{activity.duration}</span>
+                    <span>&bull;</span>
+                    <span>{activity.calories} cal</span>
+                  </div>
+                </div>
+                <div className="text-sm text-gray-500">
+                  {activity.time}
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="flex items-start gap-3">
-            <FaFile className="text-purple-500 mt-1" />
-            <div>
-              <h4 className="font-medium">Wireframing</h4>
-              <p className="text-sm">Created low-fidelity wireframes for key user flows and interfaces.</p>
-            </div>
-          </div>
-          <div className="flex items-start gap-3">
-            <FaFile className="text-purple-500 mt-1" />
-            <div>
-              <h4 className="font-medium">UI Design</h4>
-              <p className="text-sm">Developed high-fidelity mockups and design system components.</p>
-            </div>
-          </div>
-          <div className="flex items-start gap-3">
-            <FaUsers className="text-purple-500 mt-1" />
-            <div>
-              <h4 className="font-medium">Design Review</h4>
-              <p className="text-sm">Conducted stakeholder review sessions and incorporated feedback.</p>
-            </div>
-          </div>
+          ))}
+          <button className="w-full text-center text-green-500 hover:text-green-600 text-sm font-medium">
+            View All Activities
+          </button>
         </div>
       )
     },
     {
-      title: "Development Phase",
-      status: "In Progress",
-      dates: "Feb 16 - Apr 10, 2023",
+      title: "Wellness Goals",
+      icon: <FaChartLine className="text-purple-500" />,
       content: (
         <div className="space-y-4">
-          <div className="flex items-start gap-3">
-            <FaCheck className="text-green-500 mt-1" />
-            <div>
-              <h4 className="font-medium">Frontend Development</h4>
-              <p className="text-sm">Building responsive UI components and implementing user flows.</p>
-              <div className="w-full bg-gray-200 rounded-full h-2.5 mt-2">
-                <div className="bg-green-500 h-2.5 rounded-full" style={{ width: '75%' }}></div>
+          {[
+            { goal: "Exercise 5 times a week", progress: 3, total: 5, status: "in-progress" },
+            { goal: "Drink 2.5L water daily", progress: 1.8, total: 2.5, status: "in-progress" },
+            { goal: "8 hours sleep", progress: 7.5, total: 8, status: "in-progress" },
+            { goal: "Meditate daily", progress: 1, total: 1, status: "completed" }
+          ].map((goal, i) => (
+            <div key={i} className="bg-white dark:bg-gray-800 p-4 rounded-lg">
+              <div className="flex items-center gap-2 mb-2">
+                {goal.status === 'completed' ? (
+                  <FaCircleCheck className="text-green-500" />
+                ) : (
+                  <FaCircleXmark className="text-yellow-500" />
+                )}
+                <h4 className="font-medium">{goal.goal}</h4>
               </div>
-              <p className="text-xs mt-1">75% Complete</p>
-            </div>
-          </div>
-          <div className="flex items-start gap-3">
-            <FaCheck className="text-green-500 mt-1" />
-            <div>
-              <h4 className="font-medium">Backend Development</h4>
-              <p className="text-sm">Implementing API endpoints and database architecture.</p>
-              <div className="w-full bg-gray-200 rounded-full h-2.5 mt-2">
-                <div className="bg-green-500 h-2.5 rounded-full" style={{ width: '60%' }}></div>
+              <div className="w-full bg-gray-200 dark:bg-gray-700 h-2 rounded-full overflow-hidden">
+                <div 
+                  className={`h-full ${goal.status === 'completed' ? 'bg-green-500' : 'bg-yellow-500'}`}
+                  style={{ width: `${(goal.progress / goal.total) * 100}%` }}
+                ></div>
               </div>
-              <p className="text-xs mt-1">60% Complete</p>
-            </div>
-          </div>
-          <div className="flex items-start gap-3">
-            <FaHourglassHalf className="text-yellow-500 mt-1" />
-            <div>
-              <h4 className="font-medium">Integration</h4>
-              <p className="text-sm">Connecting frontend and backend systems.</p>
-              <div className="w-full bg-gray-200 rounded-full h-2.5 mt-2">
-                <div className="bg-yellow-500 h-2.5 rounded-full" style={{ width: '30%' }}></div>
+              <div className="mt-2 text-sm text-gray-500">
+                Progress: {goal.progress} / {goal.total}
               </div>
-              <p className="text-xs mt-1">30% Complete</p>
             </div>
-          </div>
-        </div>
-      )
-    },
-    {
-      title: "Testing Phase",
-      status: "Upcoming",
-      dates: "Apr 11 - Apr 25, 2023",
-      content: (
-        <div className="space-y-4">
-          <div className="flex items-start gap-3">
-            <FaHourglassHalf className="text-gray-400 mt-1" />
-            <div>
-              <h4 className="font-medium">Unit Testing</h4>
-              <p className="text-sm">Testing individual components and functions.</p>
-            </div>
-          </div>
-          <div className="flex items-start gap-3">
-            <FaHourglassHalf className="text-gray-400 mt-1" />
-            <div>
-              <h4 className="font-medium">Integration Testing</h4>
-              <p className="text-sm">Testing interactions between components and systems.</p>
-            </div>
-          </div>
-          <div className="flex items-start gap-3">
-            <FaHourglassHalf className="text-gray-400 mt-1" />
-            <div>
-              <h4 className="font-medium">User Acceptance Testing</h4>
-              <p className="text-sm">Final validation with stakeholders and end users.</p>
-            </div>
-          </div>
+          ))}
         </div>
       )
     }
   ];
 
-  const getStatusBadge = (status: string) => {
-    switch (status) {
-      case 'Completed':
-        return <span className="bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded">Completed</span>;
-      case 'In Progress':
-        return <span className="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">In Progress</span>;
-      case 'Upcoming':
-        return <span className="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded">Upcoming</span>;
-      default:
-        return null;
-    }
-  };
-
   return (
-    <div className={`min-h-screen p-8 ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-900'}`}>
+    <div className={`min-h-screen p-8 ${darkMode ? 'bg-gray-900 text-white' : 'bg-green-50 text-gray-800'}`}>
       <div className="max-w-3xl mx-auto">
         <div className="flex justify-between items-center mb-8">
-          <h1 className="text-3xl font-bold flex items-center gap-3">
-            <FaCalendar className="text-purple-500" />
-            Project Timeline
+          <h1 className="text-2xl font-bold flex items-center gap-3">
+            <FaHeart className={darkMode ? 'text-red-400' : 'text-red-600'} />
+            Health & Wellness
           </h1>
           <button
             onClick={() => setDarkMode(!darkMode)}
             className={`px-4 py-2 rounded-lg ${
-              darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-900'
-            } shadow-md`}
+              darkMode 
+                ? 'bg-gray-800 text-white border border-gray-700' 
+                : 'bg-white text-gray-900 border border-gray-200'
+            } shadow-sm`}
           >
             {darkMode ? 'Light Mode' : 'Dark Mode'}
           </button>
         </div>
 
         <div className="space-y-4">
-          {projectPhases.map((phase, index) => (
-            <Collapsible_25
-              key={index}
-              title={`${phase.title} - ${phase.status} (${phase.dates})`}
-              defaultOpen={index === 0}
-            >
-              {phase.content}
-            </Collapsible_25>
+          {healthSections.map((section, index) => (
+            <div key={index} className="flex">
+              <div className="mt-4 mr-2">
+                {section.icon}
+              </div>
+              <div className="flex-1">
+                <Collapsible_25
+                  title={section.title}
+                  defaultOpen={index === 0}
+                >
+                  {section.content}
+                </Collapsible_25>
+              </div>
+            </div>
           ))}
         </div>
       </div>

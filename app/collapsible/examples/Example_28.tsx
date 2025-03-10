@@ -136,7 +136,7 @@ const Example_28: React.FC = () => {
               <h4 className="font-bold uppercase">Boss Enemies</h4>
               <div className="border-2 border-amber-700 p-3 mt-2">
                 <h5 className="font-bold text-center">THE DRAGON KING</h5>
-                <p className="text-center italic mb-2">"The ancient terror of the mountains"</p>
+                <p className="text-center italic mb-2">The ancient terror of the mountains</p>
                 <p>Attacks with fire breath and tail swipes. Target the glowing crystal on its forehead for critical damage.</p>
               </div>
             </div>

@@ -25,7 +25,7 @@ const Example_30: React.FC = () => {
           <div className="grid grid-cols-2 gap-4">
             <div className="bg-cyan-900 bg-opacity-20 p-3 rounded border border-cyan-800">
               <h4 className="text-cyan-400 font-mono text-sm mb-2">MISSION OBJECTIVE</h4>
-              <p className="text-cyan-100 text-sm">Establish first permanent human settlement on Europa, Jupiter's moon, and conduct deep ice drilling to search for signs of extraterrestrial life in subsurface ocean.</p>
+              <p className="text-cyan-100 text-sm">Establish first permanent human settlement on Europa, Jupiter&apos;s moon, and conduct deep ice drilling to search for signs of extraterrestrial life in subsurface ocean.</p>
             </div>
             <div className="bg-cyan-900 bg-opacity-20 p-3 rounded border border-cyan-800">
               <h4 className="text-cyan-400 font-mono text-sm mb-2">TIMELINE</h4>
@@ -46,7 +46,7 @@ const Example_30: React.FC = () => {
               <div>Distance: 628.3M km</div>
               <div>Comms Delay: 45 min</div>
               <div>Gravity: 0.134 g</div>
-              <div>Temp: -160°C avg</div>
+              <div>Temp: -160&deg;C avg</div>
             </div>
           </div>
         </div>
@@ -175,19 +175,19 @@ const Example_30: React.FC = () => {
               <li className="flex items-start gap-2">
                 <span className="bg-red-500 text-black px-1 rounded font-mono text-xs mt-1">HIGH</span>
                 <div>
-                  <span className="text-red-400">Radiation Exposure</span> - Jupiter's magnetosphere produces intense radiation that can damage equipment and cause acute radiation sickness.
+                  <span className="text-red-400">Radiation Exposure</span> - Jupiter&apos;s magnetosphere produces intense radiation that can damage equipment and cause acute radiation sickness.
                 </div>
               </li>
               <li className="flex items-start gap-2">
                 <span className="bg-red-500 text-black px-1 rounded font-mono text-xs mt-1">HIGH</span>
                 <div>
-                  <span className="text-red-400">Ice Crust Instability</span> - Europa's surface experiences regular fracturing events that could compromise habitat integrity.
+                  <span className="text-red-400">Ice Crust Instability</span> - Europa&apos;s surface experiences regular fracturing events that could compromise habitat integrity.
                 </div>
               </li>
               <li className="flex items-start gap-2">
                 <span className="bg-yellow-500 text-black px-1 rounded font-mono text-xs mt-1">MED</span>
                 <div>
-                  <span className="text-yellow-400">Communication Failure</span> - Extended blackout periods possible due to Jupiter's interference and solar conjunctions.
+                  <span className="text-yellow-400">Communication Failure</span> - Extended blackout periods possible due to Jupiter&apos;s interference and solar conjunctions.
                 </div>
               </li>
               <li className="flex items-start gap-2">

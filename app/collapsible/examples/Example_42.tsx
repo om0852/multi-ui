@@ -227,7 +227,7 @@ const Example_42: React.FC = () => {
               <span className="text-5xl">✈️</span>
             </div>
             <p className="text-yellow-600 font-light leading-relaxed">
-              Embark on a curated journey to the world's most exclusive destinations aboard our luxury private jet. 
+              Embark on a curated journey to the world&apos;s most exclusive destinations aboard our luxury private jet. 
               This 21-day expedition includes accommodations at legendary properties, private access to cultural 
               treasures after hours, and dining experiences crafted by Michelin-starred chefs. Your journey is 
               accompanied by experts including an art historian, naturalist, and professional photographer.

@@ -16,7 +16,7 @@ const Example_48: React.FC = () => {
           <div className="bg-gradient-to-r from-blue-500 to-blue-600 text-white p-6 rounded-xl">
             <div className="flex justify-between items-center mb-4">
               <div>
-                <h3 className="text-4xl font-bold">72°F</h3>
+                <h3 className="text-4xl font-bold">72&deg;F</h3>
                 <p className="text-blue-100">Partly Cloudy</p>
               </div>
               <FaSun className="text-yellow-300 text-5xl" />
@@ -35,7 +35,7 @@ const Example_48: React.FC = () => {
               <div>
                 <FaTemperatureHalf className="inline text-blue-200 mb-1" />
                 <p className="text-sm text-blue-100">Feels Like</p>
-                <p className="font-bold">75°F</p>
+                <p className="font-bold">75&deg;F</p>
               </div>
             </div>
           </div>
@@ -70,7 +70,7 @@ const Example_48: React.FC = () => {
                 <div key={i} className="bg-white dark:bg-gray-800 p-4 rounded-xl shadow-sm text-center min-w-[100px]">
                   <p className="text-gray-500 dark:text-gray-400 mb-2">{`${(i + 1) % 12 || 12}:00 ${i < 12 ? 'AM' : 'PM'}`}</p>
                   <FaCloud className={`mx-auto mb-2 ${i < 12 ? 'text-gray-400' : 'text-yellow-500'}`} />
-                  <p className="font-bold">{`${70 + Math.sin(i) * 5}°F`}</p>
+                  <p className="font-bold">{`${70 + Math.sin(i) * 5}&deg;F`}</p>
                   <p className="text-sm text-gray-500 dark:text-gray-400">{`${40 + Math.cos(i) * 10}%`}</p>
                 </div>
               ))}
@@ -102,8 +102,8 @@ const Example_48: React.FC = () => {
                   </div>
                 </div>
                 <div className="flex items-center gap-4">
-                  <span className="text-gray-500 dark:text-gray-400">{`${60 + i * 2}°F`}</span>
-                  <span className="font-bold">{`${72 + i}°F`}</span>
+                  <span className="text-gray-500 dark:text-gray-400">{`${60 + i * 2}&deg;F`}</span>
+                  <span className="font-bold">{`${72 + i}&deg;F`}</span>
                 </div>
               </div>
             </div>

@@ -62,7 +62,7 @@ const Example_32: React.FC = () => {
               <p className="text-blue-600 mb-2">Swirled fruit flavors in vibrant colors</p>
               <div className="flex justify-between items-center">
                 <span className="text-blue-800 font-medium">$1.99 each</span>
-                <span className="bg-blue-200 text-blue-800 px-2 py-1 rounded-full text-xs">Kids' Favorite</span>
+                <span className="bg-blue-200 text-blue-800 px-2 py-1 rounded-full text-xs">Kids&apos; Favorite</span>
               </div>
             </div>
             

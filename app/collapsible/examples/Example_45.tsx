@@ -209,7 +209,7 @@ const Example_45: React.FC = () => {
                 </div>
               </div>
               <div className="bg-white dark:bg-gray-800 p-3 rounded-lg shadow-sm">
-                <h5 className="font-medium mb-1">Child's Pose</h5>
+                <h5 className="font-medium mb-1">Child&apos;s Pose</h5>
                 <p className="text-sm text-gray-600 dark:text-gray-400">Hold for 1 minute</p>
                 <div className="mt-2 h-1 bg-gray-200 rounded">
                   <div className="h-full w-1/2 bg-green-500 rounded"></div>

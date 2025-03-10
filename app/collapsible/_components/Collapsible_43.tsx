@@ -19,7 +19,7 @@ const dashboardAnimation = `
   }
 `;
 
-const Collapsible_43: React.FC<{ title: string; children: React.ReactNode; defaultOpen?: boolean }> = ({
+const Collapsible_43: React.FC<{ title: React.ReactNode; children: React.ReactNode; defaultOpen?: boolean }> = ({
   title,
   children,
   defaultOpen = false,

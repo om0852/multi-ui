@@ -156,15 +156,15 @@ const Example_37: React.FC = () => {
             <h4 className="text-gray-700 font-medium mb-2">Legal Information</h4>
             <ul className="space-y-2 text-sm text-gray-600">
               <li className="flex items-center">
-                <span className="text-blue-500 mr-2">•</span>
+                <span className="text-blue-500 mr-2">&bull;</span>
                 <a href="#" className="text-blue-500">Terms of Service</a>
               </li>
               <li className="flex items-center">
-                <span className="text-blue-500 mr-2">•</span>
+                <span className="text-blue-500 mr-2">&bull;</span>
                 <a href="#" className="text-blue-500">Privacy Policy</a>
               </li>
               <li className="flex items-center">
-                <span className="text-blue-500 mr-2">•</span>
+                <span className="text-blue-500 mr-2">&bull;</span>
                 <a href="#" className="text-blue-500">Licenses</a>
               </li>
             </ul>

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Collapsible_50 from '../_components/Collapsible_50';
-import { FaHashtag, FaHeart, FaComment, FaShare, FaChartLine, FaUsers, FaGlobe } from 'react-icons/fa6';
+import { FaHashtag, FaHeart, FaComment, FaShare, FaChartLine, FaUsers, FaGlobe, FaRocket } from 'react-icons/fa6';
 
 const Example_50: React.FC = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -24,7 +24,7 @@ const Example_50: React.FC = () => {
                   <span className="text-gray-500 text-sm">@johndoe</span>
                   <span className="text-gray-500 text-sm">• 2h ago</span>
                 </div>
-                <p className="mt-2">Just launched our new website! Check it out at example.com 🚀</p>
+                <p className="mt-2">Just launched our new website! Check it out at example.com <FaRocket className="inline" /></p>
                 <div className="mt-3 flex items-center gap-6">
                   <button className="flex items-center gap-1 text-gray-500 hover:text-red-500">
                     <FaHeart />
@@ -54,7 +54,7 @@ const Example_50: React.FC = () => {
                   <span className="text-gray-500 text-sm">@techstartup</span>
                   <span className="text-gray-500 text-sm">• 4h ago</span>
                 </div>
-                <p className="mt-2">We're hiring! Looking for talented developers to join our team. #techjobs</p>
+                <p className="mt-2">We&apos;re hiring! Looking for talented developers to join our team. #techjobs</p>
                 <div className="mt-3 flex items-center gap-6">
                   <button className="flex items-center gap-1 text-gray-500 hover:text-red-500">
                     <FaHeart />

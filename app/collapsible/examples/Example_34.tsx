@@ -23,8 +23,8 @@ const Example_34: React.FC = () => {
             establishes new trade agreements, and creates a framework for ongoing diplomatic cooperation between former adversaries.
           </p>
           <p className="mb-3">
-            "This is a triumph of diplomacy over conflict," said Secretary-General Helena Reyes, who presided over the signing ceremony. 
-            "Today marks not an ending, but a beginning of a new chapter in our shared history."
+            &quot;This is a triumph of diplomacy over conflict,&quot; said Secretary-General Helena Reyes, who presided over the signing ceremony. 
+            &quot;Today marks not an ending, but a beginning of a new chapter in our shared history.&quot;
           </p>
           <p className="mb-3">
             The accord includes provisions for demilitarized zones along contested borders, a phased reduction in tariffs over the next 
@@ -50,8 +50,8 @@ const Example_34: React.FC = () => {
             charts, and architectural plans that suggest a level of scientific understanding previously thought impossible for that era.
           </p>
           <p className="mb-3">
-            "This fundamentally changes our understanding of human development," said Dr. Fatima El-Hashem, lead archaeologist on the project. 
-            "The artifacts show evidence of mathematical concepts we thought weren't discovered until millennia later."
+            &quot;This fundamentally changes our understanding of human development,&quot; said Dr. Fatima El-Hashem, lead archaeologist on the project. 
+            &quot;The artifacts show evidence of mathematical concepts we thought weren&apos;t discovered until millennia later.&quot;
           </p>
           <p className="mb-3">
             Among the most significant finds is a series of tablets containing what appears to be an early form of calculus, as well as 
@@ -70,15 +70,15 @@ const Example_34: React.FC = () => {
           <h4 className="text-xl font-bold mb-3 border-b border-gray-700 pb-1">MARKET SOARS ON INNOVATION BREAKTHROUGH</h4>
           <p className="mb-3">
             <span className="font-bold">NEW YORK</span> — Wall Street responded with unprecedented enthusiasm yesterday as Quantum Dynamics 
-            unveiled its revolutionary energy storage technology, sending the company's stock price up 47% and lifting the entire market.
+            unveiled its revolutionary energy storage technology, sending the company&apos;s stock price up 47% and lifting the entire market.
           </p>
           <p className="mb-3">
             The technology, which the company claims can store five times more energy than current battery systems at half the cost, 
             has been in development for over a decade and has now passed all regulatory hurdles for commercial deployment.
           </p>
           <p className="mb-3">
-            "This is not just an incremental improvement, but a paradigm shift," said financial analyst Morgan Chen. "The implications 
-            for renewable energy adoption, transportation, and consumer electronics are profound."
+            &quot;This is not just an incremental improvement, but a paradigm shift,&quot; said financial analyst Morgan Chen. &quot;The implications 
+            for renewable energy adoption, transportation, and consumer electronics are profound.&quot;
           </p>
           <p className="mb-3">
             Industry experts predict the technology could accelerate the transition away from fossil fuels by making renewable energy 
@@ -112,14 +112,14 @@ const Example_34: React.FC = () => {
             in rural England.
           </p>
           <p className="mb-3">
-            The play, titled "The Tempest's Heir," is believed to have been written between 1610 and 1611, making it one of the Bard's 
-            final works. The manuscript consists of 42 pages written in a hand that experts have confirmed matches Shakespeare's known 
+            The play, titled &quot;The Tempest&apos;s Heir,&quot; is believed to have been written between 1610 and 1611, making it one of the Bard&apos;s 
+            final works. The manuscript consists of 42 pages written in a hand that experts have confirmed matches Shakespeare&apos;s known 
             handwriting samples.
           </p>
           <p className="mb-3">
-            "This is the literary equivalent of finding a new planet," said Professor Eleanor Whitman, who led the authentication team. 
-            "The play contains themes consistent with Shakespeare's later works, focusing on reconciliation and the passing of legacy 
-            from one generation to the next."
+            &quot;This is the literary equivalent of finding a new planet,&quot; said Professor Eleanor Whitman, who led the authentication team. 
+            &quot;The play contains themes consistent with Shakespeare&apos;s later works, focusing on reconciliation and the passing of legacy 
+            from one generation to the next.&quot;
           </p>
           <p className="mb-3">
             The Royal Shakespeare Company has announced plans to stage the first production of the play next spring, with casting 
@@ -153,13 +153,13 @@ const Example_34: React.FC = () => {
         
         <div className="text-center border-b-2 border-t-2 border-gray-800 py-4 mb-6">
           <h1 className="text-5xl font-bold font-serif tracking-tight">THE DAILY CHRONICLE</h1>
-          <div className="text-sm font-serif italic mt-1">"All the News That's Fit to Print"</div>
+          <div className="text-sm font-serif italic mt-1">&quot;All the News That&apos;s Fit to Print&quot;</div>
         </div>
 
         <div className="flex justify-between items-center mb-8">
           <h2 className="text-2xl font-bold font-serif flex items-center gap-3">
             <FaNewspaper className="text-gray-700" />
-            Today's Headlines
+            Today&apos;s Headlines
           </h2>
           <button
             onClick={() => setDarkMode(!darkMode)}

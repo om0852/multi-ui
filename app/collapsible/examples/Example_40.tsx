@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Collapsible_40 from '../_components/Collapsible_40';
-import { FaLocationDot, FaCloudSun, FaCloudRain, FaSnowflake, FaWind, FaCalendar } from 'react-icons/fa6';
+import { FaLocationDot, FaCloudSun, FaCloudRain, FaWind, FaCalendar, FaSun } from 'react-icons/fa6';
 
 const Example_40: React.FC = () => {
   const [darkMode, setDarkMode] = useState(false);
@@ -25,7 +25,7 @@ const Example_40: React.FC = () => {
           
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-4">
-              <div className="text-5xl">☀️</div>
+              <div className="text-5xl text-yellow-500"><FaSun /></div>
               <div>
                 <div className="text-4xl font-light">24°C</div>
                 <div className="text-sm opacity-80">Feels like 26°C</div>
@@ -41,22 +41,22 @@ const Example_40: React.FC = () => {
           <div className="grid grid-cols-4 gap-2 pt-4 border-t border-blue-200 border-opacity-30">
             <div className="text-center">
               <div className="text-sm">Now</div>
-              <div className="text-xl">☀️</div>
+              <div className="text-xl text-yellow-500"><FaSun /></div>
               <div className="text-sm font-medium">24°C</div>
             </div>
             <div className="text-center">
               <div className="text-sm">12 PM</div>
-              <div className="text-xl">☀️</div>
+              <div className="text-xl text-yellow-500"><FaSun /></div>
               <div className="text-sm font-medium">26°C</div>
             </div>
             <div className="text-center">
               <div className="text-sm">3 PM</div>
-              <div className="text-xl">⛅</div>
+              <div className="text-xl text-gray-500"><FaCloudSun /></div>
               <div className="text-sm font-medium">25°C</div>
             </div>
             <div className="text-center">
               <div className="text-sm">6 PM</div>
-              <div className="text-xl">⛅</div>
+              <div className="text-xl text-gray-500"><FaCloudSun /></div>
               <div className="text-sm font-medium">22°C</div>
             </div>
           </div>
@@ -71,7 +71,7 @@ const Example_40: React.FC = () => {
             <div className="flex justify-between items-center py-2 border-b border-blue-200 border-opacity-30">
               <div className="flex items-center gap-3">
                 <div className="w-10 text-center">Tue</div>
-                <div className="text-xl">☀️</div>
+                <div className="text-xl text-yellow-500"><FaSun /></div>
               </div>
               <div className="flex items-center gap-4">
                 <div className="text-sm opacity-80">0% chance of rain</div>
@@ -88,7 +88,7 @@ const Example_40: React.FC = () => {
             <div className="flex justify-between items-center py-2 border-b border-blue-200 border-opacity-30">
               <div className="flex items-center gap-3">
                 <div className="w-10 text-center">Wed</div>
-                <div className="text-xl">⛅</div>
+                <div className="text-xl text-gray-500"><FaCloudSun /></div>
               </div>
               <div className="flex items-center gap-4">
                 <div className="text-sm opacity-80">10% chance of rain</div>
@@ -105,7 +105,7 @@ const Example_40: React.FC = () => {
             <div className="flex justify-between items-center py-2 border-b border-blue-200 border-opacity-30">
               <div className="flex items-center gap-3">
                 <div className="w-10 text-center">Thu</div>
-                <div className="text-xl">🌧️</div>
+                <div className="text-xl text-blue-500"><FaCloudRain /></div>
               </div>
               <div className="flex items-center gap-4">
                 <div className="text-sm opacity-80">70% chance of rain</div>
@@ -122,7 +122,7 @@ const Example_40: React.FC = () => {
             <div className="flex justify-between items-center py-2 border-b border-blue-200 border-opacity-30">
               <div className="flex items-center gap-3">
                 <div className="w-10 text-center">Fri</div>
-                <div className="text-xl">🌧️</div>
+                <div className="text-xl text-blue-500"><FaCloudRain /></div>
               </div>
               <div className="flex items-center gap-4">
                 <div className="text-sm opacity-80">60% chance of rain</div>
@@ -139,7 +139,7 @@ const Example_40: React.FC = () => {
             <div className="flex justify-between items-center py-2">
               <div className="flex items-center gap-3">
                 <div className="w-10 text-center">Sat</div>
-                <div className="text-xl">⛅</div>
+                <div className="text-xl text-gray-500"><FaCloudSun /></div>
               </div>
               <div className="flex items-center gap-4">
                 <div className="text-sm opacity-80">20% chance of rain</div>
