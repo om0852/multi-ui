@@ -7,12 +7,12 @@ const MatrixRainExample = () => {
   const itemsPerPage = 3;
 
   const codeSnippets = [
-    { id: 1, language: 'JavaScript', code: 'console.log("Hello Matrix");' },
-    { id: 2, language: 'Python', code: 'print("Welcome to the Matrix")' },
-    { id: 3, language: 'Java', code: 'System.out.println("Matrix Lives");' },
-    { id: 4, language: 'C++', code: 'cout << "Matrix Reloaded";' },
-    { id: 5, language: 'Ruby', code: 'puts "Matrix Revolution"' },
-    { id: 6, language: 'Go', code: 'fmt.Println("Matrix Code")' },
+    { id: 1, language: 'Python', code: 'def hack_matrix(): return "access_granted"' },
+    { id: 2, language: 'JavaScript', code: 'const matrix = new VirtualReality();' },
+    { id: 3, language: 'Ruby', code: 'class Matrix < Reality; end' },
+    { id: 4, language: 'Java', code: 'Matrix.disconnect(systemControl);' },
+    { id: 5, language: 'C++', code: 'void enterMatrix(Reality* r);' },
+    { id: 6, language: 'Rust', code: 'impl Matrix for Reality {}' }
   ];
 
   const totalPages = Math.ceil(codeSnippets.length / itemsPerPage);
@@ -22,16 +22,15 @@ const MatrixRainExample = () => {
   );
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
-      <div className="mb-8 space-y-4">
+    <div className="w-full max-w-2xl mx-auto space-y-8">
+      <div className="grid gap-4">
         {currentItems.map(item => (
-          <div key={item.id} className="p-4 bg-black border border-green-500/30 rounded-lg">
-            <div className="text-green-500 font-mono mb-2">{item.language}</div>
-            <code className="text-green-400">{item.code}</code>
+          <div key={item.id} className="p-6 bg-black rounded-lg border border-green-500/30">
+            <h3 className="text-xl font-mono text-green-500">{item.language}</h3>
+            <code className="block mt-2 font-mono text-green-400">{item.code}</code>
           </div>
         ))}
       </div>
-
       <MatrixRainPagination
         totalPages={totalPages}
         currentPage={currentPage}
