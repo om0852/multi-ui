@@ -7,12 +7,12 @@ const QuantumJumpExample = () => {
   const itemsPerPage = 2;
 
   const particles = [
-    { id: 1, name: 'Electron', charge: '-1' },
-    { id: 2, name: 'Proton', charge: '+1' },
-    { id: 3, name: 'Neutron', charge: '0' },
-    { id: 4, name: 'Photon', charge: '0' },
-    { id: 5, name: 'Quark', charge: '⅔' },
-    { id: 6, name: 'Neutrino', charge: '0' },
+    { id: 1, name: 'Electron', spin: '1/2', charge: '-1' },
+    { id: 2, name: 'Proton', spin: '1/2', charge: '+1' },
+    { id: 3, name: 'Neutron', spin: '1/2', charge: '0' },
+    { id: 4, name: 'Photon', spin: '1', charge: '0' },
+    { id: 5, name: 'Quark', spin: '1/2', charge: '2/3' },
+    { id: 6, name: 'Neutrino', spin: '1/2', charge: '0' }
   ];
 
   const totalPages = Math.ceil(particles.length / itemsPerPage);
@@ -22,16 +22,18 @@ const QuantumJumpExample = () => {
   );
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
-      <div className="mb-8 space-y-4">
+    <div className="w-full max-w-2xl mx-auto space-y-8">
+      <div className="grid gap-4">
         {currentItems.map(item => (
-          <div key={item.id} className="p-6 bg-violet-50 rounded-lg border border-violet-200">
-            <h3 className="text-xl font-semibold text-violet-900">{item.name}</h3>
-            <p className="text-violet-600">Charge: {item.charge}</p>
+          <div key={item.id} className="p-6 bg-gradient-to-r from-violet-900 to-purple-900 rounded-lg">
+            <h3 className="text-xl font-semibold text-violet-200">{item.name}</h3>
+            <div className="mt-2 space-y-1">
+              <p className="text-violet-300">Spin: {item.spin}</p>
+              <p className="text-violet-300">Charge: {item.charge}</p>
+            </div>
           </div>
         ))}
       </div>
-
       <QuantumJumpPagination
         totalPages={totalPages}
         currentPage={currentPage}
