@@ -68,6 +68,11 @@
   100% { background-position: 100% 50%; }
 }
 
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
 .animate-float {
   animation: float 3s ease-in-out infinite;
 }
