@@ -11,7 +11,6 @@ const Typewriter1Example = () => {
       <Typewriter_1 
         message={text} 
         className="text-2xl text-white" 
-        cursorColor="#ffffff"
       />
       <div className="mt-4 text-sm text-gray-400">
         Simple typewriter effect with cursor animation

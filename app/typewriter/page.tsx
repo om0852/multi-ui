@@ -10,6 +10,11 @@ import Typewriter7Example from './_examples/Typewriter7Example';
 import Typewriter8Example from './_examples/Typewriter8Example';
 import Typewriter9Example from './_examples/Typewriter9Example';
 import Typewriter10Example from './_examples/Typewriter10Example';
+import Typewriter11Example from './_examples/Typewriter11Example';
+import Typewriter12Example from './_examples/Typewriter12Example';
+import Typewriter13Example from './_examples/Typewriter13Example';
+import Typewriter14Example from './_examples/Typewriter14Example';
+import Typewriter15Example from './_examples/Typewriter15Example';
 
 export default function TypewriterDemo() {
   return (
@@ -66,6 +71,31 @@ export default function TypewriterDemo() {
           <section>
             <h2 className="text-2xl font-semibold mb-6">Liquid Typewriter</h2>
             <Typewriter10Example />
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold mb-6">3D Perspective Typewriter</h2>
+            <Typewriter11Example />
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold mb-6">Particle Typewriter</h2>
+            <Typewriter12Example />
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold mb-6">Handwriting Effect</h2>
+            <Typewriter13Example />
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold mb-6">Holographic Typewriter</h2>
+            <Typewriter14Example />
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold mb-6">Burning Text Effect</h2>
+            <Typewriter15Example />
           </section>
         </div>
       </div>

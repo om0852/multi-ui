@@ -1,27 +1,34 @@
 'use client';
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 interface TypewriterProps {
   message: string;
   className?: string;
-  cursorColor?: string;
+  style?: React.CSSProperties;
 }
 
-const Typewriter_1: React.FC<TypewriterProps> = ({ message, className, cursorColor = '#ffffff' }) => {
+const Typewriter_1: React.FC<TypewriterProps> = ({ message, className, style }) => {
+  const [displayText, setDisplayText] = useState('');
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    if (currentIndex < message.length) {
+      const timeout = setTimeout(() => {
+        setDisplayText(prev => prev + message[currentIndex]);
+        setCurrentIndex(prev => prev + 1);
+      }, 100);
+      return () => clearTimeout(timeout);
+    }
+  }, [currentIndex, message]);
+
   return (
-    <span className={className} style={{ position: 'relative' }}>
-      {message}
+    <div className={className} style={style}>
+      {displayText}
       <span 
-        style={{ 
-          backgroundColor: cursorColor,
-          width: '2px',
-          height: '1em',
-          display: 'inline-block',
-          marginLeft: '2px',
-          animation: 'blink 1s step-end infinite'
-        }}
+        className="inline-block w-[2px] h-[1em] ml-[2px] animate-blink"
+        style={{ backgroundColor: 'currentColor' }}
       />
-    </span>
+    </div>
   );
 };
 

@@ -92,6 +92,10 @@
   background-size: 200% 200%;
 }
 
+.animate-blink {
+  animation: blink 1s step-end infinite;
+}
+
 body {
   color: var(--foreground);
   background: var(--background);
