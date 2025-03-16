@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-interface ModernPasswordInputProps {
+interface PasswordInputProps {
   id?: string
   value?: string
   onChange?: (value: string) => void
@@ -12,7 +12,7 @@ interface ModernPasswordInputProps {
   onSubmit?: (isValid: boolean) => void
 }
 
-export const ModernPasswordInput: React.FC<ModernPasswordInputProps> = ({
+export const PasswordInput: React.FC<PasswordInputProps> = ({
   id = "password",
   value = "",
   onChange,
