@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef, forwardRef, ReactNode } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+
 interface MenubarChildProps {
   toggleMenu?: () => void;
   isVisible?: boolean;
@@ -126,10 +127,38 @@ export const MenubarSub: React.FC<{ label: ReactNode; children: React.ReactNode 
   );
 };
 
-// MenubarRadioGroup Component
-export const MenubarRadioGroup: React.FC<{ children: ReactNode }> = ({ children }) => {
-  return <ul className="space-y-2 px-3">{children}</ul>;
-};
+interface MenubarRadioGroupProps {
+  value: string
+  onValueChange: (value: string) => void
+  children: React.ReactNode
+}
+
+type MenubarRadioItemProps = {
+  children: React.ReactNode;
+  checked?: boolean;
+  onChange?: (value: string) => void;
+  value?: string;
+  id?: string;
+}
+
+export const MenubarRadioGroup = React.forwardRef<HTMLDivElement, MenubarRadioGroupProps>(
+  ({ children, value, onValueChange, ...props }, ref) => {
+    return (
+      <div ref={ref} role="group" {...props}>
+        {React.Children.map(children, (child) => {
+          if (React.isValidElement<MenubarRadioItemProps>(child)) {
+            return React.cloneElement(child, {
+              checked: child.props.value === value,
+              onChange: () => child.props.value && onValueChange?.(child.props.value)
+            })
+          }
+          return child
+        })}
+      </div>
+    )
+  }
+)
+MenubarRadioGroup.displayName = "MenubarRadioGroup"
 
 // MenubarRadioItem Component
 export const MenubarRadioItem: React.FC<{ children: React.ReactNode; checked?: boolean; onChange?: (value: string) => void; value?: string; id?: string }> = ({
