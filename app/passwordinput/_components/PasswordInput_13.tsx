@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 
-export const InteractivePasswordInput = () => {
+export const PasswordInput = () => {
   const [password, setPassword] = useState("");
   const [isVisible, setIsVisible] = useState(false);
 

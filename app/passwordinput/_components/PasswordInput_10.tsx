@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 
-const PlayfulPasswordInput: React.FC<{
+export const PasswordInput: React.FC<{
   id?: string;
   value?: string;
   onChange?: (value: string) => void;
@@ -78,4 +78,3 @@ const PlayfulPasswordInput: React.FC<{
   );
 };
 
-export default PlayfulPasswordInput;

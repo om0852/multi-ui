@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
-interface StylishPasswordInputProps {
+interface PasswordInputProps {
   id?: string
   value?: string
   onChange?: (value: string) => void
@@ -12,7 +12,7 @@ interface StylishPasswordInputProps {
   onSubmit?: (isValid: boolean) => void
 }
 
-export const StylishPasswordInput: React.FC<StylishPasswordInputProps> = ({
+export const PasswordInput: React.FC<PasswordInputProps> = ({
   id = "password",
   value = "",
   onChange,
