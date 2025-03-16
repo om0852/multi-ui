@@ -16,6 +16,11 @@ import ShimmerExample from './_examples/ShimmerExample';
 import SliderExample from './_examples/SliderExample';
 import RainbowWaveExample from './_examples/RainbowWaveExample';
 import QuantumJumpExample from './_examples/QuantumJumpExample';
+import PerspectiveExample from './_examples/PerspectiveExample';
+import PerspectiveCardExample from './_examples/PerspectiveCardExample';
+import PulseRingExample from './_examples/PulseRingExample';
+import OutlineExample from './_examples/OutlineExample';
+import OrbitExample from './_examples/OrbitExample';
 
 export default function PaginationDemo() {
   return (
@@ -64,7 +69,20 @@ export default function PaginationDemo() {
             <StackExample />
           </section>
 
-          
+          <section>
+            <h2 className="text-2xl font-semibold mb-6">Perspective Effect</h2>
+            <PerspectiveExample />
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold mb-6">Perspective Card</h2>
+            <PerspectiveCardExample />
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold mb-6">Pulse Ring</h2>
+            <PulseRingExample />
+          </section>
 
           <section>
             <h2 className="text-2xl font-semibold mb-6">Staggered Animation</h2>
@@ -104,6 +122,16 @@ export default function PaginationDemo() {
           <section>
             <h2 className="text-2xl font-semibold mb-6">Quantum Jump</h2>
             <QuantumJumpExample />
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold mb-6">Outline Effect</h2>
+            <OutlineExample />
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold mb-6">Orbit Effect</h2>
+            <OrbitExample />
           </section>
         </div>
       </div>
