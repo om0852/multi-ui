@@ -3,13 +3,15 @@ import React from 'react';
 import styled, { keyframes, css } from 'styled-components';
 
 type TypewriterProps = {
-  text: string;
+  message: string;
   fontSize?: string;
   cursorColor?: string;
   cursorWidth?: string;
   loop?: boolean;
   reverse?: boolean; // Add reverse as part of the props
   speed?: number; // Add speed as part of the props
+  glitchInterval: number;
+  className?: string;
 };
 
 const typingAnimation = () => keyframes`
@@ -47,7 +49,7 @@ const TypedOut = styled.div<{
 `;
 
 const Typewriter_5: React.FC<TypewriterProps> = ({
-  text = 'Web Developer',
+  message = 'Web Developer',
   fontSize = '1.6rem',
   cursorColor = 'orange',
   cursorWidth = '0.15em',
@@ -67,7 +69,7 @@ const Typewriter_5: React.FC<TypewriterProps> = ({
           reverse={reverse}  // Pass reverse prop here
           speed={speed}  // Pass speed prop here
         >
-          {text}
+          {message}
         </TypedOut>
       </Container>
     </div>

@@ -1,96 +1,104 @@
-"use client"
-import React from "react";
-import Typewriter_13 from "./_components/Typewriter_13";
-import Typewriter_14 from "./_components/Typewriter_14";
-import Typewriter_15 from "./_components/Typewriter_15";
-import Typewriter_16 from "./_components/Typewriter_16";
-import Typewriter_17 from "./_components/Typewriter_17";
+'use client';
+import React from 'react';
+import Typewriter1Example from './_examples/Typewriter1example';
+import Typewriter2Example from './_examples/Typewriter2Example';
+import Typewriter3Example from './_examples/Typewriter3Example';
+import Typewriter4Example from './_examples/Typewriter4Example';
+import Typewriter5Example from './_examples/Typewriter5Example';
+import Typewriter6Example from './_examples/Typewriter6Example';
+import Typewriter7Example from './_examples/Typewriter7Example';
+import Typewriter8Example from './_examples/Typewriter8Example';
+import Typewriter9Example from './_examples/Typewriter9Example';
+import Typewriter10Example from './_examples/Typewriter10Example';
+import Typewriter11Example from './_examples/Typewriter11Example';
+import Typewriter12Example from './_examples/Typewriter12Example';
+import Typewriter13Example from './_examples/Typewriter13Example';
+import Typewriter14Example from './_examples/Typewriter14Example';
+import Typewriter15Example from './_examples/Typewriter15Example';
 
-const TypewriterShowcase = () => {
+export default function TypewriterDemo() {
   return (
-    <div className="min-h-screen bg-gray-900 p-8">
-      {/* Spiral 3D Animation */}
-      <div className="mb-12">
-        <h2 className="text-white mb-4 text-xl">Spiral 3D Effect:</h2>
-        <Typewriter_13 
-          text={[
-            "Spinning in 3D Space! 🌀",
-            "Watch the spiral effect! 🎡",
-            "Dynamic rotations! 🔄"
-          ]}
-          typingSpeed={70}
-          cursorColor="#8b5cf6"
-          textColor="#8b5cf6"
-          fontSize="2.5rem"
-          glowColor="rgba(139, 92, 246, 0.6)"
-          spiral3dEffect={true}
-          perspective="1200px"
-        />
-      </div>
+    <div className="min-h-screen p-8 space-y-16">
+      <div className="max-w-4xl mx-auto">
+        <h1 className="text-3xl font-bold text-center mb-12">Typewriter Effect Examples</h1>
+        
+        <div className="space-y-16">
+          <section>
+            <h2 className="text-2xl font-semibold mb-6">Basic Typewriter</h2>
+            <Typewriter1Example />
+          </section>
 
-      {/* Matrix Rain Effect */}
-      <div className="mb-12 bg-black p-6 rounded-lg">
-        <h2 className="text-white mb-4 text-xl">Matrix Code Rain:</h2>
-        <Typewriter_14 
-          text={[
-            "DECRYPTING_MATRIX>>",
-            "ACCESSING_MAINFRAME..",
-            "BREACH_SUCCESSFUL!"
-          ]}
-          typingSpeed={40}
-          cursorColor="#22c55e"
-          textColor="#22c55e"
-          fontSize="2rem"
-          scrambleEffect={true}
-        />
-      </div>
+          <section>
+            <h2 className="text-2xl font-semibold mb-6">Multi-Word Typewriter</h2>
+            <Typewriter2Example />
+          </section>
 
-      {/* Neon Flicker */}
-      <div className="mb-12">
-        <h2 className="text-white mb-4 text-xl">Neon Sign Effect:</h2>
-        <Typewriter_15 
-          text="Welcome to Cyber City! ⚡"
-          typingSpeed={80}
-          primaryColor="#f0abfc"
-          secondaryColor="#818cf8"
-          fontSize="3rem"
-          flickerIntensity={0.7}
-        />
-      </div>
+          <section>
+            <h2 className="text-2xl font-semibold mb-6">Rainbow Typewriter</h2>
+            <Typewriter3Example />
+          </section>
 
-      {/* Handwriting Effect */}
-      <div className="mb-12 bg-white p-6 rounded-lg">
-        <h2 className="text-gray-800 mb-4 text-xl">Handwritten Notes:</h2>
-        <Typewriter_16 
-          text={[
-            "Dear Diary... ✍️",
-            "Today was amazing! 📖",
-            "Let me tell you why... 💭"
-          ]}
-          typingSpeed={60}
-          inkColor="#1d4ed8"
-          fontSize="2.4rem"
-          strokeWidth={2}
-          inkSpread={3}
-        />
-      </div>
+          <section>
+            <h2 className="text-2xl font-semibold mb-6">Terminal Typewriter</h2>
+            <Typewriter4Example />
+          </section>
 
-      {/* Smoke Effect */}
-      <div className="mb-12">
-        <h2 className="text-white mb-4 text-xl">Mystic Smoke:</h2>
-        <Typewriter_17 
-          text={[
-            "Dissolving into mist... 💨",
-            "Like smoke in the wind... 🌫️",
-            "Fading away... ✨"
-          ]}
-          typingSpeed={50}
-          smokeColor="#6366f1"
-          fontSize="2.8rem"
-        />
+          <section>
+            <h2 className="text-2xl font-semibold mb-6">Glitch Typewriter</h2>
+            <Typewriter5Example />
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold mb-6">Matrix Typewriter</h2>
+            <Typewriter6Example />
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold mb-6">Multi-line Typewriter</h2>
+            <Typewriter7Example />
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold mb-6">Neon Typewriter</h2>
+            <Typewriter8Example />
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold mb-6">Vintage Typewriter</h2>
+            <Typewriter9Example />
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold mb-6">Liquid Typewriter</h2>
+            <Typewriter10Example />
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold mb-6">3D Perspective Typewriter</h2>
+            <Typewriter11Example />
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold mb-6">Particle Typewriter</h2>
+            <Typewriter12Example />
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold mb-6">Handwriting Effect</h2>
+            <Typewriter13Example />
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold mb-6">Holographic Typewriter</h2>
+            <Typewriter14Example />
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold mb-6">Burning Text Effect</h2>
+            <Typewriter15Example />
+          </section>
+        </div>
       </div>
     </div>
   );
-};
-
-export default TypewriterShowcase;
+}

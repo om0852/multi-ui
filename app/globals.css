@@ -68,6 +68,11 @@
   100% { background-position: 100% 50%; }
 }
 
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
 .animate-float {
   animation: float 3s ease-in-out infinite;
 }
@@ -85,6 +90,10 @@
 .animate-prism-shift {
   animation: prism-shift 3s linear infinite;
   background-size: 200% 200%;
+}
+
+.animate-blink {
+  animation: blink 1s step-end infinite;
 }
 
 body {

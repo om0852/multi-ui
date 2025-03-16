@@ -8,7 +8,8 @@ interface TypewriterProps {
   cursorHeight?: number; // Cursor height
   typingSpeed?: number; // Typing speed (in ms)
   className?: string; // Custom className for styling
-  loop?: boolean; // Whether to loop the typing effect
+  loop?: boolean;// Whether to loop the typing effect
+  commands: string[]; 
 }
 
 const Typewriter_4: React.FC<TypewriterProps> = ({
