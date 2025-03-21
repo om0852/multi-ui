@@ -11,6 +11,8 @@ interface TypewriterProps {
   className?: string;
   cursorClassName?: string;
   loop?: boolean;
+  glowColor?: string; // Added glowColor property
+
 }
 
 const Typewriter_8: React.FC<TypewriterProps> = ({
