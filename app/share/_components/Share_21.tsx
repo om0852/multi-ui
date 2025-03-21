@@ -48,7 +48,7 @@ const socialPlatforms = [
   },
 ];
 
-export function Share_21({
+export default function Share_21({
   title = "Share this content",
   url,
   image,

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React  from "react";
 import { motion } from "framer-motion";
 
 interface SwitchProps {
@@ -8,7 +8,7 @@ interface SwitchProps {
   onToggle: () => void; // Function to handle toggle
 }
 
-const Switch: React.FC<SwitchProps> = ({ isOn, onToggle }) => {
+export const Switch: React.FC<SwitchProps> = ({ isOn, onToggle }) => {
   return (
     <div
       className={`relative w-16 h-8 flex items-center rounded-full cursor-pointer transition ${
@@ -32,21 +32,3 @@ const Switch: React.FC<SwitchProps> = ({ isOn, onToggle }) => {
   );
 };
 
-const Example = () => {
-  const [isOn, setIsOn] = useState(false);
-
-  const handleToggle = () => {
-    setIsOn((prev) => !prev);
-  };
-
-  return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
-      <Switch isOn={isOn} onToggle={handleToggle} />
-      <p className="ml-4 text-lg">
-        Switch is: <span className="font-bold">{isOn ? "ON" : "OFF"}</span>
-      </p>
-    </div>
-  );
-};
-
-export default Example;

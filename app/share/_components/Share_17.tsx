@@ -57,7 +57,7 @@ const defaultPlatforms = [
   },
 ];
 
-export function Share_17({
+export default function Share_17({
   platforms = defaultPlatforms,
   onClose,
   className = "",

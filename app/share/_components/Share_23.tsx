@@ -52,7 +52,7 @@ const platforms = [
   },
 ];
 
-export function Share_23({
+export default function Share_23({
   title = "Share this content",
   url,
   className = "",

@@ -51,7 +51,7 @@ const platforms = [
   },
 ];
 
-export function Share_30({ url, className = "" }: ShareProps) {
+export default function Share_30({ url, className = "" }: ShareProps) {
   const [hoveredPlatform, setHoveredPlatform] = React.useState<string | null>(null);
   const [copied, setCopied] = React.useState(false);
 
