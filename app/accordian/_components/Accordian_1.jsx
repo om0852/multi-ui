@@ -1,147 +1,134 @@
-"use client";
+'use client';
 
-import React, { createContext, useContext, useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import styled from 'styled-components';
+import { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import styled, { keyframes } from 'styled-components';
 
-const AccordionStyle = () => (
-  <style jsx global>{`
-    .glass-effect {
-      background: rgba(255, 255, 255, 0.05);
-      backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-    }
-    
-    .glass-hover:hover {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    
-    .content-glass {
-      background: rgba(255, 255, 255, 0.02);
-      backdrop-filter: blur(7px);
-    }
-  `}</style>
-);
+const magneticPulse = keyframes`
+  0%, 100% { transform: scale(1); opacity: 0.5; }
+  50% { transform: scale(1.2); opacity: 0.8; }
+`;
 
-const AccordionContext = createContext(null);
-const AccordionItemContext = createContext(null);
+const fieldLines = keyframes`
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+`;
+
+const energyFlow = keyframes`
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+`;
 
 const Container = styled.div`
   padding: 1rem;
-  background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+  background: linear-gradient(135deg, #000000 0%, #1a237e 100%);
   min-height: 100%;
+  position: relative;
+  overflow: hidden;
 `;
 
-export function Accordion({ children, multiple = false, className = "", persistState = false, storageKey = "accordionState" }) {
-  const [openItems, setOpenItems] = useState([]);
+const MagneticButton = styled(motion.button)`
+  width: 100%;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: none;
+  border-radius: 0.5rem;
+  padding: 1rem;
+  color: white;
+  position: relative;
+  overflow: hidden;
+`;
 
-  useEffect(() => {
-    if (persistState) {
-      const savedState = localStorage.getItem(storageKey);
-      if (savedState) setOpenItems(JSON.parse(savedState));
-    }
-  }, [persistState, storageKey]);
+const ContentWrapper = styled(motion.div)`
+  overflow: hidden;
+  margin-top: 0.5rem;
+`;
 
-  useEffect(() => {
-    if (persistState) {
-      localStorage.setItem(storageKey, JSON.stringify(openItems));
-    }
-  }, [openItems, persistState, storageKey]);
+const Content = styled.div`
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+  border-radius: 0.5rem;
+  padding: 1rem;
+  color: rgba(255, 255, 255, 0.9);
+`;
 
-  const toggleItem = (id) => {
-    setOpenItems(prev => multiple ? (prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]) : (prev[0] === id ? [] : [id]));
-  };
+const Title = styled.span`
+  font-size: 1.125rem;
+  font-weight: 500;
+  color: #42a5f5;
+  text-shadow: 0 0 10px rgba(66, 165, 245, 0.5);
+`;
 
+const IconWrapper = styled(motion.div)`
+  color: #42a5f5;
+  font-size: 1.25rem;
+  text-shadow: 0 0 10px rgba(66, 165, 245, 0.5);
+`;
+
+const MagneticField = styled.div`
+  position: absolute;
+  width: ${props => props.size}px;
+  height: ${props => props.size}px;
+  background: radial-gradient(circle, ${props => props.color} 0%, transparent 70%);
+  border-radius: 50%;
+  opacity: 0.3;
+  animation: ${magneticPulse} 3s ease-in-out infinite;
+  filter: blur(20px);
+`;
+
+function AccordionItem({ title, content, isOpen, onClick }) {
   return (
-    <AccordionContext.Provider value={{ openItems, toggleItem }}>
-      <div className={`space-y-4 ${className}`}>
-        <AccordionStyle />
-        <Container>{children}</Container>
-      </div>
-    </AccordionContext.Provider>
-  );
-}
-
-export function AccordionItem({ children, className = "", isCollapsible = true }) {
-  return (
-    <AccordionItemContext.Provider value={{ isCollapsible }}>
-      <div className={`accordion-item ${className}`}>{children}</div>
-    </AccordionItemContext.Provider>
-  );
-}
-
-export function AccordionTrigger({ children, id, className = "", onClick, openIcon, closeIcon }) {
-  const context = useContext(AccordionContext);
-  const itemContext = useContext(AccordionItemContext);
-
-  if (!context || !itemContext) throw new Error("AccordionTrigger must be used within an AccordionItem");
-
-  const { toggleItem, openItems } = context;
-  const { isCollapsible } = itemContext;
-  const isOpen = openItems.includes(id);
-
-  const handleClick = () => {
-    if (!isCollapsible) return;
-    toggleItem(id);
-    onClick?.();
-  };
-
-  return (
-    <motion.button
-      className={`w-full px-6 py-4 flex items-center justify-between text-white glass-hover transition-all duration-300 ${className}`}
-      onClick={handleClick}
-      whileHover={{ scale: 1.005 }}
-      whileTap={{ scale: 0.995 }}
-    >
-      <div className="flex-1">{children}</div>
-      <motion.div animate={{ rotate: isOpen ? 180 : 0 }} transition={{ duration: 0.3 }} className="ml-4">
-        {isOpen ? openIcon || "▲" : closeIcon || "▼"}
-      </motion.div>
-    </motion.button>
-  );
-}
-
-export function AccordionContent({ children, id, className = "", animation = "fadeIn", duration = 0.3, loadOnOpen }) {
-  const context = useContext(AccordionContext);
-  if (!context) throw new Error("AccordionContent must be used within an Accordion");
-
-  const isOpen = context.openItems.includes(id);
-  const [content, setContent] = useState(children);
-
-  useEffect(() => {
-    if (isOpen && loadOnOpen) {
-      loadOnOpen().then(setContent);
-    }
-  }, [isOpen, loadOnOpen]);
-
-  return (
-    <AnimatePresence initial={false}>
-      {isOpen && (
-        <motion.div className={`overflow-hidden content-glass ${className}`} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration }}>
-          <div className="px-6 py-4 text-white/90">{content}</div>
-        </motion.div>
-      )}
-    </AnimatePresence>
-  );
-}
-
-export function AccordionExample() {
-  const items = ['item-1', 'item-2', 'item-3'];
-
-  return (
-    <div className="p-4 min-h-screen bg-gradient-to-br from-gray-900 to-gray-800">
-      <h2 className="text-2xl font-bold text-white mb-6">Basic Accordion</h2>
-      <Accordion multiple persistState storageKey="example-accordion" className="max-w-2xl mx-auto">
-        {items.map(id => (
-          <AccordionItem key={id} id={id}>
-            <AccordionTrigger id={id}>Section {id.split('-')[1]}</AccordionTrigger>
-            <AccordionContent id={id} animation="fadeInDown" duration={0.4}>
-              <div className="p-4 text-white/90"><p>This is the content for section {id.split('-')[1]}.</p></div>
-            </AccordionContent>
-          </AccordionItem>
-        ))}
-      </Accordion>
+    <div className="mb-4">
+      <MagneticButton onClick={onClick} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+        <div className="flex justify-between items-center">
+          <Title>{title}</Title>
+          <IconWrapper animate={{ rotate: isOpen ? 180 : 0 }} transition={{ type: "spring", stiffness: 200 }}>
+            ▼
+          </IconWrapper>
+        </div>
+      </MagneticButton>
+      <AnimatePresence>
+        {isOpen && (
+          <ContentWrapper initial={{ height: 0, opacity: 0 }} animate={{ height: 'auto', opacity: 1 }} exit={{ height: 0, opacity: 0 }} transition={{ duration: 0.3 }}>
+            <Content>{content}</Content>
+          </ContentWrapper>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
+
+function Accordion({ items, allowMultiple = false }) {
+  const [openIndexes, setOpenIndexes] = useState([]);
+
+  const handleClick = index => {
+    if (allowMultiple) {
+      setOpenIndexes(openIndexes.includes(index) ? openIndexes.filter(i => i !== index) : [...openIndexes, index]);
+    } else {
+      setOpenIndexes(openIndexes.includes(index) ? [] : [index]);
+    }
+  };
+
+  return (
+    <Container>
+      <MagneticField size={300} color="#42a5f5" style={{ top: '10%', left: '10%' }} />
+      <MagneticField size={200} color="#2196f3" style={{ top: '40%', right: '20%' }} />
+      {items.map((item, index) => (
+        <AccordionItem key={index} title={item.title} content={item.content} isOpen={openIndexes.includes(index)} onClick={() => handleClick(index)} />
+      ))}
+    </Container>
+  );
+}
+
+const ExampleAccordion = () => {
+  const items = [
+    { title: "What is Multi-UI?", content: "Multi-UI is an animated component library." },
+    { title: "How to install it?", content: "Run `npm install multi-ui` to get started." },
+    { title: "Does it support animations?", content: "Yes! It includes Framer Motion animations." }
+  ];
+
+  return <Accordion items={items} allowMultiple={true} />;
+};
+
+export default ExampleAccordion;
+export { Accordion, AccordionItem, MagneticButton, MagneticField, Container as MagneticContainer };

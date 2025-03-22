@@ -24,6 +24,6 @@
       "@/*": ["./*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/accordian/_components/Accordian_1.jsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "app/accordian/_components/Accordian_1.jsx", "app/accordian/page.jsx"],
   "exclude": ["node_modules"]
 }

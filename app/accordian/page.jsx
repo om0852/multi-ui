@@ -135,11 +135,11 @@
 // }
 
 import React from 'react'
-import { AccordionExample1 } from './_components/Accordian_1'
+import { AccordionExample } from './_components/Accordian_1'
 const page = () => {
   return (
     <div>
-      <AccordionExample1 />
+      <AccordionExample />
     </div>
   )
 }
