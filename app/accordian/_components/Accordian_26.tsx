@@ -233,3 +233,13 @@ export { MetalButton };
 export { Content as MetalContent };
 export { AccordionItem as MetalAccordionItem };
 export { RippleEffect }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Metallic Design", content: "Sleek metal-inspired accordion." },
+    { title: "Chrome finish", content: "Polished metallic surfaces." },
+    { title: "Industrial", content: "Robust, industrial aesthetic." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

@@ -251,3 +251,13 @@ export { Container as SplitContainer };
 export { SplitButton };
 export { Content as SplitContent };
 export { AccordionItem as SplitAccordionItem }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Split Design", content: "Visually divided interface elements." },
+    { title: "Dual-tone aesthetics", content: "Contrasting colors and split content." },
+    { title: "Balanced asymmetry", content: "Harmonious layout with split sections." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

@@ -299,3 +299,13 @@ export { Container as MoltenContainer };
 export { MoltenButton };
 export { Content as MoltenContent };
 export { AccordionItem as MoltenAccordionItem }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Molten Design", content: "Flowing, liquid-inspired elements with a sense of heat and movement." },
+    { title: "Lava aesthetics", content: "Warm color palette with glowing, ember-like accents." },
+    { title: "Heat dynamics", content: "Interface elements that suggest the flow and behavior of molten materials." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

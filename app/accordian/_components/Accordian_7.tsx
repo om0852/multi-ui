@@ -170,3 +170,13 @@ export { MorphingButton };
 export { Content as MorphingContent };
 export { AccordionItem as MorphingAccordionItem };
 export { Shape };
+
+export const Example = () => {
+  const items = [
+    { title: "Morphing Design", content: "Accordion with shape-morphing background." },
+    { title: "Colorful", content: "Vibrant color transitions." },
+    { title: "Animated", content: "Smooth shape transformations." }
+  ];
+
+  return <Accordion items={items} />;
+};

@@ -240,3 +240,13 @@ export { IslandButton };
 export { Content as IslandContent };
 export { AccordionItem as IslandAccordionItem };
 export { Cloud, FloatingIsland }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Floating Islands", content: "Dreamy island-inspired design elements." },
+    { title: "Cloud animations", content: "Soft floating cloud effects." },
+    { title: "Light atmosphere", content: "Airy and relaxed visual theme." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

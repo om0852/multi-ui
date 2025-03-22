@@ -289,3 +289,13 @@ export { Container as VortexContainer };
 export { VortexButton };
 export { Content as VortexContent };
 export { AccordionItem as VortexAccordionItem }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Vortex Design", content: "Spiraling, dynamic interface elements with a sense of motion and flow." },
+    { title: "Swirling patterns", content: "Visual designs that create a sense of depth through spiral movement." },
+    { title: "Circular flow", content: "Elements that guide the eye in a circular, vortex-like pattern." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

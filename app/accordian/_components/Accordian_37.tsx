@@ -189,3 +189,13 @@ export { Container as WaveContainer };
 export { WaveButton };
 export { Content as WaveContent };
 export { AccordionItem as WaveAccordionItem }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Wave Pattern", content: "Fluid, wave-inspired design elements that create a sense of motion and flow throughout the interface." },
+    { title: "Flowing aesthetics", content: "Smooth, undulating visual transitions that mimic water movements and create a calming user experience." },
+    { title: "Ocean-like motion", content: "Gentle wave animations and effects that respond to user interaction, enhancing engagement." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

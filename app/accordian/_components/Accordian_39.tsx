@@ -283,3 +283,13 @@ export { Container as CosmicContainer };
 export { CosmicButton };
 export { Content as CosmicContent };
 export { AccordionItem as CosmicAccordionItem }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Cosmic Design", content: "Space-inspired interfaces with star-like elements and galactic aesthetics." },
+    { title: "Celestial movements", content: "Animations that mimic the gentle drift and rotation of celestial bodies." },
+    { title: "Stellar interactions", content: "Interactive elements that sparkle and shine like distant stars in the night sky." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

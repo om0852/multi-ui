@@ -222,3 +222,13 @@ export { FloatingButton };
 export { Content as FloatingContent };
 export { AccordionItem as FloatingAccordionItem };
 export { FloatingElement }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Weightless Design", content: "Elements that appear to float in space." },
+    { title: "Subtle movement", content: "Gentle animations create a sense of buoyancy." },
+    { title: "Minimalist approach", content: "Clean interfaces with floating components." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

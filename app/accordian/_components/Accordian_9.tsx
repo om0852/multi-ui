@@ -206,3 +206,13 @@ export { MatrixButton };
 export { Content as MatrixContent };
 export { AccordionItem as MatrixAccordionItem };
 export { RainColumn };
+
+export const Example = () => {
+  const items = [
+    { title: "Matrix Style", content: "Digital rain effect accordion." },
+    { title: "Green Code", content: "Classic matrix-inspired design." },
+    { title: "Binary", content: "Flowing binary elements." }
+  ];
+
+  return <Accordion items={items} />;
+};

@@ -216,3 +216,13 @@ export { AccordionButton };
 export { Content as HoloContent };
 export { AccordionItem as HoloAccordionItem };
 export { HoloPrism };
+
+export const Example = () => {
+  const items = [
+    { title: "Holographic", content: "Accordion with hologram-like effects." },
+    { title: "3D elements", content: "Dimensional prism objects." },
+    { title: "Iridescent", content: "Color-shifting surfaces." }
+  ];
+
+  return <Accordion items={items} />;
+};

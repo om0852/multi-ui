@@ -222,3 +222,13 @@ export { Container as GalaxyContainer };
 export { GalaxyButton };
 export { Content as GalaxyContent };
 export { AccordionItem as GalaxyAccordionItem }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Cosmic Interface", content: "Galaxy-inspired design with star field backgrounds and nebula effects." },
+    { title: "Stellar elements", content: "Interface components that mimic celestial bodies and cosmic phenomena." },
+    { title: "Space aesthetics", content: "Deep space color schemes with twinkling star particles." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

@@ -218,3 +218,13 @@ export { Container as FloatingContainer };
 export { FloatingButton };
 export { Content as FloatingContent };
 export { AccordionItem as FloatingAccordionItem }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Floating Elements", content: "Interface components that appear to hover with subtle shadows." },
+    { title: "Weightless design", content: "Light, airy aesthetic that creates a sense of components floating in space." },
+    { title: "Elevation layers", content: "Carefully designed shadow work that creates a sense of varying depths." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

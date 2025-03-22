@@ -173,3 +173,13 @@ export { Container as CyberContainer };
 export { CyberButton };
 export { Content as CyberContent };
 export { AccordionItem as CyberAccordionItem }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Cyber Interface", content: "High-tech, digital-inspired design with a futuristic aesthetic." },
+    { title: "Matrix elements", content: "Code-like visual treatments and digital noise patterns." },
+    { title: "Tech minimalism", content: "Clean lines and angular elements reminiscent of advanced technology." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

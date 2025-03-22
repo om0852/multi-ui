@@ -272,3 +272,13 @@ export { Container as RibbonContainer };
 export { RibbonButton };
 export { Content as RibbonContent };
 export { AccordionItem as RibbonAccordionItem }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Ribbon Design", content: "Elegant ribbon-like interface elements." },
+    { title: "Flowing aesthetics", content: "Smooth curved shapes that resemble ribbons." },
+    { title: "Decorative accents", content: "Visual embellishments using ribbon motifs." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

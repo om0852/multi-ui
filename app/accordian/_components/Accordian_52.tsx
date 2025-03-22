@@ -264,3 +264,13 @@ export { Container as GlassContainer };
 export { GlassButton };
 export { Content as GlassContent };
 export { AccordionItem as GlassAccordionItem }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Glass Morphism", content: "Modern transparency effects with subtle backdrop blur." },
+    { title: "Frosted surfaces", content: "Semi-transparent elements with a light diffusion effect." },
+    { title: "Light interplay", content: "Visual depth through layered transparency and soft shadows." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

@@ -183,3 +183,13 @@ export { GlassCard };
 export { Content as GlassContent };
 export { AccordionItem as GlassAccordionItem };
 export { GlassOverlay };
+
+export const Example = () => {
+  const items = [
+    { title: "Glassmorphism", content: "Modern glass-effect accordion." },
+    { title: "Transparency", content: "Frosted glass aesthetic." },
+    { title: "Blur effects", content: "Subtle backdrop blur styling." }
+  ];
+
+  return <Accordion items={items} />;
+};

@@ -288,3 +288,13 @@ export { Container as GlowContainer };
 export { GlowButton };
 export { Content as GlowContent };
 export { AccordionItem as GlowAccordionItem }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Glowing Elements", content: "Radiant UI with illuminated components." },
+    { title: "Light effects", content: "Soft glowing edges and highlights." },
+    { title: "Ethereal design", content: "Luminous interface with ambient lighting." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

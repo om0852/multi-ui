@@ -253,3 +253,13 @@ export { Container as CircuitContainer };
 export { CircuitButton };
 export { Content as CircuitContent };
 export { AccordionItem as CircuitAccordionItem }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Circuit Design", content: "Technology-inspired interface with circuit board aesthetics." },
+    { title: "Connected paths", content: "Visual elements that mimic electronic circuit connectivity." },
+    { title: "Component layout", content: "Organized design reminiscent of electronic component arrangements." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

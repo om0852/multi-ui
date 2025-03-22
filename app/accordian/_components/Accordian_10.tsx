@@ -203,3 +203,13 @@ export { RetroButton };
 export { Content as RetroContent };
 export { AccordionItem as RetroAccordionItem };
 export { SunBackground };
+
+export const Example = () => {
+  const items = [
+    { title: "Retro Design", content: "A vintage-inspired accordion." },
+    { title: "Sunset colors", content: "Warm gradient color scheme." },
+    { title: "Classic style", content: "Nostalgic UI elements." }
+  ];
+
+  return <Accordion items={items} />;
+};

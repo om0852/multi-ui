@@ -279,3 +279,13 @@ export { Container as MagneticContainer };
 export { MagneticButton };
 export { Content as MagneticContent };
 export { AccordionItem as MagneticAccordionItem }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Magnetic Elements", content: "Interactive components that subtly attract user attention with magnetic-like behavior." },
+    { title: "Attraction effects", content: "Elements that respond to user proximity, creating a sense of physical connection with digital interfaces." },
+    { title: "Dynamic pull", content: "Smooth magnetic animations that guide users through content with intuitive pull mechanics." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

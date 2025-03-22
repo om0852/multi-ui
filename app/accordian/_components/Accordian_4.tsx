@@ -140,3 +140,13 @@ export { Container as MinimalContainer };
 export { MinimalButton };
 export { Content as MinimalContent };
 export { AccordionItem as MinimalAccordionItem };
+
+export const Example = () => {
+  const items = [
+    { title: "Minimalist", content: "A clean, minimalist accordion design." },
+    { title: "Simple UI", content: "Perfect for modern interfaces." },
+    { title: "Lightweight", content: "Optimized for performance." }
+  ];
+
+  return <Accordion items={items} />;
+};

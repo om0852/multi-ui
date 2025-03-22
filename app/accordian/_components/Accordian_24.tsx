@@ -209,3 +209,13 @@ export { LayerButton };
 export { Content as LayerContent };
 export { AccordionItem as LayerAccordionItem };
 export { Layer }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Layered UI", content: "Accordion with stacked layer design." },
+    { title: "Depth effect", content: "Visual depth through layering." },
+    { title: "Dimensional", content: "3D-like stacked interface." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

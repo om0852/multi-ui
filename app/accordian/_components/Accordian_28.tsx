@@ -205,3 +205,13 @@ export { NeonButton };
 export { Content as NeonContent };
 export { AccordionItem as NeonAccordionItem };
 export { NeonLine }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Neon Glow", content: "Vibrant electric colors with glowing effects." },
+    { title: "Retro Vibes", content: "80s inspired neon aesthetic." },
+    { title: "High contrast", content: "Bold outlines with neon accents." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

@@ -120,7 +120,7 @@ function Accordion({ items, allowMultiple = false }) {
   );
 }
 
-export const ExampleAccordion = () => {
+export const Example = () => {
   const items = [
     { title: "What is Multi-UI?", content: "Multi-UI is an animated component library." },
     { title: "How to install it?", content: "Run `npm install multi-ui` to get started." },

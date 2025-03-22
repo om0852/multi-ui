@@ -225,3 +225,13 @@ export { CircuitButton };
 export { Content as CircuitContent };
 export { AccordionItem as CircuitAccordionItem };
 export { Circuit, CircuitPath, CircuitDot }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Circuit Design", content: "Tech-inspired circuit board accordion." },
+    { title: "Techno paths", content: "Linear electronic pathways." },
+    { title: "Nodes & connections", content: "Digital network aesthetic." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

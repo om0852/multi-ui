@@ -150,3 +150,13 @@ export { Container as GradientContainer };
 export { GradientButton };
 export { Content as GradientContent };
 export { AccordionItem as GradientAccordionItem };
+
+export const Example = () => {
+  const items = [
+    { title: "Dark Theme", content: "This accordion uses a dark theme." },
+    { title: "Gradient Design", content: "Features gradient backgrounds." },
+    { title: "Animation", content: "Smooth transitions when expanding." }
+  ];
+
+  return <Accordion items={items} />;
+};

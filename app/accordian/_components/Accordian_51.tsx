@@ -242,3 +242,13 @@ export { Container as NeonContainer };
 export { NeonButton };
 export { Content as NeonContent };
 export { AccordionItem as NeonAccordionItem }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Cyberpunk Design", content: "Futuristic, neon-infused interface with a dystopian urban aesthetic." },
+    { title: "High contrast", content: "Bold, vibrant colors against dark backgrounds for maximum impact." },
+    { title: "Digital distortion", content: "Glitch-like effects and digital artifacts that create tension and energy." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

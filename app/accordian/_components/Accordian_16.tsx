@@ -206,3 +206,13 @@ export { Container as NeonContainer };
 export { NeonButton };
 export { Content as NeonContent };
 export { AccordionItem as NeonAccordionItem };
+
+export const Example = () => {
+  const items = [
+    { title: "Neon Style", content: "Bright neon-themed accordion." },
+    { title: "Vibrant", content: "Glowing neon-sign aesthetics." },
+    { title: "Nightlife", content: "Urban nightclub vibe." }
+  ];
+
+  return <Accordion items={items} />;
+};

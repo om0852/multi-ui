@@ -139,3 +139,13 @@ export { Container as NeumorphicContainer }
 export { NeumorphicButton }
 export { Content as NeumorphicContent }
 export { AccordionItem as NeumorphicAccordionItem }
+
+export const Example = () => {
+  const items = [
+    { title: "What is this?", content: "A neumorphic accordion component." },
+    { title: "Features?", content: "Clean design with soft shadows." },
+    { title: "Customizable?", content: "Yes, fully customizable." }
+  ];
+
+  return <Accordion items={items} />;
+};

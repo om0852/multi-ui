@@ -199,3 +199,13 @@ export { Container as FrostContainer };
 export { FrostButton };
 export { Content as FrostContent };
 export { AccordionItem as FrostAccordionItem }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Frost Interface", content: "Winter-inspired design elements with ice and snow aesthetics." },
+    { title: "Icy textures", content: "Frosted glass effects and crystalline patterns that suggest frozen surfaces." },
+    { title: "Cool palette", content: "Color schemes built around blues, whites, and subtle ice tones." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

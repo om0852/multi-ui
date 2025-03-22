@@ -249,3 +249,13 @@ export { Container as PlasmaContainer };
 export { PlasmaButton };
 export { Content as PlasmaContent };
 export { AccordionItem as PlasmaAccordionItem }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Plasma Effects", content: "Fluid, energetic design elements with organic movement and vibrant colors." },
+    { title: "Energy flow", content: "Dynamic visual treatments that simulate flowing energy and plasma currents." },
+    { title: "Luminous interactions", content: "Glowing interface elements that respond to user actions with plasma-like animations." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

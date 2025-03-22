@@ -179,3 +179,13 @@ export { Container as FuturisticContainer };
 export { FuturisticButton };
 export { Content as FuturisticContent };
 export { AccordionItem as FuturisticAccordionItem };
+
+export const Example = () => {
+  const items = [
+    { title: "Futuristic UI", content: "A sleek, futuristic accordion design." },
+    { title: "Neon effects", content: "Glowing elements with neon styling." },
+    { title: "Interactive", content: "Responsive animations on interaction." }
+  ];
+
+  return <Accordion items={items} />;
+};

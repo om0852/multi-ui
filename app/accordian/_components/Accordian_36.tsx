@@ -240,3 +240,13 @@ export { Container as GridContainer };
 export { GridButton };
 export { Content as GridContent };
 export { AccordionItem as GridAccordionItem }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Grid Layout", content: "Accordion with structured grid patterns." },
+    { title: "Organized design", content: "Clean, precise grid-based interfaces." },
+    { title: "Geometric structure", content: "Systematic grid arrangement for visual clarity." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

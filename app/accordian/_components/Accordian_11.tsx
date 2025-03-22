@@ -218,3 +218,13 @@ export { CosmicButton };
 export { Content as CosmicContent };
 export { AccordionItem as CosmicAccordionItem };
 export { Particle };
+
+export const Example = () => {
+  const items = [
+    { title: "Cosmic Theme", content: "Space-inspired accordion design." },
+    { title: "Particles", content: "Floating particle elements." },
+    { title: "Galaxy colors", content: "Cosmic color palette." }
+  ];
+
+  return <Accordion items={items} />;
+};

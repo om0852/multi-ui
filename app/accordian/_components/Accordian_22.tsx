@@ -195,3 +195,13 @@ export { PaperButton };
 export { Content as PaperContent };
 export { AccordionItem as PaperAccordionItem };
 export { PaperFold }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Paper Effect", content: "Accordion with folded paper styling." },
+    { title: "Tactile design", content: "Realistic paper texture and folds." },
+    { title: "Craft style", content: "Handmade, organic aesthetic." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

@@ -235,3 +235,13 @@ export { Container as DigitalContainer };
 export { DigitalButton };
 export { Content as DigitalContent };
 export { AccordionItem as DigitalAccordionItem }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Digital Interface", content: "Modern tech-inspired design with clean lines and digital aesthetics." },
+    { title: "Circuit patterns", content: "Visual elements inspired by circuit boards and electronic components." },
+    { title: "Tech minimalism", content: "Streamlined, efficient design that embodies modern digital principles." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

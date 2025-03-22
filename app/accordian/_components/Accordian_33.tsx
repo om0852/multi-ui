@@ -220,3 +220,13 @@ export { Container as StackedContainer };
 export { StackedButton };
 export { Content as StackedContent };
 export { AccordionItem as StackedAccordionItem }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Layered Design", content: "Elements that appear stacked on top of each other." },
+    { title: "Depth perception", content: "Visual hierarchy through stacked components." },
+    { title: "Layer organization", content: "Structured content with z-index differentiation." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

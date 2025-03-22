@@ -279,3 +279,13 @@ export { Container as OrigamiContainer };
 export { OrigamiButton };
 export { Content as OrigamiContent };
 export { AccordionItem as OrigamiAccordionItem }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Origami Design", content: "Interface inspired by paper folding art with geometric precision." },
+    { title: "Folded surfaces", content: "Elements that appear to be folded like paper with realistic shadows." },
+    { title: "Transformative motion", content: "Animations that mimic the unfolding and folding of paper." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

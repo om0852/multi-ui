@@ -219,3 +219,13 @@ export { GeometricButton };
 export { Content as GeometricContent };
 export { AccordionItem as GeometricAccordionItem };
 export { GeometricShape };
+
+export const Example = () => {
+  const items = [
+    { title: "Geometric Shapes", content: "Accordion with polygon elements." },
+    { title: "Bold colors", content: "Vibrant geometric color scheme." },
+    { title: "Modern design", content: "Contemporary flat design aesthetics." }
+  ];
+
+  return <Accordion items={items} />;
+};

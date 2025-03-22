@@ -230,3 +230,13 @@ export { MagneticButton };
 export { Content as MagneticContent };
 export { AccordionItem as MagneticAccordionItem };
 export { MagneticField };
+
+export const Example = () => {
+  const items = [
+    { title: "Magnetic Fields", content: "Accordion with electromagnetic styling." },
+    { title: "Force fields", content: "Dynamic energy field visuals." },
+    { title: "Blue glow", content: "Electric blue color scheme." }
+  ];
+
+  return <Accordion items={items} />;
+};

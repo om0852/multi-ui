@@ -183,3 +183,13 @@ export { MinimalButton };
 export { Content as MinimalContent };
 export { AccordionItem as MinimalAccordionItem };
 export { Accent };
+
+export const Example = () => {
+  const items = [
+    { title: "Minimalist Style", content: "Clean, minimal accordion design." },
+    { title: "Subtle accents", content: "Simple color highlights." },
+    { title: "Elegant", content: "Refined user interface." }
+  ];
+
+  return <Accordion items={items} />;
+};

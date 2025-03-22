@@ -203,3 +203,13 @@ export { Container as SynthContainer };
 export { SynthButton };
 export { Content as SynthContent };
 export { AccordionItem as SynthAccordionItem }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Synthwave Design", content: "Retro-futuristic aesthetic with neon colors and 80s vibes." },
+    { title: "Sunset gradients", content: "Vibrant color schemes inspired by retro sunsets and neon lighting." },
+    { title: "Grid aesthetics", content: "Clean, geometric patterns reminiscent of early digital interfaces." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

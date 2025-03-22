@@ -207,3 +207,13 @@ export { Container as HoloContainer };
 export { HoloButton };
 export { Content as HoloContent };
 export { AccordionItem as HoloAccordionItem }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Holographic UI", content: "Futuristic interface with light refraction and rainbow-like effects." },
+    { title: "Spatial depth", content: "Elements that appear to float and exist in three-dimensional space." },
+    { title: "Light distortion", content: "Visual treatments that mimic holographic projection imperfections." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

@@ -269,3 +269,13 @@ export { Container as AuroraContainer };
 export { AuroraButton };
 export { Content as AuroraContent };
 export { AccordionItem as AuroraAccordionItem }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Aurora Design", content: "Light-infused interface inspired by the northern lights phenomenon." },
+    { title: "Ethereal glow", content: "Subtle, shifting color gradients that evoke the aurora borealis." },
+    { title: "Atmospheric effects", content: "Gentle, wave-like animations that mimic the movement of auroras." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

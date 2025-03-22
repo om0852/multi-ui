@@ -201,3 +201,13 @@ export { Container as LiquidContainer };
 export { LiquidButton };
 export { Content as LiquidContent };
 export { AccordionItem as LiquidAccordionItem };
+
+export const Example = () => {
+  const items = [
+    { title: "Liquid Design", content: "Accordion with fluid animations." },
+    { title: "Smooth flow", content: "Elegant liquid-like transitions." },
+    { title: "Bubbling", content: "Bubble effects on interaction." }
+  ];
+
+  return <Accordion items={items} />;
+};

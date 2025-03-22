@@ -257,3 +257,13 @@ export { CyberButton };
 export { Content as CyberContent };
 export { AccordionItem as CyberAccordionItem };
 export { NeonLine };
+
+export const Example = () => {
+  const items = [
+    { title: "Cyberpunk", content: "Futuristic cyberpunk-style accordion." },
+    { title: "Neon glow", content: "Glowing neon elements." },
+    { title: "Tech-inspired", content: "High-tech digital aesthetic." }
+  ];
+
+  return <Accordion items={items} />;
+};

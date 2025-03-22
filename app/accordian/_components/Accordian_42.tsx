@@ -264,3 +264,13 @@ export { Container as MetalContainer };
 export { MetalButton };
 export { Content as MetalContent };
 export { AccordionItem as MetalAccordionItem }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Metal Design", content: "Industrial-inspired interface with metallic textures and finishes." },
+    { title: "Solid construction", content: "Design elements that convey strength and durability through metallic aesthetics." },
+    { title: "Polished surfaces", content: "Reflective, metallic surfaces with realistic light interactions." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

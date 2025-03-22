@@ -236,3 +236,13 @@ export { Container as LiquidMetalContainer };
 export { MetalButton };
 export { Content as LiquidMetalContent };
 export { AccordionItem as LiquidMetalAccordionItem }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Liquid Metal", content: "Fluid, metallic surfaces with high-shine reflective properties." },
+    { title: "Chrome dynamics", content: "Animated elements that mimic liquid metal flowing and reforming." },
+    { title: "Metallic sheen", content: "Reflective surfaces with realistic light interactions and gradients." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

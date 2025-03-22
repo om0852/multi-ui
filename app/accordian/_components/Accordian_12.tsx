@@ -229,3 +229,13 @@ export { CrystalButton };
 export { Content as CrystalContent };
 export { AccordionItem as CrystalAccordionItem };
 export { Crystal };
+
+export const Example = () => {
+  const items = [
+    { title: "Crystal Design", content: "Accordion with crystal elements." },
+    { title: "Transparent", content: "Light, airy aesthetic." },
+    { title: "Geometric", content: "Angular crystal shapes." }
+  ];
+
+  return <Accordion items={items} />;
+};

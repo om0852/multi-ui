@@ -190,3 +190,13 @@ export { BubbleButton };
 export { Content as BubbleContent };
 export { AccordionItem as BubbleAccordionItem };
 export { Bubble }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Bubble Design", content: "Accordion with floating bubble elements." },
+    { title: "Playful", content: "Fun, animated bubble movements." },
+    { title: "Fluid", content: "Soft, round shapes and transitions." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

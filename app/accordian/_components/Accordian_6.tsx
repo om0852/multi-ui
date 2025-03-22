@@ -169,3 +169,13 @@ export { FloatingButton };
 export { Content as FloatingContent };
 export { AccordionItem as FloatingAccordionItem };
 export { Orb };
+
+export const Example = () => {
+  const items = [
+    { title: "Floating UI", content: "An accordion with floating orb elements." },
+    { title: "Dynamic", content: "Moving background elements." },
+    { title: "Modern", content: "Contemporary design aesthetics." }
+  ];
+
+  return <Accordion items={items} />;
+};

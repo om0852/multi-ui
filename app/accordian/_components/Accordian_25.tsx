@@ -248,3 +248,13 @@ export { NebulaButton };
 export { Content as NebulaContent };
 export { AccordionItem as NebulaAccordionItem };
 export { Star, Nebula }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Space Theme", content: "Cosmic nebula-inspired accordion." },
+    { title: "Starry background", content: "Twinkling stars and nebulae." },
+    { title: "Galactic", content: "Deep space visual aesthetic." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

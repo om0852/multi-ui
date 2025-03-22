@@ -242,3 +242,13 @@ export { Container as NeonContainer };
 export { NeonButton };
 export { Content as NeonContent };
 export { AccordionItem as NeonAccordionItem }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Neon Glow", content: "Vibrant, glowing design elements inspired by neon lighting." },
+    { title: "Electric colors", content: "Bright, saturated colors that create visual impact and energy." },
+    { title: "Night city aesthetic", content: "Urban-inspired design reminiscent of city lights after dark." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

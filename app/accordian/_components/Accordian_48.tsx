@@ -294,3 +294,13 @@ export { Container as PrismContainer };
 export { PrismButton };
 export { Content as PrismContent };
 export { AccordionItem as PrismAccordionItem }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Prism Design", content: "Light-refracting interface elements with spectrum color effects." },
+    { title: "Rainbow edges", content: "Color dispersion effects that mimic light passing through a prism." },
+    { title: "Crystalline structure", content: "Angular, faceted design elements with transparent qualities." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

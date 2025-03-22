@@ -203,3 +203,13 @@ export { FrostButton };
 export { Content as FrostContent };
 export { AccordionItem as FrostAccordionItem };
 export { FrostEffect, Snowflake }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Winter Theme", content: "Frost-covered accordion design." },
+    { title: "Ice effects", content: "Snowflakes and frozen aesthetics." },
+    { title: "Cool tones", content: "Icy blue color palette." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

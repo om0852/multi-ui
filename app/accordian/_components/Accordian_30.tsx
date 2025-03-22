@@ -239,3 +239,13 @@ export { RetroButton };
 export { Content as RetroContent };
 export { AccordionItem as RetroAccordionItem };
 export { Pixel }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Pixel Art", content: "Retro 8-bit inspired design elements." },
+    { title: "Game aesthetics", content: "Classic video game visual style." },
+    { title: "Digital nostalgia", content: "Old-school computing interfaces." }
+  ];
+
+  return <Accordion items={items} />;
+}; 
