@@ -220,6 +220,15 @@ export default function Accordion({ items, allowMultiple = false }: AccordionPro
     </Container>
   );
 }
+export const ExampleAccordion = () => {
+  const items = [
+    { title: "What is Multi-UI?", content: "Multi-UI is an animated component library." },
+    { title: "How to install it?", content: "Run `npm install multi-ui` to get started." },
+    { title: "Does it support animations?", content: "Yes! It includes Framer Motion animations." }
+  ];
+
+  return <Accordion items={items} allowMultiple={true} />;
+};
 
 // Export individual components
 export { Container as GradientContainer };
