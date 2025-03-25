@@ -7,7 +7,11 @@ interface TypewriterProps {
   style?: React.CSSProperties;
 }
 
-const Typewriter_1: React.FC<TypewriterProps> = ({ message, className, style }) => {
+const Typewriter_1: React.FC<TypewriterProps> = ({ 
+  message, 
+  className,
+  style 
+}) => {
   const [displayText, setDisplayText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
 
@@ -25,8 +29,8 @@ const Typewriter_1: React.FC<TypewriterProps> = ({ message, className, style }) 
     <div className={className} style={style}>
       {displayText}
       <span 
-        className="inline-block w-[2px] h-[1em] ml-[2px] animate-blink"
-        style={{ backgroundColor: 'currentColor' }}
+        className="inline-block w-[2px] h-[1em] ml-[2px] bg-current animate-blink"
+        aria-hidden="true"
       />
     </div>
   );
