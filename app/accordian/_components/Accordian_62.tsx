@@ -255,4 +255,14 @@ export default function Accordion({ items, allowMultiple = false }: AccordionPro
 export { Container as MagmaContainer };
 export { MagmaButton };
 export { Content as MagmaContent };
-export { AccordionItem as MagmaAccordionItem }; 
+export { AccordionItem as MagmaAccordionItem };
+
+export const Example = () => {
+  const items = [
+    { title: "Magma Design", content: "Intense, fiery interfaces inspired by volcanic activity and flowing lava." },
+    { title: "Heat distortion", content: "Visual effects that mimic heat waves and thermal distortion." },
+    { title: "Molten flows", content: "Animated lava-like elements with realistic fluid dynamics." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

@@ -54,14 +54,7 @@ const IconWrapper = styled(motion.div)`
   font-size: 1.25rem;
 `
 
-interface AccordionItemProps {
-  title: string
-  content: string
-  isOpen: boolean
-  onClick: () => void
-}
-
-function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) {
+function AccordionItem({ title, content, isOpen, onClick }) {
   return (
     <div className="mb-4">
       <NeumorphicButton
@@ -100,15 +93,10 @@ function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) 
   )
 }
 
-interface AccordionProps {
-  items: Array<{ title: string; content: string }>
-  allowMultiple?: boolean
-}
+function Accordion({ items, allowMultiple = false }) {
+  const [openIndexes, setOpenIndexes] = useState([])
 
-export default function Accordion({ items, allowMultiple = false }: AccordionProps) {
-  const [openIndexes, setOpenIndexes] = useState<number[]>([])
-
-  const handleClick = (index: number) => {
+  const handleClick = (index) => {
     if (allowMultiple) {
       setOpenIndexes(openIndexes.includes(index)
         ? openIndexes.filter(i => i !== index)
@@ -134,7 +122,8 @@ export default function Accordion({ items, allowMultiple = false }: AccordionPro
   )
 }
 
-// Export individual components
+export default Accordion
+
 export { Container as NeumorphicContainer }
 export { NeumorphicButton }
 export { Content as NeumorphicContent }

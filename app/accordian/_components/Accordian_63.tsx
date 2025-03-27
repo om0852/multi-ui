@@ -229,3 +229,13 @@ export { Container as RainyContainer };
 export { RainyButton };
 export { Content as RainyContent };
 export { AccordionItem as RainyAccordionItem }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Rainy Atmosphere", content: "Interface inspired by rainy days with water droplets and mist effects." },
+    { title: "Liquid surfaces", content: "Elements that mimic wet surfaces with water droplets and reflections." },
+    { title: "Precipitation effects", content: "Animated rain and droplets with realistic physics." }
+  ];
+
+  return <Accordion items={items} />;
+}; 

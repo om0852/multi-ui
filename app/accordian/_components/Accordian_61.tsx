@@ -246,3 +246,13 @@ export { Container as QuantumContainer };
 export { QuantumButton };
 export { Content as QuantumContent };
 export { AccordionItem as QuantumAccordionItem }; 
+
+export const Example = () => {
+  const items = [
+    { title: "Quantum Computing", content: "Futuristic interface inspired by quantum computing visualizations." },
+    { title: "Particle effects", content: "Animated elements that mimic subatomic particles and quantum fields." },
+    { title: "Digital circuitry", content: "Complex, animated circuit patterns with energy flows." }
+  ];
+
+  return <Accordion items={items} />;
+}; 
