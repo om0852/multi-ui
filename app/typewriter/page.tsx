@@ -15,6 +15,11 @@ import Typewriter12Example from './_examples/Typewriter12Example';
 import Typewriter13Example from './_examples/Typewriter13Example';
 import Typewriter14Example from './_examples/Typewriter14Example';
 import Typewriter15Example from './_examples/Typewriter15Example';
+import Typewriter16Example from './_examples/Typewriter16Example';
+import Typewriter17Example from './_examples/Typewriter17Example';
+import Typewriter18Example from './_examples/Typewriter18Example';
+import Typewriter19Example from './_examples/Typewriter19Example';
+import Typewriter20Example from './_examples/Typewriter20Example';
 
 export default function TypewriterDemo() {
   return (
@@ -96,6 +101,31 @@ export default function TypewriterDemo() {
           <section>
             <h2 className="text-2xl font-semibold mb-6">Burning Text Effect</h2>
             <Typewriter15Example />
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold mb-6">Shadow Cast Effect</h2>
+            <Typewriter16Example />
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold mb-6">Magnetic Effect</h2>
+            <Typewriter17Example />
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold mb-6">Pixel Formation</h2>
+            <Typewriter18Example />
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold mb-6">Wave Distortion</h2>
+            <Typewriter19Example />
+          </section>
+
+          <section>
+            <h2 className="text-2xl font-semibold mb-6">Mirror Reflection</h2>
+            <Typewriter20Example />
           </section>
         </div>
       </div>
