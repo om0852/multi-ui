@@ -133,7 +133,7 @@ function Accordion({ items, allowMultiple = false }) {
   );
 }
 
-const Example = () => {
+export const Example = () => {
   const items = [
     { title: "Dark Theme", content: "This accordion uses a dark theme." },
     { title: "Gradient Design", content: "Features gradient backgrounds." },
@@ -143,4 +143,3 @@ const Example = () => {
   return <Accordion items={items} />;
 };
 
-export default Example;
