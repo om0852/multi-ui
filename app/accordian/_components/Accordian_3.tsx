@@ -116,7 +116,7 @@ interface AccordionProps {
   allowMultiple?: boolean;
 }
 
-export default function Accordion({ items, allowMultiple = false }: AccordionProps) {
+export function Accordion({ items, allowMultiple = false }: AccordionProps) {
   const [openIndexes, setOpenIndexes] = useState<number[]>([]);
 
   const handleClick = (index: number) => {
@@ -151,7 +151,7 @@ export { GradientButton };
 export { Content as GradientContent };
 export { AccordionItem as GradientAccordionItem };
 
-export const Example = () => {
+ const Example = () => {
   const items = [
     { title: "Dark Theme", content: "This accordion uses a dark theme." },
     { title: "Gradient Design", content: "Features gradient backgrounds." },
@@ -160,3 +160,5 @@ export const Example = () => {
 
   return <Accordion items={items} />;
 };
+
+export default Example;
