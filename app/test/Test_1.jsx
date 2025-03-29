@@ -1,5 +1,4 @@
-import React from 'react';
-(() => { 
+const Test_1 = () => { 
     return (
       <div>
         <h1>Test_1</h1>
@@ -15,5 +14,7 @@ import React from 'react';
         <label>Test Label</label>
       </div>
     );
-  })
+  }
+
+  export default Test_1;
   
