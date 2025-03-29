@@ -9,10 +9,6 @@ const magneticPulse = keyframes`
   50% { transform: scale(1.2); opacity: 0.8; }
 `;
 
-const fieldLines = keyframes`
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-`;
 
 const energyFlow = keyframes`
   0% { transform: translateX(-100%); }
