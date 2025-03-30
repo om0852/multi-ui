@@ -135,7 +135,7 @@
 // }
 
 import React from 'react'
-import { Example } from './_components/Accordian_1'
+import { Example } from './_components/Accordian_3'
 const page = () => {
   return (
     <div>
