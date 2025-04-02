@@ -8,7 +8,7 @@ import {
   StyledDialogHeader,
   StyledDialogDescription,
   StyledDialogFooter,
-} from "../_components/Dialog_21";
+} from "../tsx/Dialog_21";
 
 type AnimationType = "fade" | "slide" | "bounce" | "spin";
 

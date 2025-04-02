@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import OutlinePagination from '../_components/OutlinePagination';
+import OutlinePagination from '../tsx/OutlinePagination';
 
 const OutlineExample = () => {
   const [currentPage, setCurrentPage] = useState(1);

@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import ShakeBadge from '../_components/Badge_21';
+import ShakeBadge from '../tsx/Badge_21';
 
 export default function BadgeExample21() {
   return (

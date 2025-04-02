@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { HorizontalRadioGroupBounceFlipExpand as RadioGroup } from '../_components/RadioGroup_58';
+import { HorizontalRadioGroupBounceFlipExpand as RadioGroup } from '../tsx/RadioGroup_58';
 
 export default function RadioGroupExample() {
   const [selectedOption, setSelectedOption] = useState<string>("option1");

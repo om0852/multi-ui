@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import MorseCodeSeparator from "../_components/Separator_12";
+import MorseCodeSeparator from "../tsx/Separator_12";
 
 const SeparatorExample = () => {
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">("horizontal");

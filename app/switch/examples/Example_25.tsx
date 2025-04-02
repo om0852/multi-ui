@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Switch from "../_components/Switch_25";
+import Switch from "../tsx/Switch_25";
 
 const SwitchExample25 = () => {
   const [darkMode, setDarkMode] = useState(true);

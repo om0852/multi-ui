@@ -1,20 +1,20 @@
 'use client';
 import React from 'react';
-import Clock_21 from './_components/Clock_21';
-import Clock_22 from './_components/Clock_22';
-import Clock_23 from './_components/Clock_23';
-import Clock_24 from './_components/Clock_24';
-import Clock_25 from './_components/Clock_25';
-import Clock_26 from './_components/Clock_36';
-import Clock_27 from './_components/Clock_37';
-import Clock_28 from './_components/Clock_38';
-import Clock_29 from './_components/Clock_39';
-import Clock_30 from './_components/Clock_40';
-import Clock_31 from './_components/Clock_31';
-import Clock_32 from './_components/Clock_32';
-import Clock_33 from './_components/Clock_33';
-import Clock_34 from './_components/Clock_34';
-import Clock_35 from './_components/Clock_35';
+import Clock_21 from './tsx/Clock_21';
+import Clock_22 from './tsx/Clock_22';
+import Clock_23 from './tsx/Clock_23';
+import Clock_24 from './tsx/Clock_24';
+import Clock_25 from './tsx/Clock_25';
+import Clock_26 from './tsx/Clock_36';
+import Clock_27 from './tsx/Clock_37';
+import Clock_28 from './tsx/Clock_38';
+import Clock_29 from './tsx/Clock_39';
+import Clock_30 from './tsx/Clock_40';
+import Clock_31 from './tsx/Clock_31';
+import Clock_32 from './tsx/Clock_32';
+import Clock_33 from './tsx/Clock_33';
+import Clock_34 from './tsx/Clock_34';
+import Clock_35 from './tsx/Clock_35';
 
 const ClockPage = () => {
   return (

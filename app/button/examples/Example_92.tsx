@@ -1,5 +1,5 @@
 import React from 'react';
-import Button92 from '../_components/Button_92';
+import Button92 from '../tsx/Button_92';
 
 const Example92 = () => {
     return (

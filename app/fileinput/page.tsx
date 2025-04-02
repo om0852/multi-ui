@@ -1,20 +1,20 @@
 "use client"
 
 import React from 'react';
-import MinimalFileInput from './_components/FileInput_26';
-import GlassFileInput from './_components/FileInput_27';
-import GridFileInput from './_components/FileInput_28';
-import NeonFileInput from './_components/FileInput_29';
-import MaterialFileInput from './_components/FileInput_30';
-import BrutalistFileInput from './_components/FileInput_31';
-import FuturisticFileInput from './_components/FileInput_32';
-import MinimalistDarkFileInput from './_components/FileInput_34';
-import FloatingFileInput from './_components/FileInput_35';
-import GradientFileInput from './_components/FileInput_36';
-import BorderedFileInput from './_components/FileInput_37';
-import AnimatedFileInput from './_components/FileInput_38';
-import RetroFileInput from './_components/FileInput_39';
-import TerminalFileInput from './_components/FileInput_40';
+import MinimalFileInput from './tsx/FileInput_26';
+import GlassFileInput from './tsx/FileInput_27';
+import GridFileInput from './tsx/FileInput_28';
+import NeonFileInput from './tsx/FileInput_29';
+import MaterialFileInput from './tsx/FileInput_30';
+import BrutalistFileInput from './tsx/FileInput_31';
+import FuturisticFileInput from './tsx/FileInput_32';
+import MinimalistDarkFileInput from './tsx/FileInput_34';
+import FloatingFileInput from './tsx/FileInput_35';
+import GradientFileInput from './tsx/FileInput_36';
+import BorderedFileInput from './tsx/FileInput_37';
+import AnimatedFileInput from './tsx/FileInput_38';
+import RetroFileInput from './tsx/FileInput_39';
+import TerminalFileInput from './tsx/FileInput_40';
 
 export default function FileInputPage() {
   const handleFiles = (files: FileList | null) => {

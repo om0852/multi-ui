@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import Typewriter_5 from '../_components/Typewriter_5';
+import Typewriter_5 from '../tsx/Typewriter_5';
 
 const Typewriter5Example = () => {
   const text = "System malfunction detected";

@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import RotatingBadge from '../_components/Badge_19';
+import RotatingBadge from '../tsx/Badge_19';
 
 export default function BadgeExample19() {
   return (

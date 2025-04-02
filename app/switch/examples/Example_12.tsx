@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import SmoothSwitch from "../_components/Switch_12";
+import SmoothSwitch from "../tsx/Switch_12";
 
 const SwitchExample12 = () => {
   const [heatModeEnabled, setHeatModeEnabled] = useState(true);

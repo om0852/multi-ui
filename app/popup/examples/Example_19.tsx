@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import Popup_19 from '../_components/Popup_19';
+import Popup_19 from '../tsx/Popup_19';
 
 export default function PopupExample() {
   // Define menu items for the popup with gaming actions

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import  WaveformSeparator  from '../_components/Separator_36';
+import  WaveformSeparator  from '../tsx/Separator_36';
 
 const SeparatorExample = () => {
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">("horizontal");

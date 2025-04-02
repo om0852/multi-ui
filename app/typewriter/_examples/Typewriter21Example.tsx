@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import Typewriter_21 from '../_components/Typewriter_21';
+import Typewriter_21 from '../tsx/Typewriter_21';
 
 const Typewriter21Example = () => {
   const text = "Each letter spins into place";

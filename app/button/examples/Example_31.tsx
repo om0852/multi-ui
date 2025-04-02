@@ -1,5 +1,5 @@
 import React from 'react';
-import HoverAnimatedButton from '../_components/Button_31';
+import HoverAnimatedButton from '../tsx/Button_31';
 
 const Example31 = () => {
     return (

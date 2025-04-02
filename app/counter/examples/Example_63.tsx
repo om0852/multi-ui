@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react';
-import Counter_63 from '../_components/Counter_63';
+import Counter_63 from '../ts/Counter_63';
 
 const Example_63: React.FC = () => {
   return (

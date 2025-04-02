@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Switch from "../_components/Switch_127";
+import Switch from "../tsx/Switch_127";
 
 const SwitchExample127 = () => {
   const [autoPlay, setAutoPlay] = useState(true);

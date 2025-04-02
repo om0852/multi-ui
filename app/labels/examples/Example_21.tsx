@@ -1,6 +1,6 @@
 "use client"
 import React from 'react';
-import { Label_21 } from '../_components/Label_21';
+import { Label_21 } from '../tsx/Label_21';
 
 const Example_21: React.FC = () => {
   return (

@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import BorderAnimationPagination from '../_components/BorderAnimationPagination';
+import BorderAnimationPagination from '../tsx/BorderAnimationPagination';
 
 const BorderAnimationExample = () => {
   const [currentPage, setCurrentPage] = useState(1);

@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import GlitchSeparator from '../_components/Separator_44';
+import GlitchSeparator from '../tsx/Separator_44';
 
 const SeparatorExample = () => {
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">("horizontal");

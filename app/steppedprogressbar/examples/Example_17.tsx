@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { StepsRoot } from "../_components/SteppedProgressBar_17";
+import { StepsRoot } from "../tsx/SteppedProgressBar_17";
 
 const SteppedProgressBarExample17 = () => {
   // Define the steps for the video production process

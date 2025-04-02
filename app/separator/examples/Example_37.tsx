@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import  CircuitSeparator  from '../_components/Separator_37';
+import  CircuitSeparator  from '../tsx/Separator_37';
 
 const SeparatorExample = () => {
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">("horizontal");

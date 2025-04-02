@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Checkbox21 from '../_components/Checkbox_21';
+import Checkbox21 from '../tsx/Checkbox_21';
 
 const Example_21 = () => {
   const [isChecked, setIsChecked] = useState(false);

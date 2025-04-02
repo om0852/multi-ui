@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import FrostListGroup from '../_components/ListGroup_24';
+import FrostListGroup from '../tsx/ListGroup_24';
 import { FaSnowflake, FaMountain, FaIcicles, FaWater, FaWind } from 'react-icons/fa';
 
 const Example_24: React.FC = () => {

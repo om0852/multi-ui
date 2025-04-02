@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import LineGraphDesign3 from "../_components/Bar_19";
+import LineGraphDesign3 from "../tsx/Bar_19";
 
 export default function BarExample19() {
   // Sample datasets

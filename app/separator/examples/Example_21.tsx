@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import SystemUpdateSeparator from "../_components/Separator_21";
+import SystemUpdateSeparator from "../tsx/Separator_21";
 
 const SeparatorExample = () => {
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">("horizontal");

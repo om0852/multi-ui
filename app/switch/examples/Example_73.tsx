@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Switch from "../_components/Switch_73";
+import Switch from "../tsx/Switch_73";
 
 const SwitchExample73 = () => {
   const [midiSync, setMidiSync] = useState(true);

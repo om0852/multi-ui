@@ -1,5 +1,5 @@
 import React from 'react';
-import Button64 from '../_components/Button_64';
+import Button64 from '../tsx/Button_64';
 
 const Example64 = () => {
     return (

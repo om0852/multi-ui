@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { FloatingRadioGroup as RadioGroup } from '../_components/RadioGroup_16';
+import { FloatingRadioGroup as RadioGroup } from '../tsx/RadioGroup_16';
 
 export default function RadioGroupExample() {
   const [selectedOption, setSelectedOption] = useState<string>("option1");

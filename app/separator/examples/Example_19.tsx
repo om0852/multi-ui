@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import BubbleFlowSeparator from "../_components/Separator_19";
+import BubbleFlowSeparator from "../tsx/Separator_19";
 
 const SeparatorExample = () => {
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">("horizontal");

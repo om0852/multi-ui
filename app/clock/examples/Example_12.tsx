@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from 'react';
-import EnhancedCircularClock from '../_components/Clock_12';
+import EnhancedCircularClock from '../tsx/Clock_12';
 import { FaToggleOn, FaToggleOff, FaClock } from 'react-icons/fa6';
 
 const Example_12: React.FC = () => {

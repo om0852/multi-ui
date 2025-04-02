@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import SteppedProgressBar_3 from "../_components/SteppedProgressBar_3";
+import SteppedProgressBar_3 from "../tsx/SteppedProgressBar_3";
 
 const SteppedProgressBarExample3 = () => {
   const [activeStep, setActiveStep] = useState(1);

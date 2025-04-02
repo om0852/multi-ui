@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import Typewriter_4 from '../_components/Typewriter_4';
+import Typewriter_4 from '../tsx/Typewriter_4';
 
 const Typewriter4Example = () => {
   const commands = [

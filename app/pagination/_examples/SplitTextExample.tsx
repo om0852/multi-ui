@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import SplitTextPagination from '../_components/SplitTextPagination';
+import SplitTextPagination from '../tsx/SplitTextPagination';
 
 const SplitTextExample = () => {
   const [currentPage, setCurrentPage] = useState(1);

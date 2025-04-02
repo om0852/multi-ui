@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import BounceBadge from '../_components/Badge_2';
+import BounceBadge from '../tsx/Badge_2';
 
 export default function BadgeExample2() {
   return (

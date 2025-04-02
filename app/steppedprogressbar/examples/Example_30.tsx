@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { StepsRoot } from "../_components/SteppedProgressBar_30";
+import { StepsRoot } from "../tsx/SteppedProgressBar_30";
 
 const SteppedProgressBarExample30 = () => {
   // Define the steps for the agile sprint process

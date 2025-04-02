@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import GlowingMenu from '../_components/Popup_29';
+import GlowingMenu from '../tsx/Popup_29';
 
 export default function PopupExample() {
   // Define menu items for the popup with holiday options

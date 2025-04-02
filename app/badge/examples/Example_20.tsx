@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import ScaleBadge from '../_components/Badge_20';
+import ScaleBadge from '../tsx/Badge_20';
 
 export default function BadgeExample20() {
   return (

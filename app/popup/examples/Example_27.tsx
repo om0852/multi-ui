@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import PopupMenu from '../_components/Popup_27';
+import PopupMenu from '../tsx/Popup_27';
 
 export default function PopupExample() {
   // Define menu items for the popup with sport options

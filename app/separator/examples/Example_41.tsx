@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import StarfieldSeparator  from '../_components/Separator_41';
+import StarfieldSeparator  from '../tsx/Separator_41';
 
 const SeparatorExample = () => {
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">("horizontal");

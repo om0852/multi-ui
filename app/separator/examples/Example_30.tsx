@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import RainbowSeparator from "../_components/Separator_30";
+import RainbowSeparator from "../tsx/Separator_30";
 
 const SeparatorExample = () => {
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">("horizontal");

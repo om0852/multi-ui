@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Switch from "../_components/Switch_69";
+import Switch from "../tsx/Switch_69";
 
 const SwitchExample69 = () => {
   const [workoutReminders, setWorkoutReminders] = useState(true);

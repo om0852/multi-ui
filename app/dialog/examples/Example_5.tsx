@@ -8,7 +8,7 @@ import {
   NeonDialogTitle,
   NeonDialogDescription,
   NeonDialogFooter,
-} from "../_components/Dialog_5";
+} from "../tsx/Dialog_5";
 
 export default function Example_5() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);

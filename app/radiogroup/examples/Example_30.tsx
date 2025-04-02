@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { GlitchRadioGroup as RadioGroup } from '../_components/RadioGroup_30';
+import { GlitchRadioGroup as RadioGroup } from '../tsx/RadioGroup_30';
 
 export default function RadioGroupExample() {
   const [selectedOption, setSelectedOption] = useState<string>("option1");

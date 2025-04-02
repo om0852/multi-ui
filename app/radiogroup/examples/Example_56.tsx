@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { HorizontalRadioGroupPopShakeGlow as RadioGroup } from '../_components/RadioGroup_56';
+import { HorizontalRadioGroupPopShakeGlow as RadioGroup } from '../tsx/RadioGroup_56';
 
 export default function RadioGroupExample() {
   const [selectedOption, setSelectedOption] = useState<string>("option1");

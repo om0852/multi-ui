@@ -8,7 +8,7 @@ import {
   StyledDialogHeader,
   StyledDialogDescription,
   StyledDialogFooter,
-} from "../_components/Dialog_28";
+} from "../tsx/Dialog_28";
 
 type AnimationType = "gallery" | "zoom" | "slide" | "fade";
 

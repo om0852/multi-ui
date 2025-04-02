@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from 'react';
-import Clipboard from '../_components/Clipboard_60';
+import Clipboard from '../tsx/Clipboard_60';
 import { FaSun, FaMoon, FaDiamond, FaLightbulb, FaArrowRotateRight, FaPalette, FaWandMagicSparkles } from 'react-icons/fa6';
 
 const Example_60: React.FC = () => {

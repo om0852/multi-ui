@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import Typewriter_24 from '../_components/Typewriter_24';
+import Typewriter_24 from '../tsx/Typewriter_24';
 
 const Typewriter24Example = () => {
   const text = "Letters bounce into place";

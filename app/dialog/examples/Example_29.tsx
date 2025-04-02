@@ -8,7 +8,7 @@ import {
   StyledDialogHeader,
   StyledDialogDescription,
   StyledDialogFooter,
-} from "../_components/Dialog_29";
+} from "../tsx/Dialog_29";
 
 type AnimationType = "playlist" | "track" | "wave" | "fade";
 

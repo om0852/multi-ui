@@ -1,5 +1,5 @@
 "use client"
-import Skeleton from "./_components/Skeleton_16";
+import Skeleton from "./tsx/Skeleton_16";
 
 const App: React.FC = () => (
   <div className="p-6 space-y-4">

@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import GlowBadge from '../_components/Badge_8';
+import GlowBadge from '../tsx/Badge_8';
 
 export default function BadgeExample8() {
   return (

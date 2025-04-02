@@ -1,6 +1,6 @@
 "use client"
 import React from 'react';
-import InputField from '../_components/InputField_12';
+import InputField from '../tsx/InputField_12';
 
 const Example_12: React.FC = () => {
   return (

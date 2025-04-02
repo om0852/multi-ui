@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import Avatar from '../_components/Avatar_7';
+import Avatar from '../tsx/Avatar_7';
 
 export default function AvatarExample7() {
   const avatarData = [

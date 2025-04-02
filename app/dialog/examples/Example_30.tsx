@@ -8,7 +8,7 @@ import {
   StyledDialogHeader,
   StyledDialogDescription,
   StyledDialogFooter,
-} from "../_components/Dialog_30";
+} from "../tsx/Dialog_30";
 
 type AnimationType = "task" | "status" | "progress" | "check";
 

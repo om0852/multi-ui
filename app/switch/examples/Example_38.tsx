@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Switch from "../_components/Switch_38";
+import Switch from "../tsx/Switch_38";
 
 const SwitchExample38 = () => {
   const [voiceChat, setVoiceChat] = useState(true);

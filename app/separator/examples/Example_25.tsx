@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import NeonGlowSeparator from "../_components/Separator_25";
+import NeonGlowSeparator from "../tsx/Separator_25";
 
 const SeparatorExample = () => {
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">("horizontal");

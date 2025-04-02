@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Loader from "../_components/Loader_148";
+import Loader from "../tsx/Loader_148";
 
 const Example_148 = () => {
   const [isLoading, setIsLoading] = useState(true);

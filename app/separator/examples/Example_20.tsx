@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import GeometricPatternSeparator from "../_components/Separator_20";
+import GeometricPatternSeparator from "../tsx/Separator_20";
 
 const SeparatorExample = () => {
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">("horizontal");

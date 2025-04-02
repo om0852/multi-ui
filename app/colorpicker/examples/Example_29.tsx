@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from 'react';
-import ColorPicker_29 from '../_components/ColorPicker_29';
+import ColorPicker_29 from '../tsx/ColorPicker_29';
 
 export default function Example_29() {
   const [selectedColor, setSelectedColor] = useState('#d946ef');

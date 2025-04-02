@@ -8,7 +8,7 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from "../_components/Dialog_1";
+} from "../tsx/Dialog_1";
 
 type AnimationType = "fade" | "scale" | "slideUp" | "slideDown" | "slideLeft" | 
   "slideRight" | "zoomIn" | "zoomOut" | "rotate" | "flip" | "bounce" | 

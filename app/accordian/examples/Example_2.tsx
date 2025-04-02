@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import Accordion from '../_components/Accordian_2';
+import Accordion from '../tsx/Accordian_2';
 
 export default function AccordionExample2() {
   const accordionItems = [

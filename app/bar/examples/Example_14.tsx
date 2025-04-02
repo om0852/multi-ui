@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { BoxPlot } from "../_components/Bar_14";
+import { BoxPlot } from "../tsx/Bar_14";
 
 export default function BarExample14() {
   // Sample datasets

@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import Typewriter_16 from '../_components/Typewriter_16';
+import Typewriter_16 from '../tsx/Typewriter_16';
 
 const Typewriter16Example = () => {
   const text = "Shadows dance with every letter";

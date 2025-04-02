@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import QuantumTunnelSeparator from "../_components/Separator_46";
+import QuantumTunnelSeparator from "../tsx/Separator_46";
 
 const SeparatorExample46 = () => {
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">("horizontal");

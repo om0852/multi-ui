@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { HorizontalRadioGroupSpinFadePulse as RadioGroup } from '../_components/RadioGroup_57';
+import { HorizontalRadioGroupSpinFadePulse as RadioGroup } from '../tsx/RadioGroup_57';
 
 export default function RadioGroupExample() {
   const [selectedOption, setSelectedOption] = useState<string>("option1");

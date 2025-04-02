@@ -12,7 +12,7 @@ import {
   MenubarRadioGroup,
   MenubarRadioItem,
   MenubarShortcut,
-} from "../_components/Menubar_2";
+} from "../tsx/Menubar_2";
 import { useState } from "react";
 
 export default function Example_2() {

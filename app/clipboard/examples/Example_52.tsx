@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import Clipboard from '../_components/Clipboard_52';
+import Clipboard from '../tsx/Clipboard_52';
 
 const Example_52: React.FC = () => {
   const [darkMode, setDarkMode] = useState(true); // Default to dark mode for better glitch visibility

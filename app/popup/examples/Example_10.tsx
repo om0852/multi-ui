@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import Popup_10 from '../_components/Popup_10';
+import Popup_10 from '../tsx/Popup_10';
 
 export default function PopupExample() {
   // Define menu items for the popup with social media actions

@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import FallingConfettiBadge from '../_components/Badge_5';
+import FallingConfettiBadge from '../tsx/Badge_5';
 
 export default function BadgeExample5() {
   return (

@@ -8,7 +8,7 @@ import {
   StyledDialogHeader,
   StyledDialogDescription,
   StyledDialogFooter,
-} from "../_components/Dialog_17";
+} from "../tsx/Dialog_17";
 
 type AnimationType = "grow" | "bloom" | "leaf" | "roots";
 

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Switch from "../_components/Switch_2";
+import Switch from "../tsx/Switch_2";
 
 const SwitchExample2 = () => {
   const [wifiEnabled, setWifiEnabled] = useState(true);

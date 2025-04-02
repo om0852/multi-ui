@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Switch from "../_components/Switch_75";
+import Switch from "../tsx/Switch_75";
 
 const SwitchExample75 = () => {
   const [autoComplete, setAutoComplete] = useState(true);

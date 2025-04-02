@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { SlideEditContainer } from "../_components/Editable_8";
+import { SlideEditContainer } from "../tsx/Editable_8";
 
 export default function Example_8() {
   const handleSave = (content: string) => {

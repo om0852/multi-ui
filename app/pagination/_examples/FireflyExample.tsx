@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import FireflyPagination from '../_components/FireflyPagination';
+import FireflyPagination from '../tsx/FireflyPagination';
 
 const FireflyExample = () => {
   const [currentPage, setCurrentPage] = useState(1);

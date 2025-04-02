@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import HolographicPagination from '../_components/HolographicPagination';
+import HolographicPagination from '../tsx/HolographicPagination';
 
 const HolographicExample = () => {
   const [currentPage, setCurrentPage] = useState(1);

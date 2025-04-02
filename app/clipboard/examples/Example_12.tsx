@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import Clipboard from '../_components/Clipboard_12';
+import Clipboard from '../tsx/Clipboard_12';
 
 const Example_12: React.FC = () => {
   const [darkMode, setDarkMode] = useState(true); // Default to dark mode for better synthwave visibility

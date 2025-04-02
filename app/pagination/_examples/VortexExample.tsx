@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import VortexPagination from '../_components/VortexPagination';
+import VortexPagination from '../tsx/VortexPagination';
 
 const VortexExample = () => {
   const [currentPage, setCurrentPage] = useState(1);

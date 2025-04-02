@@ -11,7 +11,7 @@ import {
   MenubarTrigger,
   MenubarRadioGroup,
   MenubarRadioItem,
-} from "../_components/Menubar_12";
+} from "../tsx/Menubar_12";
 import { useState } from "react";
 
 export default function Example_15() {

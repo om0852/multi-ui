@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import OrigamiPagination from '../_components/OrigamiPagination';
+import OrigamiPagination from '../tsx/OrigamiPagination';
 
 const OrigamiExample = () => {
   const [currentPage, setCurrentPage] = useState(1);

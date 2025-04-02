@@ -8,7 +8,7 @@ import {
   StyledDialogHeader,
   StyledDialogDescription,
   StyledDialogFooter,
-} from "../_components/Dialog_23";
+} from "../tsx/Dialog_23";
 
 type AnimationType = "calendar" | "month" | "date" | "event";
 

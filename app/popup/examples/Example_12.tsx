@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import RadialMenu from '../_components/Popup_12';
+import RadialMenu from '../tsx/Popup_12';
 
 export default function PopupExample() {
   // Define menu items for the popup with color options

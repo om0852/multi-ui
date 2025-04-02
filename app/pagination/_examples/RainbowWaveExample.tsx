@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import RainbowWavePagination from '../_components/RainbowWavePagination';
+import RainbowWavePagination from '../tsx/RainbowWavePagination';
 
 const RainbowWaveExample = () => {
   const [currentPage, setCurrentPage] = useState(1);

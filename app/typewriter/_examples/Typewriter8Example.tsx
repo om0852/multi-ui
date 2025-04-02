@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import Typewriter_8 from '../_components/Typewriter_8';
+import Typewriter_8 from '../tsx/Typewriter_8';
 
 const Typewriter8Example = () => {
   const neonText = ["Bright Ideas Come to Life"];

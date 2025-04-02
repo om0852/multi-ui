@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import TiltBadge from '../_components/Badge_28';
+import TiltBadge from '../tsx/Badge_28';
 
 export default function BadgeExample28() {
   return (

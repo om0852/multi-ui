@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "../_components/Tab_33";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "../tsx/Tab_33";
 
 const TabExample33 = () => {
   return (

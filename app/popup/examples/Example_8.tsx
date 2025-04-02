@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import Popup_8 from '../_components/Popup_8';
+import Popup_8 from '../tsx/Popup_8';
 
 export default function PopupExample() {
   // Define menu items for the popup

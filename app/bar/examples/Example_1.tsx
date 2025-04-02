@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { CustomBarChart, BarChartConfig } from '../_components/Bar_1';
+import { CustomBarChart, BarChartConfig } from '../tsx/Bar_1';
 
 export default function BarExample1() {
   // Sample data for the bar chart

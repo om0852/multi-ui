@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import Clipboard from '../_components/Clipboard_6';
+import Clipboard from '../tsx/Clipboard_6';
 
 const Example_6: React.FC = () => {
   const [darkMode, setDarkMode] = useState(true); // Default to dark mode for better neon effect visibility

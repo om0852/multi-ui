@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import PortalPagination from '../_components/PortalPagination';
+import PortalPagination from '../tsx/PortalPagination';
 
 const PortalExample = () => {
   const [currentPage, setCurrentPage] = useState(1);

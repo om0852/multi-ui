@@ -1,6 +1,6 @@
 "use client"
 
-import MaskedInput from "./_components/InputMask_29";
+import MaskedInput from "./tsx/InputMask_29";
 
 // Usage Example for Time Mask
 const App: React.FC = () => {

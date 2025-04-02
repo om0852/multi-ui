@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import MosaicSeparator from "../_components/Separator_29";
+import MosaicSeparator from "../tsx/Separator_29";
 
 const SeparatorExample = () => {
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">("horizontal");

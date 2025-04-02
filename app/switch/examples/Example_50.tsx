@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Switch from "../_components/Switch_50";
+import Switch from "../tsx/Switch_50";
 
 const SwitchExample50 = () => {
   const [mealPlanning, setMealPlanning] = useState(true);

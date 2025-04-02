@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import Typewriter_6 from '../_components/Typewriter_6';
+import Typewriter_6 from '../tsx/Typewriter_6';
 
 const Typewriter6Example = () => {
   const hackerText = "Accessing mainframe... Decrypting data... Access granted.";

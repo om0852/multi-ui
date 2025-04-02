@@ -19,26 +19,18 @@ const Avatar = ({
 
   return (
     <motion.div
-      className={`relative inline-block ${sizeClasses[size]} rounded-full overflow-hidden border ${borderColor} ${className}`}
-      style={{ borderWidth }}
+      className={`relative inline-block ${sizeClasses[size]} rounded-full overflow-hidden border ${borderWidth} ${borderColor} ${className}`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.3 }}
     >
-      <img src={src} alt={alt} className="object-cover w-full h-full" />
+      <img
+        src={src}
+        alt={alt}
+        className="object-cover w-full h-full"
+      />
     </motion.div>
   );
 };
 
 export default Avatar;
-
-// ✅ Example as Named Export (Best for Previewing Dynamically)
-export const Example = () => {
-  return (
-    <div className="flex space-x-4 p-4">
-      <Avatar src="https://via.placeholder.com/150" alt="User Avatar" size="sm" borderColor="border-blue-500" />
-      <Avatar src="https://via.placeholder.com/150" alt="User Avatar" size="md" borderColor="border-red-500" />
-      <Avatar src="https://via.placeholder.com/150" alt="User Avatar" size="lg" borderColor="border-green-500" />
-    </div>
-  );
-};

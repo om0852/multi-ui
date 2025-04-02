@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import LaserBeamSeparator from "../_components/Separator_26";
+import LaserBeamSeparator from "../tsx/Separator_26";
 
 const SeparatorExample = () => {
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">("horizontal");

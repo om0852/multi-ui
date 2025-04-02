@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import Typewriter_14 from '../_components/Typewriter_14';
+import Typewriter_14 from '../tsx/Typewriter_14';
 
 const Typewriter14Example = () => {
   const text = "Holographic projection active";

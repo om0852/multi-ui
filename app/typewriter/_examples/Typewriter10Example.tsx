@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import Typewriter_10 from '../_components/Typewriter_10';
+import Typewriter_10 from '../tsx/Typewriter_10';
 
 const Typewriter10Example = () => {
   const liquidText = ["Flow like water..."];

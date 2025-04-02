@@ -8,7 +8,7 @@ import {
   StyledDialogHeader,
   StyledDialogDescription,
   StyledDialogFooter,
-} from "../_components/Dialog_25";
+} from "../tsx/Dialog_25";
 
 type AnimationType = "folder" | "file" | "list" | "grid";
 

@@ -15,7 +15,7 @@ import {
   MenubarRadioGroup,
   MenubarRadioItem,
   MenubarShortcut,
-} from "../_components/Menubar_3";
+} from "../tsx/Menubar_3";
 
 export default function Example_3() {
   const [quality, setQuality] = useState("1080p");

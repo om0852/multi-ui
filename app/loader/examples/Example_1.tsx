@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import PyramidLoader from "../_components/Loader_1";
+import PyramidLoader from "../tsx/Loader_1";
 
 const Example_1 = () => {
   const [isLoading, setIsLoading] = useState(true);

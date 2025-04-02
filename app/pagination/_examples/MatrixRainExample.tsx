@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import MatrixRainPagination from '../_components/MatrixRainPagination';
+import MatrixRainPagination from '../tsx/MatrixRainPagination';
 
 const MatrixRainExample = () => {
   const [currentPage, setCurrentPage] = useState(1);

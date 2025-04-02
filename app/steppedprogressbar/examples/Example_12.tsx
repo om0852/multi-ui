@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { StepsRoot } from "../_components/SteppedProgressBar_12";
+import { StepsRoot } from "../tsx/SteppedProgressBar_12";
 
 const SteppedProgressBarExample12 = () => {
   // Define the steps for the software development process

@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react';
-import Counter_64 from '../_components/Counter_64';
+import Counter_64 from '../ts/Counter_64';
 
 const Example_64: React.FC = () => {
   return (

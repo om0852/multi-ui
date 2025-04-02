@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import ArtDecoListGroup from '../_components/ListGroup_44';
+import ArtDecoListGroup from '../tsx/ListGroup_44';
 import { FaGem, FaGlassMartini, FaTheaterMasks, FaMusic, FaLock } from 'react-icons/fa';
 
 const Example_38: React.FC = () => {

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import ParticleSeparator from "../_components/Separator_28";
+import ParticleSeparator from "../tsx/Separator_28";
 
 const SeparatorExample = () => {
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">("horizontal");

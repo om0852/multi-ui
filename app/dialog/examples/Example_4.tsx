@@ -8,7 +8,7 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from "../_components/Dialog_4";
+} from "../tsx/Dialog_4";
 
 type AnimationType = "pulseGlow" | "slideNeon" | "glowExpand";
 

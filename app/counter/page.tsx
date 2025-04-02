@@ -1,10 +1,10 @@
 "use client"
 import React from "react";
-import Counter_21 from "./_components/Counter_31";
-import Counter_22 from "./_components/Counter_32";
-import Counter_23 from "./_components/Counter_33";
-import Counter_24 from "./_components/Counter_34";
-import Counter_25 from "./_components/Counter_35";
+import Counter_21 from "./ts/Counter_31";
+import Counter_22 from "./ts/Counter_32";
+import Counter_23 from "./ts/Counter_33";
+import Counter_24 from "./ts/Counter_34";
+import Counter_25 from "./ts/Counter_35";
 // import AnimatedCounter from "./_components/Counter_2";
 // import BouncyCounter from "./_components/Counter_3";
 // import FlipCounter from "./_components/Counter_4";

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import FireSeparator from "../_components/Separator_35";
+import FireSeparator from "../tsx/Separator_35";
 
 const SeparatorExample = () => {
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">("horizontal");

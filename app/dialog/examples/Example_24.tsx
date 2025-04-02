@@ -8,7 +8,7 @@ import {
   StyledDialogHeader,
   StyledDialogDescription,
   StyledDialogFooter,
-} from "../_components/Dialog_24";
+} from "../tsx/Dialog_24";
 
 type AnimationType = "toast" | "alert" | "badge" | "pulse";
 

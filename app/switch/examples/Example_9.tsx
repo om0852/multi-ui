@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import UniqueSwitch from "../_components/Switch_9";
+import UniqueSwitch from "../tsx/Switch_9";
 
 const SwitchExample9 = () => {
   const [powerSavingEnabled, setPowerSavingEnabled] = useState(true);

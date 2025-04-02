@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import ScrollArea from '../_components/ScrollArea_1';
+import ScrollArea from '../tsx/ScrollArea_1';
 
 export default function ScrollAreaExample() {
   const [orientation, setOrientation] = useState<"vertical" | "horizontal" | "both">("vertical");

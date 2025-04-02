@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import PulseNetworkSeparator from "../_components/Separator_16";
+import PulseNetworkSeparator from "../tsx/Separator_16";
 
 const SeparatorExample = () => {
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">("horizontal");

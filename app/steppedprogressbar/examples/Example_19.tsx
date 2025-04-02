@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { StepsRoot } from "../_components/SteppedProgressBar_19";
+import { StepsRoot } from "../tsx/SteppedProgressBar_19";
 
 const SteppedProgressBarExample19 = () => {
   // Define the steps for the podcast production process

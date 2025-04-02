@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Drawer, DrawerTrigger, DrawerContent } from "../_components/Drawer_17";
+import { Drawer, DrawerTrigger, DrawerContent } from "../tsx/Drawer_17";
 
 export default function Example_17() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);

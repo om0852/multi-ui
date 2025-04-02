@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import Typewriter_1 from '../_components/Typewriter_1';
+import Typewriter_1 from '../tsx/Typewriter_1';
 
 const Typewriter1Example = () => {
   const text = "Welcome to the future of web development";

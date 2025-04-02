@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import PulseHoverBadge from '../_components/Badge_15';
+import PulseHoverBadge from '../tsx/Badge_15';
 
 export default function BadgeExample15() {
   return (

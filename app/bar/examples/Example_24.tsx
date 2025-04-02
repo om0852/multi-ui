@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import CircularProgressChart from "../_components/Bar_24";
+import CircularProgressChart from "../tsx/Bar_24";
 
 export default function BarExample24() {
   // Sample datasets

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import SwitchOne from "../_components/Switch_14";
+import SwitchOne from "../tsx/Switch_14";
 
 const SwitchExample14 = () => {
   const [airplaneMode, setAirplaneMode] = useState(false);

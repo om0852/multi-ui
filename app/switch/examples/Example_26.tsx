@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Switch from "../_components/Switch_26";
+import Switch from "../tsx/Switch_26";
 
 const SwitchExample26 = () => {
   const [profileVisibility, setProfileVisibility] = useState(true);

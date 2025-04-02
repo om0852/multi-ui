@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import StaggeredPagination from '../_components/StaggeredPagination';
+import StaggeredPagination from '../tsx/StaggeredPagination';
 
 const StaggeredExample = () => {
   const [currentPage, setCurrentPage] = useState(1);

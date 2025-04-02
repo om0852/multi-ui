@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import Popup_13 from '../_components/Popup_13';
+import Popup_13 from '../tsx/Popup_13';
 
 export default function PopupExample() {
   // Define menu items for the popup with weather options

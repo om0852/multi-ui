@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Switch from "../_components/Switch_47";
+import Switch from "../tsx/Switch_47";
 
 const SwitchExample47 = () => {
   const [crossfade, setCrossfade] = useState(true);

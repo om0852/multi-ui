@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import CelestialListGroup from '../_components/ListGroup_36';
+import CelestialListGroup from '../tsx/ListGroup_36';
 import { 
   FiStar, 
   FiMoon, 

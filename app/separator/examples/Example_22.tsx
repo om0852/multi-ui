@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import PixelArtSeparator from "../_components/Separator_22";
+import PixelArtSeparator from "../tsx/Separator_22";
 
 const SeparatorExample = () => {
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">("horizontal");

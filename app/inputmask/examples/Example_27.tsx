@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import InputMask from '../_components/InputMask_27';
+import InputMask from '../tsx/InputMask_27';
 
 const Example_27: React.FC = () => {
   const [values, setValues] = useState({

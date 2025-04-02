@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { ZoomRadioGroup as RadioGroup } from '../_components/RadioGroup_32';
+import { ZoomRadioGroup as RadioGroup } from '../tsx/RadioGroup_32';
 
 export default function RadioGroupExample() {
   const [selectedOption, setSelectedOption] = useState<string>("option1");

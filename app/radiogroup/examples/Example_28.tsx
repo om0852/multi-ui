@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { ColorShiftRadioGroup as RadioGroup } from '../_components/RadioGroup_28';
+import { ColorShiftRadioGroup as RadioGroup } from '../tsx/RadioGroup_28';
 
 export default function RadioGroupExample() {
   const [selectedOption, setSelectedOption] = useState<string>("option1");

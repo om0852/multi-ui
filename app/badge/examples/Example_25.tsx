@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import SpinBadge from '../_components/Badge_25';
+import SpinBadge from '../tsx/Badge_25';
 
 export default function BadgeExample25() {
   return (

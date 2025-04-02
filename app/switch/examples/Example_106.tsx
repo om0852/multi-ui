@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Switch from "../_components/Switch_106";
+import Switch from "../tsx/Switch_106";
 
 const SwitchExample106 = () => {
   const [speechPractice, setSpeechPractice] = useState(true);

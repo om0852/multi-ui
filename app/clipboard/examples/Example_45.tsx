@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import Clipboard from '../_components/Clipboard_45';
+import Clipboard from '../tsx/Clipboard_45';
 
 const Example_45: React.FC = () => {
   const [darkMode, setDarkMode] = useState(true); // Default to dark mode for better shatter effect visibility

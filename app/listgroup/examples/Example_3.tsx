@@ -1,6 +1,6 @@
 "use client"
 import React from 'react';
-import { ListGroup, ListItem } from '../_components/ListGroup_3';
+import { ListGroup, ListItem } from '../tsx/ListGroup_3';
 
 const Example_3: React.FC = () => {
   const handleItemClick = (text: string) => {

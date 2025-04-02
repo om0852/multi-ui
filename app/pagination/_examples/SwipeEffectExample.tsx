@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import SwipeEffectPagination from '../_components/SwipeEffectPagination';
+import SwipeEffectPagination from '../tsx/SwipeEffectPagination';
 
 const SwipeEffectExample = () => {
   const [currentPage, setCurrentPage] = useState(1);

@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import CircularMenu from '../_components/Popup_24';
+import CircularMenu from '../tsx/Popup_24';
 
 export default function PopupExample() {
   // Define menu items for the popup with animal options

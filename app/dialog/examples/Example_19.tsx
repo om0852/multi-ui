@@ -8,7 +8,7 @@ import {
   StyledDialogHeader,
   StyledDialogDescription,
   StyledDialogFooter,
-} from "../_components/Dialog_19";
+} from "../tsx/Dialog_19";
 import { motion } from "framer-motion";
 
 type AnimationType = "boot" | "glitch" | "scan" | "pixel";

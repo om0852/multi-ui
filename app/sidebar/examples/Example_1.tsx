@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import Sidebar from "../_components/Sidebar_1";
+import Sidebar from "../tsx/Sidebar_1";
 
 const SidebarExample1 = () => {
   return (

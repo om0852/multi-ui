@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { StepsRoot } from "../_components/SteppedProgressBar_11";
+import { StepsRoot } from "../tsx/SteppedProgressBar_11";
 
 const SteppedProgressBarExample11 = () => {
   // Define the steps for the event planning process

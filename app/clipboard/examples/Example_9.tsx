@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import Clipboard from '../_components/Clipboard_9';
+import Clipboard from '../tsx/Clipboard_9';
 
 const Example_9: React.FC = () => {
   const [darkMode, setDarkMode] = useState(true); // Default to dark mode for better plasma effect visibility

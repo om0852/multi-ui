@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import InputField from '../_components/InputField_21';
+import InputField from '../tsx/InputField_21';
 
 const Example_21: React.FC = () => {
   const [command, setCommand] = useState('');

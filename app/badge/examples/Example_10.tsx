@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import NeonBadge from '../_components/Badge_10';
+import NeonBadge from '../tsx/Badge_10';
 
 export default function BadgeExample10() {
   return (

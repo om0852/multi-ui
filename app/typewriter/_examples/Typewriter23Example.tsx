@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import Typewriter_23 from '../_components/Typewriter_23';
+import Typewriter_23 from '../tsx/Typewriter_23';
 
 const Typewriter23Example = () => {
   const text = "Letters fade into existence";

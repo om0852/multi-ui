@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import Clipboard from '../_components/Clipboard_50';
+import Clipboard from '../tsx/Clipboard_50';
 
 const Example_50: React.FC = () => {
   const [darkMode, setDarkMode] = useState(true); // Default to dark mode for better portal effect visibility

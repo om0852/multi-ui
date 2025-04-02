@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import OrbitPagination from '../_components/OrbitPagination';
+import OrbitPagination from '../tsx/OrbitPagination';
 
 const OrbitExample = () => {
   const [currentPage, setCurrentPage] = useState(1);

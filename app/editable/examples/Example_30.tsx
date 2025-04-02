@@ -1,5 +1,5 @@
 import React from 'react'
-import { Editable_30 } from '../_components/Editable_30'
+import { Editable_30 } from '../tsx/Editable_30'
 
 export default function Example_30() {
   const handleSave = (content: string) => {

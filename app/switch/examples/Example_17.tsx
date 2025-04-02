@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import SwitchFour from "../_components/Switch_17";
+import SwitchFour from "../tsx/Switch_17";
 
 const SwitchExample17 = () => {
   const [alarmEnabled, setAlarmEnabled] = useState(true);

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import GalaxySeparator from "../_components/Separator_33";
+import GalaxySeparator from "../tsx/Separator_33";
 
 const SeparatorExample = () => {
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">("horizontal");

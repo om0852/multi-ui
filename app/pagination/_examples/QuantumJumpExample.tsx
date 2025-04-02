@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import QuantumJumpPagination from '../_components/QuantumJumpPagination';
+import QuantumJumpPagination from '../tsx/QuantumJumpPagination';
 
 const QuantumJumpExample = () => {
   const [currentPage, setCurrentPage] = useState(1);

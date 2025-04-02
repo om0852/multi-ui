@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import RippleHoverBadge from '../_components/Badge_18';
+import RippleHoverBadge from '../tsx/Badge_18';
 
 export default function BadgeExample18() {
   return (

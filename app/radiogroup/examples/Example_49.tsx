@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { GlowingScaleBackgroundRadioGroup as RadioGroup } from '../_components/RadioGroup_49';
+import { GlowingScaleBackgroundRadioGroup as RadioGroup } from '../tsx/RadioGroup_49';
 
 export default function RadioGroupExample() {
   const [selectedOption, setSelectedOption] = useState<string>("option1");

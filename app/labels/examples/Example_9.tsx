@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import { Label_9 } from '../_components/Label_9';
+import { Label_9 } from '../tsx/Label_9';
 
 const Example_9: React.FC = () => {
   const [tags, setTags] = useState([

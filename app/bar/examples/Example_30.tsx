@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import RadialProgressChart from '../_components/Bar_30'
+import RadialProgressChart from '../tsx/Bar_30'
 
 export default function BarExample30() {
   // Sample datasets

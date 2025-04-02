@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import JungleListGroup from '../_components/ListGroup_23';
+import JungleListGroup from '../tsx/ListGroup_23';
 import { FaLeaf, FaTree, FaSpider, FaPaw, FaFeather } from 'react-icons/fa';
 
 const Example_23: React.FC = () => {

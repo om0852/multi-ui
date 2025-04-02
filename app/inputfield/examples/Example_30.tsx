@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import InputField_30 from '../_components/InputField_30';
+import InputField_30 from '../tsx/InputField_30';
 import { FaUser, FaLock, FaTerminal, FaKey } from 'react-icons/fa';
 
 const Example_30 = () => {

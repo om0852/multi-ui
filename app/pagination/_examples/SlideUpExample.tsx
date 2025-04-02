@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import SlideUpPagination from '../_components/SlideUpPagination';
+import SlideUpPagination from '../tsx/SlideUpPagination';
 
 const SlideUpExample = () => {
   const [currentPage, setCurrentPage] = useState(1);

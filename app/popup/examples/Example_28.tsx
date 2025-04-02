@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import PopupMenu from '../_components/Popup_28';
+import PopupMenu from '../tsx/Popup_28';
 
 export default function PopupExample() {
   // Define menu items for the popup with travel destinations

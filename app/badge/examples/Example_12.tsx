@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import OutlineBadge from '../_components/Badge_12';
+import OutlineBadge from '../tsx/Badge_12';
 
 export default function BadgeExample12() {
   return (

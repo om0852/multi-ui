@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import Separator from '../_components/Separator_10';
+import Separator from '../tsx/Separator_10';
 
 export default function SeparatorExample() {
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">("horizontal");

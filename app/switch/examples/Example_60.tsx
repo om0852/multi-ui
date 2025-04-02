@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Switch from "../_components/Switch_60";
+import Switch from "../tsx/Switch_60";
 
 const SwitchExample60 = () => {
   const [gridLines, setGridLines] = useState(true);

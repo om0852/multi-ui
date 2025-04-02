@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import TypingBadge from '../_components/Badge_29';
+import TypingBadge from '../tsx/Badge_29';
 
 export default function BadgeExample29() {
   return (

@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import NeumorphicListGroup from '../_components/ListGroup_8';
+import NeumorphicListGroup from '../tsx/ListGroup_8';
 
 const Example_8: React.FC = () => {
   const [activeItem, setActiveItem] = useState('item1');

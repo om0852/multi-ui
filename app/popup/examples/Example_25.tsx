@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import FanMenu from '../_components/Popup_25';
+import FanMenu from '../tsx/Popup_25';
 
 export default function PopupExample() {
   // Define menu items for the popup with fruit options

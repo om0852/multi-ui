@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import Typewriter_11 from '../_components/Typewriter_11';
+import Typewriter_11 from '../tsx/Typewriter_11';
 
 const Typewriter11Example = () => {
   const text = "Explore the third dimension";

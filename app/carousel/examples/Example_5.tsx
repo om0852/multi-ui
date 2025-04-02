@@ -8,7 +8,7 @@ import {
   CarouselDots,
   CarouselNext,
   CarouselPrevious,
-} from '../_components/Carousel_1';
+} from '../tsx/Carousel_1';
 
 const Example_5 = () => {
   const [transitionEffect, setTransitionEffect] = useState(1);

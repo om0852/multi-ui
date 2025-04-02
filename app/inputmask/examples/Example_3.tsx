@@ -1,6 +1,6 @@
 "use client"
 import React from 'react';
-import InputMask from '../_components/InputMask_3';
+import InputMask from '../tsx/InputMask_3';
 
 const Example_3: React.FC = () => {
   const handleInputChange = (value: string) => {

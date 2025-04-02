@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Switch from "../_components/Switch_78";
+import Switch from "../tsx/Switch_78";
 
 const SwitchExample78 = () => {
   const [eventReminders, setEventReminders] = useState(true);

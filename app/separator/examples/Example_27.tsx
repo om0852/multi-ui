@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import ElectricArcSeparator from "../_components/Separator_27";
+import ElectricArcSeparator from "../tsx/Separator_27";
 
 const SeparatorExample = () => {
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">("horizontal");

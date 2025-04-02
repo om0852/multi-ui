@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import DataStreamSeparator from "../_components/Separator_34";
+import DataStreamSeparator from "../tsx/Separator_34";
 
 const SeparatorExample = () => {
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">("horizontal");

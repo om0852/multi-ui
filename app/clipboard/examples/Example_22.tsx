@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import Clipboard from '../_components/Clipboard_22';
+import Clipboard from '../tsx/Clipboard_22';
 
 const Example_22: React.FC = () => {
   const [darkMode, setDarkMode] = useState(false); // Default to light mode for neumorphic effect

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import BubbleChart from "../_components/Bar_25";
+import BubbleChart from "../tsx/Bar_25";
 
 export default function BarExample25() {
   // Sample datasets

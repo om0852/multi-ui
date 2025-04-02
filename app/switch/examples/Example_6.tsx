@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import SmoothSwitch from "../_components/Switch_6";
+import SmoothSwitch from "../tsx/Switch_6";
 
 const SwitchExample6 = () => {
   const [notificationsEnabled, setNotificationsEnabled] = useState(true);

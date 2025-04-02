@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import PopupMenu from '../_components/Popup_26';
+import PopupMenu from '../tsx/Popup_26';
 
 export default function PopupExample() {
   // Define menu items for the popup with planet options

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Switch from "../_components/Switch_67";
+import Switch from "../tsx/Switch_67";
 
 const SwitchExample67 = () => {
   const [guidedMeditation, setGuidedMeditation] = useState(true);

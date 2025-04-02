@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { OverlappingBarChart } from "../_components/Bar_8";
+import { OverlappingBarChart } from "../tsx/Bar_8";
 
 export default function BarExample8() {
   // Sample data for sales comparison

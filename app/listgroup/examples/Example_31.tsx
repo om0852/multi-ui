@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import MedievalListGroup from '../_components/ListGroup_31';
+import MedievalListGroup from '../tsx/ListGroup_31';
 import { GiSwordman, GiWizardStaff, GiArrowsShield, GiTreasureMap, GiLockedChest } from 'react-icons/gi';
 
 const Example_31: React.FC = () => {

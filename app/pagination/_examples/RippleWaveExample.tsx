@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import RippleWavePagination from '../_components/RippleWavePagination';
+import RippleWavePagination from '../tsx/RippleWavePagination';
 
 const RippleWaveExample = () => {
   const [currentPage, setCurrentPage] = useState(1);

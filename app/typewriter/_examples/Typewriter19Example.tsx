@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import Typewriter_19 from '../_components/Typewriter_19';
+import Typewriter_19 from '../tsx/Typewriter_19';
 
 const Typewriter19Example = () => {
   const text = "Waves of typography in motion";

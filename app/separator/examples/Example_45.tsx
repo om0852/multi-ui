@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import HologramSeparator from '../_components/Separator_45';
+import HologramSeparator from '../tsx/Separator_45';
 
 const SeparatorExample = () => {
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">("horizontal");

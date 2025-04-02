@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import ProgressBar_14 from '../_components/ProgressBar_14';
+import ProgressBar_14 from '../tsx/ProgressBar_14';
 
 export default function ProgressBarExample() {
   const [progress, setProgress] = useState(0);

@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import VintageListGroup from '../_components/ListGroup_29';
+import VintageListGroup from '../tsx/ListGroup_29';
 import { FaBook, FaPen, FaGlobe, FaCamera, FaEnvelope } from 'react-icons/fa';
 
 const Example_29: React.FC = () => {

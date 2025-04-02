@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import WaterfallChart from '../_components/Bar_27'
+import WaterfallChart from '../tsx/Bar_27'
 
 export default function BarExample27() {
   // Sample datasets

@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import AuroraPagination from '../_components/AuroraPagination';
+import AuroraPagination from '../tsx/AuroraPagination';
 
 const AuroraExample = () => {
   const [currentPage, setCurrentPage] = useState(1);

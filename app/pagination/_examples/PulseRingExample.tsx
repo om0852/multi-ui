@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import PulseRingPagination from '../_components/PulseRingPagination';
+import PulseRingPagination from '../tsx/PulseRingPagination';
 
 const PulseRingExample = () => {
   const [currentPage, setCurrentPage] = useState(1);

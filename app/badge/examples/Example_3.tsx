@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import BounceOnClickBadge from '../_components/Badge_3';
+import BounceOnClickBadge from '../tsx/Badge_3';
 
 export default function BadgeExample3() {
   return (

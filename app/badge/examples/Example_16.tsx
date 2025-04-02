@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import PulsingGlowBadge from '../_components/Badge_16';
+import PulsingGlowBadge from '../tsx/Badge_16';
 
 export default function BadgeExample16() {
   return (

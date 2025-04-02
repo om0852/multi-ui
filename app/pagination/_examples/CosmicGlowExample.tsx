@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import CosmicGlowPagination from '../_components/CosmicGlowPagination';
+import CosmicGlowPagination from '../tsx/CosmicGlowPagination';
 
 const CosmicGlowExample = () => {
   const [currentPage, setCurrentPage] = useState(1);

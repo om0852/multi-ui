@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import GeometricListGroup from '../_components/ListGroup_33';
+import GeometricListGroup from '../tsx/ListGroup_33';
 import { FiHexagon, FiTriangle, FiSquare, FiCircle, FiOctagon } from 'react-icons/fi';
 
 const Example_33: React.FC = () => {

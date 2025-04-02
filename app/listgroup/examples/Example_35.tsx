@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import CrystallineListGroup from '../_components/ListGroup_35';
+import CrystallineListGroup from '../tsx/ListGroup_35';
 import { 
   FiCpu, 
   FiDatabase, 

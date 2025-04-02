@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import SwitchSix from "../_components/Switch_19";
+import SwitchSix from "../tsx/Switch_19";
 
 const SwitchExample19 = () => {
   const [waterSavingEnabled, setWaterSavingEnabled] = useState(true);

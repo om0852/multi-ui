@@ -8,7 +8,7 @@ import {
   StyledDialogHeader,
   StyledDialogDescription,
   StyledDialogFooter,
-} from "../_components/Dialog_16";
+} from "../tsx/Dialog_16";
 
 type AnimationType = "scroll" | "magic" | "flame" | "enchant";
 

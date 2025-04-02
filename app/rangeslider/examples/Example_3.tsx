@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import RangeSlider from '../_components/RangeSlider_3';
+import RangeSlider from '../tsx/RangeSlider_3';
 
 export default function RangeSliderExample() {
   const [progress, setProgress] = useState(60);

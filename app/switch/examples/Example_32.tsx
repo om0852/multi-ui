@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Switch from "../_components/Switch_32";
+import Switch from "../tsx/Switch_32";
 
 const SwitchExample32 = () => {
   const [shuffle, setShuffle] = useState(false);

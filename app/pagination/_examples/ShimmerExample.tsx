@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import ShimmerPagination from '../_components/ShimmerPagination';
+import ShimmerPagination from '../tsx/ShimmerPagination';
 
 const ShimmerExample = () => {
   const [currentPage, setCurrentPage] = useState(1);

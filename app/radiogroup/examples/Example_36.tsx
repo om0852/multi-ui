@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { WobbleRadioGroup as RadioGroup } from '../_components/RadioGroup_36';
+import { WobbleRadioGroup as RadioGroup } from '../tsx/RadioGroup_36';
 
 export default function RadioGroupExample() {
   const [selectedOption, setSelectedOption] = useState<string>("option1");

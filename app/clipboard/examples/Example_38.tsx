@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import Clipboard from '../_components/Clipboard_38';
+import Clipboard from '../tsx/Clipboard_38';
 
 const Example_38: React.FC = () => {
   const [darkMode, setDarkMode] = useState(false);

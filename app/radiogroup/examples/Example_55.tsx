@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { HorizontalRadioGroupRippleGlowFade as RadioGroup } from '../_components/RadioGroup_55';
+import { HorizontalRadioGroupRippleGlowFade as RadioGroup } from '../tsx/RadioGroup_55';
 
 export default function RadioGroupExample() {
   const [selectedOption, setSelectedOption] = useState<string>("option1");

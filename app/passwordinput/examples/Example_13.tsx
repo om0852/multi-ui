@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import { PasswordInput } from '../_components/PasswordInput_13';
+import { PasswordInput } from '../tsx/PasswordInput_13';
 
 export default function PasswordInputExample() {
   const handleSubmit = (e: React.FormEvent) => {

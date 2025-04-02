@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { HorizontalRadioGroupSlideZoomWave as RadioGroup } from '../_components/RadioGroup_54';
+import { HorizontalRadioGroupSlideZoomWave as RadioGroup } from '../tsx/RadioGroup_54';
 
 export default function RadioGroupExample() {
   const [selectedOption, setSelectedOption] = useState<string>("option1");

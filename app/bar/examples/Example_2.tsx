@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { AnimatedBarChart } from '../_components/Bar_2';
+import { AnimatedBarChart } from '../tsx/Bar_2';
 
 export default function BarExample2() {
   // Sample data for the animated bar chart

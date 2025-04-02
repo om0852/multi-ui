@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import OrbitingDotsBadge from '../_components/Badge_11';
+import OrbitingDotsBadge from '../tsx/Badge_11';
 
 export default function BadgeExample11() {
   return (

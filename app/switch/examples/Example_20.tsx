@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Switch from "../_components/Switch_20";
+import Switch from "../tsx/Switch_20";
 
 const SwitchExample20 = () => {
   const [ecoMode, setEcoMode] = useState(true);

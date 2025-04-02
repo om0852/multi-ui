@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { ScaleShadowRadioGroup as RadioGroup } from '../_components/RadioGroup_12';
+import { ScaleShadowRadioGroup as RadioGroup } from '../tsx/RadioGroup_12';
 
 export default function RadioGroupExample() {
   const [selectedOption, setSelectedOption] = useState<string>("option1");

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import PolarAreaChart from '../_components/Bar_26'
+import PolarAreaChart from '../tsx/Bar_26'
 
 export default function BarExample26() {
   // Sample datasets

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import CircularProgressBar from '../_components/CircularProgressBar_66';
+import CircularProgressBar from '../tsx/CircularProgressBar_66';
 
 const Example_66: React.FC = () => {
   const [value, setValue] = useState(75);

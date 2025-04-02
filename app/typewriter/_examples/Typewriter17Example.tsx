@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import Typewriter_17 from '../_components/Typewriter_17';
+import Typewriter_17 from '../tsx/Typewriter_17';
 
 const Typewriter17Example = () => {
   const text = "Letters attract and align";

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import InputField from '../_components/InputField_57';
+import InputField from '../tsx/InputField_57';
 
 const Example_57: React.FC = () => {
   const [formData, setFormData] = useState({

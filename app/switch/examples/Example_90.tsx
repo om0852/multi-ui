@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Switch from "../_components/Switch_90";
+import Switch from "../tsx/Switch_90";
 
 const SwitchExample90 = () => {
   const [cameraOn, setCameraOn] = useState(true);

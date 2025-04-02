@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { AreaChart } from "../_components/Bar_11";
+import { AreaChart } from "../tsx/Bar_11";
 
 export default function BarExample11() {
   // Sample data for website analytics

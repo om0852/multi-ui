@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { ThreeDBarChart } from "../_components/Bar_5";
+import { ThreeDBarChart } from "../tsx/Bar_5";
 
 export default function BarExample5() {
   // Sample data for quarterly revenue

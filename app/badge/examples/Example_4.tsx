@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import BouncingGlowBadge from '../_components/Badge_4';
+import BouncingGlowBadge from '../tsx/Badge_4';
 
 export default function BadgeExample4() {
   return (

@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import OrigamiListGroup from '../_components/ListGroup_21';
+import OrigamiListGroup from '../tsx/ListGroup_21';
 
 const Example_21: React.FC = () => {
   const [activeItem, setActiveItem] = useState('item1');

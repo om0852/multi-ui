@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import LiquidBubblePagination from '../_components/LiquidBubblePagination';
+import LiquidBubblePagination from '../tsx/LiquidBubblePagination';
 
 const LiquidBubbleExample = () => {
   const [currentPage, setCurrentPage] = useState(1);

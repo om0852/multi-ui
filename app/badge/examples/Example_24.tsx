@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import SlidingGlowBadge from '../_components/Badge_24';
+import SlidingGlowBadge from '../tsx/Badge_24';
 
 export default function BadgeExample24() {
   return (

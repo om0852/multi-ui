@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { AnimatedHorizontalBarChart } from '../_components/Bar_3';
+import { AnimatedHorizontalBarChart } from '../tsx/Bar_3';
 
 export default function BarExample3() {
   // Sample data for the horizontal bar chart

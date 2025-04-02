@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import SciFiListGroup from '../_components/ListGroup_30';
+import SciFiListGroup from '../tsx/ListGroup_30';
 import { FiCpu, FiServer, FiShield, FiGlobe, FiLock } from 'react-icons/fi';
 
 const Example_30: React.FC = () => {

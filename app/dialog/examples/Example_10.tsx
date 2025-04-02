@@ -7,7 +7,7 @@ import {
   StyledDialogHeader,
   StyledDialogDescription,
   StyledDialogFooter,
-} from "../_components/Dialog_10";
+} from "../tsx/Dialog_10";
 
 type AnimationType = "slideUp" | "fadeInOut" | "scaleIn" | "rotateZoom";
 

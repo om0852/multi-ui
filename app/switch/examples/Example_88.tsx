@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Switch from "../_components/Switch_88";
+import Switch from "../tsx/Switch_88";
 
 const SwitchExample88 = () => {
   const [inGameChat, setInGameChat] = useState(true);

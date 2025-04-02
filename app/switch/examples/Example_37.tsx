@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Switch from "../_components/Switch_37";
+import Switch from "../tsx/Switch_37";
 
 const SwitchExample37 = () => {
   const [focusMode, setFocusMode] = useState(false);

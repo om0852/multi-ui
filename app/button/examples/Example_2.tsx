@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import Button2 from '../_components/Button_2'
+import Button2 from '../tsx/Button_2'
 
 export default function ButtonExample2() {
   const [clickCount, setClickCount] = useState(0)

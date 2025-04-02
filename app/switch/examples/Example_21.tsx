@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Switch from "../_components/Switch_21";
+import Switch from "../tsx/Switch_21";
 
 const SwitchExample21 = () => {
   const [highQuality, setHighQuality] = useState(true);

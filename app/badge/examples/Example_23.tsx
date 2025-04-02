@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import SlidingBorderBadge from '../_components/Badge_23';
+import SlidingBorderBadge from '../tsx/Badge_23';
 
 export default function BadgeExample23() {
   return (

@@ -1,5 +1,5 @@
 import React from 'react'
-import { DialogExample } from './_components/Dialog_25'
+import { DialogExample } from './tsx/Dialog_25'
 
 const page = () => {
   return (

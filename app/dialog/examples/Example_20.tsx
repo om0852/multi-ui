@@ -8,7 +8,7 @@ import {
   StyledDialogHeader,
   StyledDialogDescription,
   StyledDialogFooter,
-} from "../_components/Dialog_20";
+} from "../tsx/Dialog_20";
 
 type AnimationType = "like" | "share" | "comment" | "story";
 

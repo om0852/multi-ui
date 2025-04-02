@@ -6,7 +6,7 @@ import {
   InputOTPGroup,
   InputOTPSlot,
   InputOTPSeparator,
-} from '../_components/OtpField_8';
+} from '../tsx/OtpField_8';
 
 export default function Example_8() {
   return (

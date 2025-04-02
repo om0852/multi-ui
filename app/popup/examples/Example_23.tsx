@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import CircularMenu from '../_components/Popup_23';
+import CircularMenu from '../tsx/Popup_23';
 
 export default function PopupExample() {
   // Define menu items for the popup with tool options

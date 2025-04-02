@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { HorizontalRadioGroupSlideStretchShrink as RadioGroup } from '../_components/RadioGroup_60';
+import { HorizontalRadioGroupSlideStretchShrink as RadioGroup } from '../tsx/RadioGroup_60';
 
 export default function RadioGroupExample() {
   const [selectedOption, setSelectedOption] = useState<string>("option1");

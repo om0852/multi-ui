@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import FloatingListGroup from '../_components/ListGroup_9';
+import FloatingListGroup from '../tsx/ListGroup_9';
 
 const Example_9: React.FC = () => {
   const [activeItem, setActiveItem] = useState('item1');

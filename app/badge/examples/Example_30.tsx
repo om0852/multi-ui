@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import WavePulsingBadge from '../_components/Badge_30';
+import WavePulsingBadge from '../tsx/Badge_30';
 
 export default function BadgeExample30() {
   return (

@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import StackPagination from '../_components/StackPagination';
+import StackPagination from '../tsx/StackPagination';
 
 const StackExample = () => {
   const [currentPage, setCurrentPage] = useState(1);

@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import ParallaxPagination from '../_components/ParallaxPagination';
+import ParallaxPagination from '../tsx/ParallaxPagination';
 
 const ParallaxExample = () => {
   const [currentPage, setCurrentPage] = useState(1);

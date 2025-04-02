@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Switch from "../_components/Switch_77";
+import Switch from "../tsx/Switch_77";
 
 const SwitchExample77 = () => {
   const [markdownSupport, setMarkdownSupport] = useState(true);

@@ -8,7 +8,7 @@ import {
   StyledDialogHeader,
   StyledDialogDescription,
   StyledDialogFooter,
-} from "../_components/Dialog_27";
+} from "../tsx/Dialog_27";
 
 type AnimationType = "destination" | "booking" | "calendar" | "flight";
 

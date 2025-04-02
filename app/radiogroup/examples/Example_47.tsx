@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { GlowingSkewRadioGroup as RadioGroup } from '../_components/RadioGroup_47';
+import { GlowingSkewRadioGroup as RadioGroup } from '../tsx/RadioGroup_47';
 
 export default function RadioGroupExample() {
   const [selectedOption, setSelectedOption] = useState<string>("option1");

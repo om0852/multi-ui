@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import PerspectivePagination from '../_components/PerspectivePagination';
+import PerspectivePagination from '../tsx/PerspectivePagination';
 
 const PerspectiveExample = () => {
   const [currentPage, setCurrentPage] = useState(1);

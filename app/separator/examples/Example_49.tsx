@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import NeuralNetworkSeparator from "../_components/Separator_49";
+import NeuralNetworkSeparator from "../tsx/Separator_49";
 
 const SeparatorExample49 = () => {
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">("horizontal");

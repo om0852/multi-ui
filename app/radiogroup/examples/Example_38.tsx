@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { ShakeRadioGroup as RadioGroup } from '../_components/RadioGroup_38';
+import { ShakeRadioGroup as RadioGroup } from '../tsx/RadioGroup_38';
 
 export default function RadioGroupExample() {
   const [selectedOption, setSelectedOption] = useState<string>("option1");

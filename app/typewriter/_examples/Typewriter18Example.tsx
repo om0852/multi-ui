@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import Typewriter_18 from '../_components/Typewriter_18';
+import Typewriter_18 from '../tsx/Typewriter_18';
 
 const Typewriter18Example = () => {
   const text = "Pixels form into clarity";

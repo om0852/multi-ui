@@ -8,7 +8,7 @@ import {
   StyledDialogHeader,
   StyledDialogDescription,
   StyledDialogFooter,
-} from "../_components/Dialog_22";
+} from "../tsx/Dialog_22";
 
 type AnimationType = "score" | "board" | "stats" | "flash";
 

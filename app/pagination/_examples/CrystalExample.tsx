@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import CrystalPagination from '../_components/CrystalPagination';
+import CrystalPagination from '../tsx/CrystalPagination';
 
 const CrystalExample = () => {
   const [currentPage, setCurrentPage] = useState(1);

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Switch from "../_components/Switch_56";
+import Switch from "../tsx/Switch_56";
 
 const SwitchExample56 = () => {
   const [motionDetection, setMotionDetection] = useState(true);

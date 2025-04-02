@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Editable_43 } from "../_components/Editable_43";
+import { Editable_43 } from "../tsx/Editable_43";
 
 type SampleData = {
   id: string;

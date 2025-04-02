@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Skeleton from "../_components/Skeleton_49";
+import Skeleton from "../tsx/Skeleton_49";
 
 const SkeletonExample49 = () => {
   const [borderRadius, setBorderRadius] = useState("4px");

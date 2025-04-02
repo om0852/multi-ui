@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import FunnelChart from '../_components/Bar_28'
+import FunnelChart from '../tsx/Bar_28'
 
 export default function BarExample28() {
   // Sample datasets

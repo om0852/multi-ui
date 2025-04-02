@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { EditableContainer } from "../_components/Editable_3";
+import { EditableContainer } from "../tsx/Editable_3";
 
 export default function Example_3() {
   const handleSave = (content: string) => {

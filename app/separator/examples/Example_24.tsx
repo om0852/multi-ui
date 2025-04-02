@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import FractalTreeSeparator from "../_components/Separator_24";
+import FractalTreeSeparator from "../tsx/Separator_24";
 
 const SeparatorExample = () => {
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">("horizontal");

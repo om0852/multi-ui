@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { GlowingShakePulseRadioGroup as RadioGroup } from '../_components/RadioGroup_48';
+import { GlowingShakePulseRadioGroup as RadioGroup } from '../tsx/RadioGroup_48';
 
 export default function RadioGroupExample() {
   const [selectedOption, setSelectedOption] = useState<string>("option1");

@@ -1,6 +1,6 @@
 "use client"
 import React from "react";
-import Typewriter_12 from "./_components/Typewriter_12";
+import Typewriter_12 from "./tsx/Typewriter_12";
 
 const TypewriterPage12 = () => {
   return (

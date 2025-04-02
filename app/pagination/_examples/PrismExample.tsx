@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import PrismPagination from '../_components/PrismPagination';
+import PrismPagination from '../tsx/PrismPagination';
 
 const PrismExample = () => {
   const [currentPage, setCurrentPage] = useState(1);

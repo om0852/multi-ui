@@ -1,5 +1,5 @@
 import React from 'react';
-import Card from '../_components/Card_113';
+import Card from '../tsx/Card_113';
 
 const Example_113 = () => {
   return (

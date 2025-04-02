@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import IndustrialListGroup from '../_components/ListGroup_37';
+import IndustrialListGroup from '../tsx/ListGroup_37';
 import { FiTool, FiSettings, FiCpu, FiPower, FiLock } from 'react-icons/fi';
 
 const Example_37: React.FC = () => {

@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import SlideInBadge from '../_components/Badge_22';
+import SlideInBadge from '../tsx/Badge_22';
 
 export default function BadgeExample22() {
   return (

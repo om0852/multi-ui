@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import GlowingMenu from '../_components/Popup_22';
+import GlowingMenu from '../tsx/Popup_22';
 
 export default function PopupExample() {
   // Define menu items for the popup with glowing elements

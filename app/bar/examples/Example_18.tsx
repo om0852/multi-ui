@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import LineGraphAlt from "../_components/Bar_18";
+import LineGraphAlt from "../tsx/Bar_18";
 
 export default function BarExample18() {
   // Sample datasets with different color themes

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Carousel, CarouselItem } from '../_components/Carousel_1';
+import { Carousel, CarouselItem } from '../tsx/Carousel_1';
 
 const Example_35 = () => {
     return (

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import Clipboard from '../_components/Clipboard_16';
+import Clipboard from '../tsx/Clipboard_16';
 
 const Example_16: React.FC = () => {
   const [darkMode, setDarkMode] = useState(false); // Default to light mode for minimal theme

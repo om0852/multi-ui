@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import PieChart from "../_components/Bar_15";
+import PieChart from "../tsx/Bar_15";
 
 export default function BarExample15() {
   // Sample datasets

@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from 'react';
-import Clock_76 from '../_components/Clock_76';
+import Clock_76 from '../tsx/Clock_76';
 import { FaToggleOn, FaToggleOff, FaMagnet } from 'react-icons/fa6';
 
 const Example_76: React.FC = () => {

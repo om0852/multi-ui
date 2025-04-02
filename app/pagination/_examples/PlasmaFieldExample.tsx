@@ -1,6 +1,6 @@
 'use client';
 import React, { useState } from 'react';
-import PlasmaFieldPagination from '../_components/PlasmaFieldPagination';
+import PlasmaFieldPagination from '../tsx/PlasmaFieldPagination';
 
 const PlasmaFieldExample = () => {
   const [currentPage, setCurrentPage] = useState(1);

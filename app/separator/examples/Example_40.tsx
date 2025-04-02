@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import  CrystalSeparator  from '../_components/Separator_40';
+import  CrystalSeparator  from '../tsx/Separator_40';
 
 const SeparatorExample = () => {
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">("horizontal");

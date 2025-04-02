@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import Checkbox91 from '../_components/Checkbox_91';
+import Checkbox91 from '../tsx/Checkbox_91';
 
 const Example_91 = () => {
   const [isChecked, setIsChecked] = useState(false);

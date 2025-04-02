@@ -1,6 +1,6 @@
 'use client';
 import React from 'react';
-import Typewriter_9 from '../_components/Typewriter_9';
+import Typewriter_9 from '../tsx/Typewriter_9';
 
 const Typewriter9Example = () => {
   const vintageText =[ "A message from the past..."];

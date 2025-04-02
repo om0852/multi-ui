@@ -2,7 +2,7 @@
 
 import React from "react";
 import { FaClock } from "react-icons/fa";
-import LedDigitalClock from "../_components/Clock_15";
+import LedDigitalClock from "../tsx/Clock_15";
 
 const Example_15 = () => {
   return (

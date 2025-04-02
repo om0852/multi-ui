@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Switch from "../_components/Switch_54";
+import Switch from "../tsx/Switch_54";
 
 const SwitchExample54 = () => {
   const [autoEnhance, setAutoEnhance] = useState(true);
