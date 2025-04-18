@@ -1,15 +1,15 @@
 "use client"
 import React from "react";
-import BadgeExample1 from "./circularprogressbar/examples/Example_21";
-import BadgeExample2 from "./circularprogressbar/examples/Example_22";
-import BadgeExample3 from "./circularprogressbar/examples/Example_23";
-import BadgeExample4 from "./circularprogressbar/examples/Example_24";
-import BadgeExample5 from "./circularprogressbar/examples/Example_25";
-import BadgeExample6 from "./circularprogressbar/examples/Example_16";
-import BadgeExample7 from "./circularprogressbar/examples/Example_17";
-import BadgeExample8 from "./circularprogressbar/examples/Example_18";
-import BadgeExample9 from "./circularprogressbar/examples/Example_19"; 
-import BadgeExample10 from "./circularprogressbar/examples/Example_20";
+import BadgeExample1 from "./clock/examples/Example_1";
+import BadgeExample2 from "./clock/examples/Example_2";
+import BadgeExample3 from "./clock/examples/Example_3";
+import BadgeExample4 from "./clock/examples/Example_4";
+import BadgeExample5 from "./clock/examples/Example_5";
+import BadgeExample6 from "./clock/examples/Example_6";
+import BadgeExample7 from "./clock/examples/Example_7";
+import BadgeExample8 from "./clock/examples/Example_8";
+import BadgeExample9 from "./clock/examples/Example_9"; 
+import BadgeExample10 from "./clock/examples/Example_10";
 import Image from 'next/image'
 
 const page = () => {

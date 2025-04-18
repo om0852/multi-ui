@@ -12,6 +12,7 @@ export interface EnhancedAnalogClockProps {
   numberColor?: string; // Color of the numbers
   markerColor?: string; // Color of the hour markers
   digitalTimeColor?: string; // Color of the digital time
+  className?: string; // Additional CSS classes
 }
 
 const EnhancedAnalogClock: React.FC<EnhancedAnalogClockProps> = ({
@@ -23,6 +24,7 @@ const EnhancedAnalogClock: React.FC<EnhancedAnalogClockProps> = ({
   backgroundColor = "bg-gray-900",
   numberColor = "text-white",
   digitalTimeColor = "text-white",
+  className = "",
 }) => {
   const [time, setTime] = useState(new Date());
 
@@ -46,7 +48,7 @@ const EnhancedAnalogClock: React.FC<EnhancedAnalogClockProps> = ({
     .toUpperCase();
 
   return (
-    <div className="flex flex-col items-center">
+    <div className={`flex flex-col items-center ${className}`}>
       {/* Analog Clock */}
       <div
         className={`relative ${backgroundColor} ${borderColor} border-8 rounded-full shadow-lg`}
