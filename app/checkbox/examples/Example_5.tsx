@@ -1,3 +1,4 @@
+"use client"
 import React, { useState } from 'react';
 import Checkbox5 from '../_components/Checkbox_5';
 
@@ -9,10 +10,21 @@ const Example_5 = () => {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="mb-4">Checkbox 5 Example</h1>
-      <Checkbox5 value={isChecked} onChange={handleCheckboxChange} />
-      <p className="mt-4">Checkbox is {isChecked ? 'checked' : 'unchecked'}</p>
+    <div className="h-[400px] flex items-center justify-center bg-white dark:bg-gray-900">
+      <div className="w-full max-w-md mx-auto px-4">
+        <div className="text-center mb-6">
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">Checkbox 5 Example</h1>
+        </div>
+
+        <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
+          <div className="flex flex-col items-center space-y-4">
+            <Checkbox5 value={isChecked} onChange={handleCheckboxChange} />
+            <p className="text-sm sm:text-base text-gray-700 dark:text-gray-200">
+              Checkbox is {isChecked ? 'checked' : 'unchecked'}
+            </p>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

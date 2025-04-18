@@ -4,9 +4,9 @@ import React from "react";
 import { motion } from "framer-motion";
 
 interface SmoothSwitchProps {
-  value: boolean; // Current state of the switch
-  onChange: (value: boolean) => void; // Callback function when toggled
-  disabled?: boolean; // Whether the switch is disabled
+  value: boolean; 
+  onChange: (value: boolean) => void; 
+  disabled?: boolean; 
 }
 
 const SmoothSwitch: React.FC<SmoothSwitchProps> = ({

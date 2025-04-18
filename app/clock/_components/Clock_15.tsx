@@ -2,7 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-const LedDigitalClock: React.FC = () => {
+const LedDigitalClock: React.FC<{ className?: string }> = ({ className }) => {
   const [time, setTime] = useState(new Date());
 
   useEffect(() => {
@@ -17,7 +17,7 @@ const LedDigitalClock: React.FC = () => {
   const seconds = formatTime(time.getSeconds());
 
   return (
-    <div className="flex items-center justify-center h-screen bg-black">
+    <div className={`flex items-center justify-center h-screen bg-black ${className || ''}`}>
       <div className="text-center">
         {/* Digital Clock Display */}
         <motion.div

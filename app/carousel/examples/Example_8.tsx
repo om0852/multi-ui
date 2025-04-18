@@ -1,59 +1,44 @@
 "use client";
 
-import React, { useState } from 'react';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselDots,
-  CarouselNext,
-  CarouselPrevious,
-} from '../_components/Carousel_1';
+import React from 'react';
+import Carousel from '../_components/Carousel_8';
 
 const Example_8 = () => {
-  const [transitionEffect, setTransitionEffect] = useState(1);
+  const carouselItems = [
+    {
+      id: 1,
+      image: "https://picsum.photos/seed/801/800/500",
+      title: "Elastic Motion",
+      description: "Experience springy transitions with our elastic carousel effect"
+    },
+    {
+      id: 2,
+      image: "https://picsum.photos/seed/802/800/500",
+      title: "Bouncy Effects",
+      description: "Watch elements bounce smoothly between transitions"
+    },
+    {
+      id: 3,
+      image: "https://picsum.photos/seed/803/800/500",
+      title: "Dynamic Springs",
+      description: "Enjoy natural-feeling animations with spring physics"
+    },
+    {
+      id: 4,
+      image: "https://picsum.photos/seed/804/800/500",
+      title: "Smooth Interactions",
+      description: "Interactive controls with elastic feedback"
+    }
+  ];
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="mb-4">
-        <label className="mr-2">Select Transition Effect:</label>
-        <select
-          value={transitionEffect}
-          onChange={(e) => setTransitionEffect(Number(e.target.value))}
-        >
-          <option value={1}>Effect 1</option>
-          <option value={2}>Effect 2</option>
-          <option value={3}>Effect 3</option>
-          <option value={4}>Effect 4</option>
-          <option value={5}>Effect 5</option>
-        </select>
-      </div>
-      <Carousel className="w-[500px] h-[300px] bg-white shadow-lg rounded-lg relative">
-        <CarouselContent transitionEffect={transitionEffect}>
-          <CarouselItem>
-            <div className="flex flex-col items-center justify-center h-full bg-blue-500 text-white text-xl font-bold">
-              Slide 1: Welcome to Carousel 8
-            </div>
-          </CarouselItem>
-          <CarouselItem>
-            <div className="flex flex-col items-center justify-center h-full bg-green-500 text-white text-xl font-bold">
-              Slide 2: Enjoy the smooth transitions!
-            </div>
-          </CarouselItem>
-          <CarouselItem>
-            <div className="flex flex-col items-center justify-center h-full bg-purple-500 text-white text-xl font-bold">
-              Slide 3: Add your own images!
-            </div>
-          </CarouselItem>
-        </CarouselContent>
-        <CarouselPrevious className="text-white bg-black px-4 py-2 rounded">
-          &lt;
-        </CarouselPrevious>
-        <CarouselNext className="text-white bg-black px-4 py-2 rounded">
-          &gt;
-        </CarouselNext>
-        <CarouselDots className="absolute bottom-4 left-1/2 transform -translate-x-1/2" />
-      </Carousel>
+    <div className="flex flex-col justify-center items-center min-h-screen bg-gradient-to-br from-amber-50 to-yellow-50 p-8">
+      <h2 className="text-2xl font-bold text-gray-800 mb-8">Elastic Effect Carousel</h2>
+      <Carousel 
+        items={carouselItems}
+        autoPlay={true}
+        interval={4200}
+      />
     </div>
   );
 };

@@ -27,44 +27,17 @@ export default function BarExample1() {
   };
 
   return (
-    <div className="p-4 min-h-screen bg-gradient-to-br from-gray-50 to-gray-100">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Custom Bar Chart</h2>
+    <div className="p-4 sm:p-6 md:p-8 min-h-screen bg-white">
+      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-4 sm:mb-6">Custom Bar Chart</h2>
       
-      <div className="flex flex-col space-y-8 max-w-4xl mx-auto">
+      <div className="flex flex-col space-y-6 sm:space-y-8">
         {/* Basic usage */}
-        <div className="flex flex-col space-y-4">
-          <h3 className="text-xl font-semibold text-gray-700">Basic Usage</h3>
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <CustomBarChart data={sampleData} config={chartConfig} className="h-80" />
-          </div>
-        </div>
-
-        {/* Features explanation */}
-        <div className="flex flex-col space-y-4">
-          <h3 className="text-xl font-semibold text-gray-700">Features</h3>
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <ul className="list-disc pl-5 space-y-2 text-gray-600">
-              <li>Interactive bar chart with hover effects</li>
-              <li>Customizable colors and labels for each data series</li>
-              <li>Automatic scaling based on data values</li>
-              <li>Grid lines for better readability</li>
-              <li>Responsive design that adapts to container width</li>
-            </ul>
-          </div>
-        </div>
-
-        {/* Usage instructions */}
-        <div className="flex flex-col space-y-4">
-          <h3 className="text-xl font-semibold text-gray-700">How to Use</h3>
-          <div className="bg-white p-6 rounded-lg shadow-md">
-            <p className="text-gray-600 mb-4">
-              The CustomBarChart component requires two main props:
-            </p>
-            <ul className="list-disc pl-5 space-y-2 text-gray-600">
-              <li><code className="bg-gray-100 px-1 rounded">data</code>: An array of objects where each object represents a data point with named properties</li>
-              <li><code className="bg-gray-100 px-1 rounded">config</code>: A configuration object that defines the label and color for each data series</li>
-              <li><code className="bg-gray-100 px-1 rounded">className</code> (optional): Additional CSS classes to apply to the chart</li>
-            </ul>
+        <div className="flex flex-col space-y-3 sm:space-y-4">
+          <h3 className="text-lg sm:text-xl font-semibold text-gray-700">Basic Usage</h3>
+          <div className="bg-gray-50 p-4 sm:p-6 rounded-lg shadow-md">
+            <div className="w-full h-[300px] sm:h-[400px] md:h-[500px]">
+              <CustomBarChart data={sampleData} config={chartConfig} className="w-full h-full" />
+            </div>
           </div>
         </div>
       </div>

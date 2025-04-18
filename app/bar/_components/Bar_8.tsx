@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 
 type OverlappingBarChartData = {
@@ -14,18 +14,42 @@ type OverlappingBarChartProps = {
 };
 
 export function OverlappingBarChart({ data }: OverlappingBarChartProps) {
-  const width = 700;
-  const height = 400;
-  const margin = { top: 20, right: 30, bottom: 70, left: 60 };
+  const [dimensions, setDimensions] = useState({ width: 700, height: 400 });
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const updateDimensions = () => {
+      if (containerRef.current) {
+        const { width } = containerRef.current.getBoundingClientRect();
+        const height = Math.max(300, width * 0.6); // Maintain aspect ratio with min height
+        setDimensions({ width, height });
+      }
+    };
+
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, []);
+
+  // Calculate responsive margins
+  const margin = {
+    top: dimensions.height * 0.05,
+    right: dimensions.width * 0.05,
+    bottom: dimensions.height * 0.15,
+    left: dimensions.width * 0.1
+  };
 
   const maxValue = Math.max(
     ...data.flatMap((item) => [item.groupA, item.groupB])
   );
 
   const yScale = (value: number) =>
-    height - margin.bottom - (value / maxValue) * (height - margin.top - margin.bottom);
+    dimensions.height - margin.bottom - (value / maxValue) * (dimensions.height - margin.top - margin.bottom);
 
-  const barWidth = 20;
+  // Calculate responsive bar width and spacing
+  const availableWidth = dimensions.width - margin.left - margin.right;
+  const barSpacing = Math.min(availableWidth / (data.length * 2), 40);
+  const barWidth = Math.min(barSpacing * 0.8, 20);
 
   // State for hover effect
   const [hoveredBar, setHoveredBar] = useState<{
@@ -35,26 +59,34 @@ export function OverlappingBarChart({ data }: OverlappingBarChartProps) {
     y: number;
   } | null>(null);
 
+  // Calculate responsive font size
+  const fontSize = Math.min(dimensions.width * 0.02, 12);
+
   return (
-    <div className="w-full max-w-[700px] mx-auto pt-10">
-      {/* SVG Chart */}
-      <svg className="w-full" viewBox={`0 0 ${width} ${height}`}>
+    <div ref={containerRef} className="w-full h-full min-w-[300px]">
+      <svg
+        className="w-full h-full"
+        viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
+        preserveAspectRatio="xMidYMid meet"
+      >
         {/* Draw Axes */}
         {/* X Axis */}
         <line
           x1={margin.left}
-          y1={height - margin.bottom}
-          x2={width - margin.right}
-          y2={height - margin.bottom}
+          y1={dimensions.height - margin.bottom}
+          x2={dimensions.width - margin.right}
+          y2={dimensions.height - margin.bottom}
           stroke="black"
+          strokeWidth={1}
         />
         {/* Y Axis */}
         <line
           x1={margin.left}
           y1={margin.top}
           x2={margin.left}
-          y2={height - margin.bottom}
+          y2={dimensions.height - margin.bottom}
           stroke="black"
+          strokeWidth={1}
         />
 
         {/* Draw Y-Axis Scale Labels */}
@@ -65,10 +97,12 @@ export function OverlappingBarChart({ data }: OverlappingBarChartProps) {
           return (
             <text
               key={i}
-              x={margin.left - 10}
+              x={margin.left - 5}
               y={yPos}
               textAnchor="end"
-              fontSize="12"
+              alignmentBaseline="middle"
+              fontSize={fontSize}
+              fill="black"
             >
               {value}
             </text>
@@ -77,13 +111,16 @@ export function OverlappingBarChart({ data }: OverlappingBarChartProps) {
 
         {/* Draw X-Axis Group Labels */}
         {data.map((item, index) => {
+          const xPos = margin.left + index * (barSpacing * 2) + barSpacing;
           return (
             <text
               key={index}
-              x={margin.left + index * 40 + 10} 
-              y={height - margin.bottom + 20}
+              x={xPos}
+              y={dimensions.height - margin.bottom + fontSize * 1.5}
               textAnchor="middle"
-              fontSize="12"
+              fontSize={fontSize}
+              fill="black"
+              transform={`rotate(-45, ${xPos}, ${dimensions.height - margin.bottom + fontSize * 1.5})`}
             >
               {item.label}
             </text>
@@ -92,9 +129,9 @@ export function OverlappingBarChart({ data }: OverlappingBarChartProps) {
 
         {/* Draw bars with overlapping effects */}
         {data.map((item, index) => {
-          const xPositionGroupA =
-            margin.left + index * 40; /* adjust X spacing between bars */
-          const xPositionGroupB = xPositionGroupA + 10; /* overlapping effect */
+          const xPositionBase = margin.left + index * (barSpacing * 2);
+          const xPositionGroupA = xPositionBase + barSpacing - barWidth / 2;
+          const xPositionGroupB = xPositionBase + barSpacing + barWidth / 2;
 
           return (
             <g key={index}>
@@ -103,9 +140,11 @@ export function OverlappingBarChart({ data }: OverlappingBarChartProps) {
                 x={xPositionGroupA}
                 y={yScale(item.groupA)}
                 width={barWidth}
-                height={height - margin.bottom - yScale(item.groupA)}
+                height={dimensions.height - margin.bottom - yScale(item.groupA)}
                 fill="#2563eb"
+                opacity={0.8}
                 whileHover={{
+                  opacity: 1,
                   scale: 1.1,
                   transition: { duration: 0.2 },
                 }}
@@ -125,9 +164,11 @@ export function OverlappingBarChart({ data }: OverlappingBarChartProps) {
                 x={xPositionGroupB}
                 y={yScale(item.groupB)}
                 width={barWidth}
-                height={height - margin.bottom - yScale(item.groupB)}
+                height={dimensions.height - margin.bottom - yScale(item.groupB)}
                 fill="#60a5fa"
+                opacity={0.8}
                 whileHover={{
+                  opacity: 1,
                   scale: 1.1,
                   transition: { duration: 0.2 },
                 }}
@@ -141,28 +182,6 @@ export function OverlappingBarChart({ data }: OverlappingBarChartProps) {
                 }
                 onMouseLeave={() => setHoveredBar(null)}
               />
-
-              {/* Add labels for Group A */}
-              <text
-                x={xPositionGroupA + barWidth / 2}
-                y={yScale(item.groupA) - 5}
-                textAnchor="middle"
-                fontSize="12"
-                fill="#000"
-              >
-                {item.groupA}
-              </text>
-
-              {/* Add labels for Group B */}
-              <text
-                x={xPositionGroupB + barWidth / 2}
-                y={yScale(item.groupB) - 5}
-                textAnchor="middle"
-                fontSize="12"
-                fill="#000"
-              >
-                {item.groupB}
-              </text>
             </g>
           );
         })}
@@ -176,38 +195,47 @@ export function OverlappingBarChart({ data }: OverlappingBarChartProps) {
             transition={{ duration: 0.2 }}
           >
             <rect
-              x={hoveredBar.x - 20}
+              x={hoveredBar.x - 25}
               y={hoveredBar.y - 25}
-              width={40}
+              width={50}
               height={20}
-              fill="rgba(0, 0, 0, 0.7)"
-              rx={5}
+              fill="rgba(0, 0, 0, 0.8)"
+              rx={4}
             />
             <text
               x={hoveredBar.x}
-              y={hoveredBar.y - 10}
+              y={hoveredBar.y - 12}
               textAnchor="middle"
-              fontSize="12"
+              fontSize={fontSize}
               fill="white"
             >
               {hoveredBar.value}
             </text>
           </motion.g>
         )}
+
+        {/* Legend */}
+        <g transform={`translate(${margin.left}, ${margin.top - 10})`}>
+          <rect width={12} height={12} fill="#2563eb" opacity={0.8} />
+          <text x={16} y={10} fontSize={fontSize} fill="black">Group A</text>
+          <rect x={70} width={12} height={12} fill="#60a5fa" opacity={0.8} />
+          <text x={86} y={10} fontSize={fontSize} fill="black">Group B</text>
+        </g>
       </svg>
     </div>
   );
 }
 
 // Example Usage
-const exampleData: OverlappingBarChartData[] = [
-  { label: "Jan", groupA: 150, groupB: 100 },
-  { label: "Feb", groupA: 200, groupB: 180 },
-  { label: "Mar", groupA: 130, groupB: 120 },
-  { label: "Apr", groupA: 180, groupB: 140 },
-  { label: "May", groupA: 220, groupB: 160 },
+const exampleData = [
+  { label: "Jan", groupA: 100, groupB: 80 },
+  { label: "Feb", groupA: 120, groupB: 100 },
+  { label: "Mar", groupA: 140, groupB: 120 },
+  { label: "Apr", groupA: 90, groupB: 110 },
+  { label: "May", groupA: 160, groupB: 140 },
+  { label: "Jun", groupA: 130, groupB: 150 },
 ];
 
 export function Component() {
   return <OverlappingBarChart data={exampleData} />;
-};
+}

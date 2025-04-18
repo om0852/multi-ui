@@ -64,7 +64,7 @@ const defaultPlatforms = [
   },
 ];
 
-export function Share_20({
+export default function Share_20({
   title = "Share this content",
   url,
   platforms = defaultPlatforms,

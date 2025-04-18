@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 
 // Types for 3D Bar Chart
@@ -15,42 +15,72 @@ type ThreeDBarChartProps = {
 
 export function ThreeDBarChart({ data }: ThreeDBarChartProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const updateDimensions = () => {
+      if (containerRef.current) {
+        const { width, height } = containerRef.current.getBoundingClientRect();
+        setDimensions({ width, height });
+      }
+    };
+
+    // Initial measurement
+    updateDimensions();
+
+    // Add resize listener
+    window.addEventListener('resize', updateDimensions);
+
+    // Cleanup
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, []);
 
   const maxValue = Math.max(...data.map((item) => item.value));
 
+  // Calculate responsive dimensions
+  const margin = {
+    top: dimensions.height * 0.1,
+    right: dimensions.width * 0.1,
+    bottom: dimensions.height * 0.15,
+    left: dimensions.width * 0.15
+  };
+
+  const chartWidth = dimensions.width - margin.left - margin.right;
+  const chartHeight = dimensions.height - margin.top - margin.bottom;
+  const barWidth = Math.min(chartWidth / (data.length * 2), 50); // Responsive bar width
+  const barSpacing = barWidth * 1.6; // Space between bars
+
   return (
-    <div className="relative w-[700px] h-[400px] mx-auto pt-10">
-      {/* SVG for Chart with Axes */}
+    <div ref={containerRef} className="w-full h-full">
       <svg
         className="w-full h-full"
-        viewBox="0 0 700 400"
-        xmlns="http://www.w3.org/2000/svg"
+        viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
+        preserveAspectRatio="xMidYMid meet"
       >
         {/* Y-Axis */}
         <line
-          x1={100}
-          y1={50}
-          x2={100}
-          y2={350}
+          x1={margin.left}
+          y1={margin.top}
+          x2={margin.left}
+          y2={dimensions.height - margin.bottom}
           stroke="black"
           strokeWidth={2}
         />
         {/* X-Axis */}
         <line
-          x1={100}
-          y1={350}
-          x2={650}
-          y2={350}
+          x1={margin.left}
+          y1={dimensions.height - margin.bottom}
+          x2={dimensions.width - margin.right}
+          y2={dimensions.height - margin.bottom}
           stroke="black"
           strokeWidth={2}
         />
 
         {/* Bars with 3D Effect */}
-        {data.map((item, index) => {
-          const barHeight = (item.value / maxValue) * 200; // Normalize the height of the bar
-          const barWidth = 50;
-          const xPosition = 100 + index * 80; // Space between bars
-
+        {dimensions.width > 0 && data.map((item, index) => {
+          const barHeight = (item.value / maxValue) * chartHeight;
+          const xPosition = margin.left + index * barSpacing;
           const isHovered = hoveredIndex === index;
 
           return (
@@ -62,7 +92,7 @@ export function ThreeDBarChart({ data }: ThreeDBarChartProps) {
               {/* 3D Bar Effect Animation */}
               <motion.rect
                 x={xPosition}
-                y={350 - barHeight}
+                y={dimensions.height - margin.bottom - barHeight}
                 width={barWidth}
                 height={barHeight}
                 fill="#2563eb"
@@ -76,9 +106,9 @@ export function ThreeDBarChart({ data }: ThreeDBarChartProps) {
               {isHovered && (
                 <motion.text
                   x={xPosition + barWidth / 2}
-                  y={350 - barHeight - 10}
+                  y={dimensions.height - margin.bottom - barHeight - 10}
                   textAnchor="middle"
-                  fontSize={12}
+                  fontSize={Math.min(dimensions.width * 0.02, 12)}
                   fill="black"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -94,15 +124,15 @@ export function ThreeDBarChart({ data }: ThreeDBarChartProps) {
         {/* Y-Axis Labels */}
         {Array.from({ length: 5 }).map((_, idx) => {
           const yValue = Math.round((maxValue / 5) * (idx + 1));
-          const yPosition = 350 - (yValue / maxValue) * 200;
+          const yPosition = dimensions.height - margin.bottom - (yValue / maxValue) * chartHeight;
 
           return (
             <text
               key={idx}
-              x={90}
+              x={margin.left - 10}
               y={yPosition}
-              textAnchor="middle"
-              fontSize={12}
+              textAnchor="end"
+              fontSize={Math.min(dimensions.width * 0.02, 12)}
               fill="black"
             >
               {yValue}
@@ -112,14 +142,14 @@ export function ThreeDBarChart({ data }: ThreeDBarChartProps) {
 
         {/* X-Axis Labels */}
         {data.map((item, index) => {
-          const xPosition = 100 + index * 80;
+          const xPosition = margin.left + index * barSpacing;
           return (
             <text
               key={item.month}
-              x={xPosition + 25}
-              y={365}
+              x={xPosition + barWidth / 2}
+              y={dimensions.height - margin.bottom + 20}
               textAnchor="middle"
-              fontSize={12}
+              fontSize={Math.min(dimensions.width * 0.02, 12)}
               fill="black"
             >
               {item.month}

@@ -17,7 +17,7 @@ type ShareProps = {
   className?: string;
 };
 
-export function Share_19({
+export default function Share_19({
   title = "Share this content",
   url,
   stats = { shares: 0, likes: 0, comments: 0 },

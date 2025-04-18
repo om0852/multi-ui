@@ -10,7 +10,8 @@ type InputOTPSlotProps = {
   onKeyDown: (e: React.KeyboardEvent) => void;
   invalid: boolean;
 };
-const InputOTPSlot: React.FC<InputOTPSlotProps> = ({
+export const InputOTPSlot: React.FC<InputOTPSlotProps> = ({
+
   index,
   value,
   onChange,
@@ -46,7 +47,8 @@ const InputOTPSlot: React.FC<InputOTPSlotProps> = ({
 type InputOTPGroupProps = {
   children: React.ReactNode;
 };
-const InputOTPGroup: React.FC<InputOTPGroupProps> = ({ children }) => {
+export const InputOTPGroup: React.FC<InputOTPGroupProps> = ({ children }) => {
+
   return <div className="flex items-center space-x-3">{children}</div>;
 };
 

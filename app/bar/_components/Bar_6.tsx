@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 
 // Types for Population Pyramid
@@ -16,34 +16,61 @@ type PopulationPyramidProps = {
 
 export function PopulationPyramid({ data }: PopulationPyramidProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [dimensions, setDimensions] = useState({ width: 700, height: 400 });
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const updateDimensions = () => {
+      if (containerRef.current) {
+        const { width } = containerRef.current.getBoundingClientRect();
+        const height = Math.max(400, width * 0.6); // Maintain aspect ratio with min height
+        setDimensions({ width, height });
+      }
+    };
+
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, []);
 
   const maxValue = Math.max(
     ...data.map((item) => Math.max(item.male, item.female))
   );
 
+  // Calculate responsive dimensions
+  const margin = {
+    top: dimensions.height * 0.1,
+    bottom: dimensions.height * 0.1,
+  };
+  const chartHeight = dimensions.height - margin.top - margin.bottom;
+  const barHeight = Math.min((chartHeight / data.length) * 0.7, 30);
+  const spacing = (chartHeight / data.length);
+  const centerX = dimensions.width / 2;
+  const maxBarWidth = Math.min(dimensions.width * 0.4, 150); // Max bar width relative to container
+
   return (
-    <div className="relative w-[700px] h-[400px] mx-auto pt-10">
-      {/* Main SVG for Population Pyramid */}
+    <div ref={containerRef} className="w-full h-full min-w-[300px]">
       <svg
         className="w-full h-full"
-        viewBox="0 0 700 400"
-        xmlns="http://www.w3.org/2000/svg"
+        viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
+        preserveAspectRatio="xMidYMid meet"
       >
         {/* Y-Axis */}
         <line
-          x1={350}
-          y1={50}
-          x2={350}
-          y2={350}
+          x1={centerX}
+          y1={margin.top}
+          x2={centerX}
+          y2={dimensions.height - margin.bottom}
           stroke="black"
           strokeWidth={2}
         />
 
         {/* Bars */}
         {data.map((item, index) => {
-          const barWidthMale = (item.male / maxValue) * 150; // Scale the bar width for males
-          const barWidthFemale = (item.female / maxValue) * 150; // Scale the bar width for females
-          const yPosition = 50 + index * 50; // Vertical space between age groups
+          const barWidthMale = (item.male / maxValue) * maxBarWidth;
+          const barWidthFemale = (item.female / maxValue) * maxBarWidth;
+          const yPosition = margin.top + index * spacing;
+          const fontSize = Math.min(dimensions.width * 0.02, 12);
 
           return (
             <motion.g
@@ -53,10 +80,10 @@ export function PopulationPyramid({ data }: PopulationPyramidProps) {
             >
               {/* Male side bar */}
               <motion.rect
-                x={350 - barWidthMale}
+                x={centerX - barWidthMale}
                 y={yPosition}
                 width={barWidthMale}
-                height={30}
+                height={barHeight}
                 fill="#2563eb"
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
@@ -64,10 +91,10 @@ export function PopulationPyramid({ data }: PopulationPyramidProps) {
               />
               {hoveredIndex === index && (
                 <motion.text
-                  x={350 - barWidthMale - 5}
-                  y={yPosition + 15}
+                  x={centerX - barWidthMale - 5}
+                  y={yPosition + barHeight / 2}
                   textAnchor="end"
-                  fontSize={12}
+                  fontSize={fontSize}
                   fill="black"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -79,10 +106,10 @@ export function PopulationPyramid({ data }: PopulationPyramidProps) {
 
               {/* Female side bar */}
               <motion.rect
-                x={350}
+                x={centerX}
                 y={yPosition}
                 width={barWidthFemale}
-                height={30}
+                height={barHeight}
                 fill="#60a5fa"
                 initial={{ scaleX: 0 }}
                 animate={{ scaleX: 1 }}
@@ -90,10 +117,9 @@ export function PopulationPyramid({ data }: PopulationPyramidProps) {
               />
               {hoveredIndex === index && (
                 <motion.text
-                  x={350 + barWidthFemale + 5}
-                  y={yPosition + 15}
-                  textAnchor="start"
-                  fontSize={12}
+                  x={centerX + barWidthFemale + 5}
+                  y={yPosition + barHeight / 2}
+                  fontSize={fontSize}
                   fill="black"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -102,25 +128,19 @@ export function PopulationPyramid({ data }: PopulationPyramidProps) {
                   {item.female}
                 </motion.text>
               )}
+
+              {/* Age Group Labels */}
+              <text
+                x={centerX}
+                y={yPosition + barHeight / 2}
+                textAnchor="middle"
+                fontSize={fontSize}
+                fill="black"
+                dy="0.3em"
+              >
+                {item.ageGroup}
+              </text>
             </motion.g>
-          );
-        })}
-
-        {/* Age Group Labels */}
-        {data.map((item, index) => {
-          const yPosition = 50 + index * 50;
-
-          return (
-            <text
-              key={item.ageGroup}
-              x={350}
-              y={yPosition + 20}
-              textAnchor="middle"
-              fontSize={12}
-              fill="black"
-            >
-              {item.ageGroup}
-            </text>
           );
         })}
       </svg>

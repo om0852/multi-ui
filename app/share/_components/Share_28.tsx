@@ -55,7 +55,7 @@ const platforms = [
   },
 ];
 
-export function Share_28({ url, className = "" }: ShareProps) {
+export default function Share_28({ url, className = "" }: ShareProps) {
   const [copied, setCopied] = React.useState(false);
 
   const handleCopy = async () => {

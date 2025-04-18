@@ -1,9 +1,24 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import RadialBarChart from "../_components/Bar_22";
 
 export default function BarExample22() {
+  const [containerWidth, setContainerWidth] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const updateWidth = () => {
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.offsetWidth);
+      }
+    };
+
+    updateWidth();
+    window.addEventListener('resize', updateWidth);
+    return () => window.removeEventListener('resize', updateWidth);
+  }, []);
+
   // Sample datasets
   const datasets = {
     performance: {
@@ -32,40 +47,37 @@ export default function BarExample22() {
 
   // State for current dataset
   const [currentDataset, setCurrentDataset] = useState<keyof typeof datasets>("performance");
+  const isCompact = containerWidth < 640;
   
   return (
-    <div className="p-6 bg-gradient-to-br from-gray-900 to-gray-800 text-white rounded-lg shadow-xl">
-      <h2 className="text-2xl font-bold mb-6">Radial Bar Chart</h2>
+    <div ref={containerRef} className="p-4 sm:p-6 md:p-8 min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6">Radial Bar Chart</h2>
       
-      {/* Dataset Selector */}
-      <div className="mb-6">
-        <div className="flex gap-4">
-          {Object.keys(datasets).map((key) => (
-            <button
-              key={key}
-              onClick={() => setCurrentDataset(key as keyof typeof datasets)}
-              className={`px-4 py-2 rounded-md transition-colors ${
-                currentDataset === key 
-                  ? 'bg-blue-600 text-white' 
-                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-              }`}
-            >
-              {datasets[key as keyof typeof datasets].name}
-            </button>
-          ))}
-        </div>
+      <div className={`mb-6 ${isCompact ? 'grid grid-cols-2' : 'flex flex-wrap'} gap-2`}>
+        {Object.entries(datasets).map(([key, { name }]) => (
+          <button
+            key={key}
+            onClick={() => setCurrentDataset(key as keyof typeof datasets)}
+            className={`px-3 py-1.5 text-xs sm:text-sm md:text-base rounded-md transition-colors ${
+              currentDataset === key 
+                ? 'bg-blue-600 text-white' 
+                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+            }`}
+          >
+            {isCompact ? name.split(' ')[0] : name}
+          </button>
+        ))}
       </div>
       
-      {/* Chart Display */}
-      <div className="bg-gray-800 p-6 rounded-lg">
-        <div className="bg-white rounded-lg p-4 flex justify-center">
+      <div className="bg-gray-800 p-3 sm:p-4 md:p-6 rounded-lg">
+        <div className="bg-white rounded-lg p-2 sm:p-3 md:p-4 flex justify-center">
           <RadialBarChart 
             data={datasets[currentDataset].data} 
-            width={500} 
-            height={500} 
-            innerRadius={80}
+            width={Math.min(500, containerWidth - 40)} 
+            height={Math.min(500, containerWidth - 40)} 
+            innerRadius={Math.min(80, (containerWidth - 40) * 0.15)}
             animationDuration={0.8}
-            showLabels={true}
+            showLabels={!isCompact}
             showValues={true}
           />
         </div>

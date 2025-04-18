@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from 'react';
-import Image from "next/image";
 import {
   Carousel,
   CarouselContent,
@@ -15,7 +14,7 @@ const Example_1 = () => {
   const [transitionEffect, setTransitionEffect] = useState(1);
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex justify-center items-center min-h-screen bg-white">
       <div className="mb-4">
         <label className="mr-2">Select Transition Effect:</label>
         <select

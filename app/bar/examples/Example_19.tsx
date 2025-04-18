@@ -1,9 +1,24 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import LineGraphDesign3 from "../_components/Bar_19";
 
 export default function BarExample19() {
+  const [containerWidth, setContainerWidth] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const updateWidth = () => {
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.offsetWidth);
+      }
+    };
+
+    updateWidth();
+    window.addEventListener('resize', updateWidth);
+    return () => window.removeEventListener('resize', updateWidth);
+  }, []);
+
   // Sample datasets
   const datasets = {
     performance: {
@@ -14,9 +29,7 @@ export default function BarExample19() {
         { x: "Mar", y: 92 },
         { x: "Apr", y: 89 },
         { x: "May", y: 94 },
-        { x: "Jun", y: 97 },
-        { x: "Jul", y: 93 },
-        { x: "Aug", y: 96 }
+        { x: "Jun", y: 97 }
       ],
       lineColor: "#8B5CF6",
       gradientStart: "#C4B5FD",
@@ -26,14 +39,12 @@ export default function BarExample19() {
     revenue: {
       name: "Monthly Revenue",
       data: [
-        { x: "Jan", y: 45000 },
-        { x: "Feb", y: 52000 },
-        { x: "Mar", y: 49000 },
-        { x: "Apr", y: 63000 },
-        { x: "May", y: 58000 },
-        { x: "Jun", y: 71000 },
-        { x: "Jul", y: 75000 },
-        { x: "Aug", y: 82000 }
+        { x: "Jan", y: 45 },
+        { x: "Feb", y: 52 },
+        { x: "Mar", y: 49 },
+        { x: "Apr", y: 63 },
+        { x: "May", y: 58 },
+        { x: "Jun", y: 71 }
       ],
       lineColor: "#10B981",
       gradientStart: "#A7F3D0",
@@ -44,42 +55,41 @@ export default function BarExample19() {
 
   // State for current dataset
   const [currentDataset, setCurrentDataset] = useState<keyof typeof datasets>("performance");
+  const isCompact = containerWidth < 640;
   
   return (
-    <div className="p-6 bg-gradient-to-br from-gray-900 to-gray-800 text-white rounded-lg shadow-xl">
-      <h2 className="text-2xl font-bold mb-6">Line Graph Design 3</h2>
+    <div ref={containerRef} className="p-4 sm:p-6 md:p-8 min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6">Gradient Line Graph</h2>
       
-      {/* Dataset Selector */}
-      <div className="mb-6">
-        <div className="flex gap-4">
-          {Object.keys(datasets).map((key) => (
-            <button
-              key={key}
-              onClick={() => setCurrentDataset(key as keyof typeof datasets)}
-              className={`px-4 py-2 rounded-md transition-colors ${
-                currentDataset === key 
-                  ? 'bg-blue-600 text-white' 
-                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-              }`}
-            >
-              {datasets[key as keyof typeof datasets].name}
-            </button>
-          ))}
-        </div>
+      <div className={`mb-6 ${isCompact ? 'grid grid-cols-2' : 'flex flex-wrap'} gap-2`}>
+        {Object.entries(datasets).map(([key, { name }]) => (
+          <button
+            key={key}
+            onClick={() => setCurrentDataset(key as keyof typeof datasets)}
+            className={`px-3 py-1.5 text-xs sm:text-sm md:text-base rounded-md transition-colors ${
+              currentDataset === key 
+                ? 'bg-blue-600 text-white' 
+                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+            }`}
+          >
+            {isCompact ? name.split(' ')[0] : name}
+          </button>
+        ))}
       </div>
       
-      {/* Line Graph Display */}
-      <div className="bg-gray-800 p-6 rounded-lg">
-        <div className="rounded-lg overflow-hidden">
-          <LineGraphDesign3 
-            data={datasets[currentDataset].data} 
-            width={700} 
-            height={400} 
-            lineColor={datasets[currentDataset].lineColor}
-            gradientStart={datasets[currentDataset].gradientStart}
-            gradientEnd={datasets[currentDataset].gradientEnd}
-            dotColor={datasets[currentDataset].dotColor}
-          />
+      <div className="bg-gray-800 p-3 sm:p-4 md:p-6 rounded-lg">
+        <div className="bg-white rounded-lg p-2 sm:p-3 md:p-4">
+          <div className="w-full h-[200px] sm:h-[400px] md:h-[500px]">
+            <LineGraphDesign3 
+              data={datasets[currentDataset].data}
+              width={Math.min(800, containerWidth - 24)}
+              height={Math.min(400, (containerWidth - 24) * 0.6)}
+              lineColor={datasets[currentDataset].lineColor}
+              gradientStart={datasets[currentDataset].gradientStart}
+              gradientEnd={datasets[currentDataset].gradientEnd}
+              dotColor={datasets[currentDataset].dotColor}
+            />
+          </div>
         </div>
       </div>
     </div>

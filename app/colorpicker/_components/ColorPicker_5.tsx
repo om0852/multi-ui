@@ -1,238 +1,246 @@
-"use client";
-import React, { useState } from "react";
-import { motion } from "framer-motion";
+'use client';
+import React, { useState } from 'react';
 
-interface ColorPickerProps {
-  initialColor?: string;
-  className?: string;
-}
-
-const natureAnimation = `
-  @keyframes leafSway {
-    0%, 100% { transform: rotate(-5deg); }
-    50% { transform: rotate(5deg); }
+const retroAnimation = `
+  @keyframes groovy {
+    0% { transform: rotate(0deg) scale(1); }
+    25% { transform: rotate(3deg) scale(1.02); }
+    75% { transform: rotate(-3deg) scale(0.98); }
+    100% { transform: rotate(0deg) scale(1); }
   }
 
-  @keyframes fadeScale {
-    from { transform: scale(0.95); opacity: 0; }
-    to { transform: scale(1); opacity: 1; }
+  @keyframes fadeRetro {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
   }
 `;
 
-const ColorPicker: React.FC<ColorPickerProps> = ({ initialColor = "#ffffff", className = "" }) => {
-  const [color, setColor] = useState(initialColor);
-  const [activeCategory, setActiveCategory] = useState('spring');
+interface RetroEra {
+  name: string;
+  decade: string;
+  style: string;
+  description: string;
+  colors: Array<{
+    name: string;
+    value: string;
+    element: string;
+  }>;
+}
 
-  const naturePalettes = {
-    spring: {
-      name: 'Spring Garden',
-      icon: '🌸',
-      colors: [
-        { name: 'Cherry Blossom', value: '#ffb7c5' },
-        { name: 'Fresh Leaf', value: '#4caf50' },
-        { name: 'Morning Dew', value: '#b2ebf2' },
-        { name: 'Spring Sky', value: '#64b5f6' },
-        { name: 'New Growth', value: '#81c784' },
-      ],
-    },
-    summer: {
-      name: 'Summer Beach',
-      icon: '🏖️',
-      colors: [
-        { name: 'Ocean Blue', value: '#1976d2' },
-        { name: 'Sandy Shore', value: '#ffd54f' },
-        { name: 'Coral Reef', value: '#ff7043' },
-        { name: 'Palm Leaf', value: '#2e7d32' },
-        { name: 'Sunset', value: '#ff4081' },
-      ],
-    },
-    autumn: {
-      name: 'Autumn Forest',
-      icon: '🍁',
-      colors: [
-        { name: 'Maple Red', value: '#d32f2f' },
-        { name: 'Golden Leaf', value: '#ffa000' },
-        { name: 'Forest Brown', value: '#795548' },
-        { name: 'Rustic Orange', value: '#f57c00' },
-        { name: 'Deep Moss', value: '#33691e' },
-      ],
-    },
-    winter: {
-      name: 'Winter Frost',
-      icon: '❄️',
-      colors: [
-        { name: 'Snow White', value: '#eceff1' },
-        { name: 'Ice Blue', value: '#90caf9' },
-        { name: 'Winter Sky', value: '#546e7a' },
-        { name: 'Evergreen', value: '#1b5e20' },
-        { name: 'Berry Red', value: '#c62828' },
-      ],
-    },
-    forest: {
-      name: 'Deep Forest',
-      icon: '🌲',
-      colors: [
-        { name: 'Pine Needle', value: '#2e7d32' },
-        { name: 'Forest Floor', value: '#5d4037' },
-        { name: 'Wild Mushroom', value: '#bcaaa4' },
-        { name: 'Moss Stone', value: '#558b2f' },
-        { name: 'Tree Bark', value: '#4e342e' },
-      ],
-    },
-    ocean: {
-      name: 'Ocean Depths',
-      icon: '🌊',
-      colors: [
-        { name: 'Deep Blue', value: '#0d47a1' },
-        { name: 'Coral Pink', value: '#ff80ab' },
-        { name: 'Sea Foam', value: '#80deea' },
-        { name: 'Teal Wave', value: '#00796b' },
-        { name: 'Ocean Mist', value: '#b2ebf2' },
-      ],
-    },
-  };
+const ColorPicker_5: React.FC<{ onChange?: (color: string) => void }> = ({ onChange }) => {
+  const [selectedEra, setSelectedEra] = useState<string>('psychedelic');
+  const [selectedColor, setSelectedColor] = useState<string>('#ff6b6b');
 
-  // Handle color change
-  const handleColorChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setColor(event.target.value);
+  const retroEras: { [key: string]: RetroEra } = {
+    psychedelic: {
+      name: 'Psychedelic',
+      decade: '1960s',
+      style: 'Peace & Love',
+      description: 'Vibrant, swirling colors of the hippie movement',
+      colors: [
+        { name: 'Electric Purple', value: '#8a2be2', element: 'Psychedelic posters' },
+        { name: 'Acid Green', value: '#7fff00', element: 'Concert flyers' },
+        { name: 'Love Pink', value: '#ff69b4', element: 'Flower power' },
+        { name: 'Sunshine Yellow', value: '#ffd700', element: 'Peace symbols' },
+        { name: 'Orange Dream', value: '#ff7f50', element: 'Tie-dye patterns' },
+      ],
+    },
+    disco: {
+      name: 'Disco Era',
+      decade: '1970s',
+      style: 'Dance & Glam',
+      description: 'Glittering colors of the disco dance floor',
+      colors: [
+        { name: 'Mirror Ball', value: '#c0c0c0', element: 'Disco balls' },
+        { name: 'Neon Blue', value: '#00ffff', element: 'Dance floor' },
+        { name: 'Gold Lamé', value: '#daa520', element: 'Disco fashion' },
+        { name: 'Studio Pink', value: '#ff1493', element: 'Neon signs' },
+        { name: 'Ultra Violet', value: '#9400d3', element: 'Stage lights' },
+      ],
+    },
+    memphis: {
+      name: 'Memphis Design',
+      decade: '1980s',
+      style: 'Bold & Geometric',
+      description: 'Playful patterns and bold geometric shapes',
+      colors: [
+        { name: 'Miami Pink', value: '#ff6b6b', element: 'Geometric shapes' },
+        { name: 'Pool Blue', value: '#4dc9ff', element: 'Squiggly lines' },
+        { name: 'Banana Yellow', value: '#ffd93d', element: 'Pattern blocks' },
+        { name: 'Grid Black', value: '#2d3436', element: 'Background dots' },
+        { name: 'Mint Pop', value: '#98ff98', element: 'Accent shapes' },
+      ],
+    },
+    grunge: {
+      name: 'Grunge',
+      decade: '1990s',
+      style: 'Raw & Rebellious',
+      description: 'Distressed and muted alternative culture colors',
+      colors: [
+        { name: 'Flannel Red', value: '#8b4513', element: 'Worn clothing' },
+        { name: 'Dirty Denim', value: '#4a5568', element: 'Faded jeans' },
+        { name: 'Army Surplus', value: '#556b2f', element: 'Military gear' },
+        { name: 'Thrift Brown', value: '#8b7355', element: 'Vintage leather' },
+        { name: 'Faded Black', value: '#2d3436', element: 'Band t-shirts' },
+      ],
+    },
+    atomic: {
+      name: 'Atomic Age',
+      decade: '1950s',
+      style: 'Retro Futurism',
+      description: 'Optimistic colors of post-war modernism',
+      colors: [
+        { name: 'Diner Red', value: '#ff0000', element: 'Vinyl booths' },
+        { name: 'Turquoise Dream', value: '#40e0d0', element: 'Car finish' },
+        { name: 'Formica Yellow', value: '#ffd700', element: 'Kitchen tables' },
+        { name: 'Mint Julep', value: '#98ff98', element: 'Appliances' },
+        { name: 'Chrome Silver', value: '#c0c0c0', element: 'Car details' },
+      ],
+    },
+    vaporwave: {
+      name: 'Vaporwave',
+      decade: '2010s',
+      style: 'Digital Nostalgia',
+      description: 'Retro-futuristic digital aesthetic',
+      colors: [
+        { name: 'Cyber Pink', value: '#ff6fff', element: 'Neon grids' },
+        { name: 'Virtual Blue', value: '#00ffff', element: 'Digital space' },
+        { name: 'Palm Purple', value: '#9370db', element: 'Sunset vibes' },
+        { name: 'Glitch Teal', value: '#40e0d0', element: 'CRT effects' },
+        { name: 'Web Safe', value: '#ff00ff', element: 'Early web' },
+      ],
+    },
   };
 
   const handleColorSelect = (color: string) => {
-    setColor(color);
+    setSelectedColor(color);
+    onChange?.(color);
   };
 
   return (
-    <div className={`flex flex-col items-center ${className}`}>
-      <style>{natureAnimation}</style>
+    <div style={{
+      padding: '24px',
+      background: '#ffffff',
+      borderRadius: '16px',
+      boxShadow: '0 4px 20px rgba(0, 0, 0, 0.1)',
+      width: '320px',
+    }}>
+      <style>{retroAnimation}</style>
 
-      <motion.div
-        className="relative mb-4"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ duration: 0.5 }}
-      >
-        {/* Swinging Color Box */}
-        <motion.div
-          className="w-32 h-32 rounded-full"
-          style={{
-            backgroundColor: color,
-          }}
-          animate={{
-            rotate: [0, 10, -10, 0],
-            transition: {
-              repeat: Infinity,
-              repeatType: "mirror",
-              duration: 1.5,
-            },
-          }}
-        />
-      </motion.div>
-
-      {/* Color Input with Pulse Hover Effect */}
-      <motion.input
-        type="color"
-        value={color}
-        onChange={handleColorChange}
-        className="w-16 h-16 cursor-pointer rounded-full border-4 border-transparent"
-        whileHover={{
-          scale: 1.3,
-          boxShadow: "0 0 15px rgba(0, 0, 0, 0.4)",
-          transition: { duration: 0.3 },
-        }}
-        whileTap={{
-          scale: 0.9,
-          transition: { duration: 0.2 },
-        }}
-        transition={{ duration: 0.3 }}
-      />
-
-      {/* Category selector */}
+      {/* Era selector */}
       <div style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(3, 1fr)',
-        gap: '8px',
         marginBottom: '24px',
       }}>
-        {Object.entries(naturePalettes).map(([key, { name, icon }]) => (
-          <button
-            key={key}
-            onClick={() => setActiveCategory(key)}
-            style={{
-              padding: '12px',
-              background: activeCategory === key ? '#f3f4f6' : 'transparent',
-              border: '2px solid',
-              borderColor: activeCategory === key ? '#6366f1' : '#e5e7eb',
-              borderRadius: '8px',
-              cursor: 'pointer',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              gap: '4px',
-              transition: 'all 0.2s ease',
-            }}
-          >
-            <span style={{
-              fontSize: '1.5rem',
-              animation: activeCategory === key ? 'leafSway 2s ease-in-out infinite' : 'none',
-            }}>
-              {icon}
-            </span>
-            <span style={{
-              fontSize: '0.8rem',
-              color: '#4b5563',
-            }}>
-              {name}
-            </span>
-          </button>
-        ))}
+        <label style={{
+          display: 'block',
+          marginBottom: '8px',
+          color: '#4b5563',
+          fontSize: '0.9rem',
+        }}>
+          Retro Era
+        </label>
+        <div style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(2, 1fr)',
+          gap: '8px',
+        }}>
+          {Object.entries(retroEras).map(([key, { name }]) => (
+            <button
+              key={key}
+              onClick={() => setSelectedEra(key)}
+              style={{
+                padding: '12px 8px',
+                background: selectedEra === key ? '#f3f4f6' : 'transparent',
+                border: '2px solid',
+                borderColor: selectedEra === key ? '#6366f1' : '#e5e7eb',
+                borderRadius: '6px',
+                cursor: 'pointer',
+                animation: selectedEra === key ? 'groovy 2s infinite' : 'none',
+              }}
+            >
+              <span style={{
+                fontSize: '0.9rem',
+                color: '#4b5563',
+                fontWeight: selectedEra === key ? 500 : 400,
+              }}>
+                {name}
+              </span>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Era info */}
+      <div style={{
+        padding: '16px',
+        background: '#f3f4f6',
+        borderRadius: '8px',
+        marginBottom: '24px',
+        animation: 'fadeRetro 0.3s ease-out',
+      }}>
+        <div style={{
+          fontSize: '0.8rem',
+          color: '#6b7280',
+          marginBottom: '4px',
+          fontFamily: 'monospace',
+        }}>
+          {retroEras[selectedEra].decade} • {retroEras[selectedEra].style}
+        </div>
+        <div style={{
+          fontSize: '0.9rem',
+          color: '#4b5563',
+        }}>
+          {retroEras[selectedEra].description}
+        </div>
       </div>
 
       {/* Color palette */}
       <div style={{
-        display: 'flex',
-        flexDirection: 'column',
+        display: 'grid',
         gap: '12px',
+        marginBottom: '24px',
       }}>
-        {naturePalettes[activeCategory as keyof typeof naturePalettes].colors.map(({ name, value }) => (
+        {retroEras[selectedEra].colors.map((color, index) => (
           <button
-            key={value}
-            onClick={() => handleColorSelect(value)}
+            key={color.value}
+            onClick={() => handleColorSelect(color.value)}
             style={{
-              display: 'flex',
-              alignItems: 'center',
+              display: 'grid',
+              gridTemplateColumns: '48px 1fr',
               gap: '12px',
-              padding: '12px',
+              padding: '8px',
               background: '#f9fafb',
-              border: color === value ? '2px solid #000' : '2px solid transparent',
+              border: '2px solid',
+              borderColor: selectedColor === color.value ? '#6366f1' : 'transparent',
               borderRadius: '8px',
               cursor: 'pointer',
-              animation: 'fadeScale 0.3s ease-out',
+              animation: `fadeRetro 0.3s ease-out ${index * 0.1}s`,
+              alignItems: 'center',
             }}
           >
             <div style={{
-              width: '40px',
-              height: '40px',
-              borderRadius: '8px',
-              background: value,
-              boxShadow: '0 2px 8px rgba(0, 0, 0, 0.1)',
+              width: '48px',
+              height: '48px',
+              background: color.value,
+              borderRadius: '6px',
+              boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
             }} />
             <div style={{
-              flex: 1,
               textAlign: 'left',
             }}>
               <div style={{
                 fontSize: '0.9rem',
                 color: '#1f2937',
+                fontWeight: 500,
                 marginBottom: '2px',
               }}>
-                {name}
+                {color.name}
               </div>
               <div style={{
                 fontSize: '0.8rem',
                 color: '#6b7280',
-                fontFamily: 'monospace',
               }}>
-                {value}
+                {color.element}
               </div>
             </div>
           </button>
@@ -241,32 +249,38 @@ const ColorPicker: React.FC<ColorPickerProps> = ({ initialColor = "#ffffff", cla
 
       {/* Selected color display */}
       <div style={{
-        marginTop: '24px',
-        padding: '16px',
-        background: color,
-        borderRadius: '12px',
+        padding: '12px',
+        background: '#f3f4f6',
+        borderRadius: '8px',
         display: 'flex',
-        justifyContent: 'center',
         alignItems: 'center',
-        color: isLightColor(color) ? '#1f2937' : '#ffffff',
-        fontSize: '0.9rem',
-        fontFamily: 'monospace',
-        transition: 'all 0.3s ease',
+        gap: '12px',
       }}>
-        {color}
+        <div style={{
+          width: '40px',
+          height: '40px',
+          borderRadius: '6px',
+          background: selectedColor,
+          boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+        }} />
+        <input
+          type="text"
+          value={selectedColor}
+          onChange={(e) => handleColorSelect(e.target.value)}
+          style={{
+            flex: 1,
+            padding: '8px',
+            border: '2px solid #e5e7eb',
+            borderRadius: '6px',
+            fontSize: '0.9rem',
+            color: '#4b5563',
+            fontFamily: 'monospace',
+            background: '#ffffff',
+          }}
+        />
       </div>
     </div>
   );
 };
 
-// Helper function to determine if a color is light
-const isLightColor = (color: string): boolean => {
-  const hex = color.replace('#', '');
-  const r = parseInt(hex.substr(0, 2), 16);
-  const g = parseInt(hex.substr(2, 2), 16);
-  const b = parseInt(hex.substr(4, 2), 16);
-  const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-  return brightness > 128;
-};
-
-export default ColorPicker;
+export default ColorPicker_5; 

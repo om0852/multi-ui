@@ -1,265 +1,119 @@
 "use client";
 
-import React, { useState } from "react";
-import LineGraphAlt from "../_components/Bar_18";
+import React, { useState, useRef, useEffect } from "react";
+import LineGraphDesign2 from "../_components/Bar_18";
 
 export default function BarExample18() {
-  // Sample datasets with different color themes
+  const [containerWidth, setContainerWidth] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const updateWidth = () => {
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.offsetWidth);
+      }
+    };
+
+    updateWidth();
+    window.addEventListener('resize', updateWidth);
+    return () => window.removeEventListener('resize', updateWidth);
+  }, []);
+
+  // Sample datasets
   const datasets = {
     sales: {
-      name: "Monthly Sales Performance",
+      name: "Monthly Sales",
       data: [
-        { x: "Jan", y: 42 },
-        { x: "Feb", y: 55 },
-        { x: "Mar", y: 70 },
-        { x: "Apr", y: 65 },
-        { x: "May", y: 85 },
-        { x: "Jun", y: 95 },
-        { x: "Jul", y: 110 },
-        { x: "Aug", y: 120 },
-        { x: "Sep", y: 105 },
-        { x: "Oct", y: 95 },
-        { x: "Nov", y: 115 },
-        { x: "Dec", y: 130 }
+        { x: "Jan", y: 45000 },
+        { x: "Feb", y: 52000 },
+        { x: "Mar", y: 49000 },
+        { x: "Apr", y: 63000 },
+        { x: "May", y: 58000 },
+        { x: "Jun", y: 71000 }
       ],
-      lineColor: "#10B981", // green
-      dotColor: "#059669",
-      backgroundColor: "#F0FDF4",
-      description: "Monthly sales figures in thousands of dollars",
-      yAxisLabel: "Sales ($K)"
+      lineColor: "#3B82F6",
+      areaColor: "#93C5FD"
     },
     engagement: {
-      name: "User Engagement Metrics",
+      name: "User Engagement",
       data: [
-        { x: "Week 1", y: 1250 },
-        { x: "Week 2", y: 1800 },
-        { x: "Week 3", y: 2200 },
-        { x: "Week 4", y: 2600 },
-        { x: "Week 5", y: 3100 },
-        { x: "Week 6", y: 3500 },
-        { x: "Week 7", y: 4200 },
-        { x: "Week 8", y: 4800 }
+        { x: "Jan", y: 8500 },
+        { x: "Feb", y: 9200 },
+        { x: "Mar", y: 8900 },
+        { x: "Apr", y: 9500 },
+        { x: "May", y: 9800 },
+        { x: "Jun", y: 10200 }
       ],
-      lineColor: "#3B82F6", // blue
-      dotColor: "#2563EB",
-      backgroundColor: "#EFF6FF",
-      description: "Weekly active users on the platform",
-      yAxisLabel: "Active Users"
+      lineColor: "#10B981",
+      areaColor: "#6EE7B7"
     },
     performance: {
       name: "Website Performance",
       data: [
-        { x: "Day 1", y: 95 },
-        { x: "Day 2", y: 92 },
-        { x: "Day 3", y: 98 },
-        { x: "Day 4", y: 97 },
-        { x: "Day 5", y: 99 },
-        { x: "Day 6", y: 94 },
-        { x: "Day 7", y: 96 }
+        { x: "Jan", y: 95 },
+        { x: "Feb", y: 92 },
+        { x: "Mar", y: 96 },
+        { x: "Apr", y: 94 },
+        { x: "May", y: 97 },
+        { x: "Jun", y: 98 }
       ],
-      lineColor: "#8B5CF6", // purple
-      dotColor: "#6D28D9",
-      backgroundColor: "#F5F3FF",
-      description: "Daily website performance score (higher is better)",
-      yAxisLabel: "Performance Score"
-    },
-    conversion: {
-      name: "Conversion Rate Trends",
-      data: [
-        { x: "Q1 2022", y: 2.4 },
-        { x: "Q2 2022", y: 2.8 },
-        { x: "Q3 2022", y: 3.2 },
-        { x: "Q4 2022", y: 3.6 },
-        { x: "Q1 2023", y: 3.9 },
-        { x: "Q2 2023", y: 4.5 },
-        { x: "Q3 2023", y: 5.1 },
-        { x: "Q4 2023", y: 5.8 }
-      ],
-      lineColor: "#EC4899", // pink
-      dotColor: "#BE185D",
-      backgroundColor: "#FCE7F3",
-      description: "Quarterly conversion rate percentage",
-      yAxisLabel: "Conversion Rate (%)"
+      lineColor: "#8B5CF6",
+      areaColor: "#C4B5FD"
     }
   };
 
   // State for current dataset
   const [currentDataset, setCurrentDataset] = useState<keyof typeof datasets>("sales");
-  
-  // Format Y-axis value based on dataset
+  const isCompact = containerWidth < 640;
+
+  // Format Y-axis values based on dataset
   const formatYValue = (value: number, dataset: keyof typeof datasets) => {
-    if (dataset === "sales") {
-      return `$${value}K`;
-    } else if (dataset === "conversion") {
-      return `${value}%`;
-    } else {
-      return value.toString();
+    switch (dataset) {
+      case 'sales':
+        return `$${(value / 1000).toFixed(0)}k`;
+      case 'engagement':
+        return `${(value / 1000).toFixed(1)}k`;
+      case 'performance':
+        return `${value}%`;
+      default:
+        return value.toString();
     }
   };
-  
+
   return (
-    <div className="p-6 bg-gradient-to-br from-gray-900 to-gray-800 text-white rounded-lg shadow-xl">
-      <h2 className="text-2xl font-bold mb-6">Animated Line Graph (Alternative Style)</h2>
+    <div ref={containerRef} className="p-4 sm:p-6 md:p-8 min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6">Area Graph</h2>
       
-      {/* Dataset Selector */}
-      <section className="mb-6">
-        <div className="flex flex-wrap gap-4">
-          {Object.keys(datasets).map((key) => (
-            <button
-              key={key}
-              onClick={() => setCurrentDataset(key as keyof typeof datasets)}
-              className={`px-4 py-2 rounded-md transition-colors ${
-                currentDataset === key 
-                  ? 'bg-blue-600 text-white' 
-                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-              }`}
-            >
-              {datasets[key as keyof typeof datasets].name}
-            </button>
-          ))}
-        </div>
-      </section>
+      <div className={`mb-6 ${isCompact ? 'grid grid-cols-2' : 'flex flex-wrap'} gap-2`}>
+        {Object.entries(datasets).map(([key, { name }]) => (
+          <button
+            key={key}
+            onClick={() => setCurrentDataset(key as keyof typeof datasets)}
+            className={`px-3 py-1.5 text-xs sm:text-sm md:text-base rounded-md transition-colors ${
+              currentDataset === key 
+                ? 'bg-blue-600 text-white' 
+                : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+            }`}
+          >
+            {isCompact ? name.split(' ')[0] : name}
+          </button>
+        ))}
+      </div>
       
-      {/* Line Graph Display */}
-      <section className="mb-10">
-        <h3 className="text-xl font-semibold mb-4">{datasets[currentDataset].name}</h3>
-        <div className="bg-gray-800 p-6 rounded-lg">
-          <div className="rounded-lg overflow-hidden">
-            <LineGraphAlt 
-              data={datasets[currentDataset].data} 
-              width={700} 
-              height={400} 
+      <div className="bg-gray-800 p-3 sm:p-4 md:p-6 rounded-lg">
+        <div className="bg-white rounded-lg p-2 sm:p-3 md:p-4">
+          <div className="w-full h-[200px] sm:h-[400px] md:h-[500px]">
+            <LineGraphDesign2 
+              data={datasets[currentDataset].data}
+              width={Math.min(800, containerWidth - 24)}
+              height={Math.min(400, (containerWidth - 24) * 0.6)}
               lineColor={datasets[currentDataset].lineColor}
-              dotColor={datasets[currentDataset].dotColor}
-              backgroundColor={datasets[currentDataset].backgroundColor}
+              areaColor={datasets[currentDataset].areaColor}
+              formatYValue={(value) => formatYValue(value, currentDataset)}
             />
           </div>
-          <div className="mt-4">
-            <p className="text-gray-300">
-              {datasets[currentDataset].description}
-            </p>
-            <div className="flex items-center mt-2">
-              <span className="text-gray-400 mr-2">Y-axis:</span>
-              <span className="text-gray-300">{datasets[currentDataset].yAxisLabel}</span>
-            </div>
-          </div>
         </div>
-      </section>
-
-      {/* Data Table */}
-      <section className="mb-10">
-        <h3 className="text-xl font-semibold mb-4">Data Points</h3>
-        <div className="bg-gray-800 p-4 rounded-lg overflow-x-auto">
-          <table className="w-full text-left">
-            <thead>
-              <tr className="border-b border-gray-700">
-                <th className="py-2 px-4">Time Period</th>
-                <th className="py-2 px-4">Value</th>
-              </tr>
-            </thead>
-            <tbody>
-              {datasets[currentDataset].data.map((point, index) => (
-                <tr key={index} className="border-b border-gray-700">
-                  <td className="py-2 px-4">{point.x}</td>
-                  <td className="py-2 px-4">{formatYValue(point.y, currentDataset)}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      {/* Enhanced Animation Features */}
-      <section className="mb-10">
-        <h3 className="text-xl font-semibold mb-4">Enhanced Animation Features</h3>
-        <div className="bg-gray-800 p-4 rounded-lg">
-          <ul className="list-disc pl-5 space-y-2 text-gray-300">
-            <li>Pulsing data points that create a rhythmic visual effect</li>
-            <li>Smooth line drawing animation with optimized easing</li>
-            <li>Sequential fade-in of axis labels for improved readability</li>
-            <li>Coordinated animation timing between elements</li>
-            <li>Continuous animation on data points to maintain visual interest</li>
-            <li>Themed background colors that complement the data visualization</li>
-          </ul>
-        </div>
-      </section>
-
-      {/* Styling Differences */}
-      <section className="mb-10">
-        <h3 className="text-xl font-semibold mb-4">Styling Differences from Standard Line Graph</h3>
-        <div className="bg-gray-800 p-4 rounded-lg">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div>
-              <h4 className="font-medium mb-2 text-gray-200">Visual Enhancements:</h4>
-              <ul className="list-disc pl-5 space-y-2 text-gray-300">
-                <li>Colored background that complements the line color</li>
-                <li>Larger, continuously animated data points</li>
-                <li>Thicker line stroke for better visibility</li>
-                <li>Softer grid lines that blend with the background</li>
-                <li>More padding around the chart for better spacing</li>
-              </ul>
-            </div>
-            <div>
-              <h4 className="font-medium mb-2 text-gray-200">Animation Differences:</h4>
-              <ul className="list-disc pl-5 space-y-2 text-gray-300">
-                <li>Continuous pulsing effect on data points</li>
-                <li>Slide-in animation for x-axis labels</li>
-                <li>Slower, more pronounced line drawing animation</li>
-                <li>Different easing function for smoother motion</li>
-                <li>Staggered animation timing for visual storytelling</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* When to Use */}
-      <section className="mb-10">
-        <h3 className="text-xl font-semibold mb-4">When to Use This Alternative Style</h3>
-        <div className="bg-gray-800 p-4 rounded-lg">
-          <p className="text-gray-300 mb-3">
-            This alternative line graph style is particularly effective for:
-          </p>
-          <ul className="list-disc pl-5 space-y-2 text-gray-300">
-            <li>Presentations where you want to create visual impact</li>
-            <li>Dashboard displays that benefit from continuous animation</li>
-            <li>Situations where you want to emphasize the data points themselves</li>
-            <li>When you want to create a themed, cohesive visual experience</li>
-            <li>Reports where you want to draw attention to specific metrics</li>
-            <li>When you want to create a more engaging, modern visualization</li>
-          </ul>
-        </div>
-      </section>
-
-      {/* Usage Instructions */}
-      <section>
-        <h3 className="text-xl font-semibold mb-4">Usage</h3>
-        <div className="bg-gray-800 p-4 rounded-lg">
-          <pre className="text-sm text-gray-300 overflow-x-auto">
-{`// Required props:
-// - data: Array of objects with x (string or number) and y (number) properties
-// - width: (Optional) Width of the chart in pixels
-// - height: (Optional) Height of the chart in pixels
-// - lineColor: (Optional) Color of the line
-// - dotColor: (Optional) Color of the data points
-// - backgroundColor: (Optional) Background color of the chart
-
-<LineGraphAlt
-  data={[
-    { x: "Jan", y: 42 },
-    { x: "Feb", y: 55 },
-    { x: "Mar", y: 70 },
-    // Add more data points as needed
-  ]}
-  width={700}
-  height={400}
-  lineColor="#10B981"
-  dotColor="#059669"
-  backgroundColor="#F0FDF4"
-/>`}
-          </pre>
-        </div>
-      </section>
+      </div>
     </div>
   );
 } 

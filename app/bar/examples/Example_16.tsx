@@ -1,9 +1,24 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import PieChart from "../_components/Bar_16";
 
 export default function BarExample16() {
+  const [containerWidth, setContainerWidth] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const updateWidth = () => {
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.offsetWidth);
+      }
+    };
+
+    updateWidth();
+    window.addEventListener('resize', updateWidth);
+    return () => window.removeEventListener('resize', updateWidth);
+  }, []);
+
   // Sample datasets
   const datasets = {
     revenue: {
@@ -14,8 +29,7 @@ export default function BarExample16() {
         { id: "product-c", value: 290000, color: "#f59e0b", label: "Product C" },
         { id: "product-d", value: 180000, color: "#8b5cf6", label: "Product D" },
         { id: "product-e", value: 120000, color: "#ec4899", label: "Product E" }
-      ],
-      description: "Annual revenue distribution across product lines"
+      ]
     },
     timeSpent: {
       name: "Time Spent on Activities",
@@ -25,8 +39,7 @@ export default function BarExample16() {
         { id: "leisure", value: 15, color: "#10b981", label: "Leisure" },
         { id: "chores", value: 7, color: "#f59e0b", label: "Chores" },
         { id: "commute", value: 5, color: "#ef4444", label: "Commute" }
-      ],
-      description: "Average weekly hours spent on different activities"
+      ]
     },
     socialMedia: {
       name: "Social Media Usage",
@@ -36,8 +49,7 @@ export default function BarExample16() {
         { id: "twitter", value: 15, color: "#1DA1F2", label: "Twitter" },
         { id: "tiktok", value: 18, color: "#000000", label: "TikTok" },
         { id: "linkedin", value: 7, color: "#0077B5", label: "LinkedIn" }
-      ],
-      description: "Percentage of time spent on different social media platforms"
+      ]
     }
   };
 
@@ -58,152 +70,65 @@ export default function BarExample16() {
       return `${value}%`;
     }
   };
+
+  // Determine if we should use compact layout
+  const isCompact = containerWidth < 640;
   
   return (
-    <div className="p-6 bg-gradient-to-br from-gray-900 to-gray-800 text-white rounded-lg shadow-xl">
-      <h2 className="text-2xl font-bold mb-6">Animated Pie Chart</h2>
+    <div ref={containerRef} className="p-4 sm:p-6 md:p-8 min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6">Animated Pie Chart</h2>
       
-      {/* Dataset Selector */}
-      <section className="mb-6">
-        <div className="flex flex-wrap gap-4">
-          {Object.keys(datasets).map((key) => (
-            <button
-              key={key}
-              onClick={() => setCurrentDataset(key as keyof typeof datasets)}
-              className={`px-4 py-2 rounded-md transition-colors ${
-                currentDataset === key 
-                  ? 'bg-blue-600 text-white' 
-                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-              }`}
-            >
-              {datasets[key as keyof typeof datasets].name}
-            </button>
-          ))}
+      <section>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-4">
+          <h3 className="text-base sm:text-lg md:text-xl font-semibold">
+            {isCompact ? 'Data View' : 'Data Distribution'}
+          </h3>
+          <div className={`flex gap-2 ${isCompact ? 'flex-col w-full' : 'flex-wrap'}`}>
+            {Object.entries(datasets).map(([key, { name }]) => (
+              <button
+                key={key}
+                onClick={() => setCurrentDataset(key as keyof typeof datasets)}
+                className={`px-4 py-2 rounded-md transition-colors text-sm sm:text-base ${
+                  currentDataset === key 
+                    ? 'bg-blue-600 text-white' 
+                    : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                } ${isCompact ? 'w-full' : ''}`}
+              >
+                {name}
+              </button>
+            ))}
+          </div>
         </div>
-      </section>
-      
-      {/* Pie Chart Display */}
-      <section className="mb-10">
-        <h3 className="text-xl font-semibold mb-4">{datasets[currentDataset].name}</h3>
-        <div className="bg-gray-800 p-6 rounded-lg">
-          <div className="bg-white rounded-lg p-4 flex justify-center">
-            <div className="relative h-[500px] w-[500px]">
+        <div className="bg-gray-800 p-3 sm:p-4 md:p-6 rounded-lg">
+          <div className="bg-white rounded-lg p-3 sm:p-4">
+            <div className="w-full h-[250px] sm:h-[400px] md:h-[500px] flex justify-center items-center">
               <PieChart 
-                data={datasets[currentDataset].data} 
-                width={500} 
-                height={500} 
+                data={datasets[currentDataset].data}
+                width={Math.min(500, containerWidth - 40)}
+                height={Math.min(500, containerWidth - 40)}
               />
             </div>
           </div>
-          <p className="mt-4 text-gray-300">
-            {datasets[currentDataset].description}. Hover over slices to see the animation effect.
-          </p>
-        </div>
-      </section>
-
-      {/* Data Table */}
-      <section className="mb-10">
-        <h3 className="text-xl font-semibold mb-4">Data Breakdown</h3>
-        <div className="bg-gray-800 p-4 rounded-lg overflow-x-auto">
-          <table className="w-full text-left">
-            <thead>
-              <tr className="border-b border-gray-700">
-                <th className="py-2 px-4">Category</th>
-                <th className="py-2 px-4">Value</th>
-                <th className="py-2 px-4">Percentage</th>
-                <th className="py-2 px-4">Color</th>
-              </tr>
-            </thead>
-            <tbody>
+          <div className="mt-4 overflow-x-auto">
+            <div className={`${isCompact ? 'text-sm' : 'text-base'} grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4`}>
               {datasets[currentDataset].data.map((item) => {
                 const total = datasets[currentDataset].data.reduce((sum, i) => sum + i.value, 0);
                 const percentage = (item.value / total * 100).toFixed(1);
                 
                 return (
-                  <tr key={item.id} className="border-b border-gray-700">
-                    <td className="py-2 px-4">{item.label}</td>
-                    <td className="py-2 px-4">{formatValue(item.value, currentDataset)}</td>
-                    <td className="py-2 px-4">{percentage}%</td>
-                    <td className="py-2 px-4">
-                      <div className="w-6 h-6 rounded" style={{ backgroundColor: item.color }}></div>
-                    </td>
-                  </tr>
+                  <div key={item.id} className="flex items-center gap-2 bg-gray-700/50 p-2 rounded">
+                    <div className="w-3 h-3 rounded shrink-0" style={{ backgroundColor: item.color }}></div>
+                    <div className="flex-grow min-w-0">
+                      <div className="truncate">{item.label}</div>
+                      <div className="text-gray-300 text-xs sm:text-sm">
+                        {formatValue(item.value, currentDataset)} ({percentage}%)
+                      </div>
+                    </div>
+                  </div>
                 );
               })}
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      {/* Animation Features */}
-      <section className="mb-10">
-        <h3 className="text-xl font-semibold mb-4">Animation Features</h3>
-        <div className="bg-gray-800 p-4 rounded-lg">
-          <ul className="list-disc pl-5 space-y-2 text-gray-300">
-            <li>Spring-based entrance animations for each pie slice</li>
-            <li>Scale effect on hover with smooth transitions</li>
-            <li>Delayed appearance of labels for better visual flow</li>
-            <li>Subtle opacity changes to enhance focus on selected slices</li>
-            <li>Natural-feeling motion with proper easing and physics</li>
-          </ul>
-        </div>
-      </section>
-
-      {/* Features */}
-      <section className="mb-10">
-        <h3 className="text-xl font-semibold mb-4">Features</h3>
-        <ul className="list-disc pl-5 space-y-2 text-gray-300">
-          <li>Interactive pie slices with spring-based hover animations</li>
-          <li>Animated entrance with scale and opacity transitions</li>
-          <li>Automatic percentage calculation</li>
-          <li>Integrated labels showing category and percentage</li>
-          <li>Color-coded legend for easy identification</li>
-          <li>Responsive design that adapts to container size</li>
-          <li>Customizable colors for each data segment</li>
-        </ul>
-      </section>
-
-      {/* When to Use */}
-      <section className="mb-10">
-        <h3 className="text-xl font-semibold mb-4">When to Use Animated Pie Charts</h3>
-        <div className="bg-gray-800 p-4 rounded-lg">
-          <p className="text-gray-300 mb-3">
-            Animated pie charts are particularly effective for:
-          </p>
-          <ul className="list-disc pl-5 space-y-2 text-gray-300">
-            <li>Presentations and dashboards where you want to draw attention</li>
-            <li>Interactive reports where user engagement is important</li>
-            <li>Highlighting proportional relationships between categories</li>
-            <li>Making data more engaging and memorable for viewers</li>
-            <li>Situations where the animation timing can represent a sequence or process</li>
-          </ul>
-          <p className="text-gray-300 mt-3">
-            The animations add visual interest while helping users understand the relative proportions in the data. They&apos;re especially useful in situations where you want to create a more engaging data experience.
-          </p>
-        </div>
-      </section>
-
-      {/* Usage Instructions */}
-      <section>
-        <h3 className="text-xl font-semibold mb-4">Usage</h3>
-        <div className="bg-gray-800 p-4 rounded-lg">
-          <pre className="text-sm text-gray-300 overflow-x-auto">
-{`// Required props:
-// - data: Array of objects with id, value, color, and label properties
-// - width: (Optional) Width of the chart in pixels
-// - height: (Optional) Height of the chart in pixels
-
-<PieChart
-  data={[
-    { id: "product-a", value: 420000, color: "#3b82f6", label: "Product A" },
-    { id: "product-b", value: 380000, color: "#10b981", label: "Product B" },
-    { id: "product-c", value: 290000, color: "#f59e0b", label: "Product C" },
-    // Add more data items as needed
-  ]}
-  width={500}
-  height={500}
-/>`}
-          </pre>
+            </div>
+          </div>
         </div>
       </section>
     </div>

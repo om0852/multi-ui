@@ -1,9 +1,24 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { ProgressBarChart } from "../_components/Bar_7";
 
 export default function BarExample7() {
+  const [containerWidth, setContainerWidth] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const updateWidth = () => {
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.offsetWidth);
+      }
+    };
+
+    updateWidth();
+    window.addEventListener('resize', updateWidth);
+    return () => window.removeEventListener('resize', updateWidth);
+  }, []);
+
   // Sample data for project completion
   const projectData = [
     { label: "Research & Planning", value: 100 },
@@ -44,110 +59,58 @@ export default function BarExample7() {
     }
   };
 
+  // Determine if we should use compact layout
+  const isCompact = containerWidth < 640;
+
   return (
-    <div className="p-6 bg-gradient-to-br from-gray-900 to-gray-800 text-white rounded-lg shadow-xl">
-      <h2 className="text-2xl font-bold mb-6">Progress Bar Chart</h2>
+    <div ref={containerRef} className="p-4 sm:p-6 md:p-8 min-h-screen bg-white">
+      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-4 sm:mb-6">Responsive Bar Chart</h2>
       
       {/* Dataset Selection */}
-      <div className="mb-6 flex flex-wrap gap-2">
+      <div className={`mb-6 ${isCompact ? 'flex flex-col' : 'flex flex-wrap'} gap-2`}>
         <button 
           onClick={() => setActiveDataset('project')}
-          className={`px-4 py-2 rounded-md transition-colors ${
+          className={`px-4 py-2 rounded-md transition-colors text-sm sm:text-base ${
             activeDataset === 'project' 
               ? 'bg-blue-600 text-white' 
               : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
           }`}
         >
-          Project Progress
+          {isCompact ? 'Projects' : 'Project Progress'}
         </button>
         <button 
           onClick={() => setActiveDataset('skill')}
-          className={`px-4 py-2 rounded-md transition-colors ${
+          className={`px-4 py-2 rounded-md transition-colors text-sm sm:text-base ${
             activeDataset === 'skill' 
               ? 'bg-blue-600 text-white' 
               : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
           }`}
         >
-          Skill Proficiency
+          {isCompact ? 'Skills' : 'Skill Proficiency'}
         </button>
         <button 
           onClick={() => setActiveDataset('team')}
-          className={`px-4 py-2 rounded-md transition-colors ${
+          className={`px-4 py-2 rounded-md transition-colors text-sm sm:text-base ${
             activeDataset === 'team' 
               ? 'bg-blue-600 text-white' 
               : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
           }`}
         >
-          Team Performance
+          {isCompact ? 'Teams' : 'Team Performance'}
         </button>
       </div>
       
-      {/* Basic Usage */}
-      <section className="mb-10">
-        <h3 className="text-xl font-semibold mb-4">
+      {/* Chart Display */}
+      <section>
+        <h3 className="text-base text-black sm:text-lg md:text-xl font-semibold mb-3 sm:mb-4 truncate">
           {activeDataset === 'project' && 'Project Completion Status'}
           {activeDataset === 'skill' && 'Developer Skill Proficiency'}
           {activeDataset === 'team' && 'Team Performance Metrics'}
         </h3>
-        <div className="bg-gray-800 p-6 rounded-lg">
-          <ProgressBarChart data={getActiveData()} />
-        </div>
-        <p className="mt-4 text-gray-300">
-          {activeDataset === 'project' && 'This chart shows the completion status of different phases in a software development project. Hover over each bar to see the exact percentage.'}
-          {activeDataset === 'skill' && 'This chart displays proficiency levels across various programming languages and technologies. Hover over each bar to see the exact percentage.'}
-          {activeDataset === 'team' && 'This chart compares performance metrics across different teams. Hover over each bar to see the exact percentage.'}
-        </p>
-      </section>
-
-      {/* Features */}
-      <section className="mb-10">
-        <h3 className="text-xl font-semibold mb-4">Features</h3>
-        <ul className="list-disc pl-5 space-y-2 text-gray-300">
-          <li>Animated progress bars with smooth entrance effects</li>
-          <li>Interactive hover tooltips showing exact percentage values</li>
-          <li>Clean and modern design with rounded corners</li>
-          <li>Descriptive labels for each progress bar</li>
-          <li>Responsive layout that adapts to container width</li>
-          <li>Simple API requiring only label and value pairs</li>
-        </ul>
-      </section>
-
-      {/* Use Cases */}
-      <section className="mb-10">
-        <h3 className="text-xl font-semibold mb-4">Common Use Cases</h3>
-        <div className="bg-gray-800 p-4 rounded-lg">
-          <p className="text-gray-300 mb-3">
-            Progress bar charts are versatile and can be used for:
-          </p>
-          <ul className="list-disc pl-5 space-y-2 text-gray-300">
-            <li>Project management dashboards to track completion status</li>
-            <li>Skill assessment and proficiency visualization</li>
-            <li>Goal tracking and achievement metrics</li>
-            <li>Survey results and satisfaction scores</li>
-            <li>Performance evaluations and benchmarking</li>
-            <li>Loading indicators for multi-step processes</li>
-          </ul>
-        </div>
-      </section>
-
-      {/* Usage Instructions */}
-      <section>
-        <h3 className="text-xl font-semibold mb-4">Usage</h3>
-        <div className="bg-gray-800 p-4 rounded-lg">
-          <pre className="text-sm text-gray-300 overflow-x-auto">
-{`// Required props:
-// - data: Array of objects with label and value properties
-// Value should be a number between 0 and 100 representing percentage
-
-<ProgressBarChart
-  data={[
-    { label: "Task 1", value: 75 },
-    { label: "Task 2", value: 50 },
-    { label: "Task 3", value: 90 },
-    // ...more items
-  ]}
-/>`}
-          </pre>
+        <div className="bg-gray-700 p-3 sm:p-4 md:p-6 rounded-lg">
+          <div className="w-full h-[auto] sm:h-[400px] md:h-[500px]">
+            <ProgressBarChart data={getActiveData()} />
+          </div>
         </div>
       </section>
     </div>

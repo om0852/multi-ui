@@ -51,7 +51,7 @@ const platforms = [
   },
 ];
 
-export function Share_27({ url, className = "" }: ShareProps) {
+export default function Share_27({ url, className = "" }: ShareProps) {
   const [isOpen, setIsOpen] = React.useState(false);
   const [copied, setCopied] = React.useState(false);
 

@@ -6,8 +6,31 @@ const Example_11 = () => {
   const [value, setValue] = useState(50);
   const [max, setMax] = useState(100);
   const [key, setKey] = useState(0);
-  const [size, setSize] = useState(150);
-  const [strokeWidth, setStrokeWidth] = useState(8);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
+
+  // Calculate default size based on screen width
+  const getDefaultSize = () => {
+    if (windowWidth < 640) return 150; // mobile
+    if (windowWidth < 1024) return 180; // tablet
+    return 200; // desktop
+  };
+
+  const [size, setSize] = useState(getDefaultSize());
+  const [strokeWidth, setStrokeWidth] = useState(windowWidth < 640 ? 6 : 8);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    setSize(getDefaultSize());
+    setStrokeWidth(windowWidth < 640 ? 6 : 8);
+  }, [windowWidth]);
 
   useEffect(() => {
     setKey(prevKey => prevKey + 1);
@@ -32,10 +55,10 @@ const Example_11 = () => {
   const percentage = (value / max) * 100;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
-      <h1 className="text-2xl font-bold mb-6">Gradient Pulsating Progress Bar</h1>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 px-4 py-6 sm:py-8">
+      <h1 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Gradient Pulsating Progress Bar</h1>
       
-      <div className="bg-white p-8 rounded-lg shadow-md flex flex-col items-center">
+      <div className="bg-white p-4 sm:p-8 rounded-lg shadow-md flex flex-col items-center w-full max-w-[90%] sm:max-w-md">
         <div key={key} className="relative">
           <CircularProgressBar 
             value={value}
@@ -45,7 +68,7 @@ const Example_11 = () => {
           />
         </div>
         
-        <div className="mt-8 w-full max-w-md space-y-4">
+        <div className="mt-6 sm:mt-8 w-full space-y-4">
           <div>
             <label htmlFor="value-slider" className="block text-sm font-medium text-gray-700 mb-2">
               Value: {value} ({percentage.toFixed(1)}%)
@@ -83,8 +106,8 @@ const Example_11 = () => {
             <input 
               id="size-slider"
               type="range" 
-              min="100" 
-              max="300" 
+              min={windowWidth < 640 ? 100 : 150} 
+              max={windowWidth < 640 ? 250 : 300} 
               value={size} 
               onChange={handleSizeChange}
               className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
@@ -99,7 +122,7 @@ const Example_11 = () => {
               id="stroke-width"
               type="range" 
               min="4" 
-              max="20" 
+              max={windowWidth < 640 ? 15 : 20} 
               value={strokeWidth} 
               onChange={handleStrokeWidthChange}
               className="w-full h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer"
@@ -108,9 +131,9 @@ const Example_11 = () => {
         </div>
       </div>
       
-      <div className="mt-8 bg-white p-6 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-lg font-semibold mb-4">Features</h2>
-        <ul className="list-disc pl-5 space-y-2">
+      <div className="mt-6 sm:mt-8 bg-white p-4 sm:p-6 rounded-lg shadow-md w-full max-w-[90%] sm:max-w-md">
+        <h2 className="text-lg font-semibold mb-3 sm:mb-4">Features</h2>
+        <ul className="list-disc pl-4 sm:pl-5 space-y-1 sm:space-y-2 text-sm sm:text-base">
           <li>Purple to pink gradient animation</li>
           <li>Pulsating background effect</li>
           <li>Drop shadow for depth</li>

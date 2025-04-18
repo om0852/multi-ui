@@ -49,7 +49,7 @@ const defaultNetworks = [
   },
 ];
 
-export function Share_16({
+export default function Share_16({
   title,
   url,
   networks = defaultNetworks,

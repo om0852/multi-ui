@@ -10,7 +10,8 @@ type InputOTPSlotProps = {
   onKeyDown: (e: React.KeyboardEvent) => void;
   invalid: boolean;
 };
-const InputOTPSlot: React.FC<InputOTPSlotProps> = ({
+export  const InputOTPSlot: React.FC<InputOTPSlotProps> = ({
+
   index,
   value,
   onChange,
@@ -24,14 +25,19 @@ const InputOTPSlot: React.FC<InputOTPSlotProps> = ({
       value={value}
       onChange={(e) => onChange(e.target.value, index)}
       onKeyDown={onKeyDown}
-      className={`w-14 h-14 text-center text-2xl font-semibold rounded-lg bg-white/30 backdrop-blur-lg ${
+      className={`w-14 h-14 text-center text-2xl font-mono font-bold rounded-lg ${
         invalid
-          ? "border-red-400 text-red-500"
-          : "border-transparent text-gray-800"
-      } border-2 shadow-lg focus:ring-4 ${
-        invalid ? "focus:ring-red-400" : "focus:ring-purple-300"
+          ? "border-red-500 text-red-500"
+          : "border-transparent text-white"
+      } bg-gray-900 border-2 shadow-lg focus:ring-4 ${
+        invalid ? "focus:ring-red-500" : "focus:ring-cyan-500"
       } focus:outline-none`}
-      animate={invalid ? { y: [-10, 10, -5, 5, 0] } : {}}
+      style={{
+        boxShadow: invalid
+          ? "0 0 10px 2px rgba(255, 0, 0, 0.8)"
+          : "0 0 10px 2px rgba(0, 255, 255, 0.8)",
+      }}
+      animate={invalid ? { x: [-10, 10, -5, 5, 0] } : {}}
       transition={{ duration: 0.4 }}
     />
   );
@@ -41,13 +47,14 @@ const InputOTPSlot: React.FC<InputOTPSlotProps> = ({
 type InputOTPGroupProps = {
   children: React.ReactNode;
 };
-const InputOTPGroup: React.FC<InputOTPGroupProps> = ({ children }) => {
-  return <div className="flex items-center space-x-4">{children}</div>;
+export  const InputOTPGroup: React.FC<InputOTPGroupProps> = ({ children }) => {
+
+  return <div className="flex items-center space-x-3">{children}</div>;
 };
 
 // OTP Separator Component
 export const InputOTPSeparator = () => (
-  <div className="text-2xl font-semibold text-gray-500">-</div>
+  <div className="text-xl font-semibold text-cyan-400">-</div>
 );
 
 // Main OTP Input Component

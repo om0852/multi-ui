@@ -3,69 +3,63 @@
 import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 
-// Define the CheckboxProps interface with value, onChange, and disabled props
 type CheckboxProps = {
-  value?: boolean; // Optional controlled value
-  onChange?: (checked: boolean) => void; // Callback for value changes
-  disabled?: boolean; // Optional disabled state
+  value: boolean;
+  onChange: (checked: boolean) => void;
+  disabled?: boolean;
 };
 
-const Checkbox: React.FC<CheckboxProps> = ({ value=false, onChange, disabled = false }) => {
+const Checkbox: React.FC<CheckboxProps> = ({ value, onChange, disabled = false }) => {
   const [mounted, setMounted] = useState(false);
-
-  // Controlled or uncontrolled checkbox
-  const [checked, setChecked] = useState<boolean>(value);
 
   // Set mounted to true after the component is rendered on the client
   useEffect(() => {
     setMounted(true);
-    setChecked(value); // Update checked state on mount
-  }, [value]);
+  }, []);
 
   // Don't render on the server during hydration
   if (!mounted) return null;
 
-  const handleChange = () => {
-    if (disabled) return; // Prevent changes if disabled
-    const newChecked = !checked;
-    setChecked(newChecked);
-    if (onChange) {
-      onChange(newChecked); // Notify parent component about the change
-    }
-  };
-
   return (
-    <div className="flex items-center justify-center min-h-screen">
-      <motion.div
-        className="relative w-7 h-7 border border-gray-300 rounded-sm transition-all duration-200 cursor-pointer"
-        whileTap={{ scale: 0.9 }}
-        onClick={handleChange}
-        animate={{
-          backgroundColor: checked ? "#6871f1" : "transparent",
-        }}
-      >
-        <input
-          type="checkbox"
-          id="cbx"
-          className="hidden"
-          checked={checked}
-          onChange={handleChange}
-          disabled={disabled} // Add the disabled property here
-        />
-        <motion.label
-          htmlFor="cbx"
-          className="relative flex items-center justify-center w-full h-full cursor-pointer"
+    <label
+      className={`checkbox-container relative inline-flex items-center cursor-pointer transition-all duration-300 ${
+        disabled ? "opacity-50 cursor-not-allowed" : ""
+      }`}
+    >
+      <input
+        type="checkbox"
+        className="hidden"
+        checked={value}
+        onChange={(e) => onChange(e.target.checked)}
+        disabled={disabled}
+      />
+      <div className="checkbox-background relative w-10 h-10 bg-gray-300 border-2 border-gray-500 rounded-md transition-colors duration-300">
+        {/* Checkmark box */}
+        <motion.div
+          className="checkbox-check w-6 h-6 bg-green-500 absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-md"
+          animate={{
+            opacity: value ? 1 : 0,
+          }}
+          transition={{
+            duration: 0.3,
+          }}
         >
-          {/* Animated checkmark */}
           <motion.div
-            className="absolute top-2 left-2 w-2 h-4 bg-white border-r-2 border-b-2 rotate-45"
-            initial={{ opacity: 0, scale: 0 }}
-            animate={checked ? { opacity: 1, scale: 1 } : { opacity: 0, scale: 0 }}
-            transition={{ duration: 0.3, delay: 0.15 }}
+            className="checkmark w-3 h-3 bg-transparent border-l-4 border-b-4 border-white absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+            initial={{ rotate: -45 }}
+            animate={{ rotate: value ? 0 : -45 }}
+            transition={{ duration: 0.3 }}
           />
-        </motion.label>
-      </motion.div>
-    </div>
+        </motion.div>
+
+        {/* Glow effect */}
+        <motion.div
+          className="checkbox-glow absolute inset-0 rounded-md bg-gradient-to-r from-blue-500 to-pink-500 opacity-0"
+          animate={value ? { opacity: 0.2, scale: 1.1 } : { opacity: 0, scale: 1 }}
+          transition={{ duration: 0.3 }}
+        />
+      </div>
+    </label>
   );
 };
 

@@ -6,8 +6,31 @@ const Example_24 = () => {
   const [value, setValue] = useState(50);
   const [max, setMax] = useState(100);
   const [key, setKey] = useState(0);
-  const [size, setSize] = useState(300);
-  const [strokeWidth, setStrokeWidth] = useState(12);
+  const [windowWidth, setWindowWidth] = useState(typeof window !== 'undefined' ? window.innerWidth : 0);
+
+  // Calculate default size based on screen width
+  const getDefaultSize = () => {
+    if (windowWidth < 640) return 200; // mobile
+    if (windowWidth < 1024) return 250; // tablet
+    return 300; // desktop
+  };
+
+  const [size, setSize] = useState(getDefaultSize());
+  const [strokeWidth, setStrokeWidth] = useState(windowWidth < 640 ? 8 : 12);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowWidth(window.innerWidth);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  useEffect(() => {
+    setSize(getDefaultSize());
+    setStrokeWidth(windowWidth < 640 ? 8 : 12);
+  }, [windowWidth]);
 
   useEffect(() => {
     setKey(prevKey => prevKey + 1);
@@ -32,12 +55,15 @@ const Example_24 = () => {
   const percentage = (value / max) * 100;
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-amber-950 to-amber-900">
-      <h1 className="text-2xl font-bold mb-6 text-amber-200" style={{ fontFamily: "Playfair Display, serif" }}>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-amber-100 to-amber-200 dark:from-amber-950 dark:to-amber-900 px-4 py-8">
+      <h1 
+        className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6 text-center text-amber-800 dark:text-amber-200" 
+        style={{ fontFamily: "Playfair Display, serif" }}
+      >
         Art Deco Progress
       </h1>
       
-      <div className="bg-gradient-to-br from-amber-900/50 to-amber-800/50 backdrop-blur-sm p-8 rounded-xl shadow-2xl flex flex-col items-center border border-amber-500/20">
+      <div className="bg-white/30 dark:bg-gradient-to-br dark:from-amber-900/50 dark:to-amber-800/50 backdrop-blur-sm p-4 sm:p-6 md:p-8 rounded-xl shadow-2xl flex flex-col items-center border border-amber-300/30 dark:border-amber-500/20 w-full max-w-[90%] sm:max-w-md">
         <div key={key} className="relative">
           <CircularProgressBar 
             value={value}
@@ -47,9 +73,9 @@ const Example_24 = () => {
           />
         </div>
         
-        <div className="mt-8 w-full max-w-md space-y-4">
+        <div className="mt-6 sm:mt-8 w-full space-y-4">
           <div>
-            <label htmlFor="value-slider" className="block text-sm font-medium text-amber-200 mb-2">
+            <label htmlFor="value-slider" className="block text-sm sm:text-base font-medium text-amber-800 dark:text-amber-200 mb-2">
               Progress: {value} ({percentage.toFixed(1)}%)
             </label>
             <input 
@@ -59,12 +85,12 @@ const Example_24 = () => {
               max={max} 
               value={value} 
               onChange={handleValueChange}
-              className="w-full h-2 bg-amber-800/50 rounded-lg appearance-none cursor-pointer"
+              className="w-full h-2 bg-amber-300/50 dark:bg-amber-800/50 rounded-lg appearance-none cursor-pointer"
             />
           </div>
           
           <div>
-            <label htmlFor="max-slider" className="block text-sm font-medium text-amber-200 mb-2">
+            <label htmlFor="max-slider" className="block text-sm sm:text-base font-medium text-amber-800 dark:text-amber-200 mb-2">
               Maximum Value: {max}
             </label>
             <input 
@@ -74,47 +100,50 @@ const Example_24 = () => {
               max="200" 
               value={max} 
               onChange={handleMaxChange}
-              className="w-full h-2 bg-amber-800/50 rounded-lg appearance-none cursor-pointer"
+              className="w-full h-2 bg-amber-300/50 dark:bg-amber-800/50 rounded-lg appearance-none cursor-pointer"
             />
           </div>
 
           <div>
-            <label htmlFor="size-slider" className="block text-sm font-medium text-amber-200 mb-2">
+            <label htmlFor="size-slider" className="block text-sm sm:text-base font-medium text-amber-800 dark:text-amber-200 mb-2">
               Size: {size}px
             </label>
             <input 
               id="size-slider"
               type="range" 
-              min="200" 
-              max="500" 
+              min={windowWidth < 640 ? 150 : 200} 
+              max={windowWidth < 640 ? 300 : 500} 
               value={size} 
               onChange={handleSizeChange}
-              className="w-full h-2 bg-amber-800/50 rounded-lg appearance-none cursor-pointer"
+              className="w-full h-2 bg-amber-300/50 dark:bg-amber-800/50 rounded-lg appearance-none cursor-pointer"
             />
           </div>
 
           <div>
-            <label htmlFor="stroke-width" className="block text-sm font-medium text-amber-200 mb-2">
+            <label htmlFor="stroke-width" className="block text-sm sm:text-base font-medium text-amber-800 dark:text-amber-200 mb-2">
               Ring Width: {strokeWidth}px
             </label>
             <input 
               id="stroke-width"
               type="range" 
-              min="8" 
-              max="24" 
+              min={windowWidth < 640 ? 6 : 8} 
+              max={windowWidth < 640 ? 18 : 24} 
               value={strokeWidth} 
               onChange={handleStrokeWidthChange}
-              className="w-full h-2 bg-amber-800/50 rounded-lg appearance-none cursor-pointer"
+              className="w-full h-2 bg-amber-300/50 dark:bg-amber-800/50 rounded-lg appearance-none cursor-pointer"
             />
           </div>
         </div>
       </div>
       
-      <div className="mt-8 bg-gradient-to-br from-amber-900/50 to-amber-800/50 backdrop-blur-sm p-6 rounded-xl shadow-2xl w-full max-w-md border border-amber-500/20">
-        <h2 className="text-lg font-semibold mb-4 text-amber-200" style={{ fontFamily: "Playfair Display, serif" }}>
+      <div className="mt-6 sm:mt-8 bg-white/30 dark:bg-gradient-to-br dark:from-amber-900/50 dark:to-amber-800/50 backdrop-blur-sm p-4 sm:p-6 rounded-xl shadow-2xl w-full max-w-[90%] sm:max-w-md border border-amber-300/30 dark:border-amber-500/20">
+        <h2 
+          className="text-base sm:text-lg font-semibold mb-3 sm:mb-4 text-amber-800 dark:text-amber-200" 
+          style={{ fontFamily: "Playfair Display, serif" }}
+        >
           Art Deco Features
         </h2>
-        <ul className="list-disc pl-5 space-y-2 text-amber-300/80">
+        <ul className="list-disc pl-4 sm:pl-5 space-y-1 sm:space-y-2 text-sm sm:text-base text-amber-700/90 dark:text-amber-300/80">
           <li>Geometric pattern background</li>
           <li>Decorative corner elements</li>
           <li>Golden gradient accents</li>

@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Image from 'next/image'
 
-interface PlayfulPasswordInputProps {
+interface PasswordInputProps {
   id?: string
   value?: string
   onChange?: (value: string) => void
@@ -13,7 +13,7 @@ interface PlayfulPasswordInputProps {
   onSubmit?: (isValid: boolean) => void
 }
 
-export const PlayfulPasswordInput: React.FC<PlayfulPasswordInputProps> = ({
+export const PasswordInput: React.FC<PasswordInputProps> = ({
   id = "password",
   value = "",
   onChange,

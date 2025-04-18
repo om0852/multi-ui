@@ -32,8 +32,8 @@ const Checkbox: React.FC<CheckboxProps> = ({ value, onChange, disabled = false }
         disabled={disabled}
       />
       <div
-        className={`checkbox-background relative w-full h-full bg-gray-100 border-2 rounded-md overflow-hidden shadow-inner transition-colors duration-300 ${
-          value ? "bg-purple-600 border-purple-600" : "bg-gray-100 border-gray-300"
+        className={`checkbox-background relative w-full h-full bg-white border-2 rounded-md overflow-hidden shadow-inner transition-colors duration-300 ${
+          value ? "bg-purple-600 border-purple-600" : "bg-white border-gray-300"
         }`}
         style={{ aspectRatio: "1 / 1" }}
       >

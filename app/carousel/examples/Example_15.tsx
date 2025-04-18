@@ -1,58 +1,42 @@
 "use client";
 
-import React, { useState } from 'react';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselDots,
-  CarouselNext,
-  CarouselPrevious,
-} from '../_components/Carousel_1';
+import React from 'react';
+import Carousel from '../_components/Carousel_15';
+import Image from 'next/image';
 
 const Example_15 = () => {
-  const [transitionEffect, setTransitionEffect] = useState(1);
-
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="mb-4">
-        <label className="mr-2">Select Transition Effect:</label>
-        <select
-          value={transitionEffect}
-          onChange={(e) => setTransitionEffect(Number(e.target.value))}
-        >
-          <option value={1}>Effect 1</option>
-          <option value={2}>Effect 2</option>
-          <option value={3}>Effect 3</option>
-          <option value={4}>Effect 4</option>
-          <option value={5}>Effect 5</option>
-        </select>
-      </div>
-      <Carousel className="w-[500px] h-[300px] bg-white shadow-lg rounded-lg relative">
-        <CarouselContent transitionEffect={transitionEffect}>
-          <CarouselItem>
-            <div className="flex flex-col items-center justify-center h-full bg-blue-500 text-white text-xl font-bold">
-              Slide 1: Welcome to Carousel 15
+    <div className="flex flex-col justify-center items-center min-h-screen bg-gradient-to-br from-teal-50 to-emerald-50 p-8">
+      <h2 className="text-2xl font-bold text-gray-800 mb-8">3D Float Carousel</h2>
+      <Carousel autoPlay interval={4800} spread={400} tilt={45}>
+        {[1, 2, 3, 4, 5].map((item) => (
+          <div key={item} className="relative w-full h-[400px] rounded-xl overflow-hidden">
+            <Image
+              src={`https://picsum.photos/seed/${1500 + item}/800/500`}
+              alt={`Slide ${item}`}
+              fill
+              className="object-cover"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent">
+              <div className="absolute bottom-0 left-0 right-0 p-8">
+                <h3 className="text-2xl font-bold text-white mb-2">
+                  {item === 1 && "3D Float Effect"}
+                  {item === 2 && "Depth Perception"}
+                  {item === 3 && "Smooth Motion"}
+                  {item === 4 && "Dynamic Flow"}
+                  {item === 5 && "Spatial Design"}
+                </h3>
+                <p className="text-lg text-gray-200">
+                  {item === 1 && "Experience stunning 3D floating transitions"}
+                  {item === 2 && "Watch content move with depth perception"}
+                  {item === 3 && "Enjoy smooth motion effects"}
+                  {item === 4 && "Dynamic content flow with perspective"}
+                  {item === 5 && "Spatial design with 3D transformations"}
+                </p>
+              </div>
             </div>
-          </CarouselItem>
-          <CarouselItem>
-            <div className="flex flex-col items-center justify-center h-full bg-green-500 text-white text-xl font-bold">
-              Slide 2: Enjoy the smooth transitions!
-            </div>
-          </CarouselItem>
-          <CarouselItem>
-            <div className="flex flex-col items-center justify-center h-full bg-purple-500 text-white text-xl font-bold">
-              Slide 3: Add your own images!
-            </div>
-          </CarouselItem>
-        </CarouselContent>
-        <CarouselPrevious className="text-white bg-black px-4 py-2 rounded">
-          &lt;
-        </CarouselPrevious>
-        <CarouselNext className="text-white bg-black px-4 py-2 rounded">
-          &gt;
-        </CarouselNext>
-        <CarouselDots className="absolute bottom-4 left-1/2 transform -translate-x-1/2" />
+          </div>
+        ))}
       </Carousel>
     </div>
   );

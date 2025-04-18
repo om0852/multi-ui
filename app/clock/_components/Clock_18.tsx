@@ -2,19 +2,7 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-export interface FlipDigitalClockProps {
-  size?: number; // Clock size in pixels (default: 200)
-  borderColor?: string; // Border color of the clock
-  backgroundColor?: string; // Background color of the clock
-  containerClass?: string; // Custom class for the container
-}
-
-const FlipDigitalClock: React.FC<FlipDigitalClockProps> = ({
-  size = 200,
-  borderColor = "border-gray-400",
-  backgroundColor = "bg-gray-900",
-  containerClass = "", // Default to an empty string
-}) => {
+const MinimalistClock: React.FC<{ className?: string }> = ({ className }) => {
   const [time, setTime] = useState(new Date());
 
   useEffect(() => {
@@ -26,23 +14,26 @@ const FlipDigitalClock: React.FC<FlipDigitalClockProps> = ({
 
   const hours = formatTime(time.getHours());
   const minutes = formatTime(time.getMinutes());
-  const seconds = formatTime(time.getSeconds());
 
   return (
-    <div className={`flex items-center justify-center h-screen ${backgroundColor} ${containerClass}`}>
-      <div className="text-center">
-        {/* Flip Digital Clock Display */}
-        <motion.div
-          className={`font-bold text-green-400 drop-shadow-lg ${borderColor} ${size ? `text-${size}px` : 'text-6xl'}`}
-          initial={{ rotateX: 0 }}
-          animate={{ rotateX: [0, 90, 0] }}
-          transition={{ repeat: Infinity, duration: 1 }}
-        >
-          {hours}:{minutes}:{seconds}
-        </motion.div>
-      </div>
+    <div className={`flex items-center justify-center h-screen bg-white ${className || ''}`}>
+      <motion.div 
+        className="text-center"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+      >
+        <div className="text-8xl font-light text-gray-800 tracking-widest">
+          {hours}
+          <span className="text-gray-400 mx-2">:</span>
+          {minutes}
+        </div>
+        <div className="text-gray-500 mt-4 text-sm uppercase tracking-widest">
+          {time.toLocaleDateString(undefined, { weekday: 'long' })}
+        </div>
+      </motion.div>
     </div>
   );
 };
 
-export default FlipDigitalClock;
+export default MinimalistClock;

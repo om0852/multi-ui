@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 
 // Type for Progress Data
@@ -15,58 +15,114 @@ type ProgressBarChartProps = {
 
 export function ProgressBarChart({ data }: ProgressBarChartProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const barContainerRef = useRef<HTMLDivElement>(null);
+  const [dimensions, setDimensions] = useState({ width: 0, height: 0 });
+  const [isMobile, setIsMobile] = useState(false);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const updateDimensions = () => {
+      if (containerRef.current) {
+        const { width, height } = containerRef.current.getBoundingClientRect();
+        setDimensions({ width, height });
+        setIsMobile(window.innerWidth < 640);
+      }
+    };
+
+    updateDimensions();
+    window.addEventListener('resize', updateDimensions);
+    return () => window.removeEventListener('resize', updateDimensions);
+  }, []);
+
+  // Calculate responsive sizes
+  const getResponsiveSizes = () => {
+    const baseSize = Math.min(dimensions.width * 0.03, 16);
+    return {
+      fontSize: Math.max(12, baseSize),
+      barHeight: isMobile ? 16 : 24,
+      tooltipOffset: isMobile ? 24 : 32,
+      marginBottom: isMobile ? 16 : 24
+    };
+  };
+
+  const { fontSize, barHeight, tooltipOffset, marginBottom } = getResponsiveSizes();
 
   return (
-    <div className="w-full max-w-[700px] mx-auto pt-10">
+    <div 
+      ref={containerRef} 
+      className="w-full max-w-[800px] mx-auto px-3 sm:px-4 md:px-6 py-4 sm:py-6 md:py-8"
+    >
       {/* Map through each progress bar */}
-      {data.map((item, index) => {
-        return (
-          <div
-            key={item.label}
-            className="relative mb-4 cursor-pointer"
-            onMouseEnter={() => setHoveredIndex(index)}
-            onMouseLeave={() => setHoveredIndex(null)}
-          >
-            {/* Label for each progress bar */}
-            <p className="text-sm font-semibold mb-2">{item.label}</p>
-
-            {/* Progress bar container */}
-            <div
-              ref={barContainerRef}
-              className="h-6 bg-gray-200 rounded-full overflow-hidden w-full relative"
+      {data.map((item, index) => (
+        <div
+          key={item.label}
+          className="relative"
+          style={{ marginBottom: index === data.length - 1 ? 0 : marginBottom }}
+          onMouseEnter={() => setHoveredIndex(index)}
+          onMouseLeave={() => setHoveredIndex(null)}
+          onTouchStart={() => setHoveredIndex(index)}
+          onTouchEnd={() => setHoveredIndex(null)}
+        >
+          {/* Label and value row */}
+          <div className="flex justify-between items-center mb-1.5 sm:mb-2">
+            <p 
+              className="font-medium truncate mr-2"
+              style={{ fontSize: `${fontSize}px` }}
             >
-              {/* Animated progress bar */}
-              <motion.div
-                className="h-full bg-blue-500"
-                initial={{ width: 0 }}
-                animate={{ width: `${item.value}%` }}
-                transition={{ duration: 0.8 }}
-              />
-
-              {/* Tooltip on hover */}
-              {hoveredIndex === index && (
-                <motion.div
-                  className="absolute"
-                  style={{
-                    right: `${100 - item.value}%`, // Dynamically position tooltip
-                    transform: "translateX(0)",
-                    top: "-0px",
-                    zIndex:2000
-                  }}
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <div className="bg-transparent text-white px-2  rounded-md shadow-lg">
-                    {item.value}%
-                  </div>
-                </motion.div>
-              )}
-            </div>
+              {item.label}
+            </p>
+            <p 
+              className="text-gray-600 whitespace-nowrap"
+              style={{ fontSize: `${fontSize}px` }}
+            >
+              {item.value}%
+            </p>
           </div>
-        );
-      })}
+
+          {/* Progress bar container */}
+          <div 
+            className="bg-gray-200 rounded-full overflow-hidden w-full relative"
+            style={{ height: barHeight }}
+          >
+            {/* Animated progress bar */}
+            <motion.div
+              className="h-full bg-blue-500"
+              initial={{ width: 0 }}
+              animate={{ width: `${item.value}%` }}
+              transition={{ duration: 0.8, ease: "easeOut" }}
+            />
+
+            {/* Tooltip */}
+            {hoveredIndex === index && (
+              <motion.div
+                className="absolute top-0 pointer-events-none"
+                style={{
+                  left: `${item.value}%`,
+                  transform: `translateX(-50%) translateY(-${tooltipOffset}px)`,
+                }}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <div 
+                  className="bg-blue-600 text-white px-2 py-1 rounded shadow-lg whitespace-nowrap"
+                  style={{ fontSize: `${fontSize}px` }}
+                >
+                  {item.value}%
+                </div>
+                {/* Tooltip arrow */}
+                <div 
+                  className="w-0 h-0 mx-auto"
+                  style={{
+                    borderLeft: '6px solid transparent',
+                    borderRight: '6px solid transparent',
+                    borderTop: '6px solid #2563eb'
+                  }}
+                />
+              </motion.div>
+            )}
+          </div>
+        </div>
+      ))}
     </div>
   );
 }
@@ -82,4 +138,4 @@ const exampleData: ProgressData[] = [
 
 export function Component() {
   return <ProgressBarChart data={exampleData} />;
-};
+}

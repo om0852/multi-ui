@@ -22,7 +22,7 @@ export default function BarExample6() {
     { ageGroup: "65+", male: 8.5, female: 9.2 },
   ];
 
-  // Sample data for Japan population pyramid (aging population)
+  // Sample data for Japan population pyramid
   const japanPopulationData = [
     { ageGroup: "0-4", male: 5.2, female: 4.9 },
     { ageGroup: "5-9", male: 5.5, female: 5.2 },
@@ -45,15 +45,16 @@ export default function BarExample6() {
   const currentData = showJapan ? japanPopulationData : usPopulationData;
   
   return (
-    <div className="p-6 bg-gradient-to-br from-gray-900 to-gray-800 text-white rounded-lg shadow-xl">
-      <h2 className="text-2xl font-bold mb-6">Population Pyramid</h2>
+    <div className="p-4 sm:p-6 md:p-8 min-h-screen bg-white">
+      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-4 sm:mb-6">Population Pyramid</h2>
       
-      {/* Basic Usage */}
-      <section className="mb-10">
-        <h3 className="text-xl font-semibold mb-4">Demographic Visualization</h3>
-        <div className="bg-gray-800 p-4 rounded-lg overflow-x-auto">
-          <div className="min-w-[700px] bg-white rounded-lg p-4">
-            <PopulationPyramid data={currentData} />
+      <section>
+        <h3 className="text-lg sm:text-xl font-semibold text-gray-700 mb-3 sm:mb-4">Demographic Visualization</h3>
+        <div className="bg-gray-50 p-4 sm:p-6 rounded-lg">
+          <div className="min-w-[300px] sm:min-w-[500px] md:min-w-[700px] mx-auto bg-white rounded-lg p-4">
+            <div className="w-full h-[300px] sm:h-[400px] md:h-[500px]">
+              <PopulationPyramid data={currentData} />
+            </div>
             <div className="flex justify-center mt-4">
               <div className="flex items-center mr-6">
                 <div className="w-4 h-4 bg-blue-600 mr-2"></div>
@@ -65,69 +66,14 @@ export default function BarExample6() {
               </div>
             </div>
           </div>
-        </div>
-        <div className="mt-4 flex justify-center">
-          <button 
-            onClick={() => setShowJapan(!showJapan)}
-            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-md transition-colors"
-          >
-            Switch to {showJapan ? "US Population" : "Japan Population"}
-          </button>
-        </div>
-        <p className="mt-4 text-gray-300">
-          This population pyramid displays the age and gender distribution for {showJapan ? "Japan (aging population)" : "the United States"}. Hover over bars to see exact values.
-        </p>
-      </section>
-
-      {/* Features */}
-      <section className="mb-10">
-        <h3 className="text-xl font-semibold mb-4">Features</h3>
-        <ul className="list-disc pl-5 space-y-2 text-gray-300">
-          <li>Symmetrical visualization of demographic data by age and gender</li>
-          <li>Interactive hover effects that reveal exact population values</li>
-          <li>Animated entrance with bars growing from the center</li>
-          <li>Clear age group labeling in the center axis</li>
-          <li>Automatic scaling based on the maximum population value</li>
-          <li>Color differentiation between male and female populations</li>
-        </ul>
-      </section>
-
-      {/* When to Use */}
-      <section className="mb-10">
-        <h3 className="text-xl font-semibold mb-4">When to Use Population Pyramids</h3>
-        <div className="bg-gray-800 p-4 rounded-lg">
-          <p className="text-gray-300 mb-3">
-            Population pyramids are particularly effective for:
-          </p>
-          <ul className="list-disc pl-5 space-y-2 text-gray-300">
-            <li>Visualizing demographic structures of countries or regions</li>
-            <li>Comparing age and gender distributions</li>
-            <li>Identifying population trends such as aging, youth bulges, or gender imbalances</li>
-            <li>Forecasting future population changes and needs</li>
-            <li>Analyzing historical demographic shifts over time</li>
-          </ul>
-          <p className="text-gray-300 mt-3">
-            The example shows two contrasting population structures: a relatively balanced distribution (US) and an aging population (Japan).
-          </p>
-        </div>
-      </section>
-
-      {/* Usage Instructions */}
-      <section>
-        <h3 className="text-xl font-semibold mb-4">Usage</h3>
-        <div className="bg-gray-800 p-4 rounded-lg">
-          <pre className="text-sm text-gray-300 overflow-x-auto">
-{`// Required props:
-// - data: Array of objects with ageGroup, male, and female properties
-
-<PopulationPyramid
-  data={[
-    { ageGroup: "0-4", male: 10.2, female: 9.8 },
-    { ageGroup: "5-9", male: 10.5, female: 10.1 },
-    // ...more age groups
-  ]}
-/>`}
-          </pre>
+          <div className="mt-4 flex justify-center">
+            <button 
+              onClick={() => setShowJapan(!showJapan)}
+              className="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-md transition-colors"
+            >
+              Switch to {showJapan ? "US Population" : "Japan Population"}
+            </button>
+          </div>
         </div>
       </section>
     </div>

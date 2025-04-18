@@ -33,7 +33,7 @@ const Checkbox: React.FC<CheckboxProps> = ({ value, onChange, disabled = false }
       />
       <div
         className={`checkbox-background relative w-full h-full bg-transparent border-2 rounded-full overflow-hidden shadow-sm transition-all duration-300 ${
-          value ? "bg-blue-500 border-blue-500" : "bg-gray-100 border-gray-400"
+          value ? "bg-blue-500 border-blue-500" : "bg-white border-gray-400"
         }`}
         style={{ aspectRatio: "1 / 1" }}
       >

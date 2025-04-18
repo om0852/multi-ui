@@ -1,59 +1,28 @@
 "use client";
 
-import React, { useState } from 'react';
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselDots,
-  CarouselNext,
-  CarouselPrevious,
-} from '../_components/Carousel_1';
+import React from 'react';
+import Carousel from '../_components/Carousel_3';
 
 const Example_3 = () => {
-  const [transitionEffect, setTransitionEffect] = useState(1);
-
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
-      <div className="mb-4">
-        <label className="mr-2">Select Transition Effect:</label>
-        <select
-          value={transitionEffect}
-          onChange={(e) => setTransitionEffect(Number(e.target.value))}
-        >
-          <option value={1}>Effect 1</option>
-          <option value={2}>Effect 2</option>
-          <option value={3}>Effect 3</option>
-          <option value={4}>Effect 4</option>
-          <option value={5}>Effect 5</option>
-        </select>
+    <div className="flex flex-col justify-center items-center min-h-screen bg-gradient-to-br from-indigo-50 to-purple-50">
+      <h2 className="text-2xl font-bold text-gray-800 mb-8">Infinite Loop Carousel</h2>
+      <div className="w-[500px]">
+        <Carousel autoPlay interval={4000}>
+          <div className="flex flex-col items-center justify-center h-64 bg-gradient-to-br from-indigo-500 to-indigo-600 text-white p-6 text-center rounded-lg">
+            <h3 className="text-2xl mb-2">Welcome to Carousel 3</h3>
+            <p className="text-lg opacity-90">Experience infinite loop transitions</p>
+          </div>
+          <div className="flex flex-col items-center justify-center h-64 bg-gradient-to-br from-violet-500 to-violet-600 text-white p-6 text-center rounded-lg">
+            <h3 className="text-2xl mb-2">Smooth Animations</h3>
+            <p className="text-lg opacity-90">Enjoy seamless content rotation</p>
+          </div>
+          <div className="flex flex-col items-center justify-center h-64 bg-gradient-to-br from-purple-500 to-purple-600 text-white p-6 text-center rounded-lg">
+            <h3 className="text-2xl mb-2">Interactive Controls</h3>
+            <p className="text-lg opacity-90">Navigate with intuitive controls</p>
+          </div>
+        </Carousel>
       </div>
-      <Carousel className="w-[500px] h-[300px] bg-white shadow-lg rounded-lg relative">
-        <CarouselContent transitionEffect={transitionEffect}>
-          <CarouselItem>
-            <div className="flex flex-col items-center justify-center h-full bg-blue-500 text-white text-xl font-bold">
-              Slide 1: Welcome to Carousel 3
-            </div>
-          </CarouselItem>
-          <CarouselItem>
-            <div className="flex flex-col items-center justify-center h-full bg-green-500 text-white text-xl font-bold">
-              Slide 2: Enjoy the smooth transitions!
-            </div>
-          </CarouselItem>
-          <CarouselItem>
-            <div className="flex flex-col items-center justify-center h-full bg-purple-500 text-white text-xl font-bold">
-              Slide 3: Add your own images!
-            </div>
-          </CarouselItem>
-        </CarouselContent>
-        <CarouselPrevious className="text-white bg-black px-4 py-2 rounded">
-          &lt;
-        </CarouselPrevious>
-        <CarouselNext className="text-white bg-black px-4 py-2 rounded">
-          &gt;
-        </CarouselNext>
-        <CarouselDots className="absolute bottom-4 left-1/2 transform -translate-x-1/2" />
-      </Carousel>
     </div>
   );
 };

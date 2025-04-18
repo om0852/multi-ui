@@ -13,7 +13,7 @@ interface PasswordInputProps {
   error?: string;    // Error message to display
 }
 
-const PasswordInput: React.FC<PasswordInputProps> = ({
+export const PasswordInput: React.FC<PasswordInputProps> = ({
   id,
   label,
   value,
@@ -110,4 +110,3 @@ const PasswordInput: React.FC<PasswordInputProps> = ({
   );
 };
 
-export default PasswordInput;

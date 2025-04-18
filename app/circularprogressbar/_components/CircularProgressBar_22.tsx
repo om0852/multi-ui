@@ -4,20 +4,31 @@ import { motion } from "framer-motion";
 interface CircularProgressBarProps {
   value: number;
   max: number;
-  size?: number;
-  strokeWidth?: number;
+  size: number;
+  strokeWidth: number;
+  glowIntensity: number;
+  neonColor: string;
 }
 
 const CircularProgressBar: React.FC<CircularProgressBarProps> = ({
   value,
   max,
-  size = 100,
-  strokeWidth = 8,
+  size,
+  strokeWidth,
+  glowIntensity,
+  neonColor
 }) => {
+  const normalizedValue = Math.min(Math.max(value, 0), max);
+  const percentage = (normalizedValue / max) * 100;
+  
+  // Calculate dimensions
+  const center = size / 2;
   const radius = (size - strokeWidth) / 2;
   const circumference = 2 * Math.PI * radius;
-  const percentage = (value / max) * 100;
   const strokeDashoffset = circumference - (percentage / 100) * circumference;
+
+  // Generate unique filter ID
+  const filterId = `neon-glow-${neonColor.replace('#', '')}`;
 
   // Generate leaf positions
   const leaves = Array.from({ length: 12 }, (_, i) => ({
@@ -76,35 +87,65 @@ const CircularProgressBar: React.FC<CircularProgressBarProps> = ({
       ))}
 
       {/* Progress ring */}
-      <svg className="absolute w-full h-full -rotate-90">
+      <svg
+        width={size}
+        height={size}
+        viewBox={`0 0 ${size} ${size}`}
+        className="transform -rotate-90"
+      >
+        {/* Define the glow filter */}
         <defs>
-          <linearGradient id="nature-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#34d399" />
-            <stop offset="100%" stopColor="#10b981" />
-          </linearGradient>
+          <filter id={filterId}>
+            <feGaussianBlur
+              stdDeviation={glowIntensity}
+              result="coloredBlur"
+            />
+            <feMerge>
+              <feMergeNode in="coloredBlur" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
         </defs>
+
+        {/* Background circle */}
         <circle
-          cx={size / 2}
-          cy={size / 2}
+          cx={center}
+          cy={center}
           r={radius}
           fill="none"
-          stroke="rgba(52,211,153,0.2)"
+          stroke="rgba(255, 255, 255, 0.1)"
           strokeWidth={strokeWidth}
         />
-        <motion.circle
-          cx={size / 2}
-          cy={size / 2}
+
+        {/* Progress circle with glow effect */}
+        <circle
+          cx={center}
+          cy={center}
           r={radius}
           fill="none"
-          stroke="url(#nature-gradient)"
+          stroke={neonColor}
           strokeWidth={strokeWidth}
           strokeDasharray={circumference}
-          strokeDashoffset={circumference}
-          initial={{ strokeDashoffset: circumference }}
-          animate={{ strokeDashoffset }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
+          strokeDashoffset={strokeDashoffset}
+          strokeLinecap="round"
           style={{
-            filter: "drop-shadow(0 0 3px rgba(52,211,153,0.5))",
+            filter: `url(#${filterId})`,
+            transition: 'stroke-dashoffset 0.5s ease-in-out',
+          }}
+          className="animate-pulse"
+        />
+
+        {/* Inner glow circle */}
+        <circle
+          cx={center}
+          cy={center}
+          r={radius - strokeWidth / 2}
+          fill="none"
+          stroke={neonColor}
+          strokeWidth="1"
+          style={{
+            filter: `url(#${filterId})`,
+            opacity: 0.5,
           }}
         />
       </svg>

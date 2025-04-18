@@ -1,193 +1,105 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import PieChart from "../_components/Bar_15";
 
 export default function BarExample15() {
+  const [containerWidth, setContainerWidth] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const updateWidth = () => {
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.offsetWidth);
+      }
+    };
+
+    updateWidth();
+    window.addEventListener('resize', updateWidth);
+    return () => window.removeEventListener('resize', updateWidth);
+  }, []);
+
   // Sample datasets
   const datasets = {
-    budget: {
-      name: "Monthly Budget Allocation",
+    revenue: {
+      name: "Revenue Sources",
       data: [
-        { id: "housing", value: 1200, color: "#3b82f6", label: "Housing" },
-        { id: "food", value: 500, color: "#10b981", label: "Food" },
-        { id: "transportation", value: 300, color: "#f59e0b", label: "Transportation" },
-        { id: "utilities", value: 200, color: "#8b5cf6", label: "Utilities" },
-        { id: "entertainment", value: 150, color: "#ec4899", label: "Entertainment" },
-        { id: "savings", value: 400, color: "#06b6d4", label: "Savings" },
-        { id: "other", value: 250, color: "#6b7280", label: "Other" }
-      ],
-      description: "Breakdown of monthly expenses by category"
+        { id: "1", label: "Product Sales", value: 45, color: "#3b82f6" },
+        { id: "2", label: "Services", value: 30, color: "#10b981" },
+        { id: "3", label: "Subscriptions", value: 25, color: "#f59e0b" }
+      ]
     },
-    marketShare: {
-      name: "Market Share by Company",
+    expenses: {
+      name: "Expense Categories",
       data: [
-        { id: "company-a", value: 35, color: "#3b82f6", label: "Company A" },
-        { id: "company-b", value: 25, color: "#10b981", label: "Company B" },
-        { id: "company-c", value: 20, color: "#f59e0b", label: "Company C" },
-        { id: "company-d", value: 10, color: "#8b5cf6", label: "Company D" },
-        { id: "others", value: 10, color: "#6b7280", label: "Others" }
-      ],
-      description: "Market share percentage by company in the industry"
-    },
-    deviceUsage: {
-      name: "Website Traffic by Device",
-      data: [
-        { id: "mobile", value: 55, color: "#3b82f6", label: "Mobile" },
-        { id: "desktop", value: 30, color: "#10b981", label: "Desktop" },
-        { id: "tablet", value: 12, color: "#f59e0b", label: "Tablet" },
-        { id: "other", value: 3, color: "#6b7280", label: "Other" }
-      ],
-      description: "Distribution of website visitors by device type"
-    },
-    energySources: {
-      name: "Energy Sources",
-      data: [
-        { id: "fossil", value: 60, color: "#6b7280", label: "Fossil Fuels" },
-        { id: "solar", value: 15, color: "#f59e0b", label: "Solar" },
-        { id: "wind", value: 12, color: "#60a5fa", label: "Wind" },
-        { id: "hydro", value: 8, color: "#3b82f6", label: "Hydro" },
-        { id: "nuclear", value: 10, color: "#10b981", label: "Nuclear" },
-        { id: "other", value: 5, color: "#8b5cf6", label: "Other Renewables" }
-      ],
-      description: "Global energy production by source type"
+        { id: "1", label: "Marketing", value: 35, color: "#8b5cf6" },
+        { id: "2", label: "Operations", value: 40, color: "#ec4899" },
+        { id: "3", label: "Development", value: 25, color: "#f43f5e" }
+      ]
     }
   };
 
   // State for current dataset
-  const [currentDataset, setCurrentDataset] = useState<keyof typeof datasets>("budget");
-  
+  const [currentDataset, setCurrentDataset] = useState<keyof typeof datasets>("revenue");
+
+  // Determine if we should use compact layout
+  const isCompact = containerWidth < 640;
+
   return (
-    <div className="p-6 bg-gradient-to-br from-gray-900 to-gray-800 text-white rounded-lg shadow-xl">
-      <h2 className="text-2xl font-bold mb-6">Pie Chart</h2>
+    <div ref={containerRef} className="p-4 sm:p-6 md:p-8 min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white">
+      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-4 sm:mb-6">Pie Chart Analysis</h2>
       
-      {/* Dataset Selector */}
-      <section className="mb-6">
-        <div className="flex flex-wrap gap-4">
-          {Object.keys(datasets).map((key) => (
-            <button
-              key={key}
-              onClick={() => setCurrentDataset(key as keyof typeof datasets)}
-              className={`px-4 py-2 rounded-md transition-colors ${
-                currentDataset === key 
-                  ? 'bg-blue-600 text-white' 
-                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
-              }`}
-            >
-              {datasets[key as keyof typeof datasets].name}
-            </button>
-          ))}
+      <section>
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-4">
+          <h3 className="text-base sm:text-lg md:text-xl font-semibold">
+            {isCompact ? 'Data View' : 'Revenue & Expenses'}
+          </h3>
+          <div className={`flex gap-2 ${isCompact ? 'flex-col w-full' : 'flex-row'}`}>
+            {Object.entries(datasets).map(([key, { name }]) => (
+              <button
+                key={key}
+                onClick={() => setCurrentDataset(key as keyof typeof datasets)}
+                className={`px-4 py-2 rounded-md transition-colors text-sm sm:text-base ${
+                  currentDataset === key 
+                    ? 'bg-blue-600 text-white' 
+                    : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                } ${isCompact ? 'w-full' : ''}`}
+              >
+                {name}
+              </button>
+            ))}
+          </div>
         </div>
-      </section>
-      
-      {/* Pie Chart Display */}
-      <section className="mb-10">
-        <h3 className="text-xl font-semibold mb-4">{datasets[currentDataset].name}</h3>
-        <div className="bg-gray-800 p-6 rounded-lg">
-          <div className="bg-white rounded-lg p-4 flex justify-center">
-            <div className="relative h-[500px] w-[500px]">
+        <div className="bg-gray-800 p-3 sm:p-4 md:p-6 rounded-lg">
+          <div className="bg-white rounded-lg p-3 sm:p-4">
+            <div className="w-full h-[250px] sm:h-[400px] md:h-[500px] flex justify-center items-center">
               <PieChart 
-                data={datasets[currentDataset].data} 
-                width={500} 
-                height={500} 
+                data={datasets[currentDataset].data}
+                width={Math.min(500, containerWidth - 40)}
+                height={Math.min(500, containerWidth - 40)}
               />
             </div>
           </div>
-          <p className="mt-4 text-gray-300">
-            {datasets[currentDataset].description}. Hover over slices to highlight them.
-          </p>
-        </div>
-      </section>
-
-      {/* Data Table */}
-      <section className="mb-10">
-        <h3 className="text-xl font-semibold mb-4">Data Breakdown</h3>
-        <div className="bg-gray-800 p-4 rounded-lg overflow-x-auto">
-          <table className="w-full text-left">
-            <thead>
-              <tr className="border-b border-gray-700">
-                <th className="py-2 px-4">Category</th>
-                <th className="py-2 px-4">Value</th>
-                <th className="py-2 px-4">Percentage</th>
-                <th className="py-2 px-4">Color</th>
-              </tr>
-            </thead>
-            <tbody>
+          <div className="mt-4">
+            <div className={`${isCompact ? 'text-sm' : 'text-base'} grid grid-cols-1 sm:grid-cols-3 gap-4`}>
               {datasets[currentDataset].data.map((item) => {
                 const total = datasets[currentDataset].data.reduce((sum, i) => sum + i.value, 0);
                 const percentage = (item.value / total * 100).toFixed(1);
                 
                 return (
-                  <tr key={item.id} className="border-b border-gray-700">
-                    <td className="py-2 px-4">{item.label}</td>
-                    <td className="py-2 px-4">{item.value}</td>
-                    <td className="py-2 px-4">{percentage}%</td>
-                    <td className="py-2 px-4">
-                      <div className="w-6 h-6 rounded" style={{ backgroundColor: item.color }}></div>
-                    </td>
-                  </tr>
+                  <div key={item.id} className="flex items-center gap-2 bg-gray-700/50 p-2 rounded">
+                    <div className="w-3 h-3 rounded shrink-0" style={{ backgroundColor: item.color }}></div>
+                    <div className="flex-grow min-w-0">
+                      <div className="truncate">{item.label}</div>
+                      <div className="text-gray-300 text-xs sm:text-sm">
+                        {item.value}% ({percentage}% of total)
+                      </div>
+                    </div>
+                  </div>
                 );
               })}
-            </tbody>
-          </table>
-        </div>
-      </section>
-
-      {/* Features */}
-      <section className="mb-10">
-        <h3 className="text-xl font-semibold mb-4">Features</h3>
-        <ul className="list-disc pl-5 space-y-2 text-gray-300">
-          <li>Interactive pie slices with hover effects</li>
-          <li>Animated entrance and hover transitions</li>
-          <li>Automatic percentage calculation</li>
-          <li>Integrated labels showing category and percentage</li>
-          <li>Color-coded legend for easy identification</li>
-          <li>Responsive design that adapts to container size</li>
-          <li>Customizable colors for each data segment</li>
-        </ul>
-      </section>
-
-      {/* When to Use */}
-      <section className="mb-10">
-        <h3 className="text-xl font-semibold mb-4">When to Use Pie Charts</h3>
-        <div className="bg-gray-800 p-4 rounded-lg">
-          <p className="text-gray-300 mb-3">
-            Pie charts are particularly effective for:
-          </p>
-          <ul className="list-disc pl-5 space-y-2 text-gray-300">
-            <li>Showing proportions and percentages of a whole</li>
-            <li>Comparing parts of a total where there are relatively few categories (ideally 5-7 or fewer)</li>
-            <li>Illustrating simple part-to-whole relationships</li>
-            <li>Highlighting a significant segment compared to others</li>
-            <li>Presenting data to non-technical audiences who find pie charts intuitive</li>
-          </ul>
-          <p className="text-gray-300 mt-3">
-            For best results, limit pie charts to situations where the sum of all values represents a meaningful whole, and where you have a small number of categories with significant differences between them.
-          </p>
-        </div>
-      </section>
-
-      {/* Usage Instructions */}
-      <section>
-        <h3 className="text-xl font-semibold mb-4">Usage</h3>
-        <div className="bg-gray-800 p-4 rounded-lg">
-          <pre className="text-sm text-gray-300 overflow-x-auto">
-{`// Required props:
-// - data: Array of objects with id, value, color, and label properties
-// - width: (Optional) Width of the chart in pixels
-// - height: (Optional) Height of the chart in pixels
-
-<PieChart
-  data={[
-    { id: "housing", value: 1200, color: "#3b82f6", label: "Housing" },
-    { id: "food", value: 500, color: "#10b981", label: "Food" },
-    { id: "transportation", value: 300, color: "#f59e0b", label: "Transportation" },
-    // Add more data items as needed
-  ]}
-  width={400}
-  height={400}
-/>`}
-          </pre>
+            </div>
+          </div>
         </div>
       </section>
     </div>

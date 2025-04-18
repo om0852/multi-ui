@@ -12,7 +12,7 @@ interface PasswordInputProps {
   onSubmit?: (isValid: boolean) => void;
 }
 
-export const StyledPasswordInput: React.FC<PasswordInputProps> = ({
+export const PasswordInput: React.FC<PasswordInputProps> = ({
   id = 'password',
   value = '',
   onChange,

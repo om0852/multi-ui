@@ -2,27 +2,13 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-interface DecorativeDigitalClockProps {
-  size?: "small" | "medium" | "large";
-  containerClass?: string;
-}
-
-const sizeClasses = {
-  small: "text-lg",
-  medium: "text-2xl",
-  large: "text-4xl",
-};
-
-const DecorativeDigitalClock: React.FC<DecorativeDigitalClockProps> = ({ size = "medium", containerClass = "" }) => {
-  const [time, setTime] = useState<Date | null>(null);
+const FlipClock: React.FC<{ className?: string }> = ({ className }) => {
+  const [time, setTime] = useState(new Date());
 
   useEffect(() => {
-    setTime(new Date());
     const interval = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(interval);
   }, []);
-
-  if (!time) return null;
 
   const formatTime = (num: number): string => num.toString().padStart(2, "0");
 
@@ -30,22 +16,34 @@ const DecorativeDigitalClock: React.FC<DecorativeDigitalClockProps> = ({ size = 
   const minutes = formatTime(time.getMinutes());
   const seconds = formatTime(time.getSeconds());
 
+  const FlipCard: React.FC<{ value: string }> = ({ value }) => (
+    <motion.div
+      className="relative w-16 h-24 bg-gray-800 rounded-lg shadow-lg mx-1"
+      initial={{ rotateX: 0 }}
+      animate={{ rotateX: [0, -90, 0] }}
+      transition={{ duration: 0.6, repeat: Infinity, repeatDelay: 0.4 }}
+    >
+      <div className="absolute inset-0 flex items-center justify-center">
+        <span className="text-4xl font-bold text-white">{value}</span>
+      </div>
+      <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-transparent" />
+    </motion.div>
+  );
+
   return (
-    <div className={`flex items-center justify-center h-auto bg-gradient-to-r from-purple-400 via-pink-500 to-red-500 ${containerClass}`}>
-      <motion.div
-        className={`font-extrabold ${sizeClasses[size]} text-white drop-shadow-lg`}
-        initial={{ scale: 0.8, rotate: 0 }}
-        animate={{ scale: 1, rotate: 360 }}
-        transition={{ repeat: Infinity, duration: 10, ease: "linear" }}
-      >
-        <div className="flex space-x-2">
-          <div className="bg-white text-black p-2 rounded-full">{hours}</div>
-          <div className="bg-white text-black p-2 rounded-full">{minutes}</div>
-          <div className="bg-white text-black p-2 rounded-full">{seconds}</div>
-        </div>
-      </motion.div>
+    <div className={`flex items-center justify-center h-screen bg-gray-900 ${className || ''}`}>
+      <div className="flex items-center">
+        <FlipCard value={hours[0]} />
+        <FlipCard value={hours[1]} />
+        <div className="text-4xl font-bold text-white mx-2">:</div>
+        <FlipCard value={minutes[0]} />
+        <FlipCard value={minutes[1]} />
+        <div className="text-4xl font-bold text-white mx-2">:</div>
+        <FlipCard value={seconds[0]} />
+        <FlipCard value={seconds[1]} />
+      </div>
     </div>
   );
 };
 
-export default DecorativeDigitalClock;
+export default FlipClock;

@@ -1,9 +1,24 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { InteractiveBarChart } from "../_components/Bar_9";
 
 export default function BarExample9() {
+  const [containerWidth, setContainerWidth] = useState(0);
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const updateWidth = () => {
+      if (containerRef.current) {
+        setContainerWidth(containerRef.current.offsetWidth);
+      }
+    };
+
+    updateWidth();
+    window.addEventListener('resize', updateWidth);
+    return () => window.removeEventListener('resize', updateWidth);
+  }, []);
+
   // Sample data for monthly revenue
   const revenueData = [
     { label: "Jan", value: 120 },
@@ -48,113 +63,65 @@ export default function BarExample9() {
     }
   };
 
+  // Determine if we should use compact layout
+  const isCompact = containerWidth < 640;
+
+  // Get the appropriate label for the current dataset
+  const getDatasetLabel = () => {
+    switch (activeDataset) {
+      case 'revenue': return isCompact ? 'Revenue' : 'Monthly Revenue ($K)';
+      case 'traffic': return isCompact ? 'Traffic' : 'Daily Website Visitors';
+      case 'product': return isCompact ? 'Products' : 'Sales by Product Category ($K)';
+    }
+  };
+
   return (
-    <div className="p-6 bg-gradient-to-br from-gray-900 to-gray-800 text-white rounded-lg shadow-xl">
-      <h2 className="text-2xl font-bold mb-6">Interactive Bar Chart</h2>
+    <div ref={containerRef} className="p-4 sm:p-6 md:p-8 min-h-screen bg-white">
+      <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-gray-800 mb-4 sm:mb-6">Interactive Bar Chart</h2>
       
       {/* Dataset Selection */}
-      <div className="mb-6 flex flex-wrap gap-2">
+      <div className={`mb-4 sm:mb-6 ${isCompact ? 'flex flex-col' : 'flex flex-wrap'} gap-2`}>
         <button 
           onClick={() => setActiveDataset('revenue')}
-          className={`px-4 py-2 rounded-md transition-colors ${
+          className={`px-4 py-2 rounded-md transition-colors text-sm sm:text-base ${
             activeDataset === 'revenue' 
               ? 'bg-blue-600 text-white' 
               : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
           }`}
         >
-          Monthly Revenue
+          {isCompact ? 'Revenue' : 'Monthly Revenue'}
         </button>
         <button 
           onClick={() => setActiveDataset('traffic')}
-          className={`px-4 py-2 rounded-md transition-colors ${
+          className={`px-4 py-2 rounded-md transition-colors text-sm sm:text-base ${
             activeDataset === 'traffic' 
               ? 'bg-blue-600 text-white' 
               : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
           }`}
         >
-          Weekly Traffic
+          {isCompact ? 'Traffic' : 'Website Traffic'}
         </button>
         <button 
           onClick={() => setActiveDataset('product')}
-          className={`px-4 py-2 rounded-md transition-colors ${
+          className={`px-4 py-2 rounded-md transition-colors text-sm sm:text-base ${
             activeDataset === 'product' 
               ? 'bg-blue-600 text-white' 
               : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
           }`}
         >
-          Product Categories
+          {isCompact ? 'Products' : 'Product Categories'}
         </button>
       </div>
       
-      {/* Basic Usage */}
-      <section className="mb-10">
-        <h3 className="text-xl font-semibold mb-4">
-          {activeDataset === 'revenue' && 'Monthly Revenue ($K)'}
-          {activeDataset === 'traffic' && 'Daily Website Visitors'}
-          {activeDataset === 'product' && 'Sales by Product Category ($K)'}
+      {/* Chart Display */}
+      <section>
+        <h3 className="text-base text-black sm:text-lg md:text-xl font-semibold mb-3 sm:mb-4 truncate">
+          {getDatasetLabel()}
         </h3>
-        <div className="bg-gray-800 p-6 rounded-lg overflow-x-auto">
-          <div className="min-w-[700px]">
+        <div className="bg-white p-3 sm:p-4 md:p-6 rounded-lg">
+          <div className="w-full h-[250px] sm:h-[400px] md:h-[500px]">
             <InteractiveBarChart data={getActiveData()} />
           </div>
-        </div>
-        <p className="mt-4 text-gray-300">
-          {activeDataset === 'revenue' && 'This chart displays monthly revenue figures in thousands of dollars. Hover over each bar to see the exact value.'}
-          {activeDataset === 'traffic' && 'This chart shows the number of daily website visitors throughout the week. Hover over each bar to see the exact count.'}
-          {activeDataset === 'product' && 'This chart breaks down sales by product category in thousands of dollars. Hover over each bar to see the exact value.'}
-        </p>
-      </section>
-
-      {/* Features */}
-      <section className="mb-10">
-        <h3 className="text-xl font-semibold mb-4">Features</h3>
-        <ul className="list-disc pl-5 space-y-2 text-gray-300">
-          <li>Animated entrance with bars growing from the bottom</li>
-          <li>Sequential animation that introduces each bar one after another</li>
-          <li>Interactive hover effects with tooltips showing exact values</li>
-          <li>Clean axis labels for better readability</li>
-          <li>Automatic scaling based on the maximum value in the dataset</li>
-          <li>Responsive layout that adapts to container width</li>
-        </ul>
-      </section>
-
-      {/* Animation Details */}
-      <section className="mb-10">
-        <h3 className="text-xl font-semibold mb-4">Animation Details</h3>
-        <div className="bg-gray-800 p-4 rounded-lg">
-          <p className="text-gray-300 mb-3">
-            This chart features several carefully designed animations:
-          </p>
-          <ul className="list-disc pl-5 space-y-2 text-gray-300">
-            <li>Bars grow from the bottom with a smooth scaling effect</li>
-            <li>Each bar animates with a slight delay after the previous one</li>
-            <li>Tooltips fade in smoothly when hovering over bars</li>
-            <li>Switching between datasets triggers a fresh animation sequence</li>
-            <li>All animations are powered by Framer Motion for fluid transitions</li>
-          </ul>
-          <p className="text-gray-300 mt-3">
-            Try switching between datasets to see the entrance animations play again!
-          </p>
-        </div>
-      </section>
-
-      {/* Usage Instructions */}
-      <section>
-        <h3 className="text-xl font-semibold mb-4">Usage</h3>
-        <div className="bg-gray-800 p-4 rounded-lg">
-          <pre className="text-sm text-gray-300 overflow-x-auto">
-{`// Required props:
-// - data: Array of objects with label and value properties
-
-<InteractiveBarChart
-  data={[
-    { label: "Jan", value: 120 },
-    { label: "Feb", value: 200 },
-    { label: "Mar", value: 150 },
-    // ...more data points
-  ]}
-/>`}
-          </pre>
         </div>
       </section>
     </div>
