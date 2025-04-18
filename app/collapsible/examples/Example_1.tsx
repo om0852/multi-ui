@@ -13,23 +13,23 @@ const Example_1: React.FC = () => {
       icon: <FaUser className="text-blue-500" />,
       content: (
         <div className="space-y-4">
-          <div className="flex items-center gap-4">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             <div className="w-16 h-16 rounded-full bg-blue-500 flex items-center justify-center text-white text-xl font-bold">
               JD
             </div>
             <div>
-              <h3 className="font-medium">John Doe</h3>
-              <p className="text-sm text-gray-500 dark:text-gray-400">Software Developer</p>
+              <h3 className="font-medium dark:text-white">John Doe</h3>
+              <p className="text-sm text-gray-600 dark:text-gray-300">Software Developer</p>
             </div>
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg">
-              <div className="text-sm text-gray-500 dark:text-gray-400">Email</div>
-              <div className="font-medium">john.doe@example.com</div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">Email</div>
+              <div className="font-medium dark:text-white">john.doe@example.com</div>
             </div>
             <div className="bg-blue-50 dark:bg-blue-900/20 p-3 rounded-lg">
-              <div className="text-sm text-gray-500 dark:text-gray-400">Location</div>
-              <div className="font-medium">San Francisco, CA</div>
+              <div className="text-sm text-gray-600 dark:text-gray-300">Location</div>
+              <div className="font-medium dark:text-white">San Francisco, CA</div>
             </div>
           </div>
         </div>
@@ -110,29 +110,29 @@ const Example_1: React.FC = () => {
   ];
 
   return (
-    <div className={`min-h-screen p-8 ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-800'}`}>
+    <div className={`min-h-screen p-4 sm:p-8 ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-800'}`}>
       <div className="max-w-3xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-2xl font-bold flex items-center gap-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8">
+          <h1 className="text-xl sm:text-2xl font-bold flex items-center gap-3">
             <FaUser className={darkMode ? 'text-blue-400' : 'text-blue-600'} />
             Personal Dashboard
           </h1>
           <button
             onClick={() => setDarkMode(!darkMode)}
-            className={`px-4 py-2 rounded-lg ${
+            className={`px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base rounded-lg ${
               darkMode 
-                ? 'bg-gray-800 text-white border border-gray-700' 
-                : 'bg-white text-gray-900 border border-gray-200'
-            } shadow-sm`}
+                ? 'bg-gray-800 text-white border border-gray-700 hover:bg-gray-700' 
+                : 'bg-white text-gray-900 border border-gray-200 hover:bg-gray-50'
+            } shadow-sm transition-colors`}
           >
             {darkMode ? 'Light Mode' : 'Dark Mode'}
           </button>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           {dashboardSections.map((section, index) => (
             <div key={index} className="flex">
-              <div className="mt-4 mr-2">
+              <div className="mt-3 sm:mt-4 mr-2 sm:mr-3">
                 {section.icon}
               </div>
               <div className="flex-1">

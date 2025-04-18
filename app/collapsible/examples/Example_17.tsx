@@ -173,29 +173,29 @@ const Example_17: React.FC = () => {
   ];
 
   return (
-    <div className={`min-h-screen p-8 ${darkMode ? 'bg-gray-900 text-white' : 'bg-orange-50 text-gray-800'}`}>
+    <div className={`min-h-screen p-4 sm:p-8 ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-800'}`}>
       <div className="max-w-3xl mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-2xl font-bold flex items-center gap-3">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6 sm:mb-8">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold mb-2 flex items-center gap-3">
             <FaUtensils className={darkMode ? 'text-orange-400' : 'text-orange-600'} />
             Restaurant Menu
           </h1>
           <button
             onClick={() => setDarkMode(!darkMode)}
-            className={`px-4 py-2 rounded-lg ${
+            className={`px-3 py-2 sm:px-4 sm:py-2 text-sm sm:text-base rounded-lg ${
               darkMode 
-                ? 'bg-gray-800 text-white border border-gray-700' 
-                : 'bg-white text-gray-900 border border-gray-200'
-            } shadow-sm`}
+                ? 'bg-gray-800 text-white border border-gray-700 hover:bg-gray-700' 
+                : 'bg-white text-gray-900 border border-gray-200 hover:bg-gray-50'
+            } shadow-sm transition-colors`}
           >
             {darkMode ? 'Light Mode' : 'Dark Mode'}
           </button>
         </div>
 
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           {menuSections.map((section, index) => (
             <div key={index} className="flex">
-              <div className="mt-4 mr-2">
+              <div className="mt-4 mr-2 text-lg sm:text-xl">
                 {section.icon}
               </div>
               <div className="flex-1">
@@ -203,7 +203,13 @@ const Example_17: React.FC = () => {
                   title={section.title}
                   defaultOpen={index === 0}
                 >
-                  {section.content}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                    {React.Children.map(section.content.props.children, (child) => 
+                      React.cloneElement(child, {
+                        className: `${child.props.className} transition-colors hover:shadow-md`
+                      })
+                    )}
+                  </div>
                 </Collapsible_17>
               </div>
             </div>
