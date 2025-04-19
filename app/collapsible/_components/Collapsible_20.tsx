@@ -1,4 +1,4 @@
- 'use client';
+'use client';
 import React, { useState } from 'react';
 
 const hologramAnimation = `
@@ -22,7 +22,7 @@ const hologramAnimation = `
   }
 `;
 
-const Collapsible_30: React.FC<{ title: string; children: React.ReactNode; defaultOpen?: boolean }> = ({
+const Collapsible_20: React.FC<{ title: string; children: React.ReactNode; defaultOpen?: boolean }> = ({
   title,
   children,
   defaultOpen = false,
@@ -125,4 +125,4 @@ const Collapsible_30: React.FC<{ title: string; children: React.ReactNode; defau
   );
 };
 
-export default Collapsible_30; 
+export default Collapsible_20; 

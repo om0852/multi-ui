@@ -1,15 +1,15 @@
 "use client"
 import React from "react";
-import BadgeExample1 from "./collapsible/examples/Example_1";
-import BadgeExample2 from "./collapsible/examples/Example_2";
-import BadgeExample3 from "./collapsible/examples/Example_3";
-import BadgeExample4 from "./collapsible/examples/Example_4";
-import BadgeExample5 from "./collapsible/examples/Example_5";
-import BadgeExample6 from "./collapsible/examples/Example_6";
-import BadgeExample7 from "./collapsible/examples/Example_7";
-import BadgeExample8 from "./collapsible/examples/Example_8";
-import BadgeExample9 from "./collapsible/examples/Example_9"; 
-import BadgeExample10 from "./collapsible/examples/Example_10";
+import BadgeExample1 from "./collapsible/examples/Example_11";
+import BadgeExample2 from "./collapsible/examples/Example_12";
+import BadgeExample3 from "./collapsible/examples/Example_13";
+import BadgeExample4 from "./collapsible/examples/Example_14";
+import BadgeExample5 from "./collapsible/examples/Example_15";
+import BadgeExample6 from "./collapsible/examples/Example_16";
+import BadgeExample7 from "./collapsible/examples/Example_17";
+import BadgeExample8 from "./collapsible/examples/Example_18";
+import BadgeExample9 from "./collapsible/examples/Example_19"; 
+import BadgeExample10 from "./collapsible/examples/Example_20";
 import Image from 'next/image'
 
 const page = () => {
