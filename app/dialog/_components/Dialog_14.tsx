@@ -31,11 +31,13 @@ const animationStyles = {
 
 type DialogProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
 type DialogTriggerProps = {
   children: React.ReactNode;
   onClick: () => void;
+  className?: string;
 };
 
 type DialogContentProps = {
@@ -43,22 +45,26 @@ type DialogContentProps = {
   isOpen: boolean;
   onClose: () => void;
   animationType: keyof typeof animationStyles;
+  className?: string;
 };
 
 type DialogHeaderProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
 type DialogDescriptionProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
 type DialogFooterProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
-export function StyledDialog({ children }: DialogProps) {
-  return <div className="relative z-50">{children}</div>;
+export function StyledDialog({ children, className }: DialogProps) {
+  return <div className={`relative z-50 ${className || ""}`}>{children}</div>;
 }
 
 export function StyledDialogContent({
@@ -66,6 +72,7 @@ export function StyledDialogContent({
   isOpen,
   onClose,
   animationType,
+  className,
 }: DialogContentProps) {
   const animation = animationStyles[animationType];
 
@@ -77,13 +84,13 @@ export function StyledDialogContent({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-emerald-900/30 backdrop-blur-sm"
+            className="fixed inset-0 bg-emerald-900/30 backdrop-blur-sm z-50"
             onClick={onClose}
           />
-          <div className="fixed inset-0 flex items-center justify-center">
+          <div className="fixed inset-0 flex items-center justify-center p-4 z-50">
             <motion.div
               {...animation}
-              className="relative bg-white rounded-lg w-full max-w-lg overflow-hidden"
+              className={`relative bg-white rounded-lg w-full max-w-[90%] sm:max-w-md md:max-w-lg overflow-hidden overflow-y-auto max-h-[90vh] ${className || ""}`}
             >
               {/* Lab glassware effect */}
               <div className="absolute inset-0 bg-gradient-to-b from-emerald-50/80 to-white/90" />
@@ -131,7 +138,7 @@ export function StyledDialogContent({
               </div>
 
               {/* Content container */}
-              <div className="relative p-8">
+              <div className="relative p-4 sm:p-8">
                 <div className="absolute top-0 left-0 w-16 h-1 bg-emerald-500 rounded-full" />
                 <div className="absolute top-0 right-0 w-8 h-1 bg-emerald-500 rounded-full" />
                 
@@ -139,9 +146,9 @@ export function StyledDialogContent({
                   whileHover={{ scale: 1.1, rotate: 90 }}
                   whileTap={{ scale: 0.9 }}
                   onClick={onClose}
-                  className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center
+                  className="absolute top-2 sm:top-2 right-2 sm:right-2 w-8 h-8 flex items-center justify-center
                     bg-emerald-100 hover:bg-emerald-200 rounded-full text-emerald-700
-                    transition-colors"
+                    transition-colors z-10"
                 >
                   ✕
                 </motion.button>
@@ -155,15 +162,15 @@ export function StyledDialogContent({
   );
 }
 
-export function StyledDialogTrigger({ children, onClick }: DialogTriggerProps) {
+export function StyledDialogTrigger({ children, onClick, className }: DialogTriggerProps) {
   return (
     <motion.button
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
-      className="px-8 py-3 bg-gradient-to-r from-emerald-400 to-green-500
+      className={`px-8 py-3 bg-gradient-to-r from-emerald-400 to-green-500
         text-white font-medium rounded-lg shadow-lg 
         hover:shadow-emerald-500/30 transition-all duration-300
-        border border-emerald-600/20"
+        border border-emerald-600/20 ${className || ""}`}
       onClick={onClick}
     >
       {children}
@@ -171,14 +178,14 @@ export function StyledDialogTrigger({ children, onClick }: DialogTriggerProps) {
   );
 }
 
-export function StyledDialogHeader({ children }: DialogHeaderProps) {
+export function StyledDialogHeader({ children, className }: DialogHeaderProps) {
   return (
     <motion.div
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="mb-6"
+      className={`mb-4 sm:mb-6 ${className || ""}`}
     >
-      <h2 className="text-3xl font-bold text-emerald-700 flex items-center gap-2">
+      <h2 className="text-xl sm:text-3xl font-bold text-emerald-700 flex items-center gap-2">
         <span className="w-2 h-2 bg-emerald-500 rounded-full" />
         {children}
       </h2>
@@ -186,24 +193,24 @@ export function StyledDialogHeader({ children }: DialogHeaderProps) {
   );
 }
 
-export function StyledDialogDescription({ children }: DialogDescriptionProps) {
+export function StyledDialogDescription({ children, className }: DialogDescriptionProps) {
   return (
     <motion.p
       initial={{ y: 20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="text-emerald-900 leading-relaxed"
+      className={`text-sm sm:text-base text-emerald-900 leading-relaxed ${className || ""}`}
     >
       {children}
     </motion.p>
   );
 }
 
-export function StyledDialogFooter({ children }: DialogFooterProps) {
+export function StyledDialogFooter({ children, className }: DialogFooterProps) {
   return (
     <motion.div
       initial={{ y: 20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="mt-8 flex justify-end space-x-4"
+      className={`mt-4 sm:mt-8 flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-4 ${className || ""}`}
     >
       {children}
     </motion.div>
@@ -215,16 +222,15 @@ export function DialogExample() {
   const [animationType, setAnimationType] = useState<keyof typeof animationStyles>("bubble");
 
   return (
-    <div className="p-8 bg-gradient-to-br from-emerald-100 to-green-50
-      min-h-screen flex flex-col items-center justify-center space-y-8">
+    <div className="p-8 bg-emerald-50 min-h-screen flex flex-col items-center justify-center space-y-8">
       <div className="flex flex-wrap gap-4 justify-center">
         {Object.keys(animationStyles).map((type) => (
           <motion.button
             key={type}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="px-6 py-2 bg-white/80 backdrop-blur-sm text-emerald-700
-              font-medium rounded-lg hover:bg-white/90 transition-colors
+            className="px-6 py-2 bg-white text-emerald-700 font-medium rounded-lg 
+              shadow-md hover:shadow-lg hover:bg-emerald-50 transition-all
               border border-emerald-200"
             onClick={() => setAnimationType(type as keyof typeof animationStyles)}
           >
@@ -235,7 +241,7 @@ export function DialogExample() {
 
       <StyledDialog>
         <StyledDialogTrigger onClick={() => setIsDialogOpen(true)}>
-          View Experiment
+          Open Laboratory
         </StyledDialogTrigger>
         <StyledDialogContent
           isOpen={isDialogOpen}
@@ -243,34 +249,31 @@ export function DialogExample() {
           animationType={animationType}
         >
           <StyledDialogHeader>
-            Chemical Analysis
+            Chemical Reaction
           </StyledDialogHeader>
           <StyledDialogDescription>
-            The reaction between compounds A and B has reached equilibrium.
-            Temperature: 25°C, Pressure: 1 atm, pH: 7.4
+            Our lab has synthesized a new compound with remarkable properties.
+            The molecular structure demonstrates unusual stability at high temperatures.
           </StyledDialogDescription>
           <StyledDialogFooter>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <button
               onClick={() => setIsDialogOpen(false)}
-              className="px-6 py-2 bg-gray-100 text-gray-700
+              className="w-full sm:w-auto px-6 py-2 bg-gray-100 text-emerald-700 
                 font-medium rounded-lg hover:bg-gray-200 transition-colors"
             >
-              Cancel
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              Close
+            </button>
+            <button
               onClick={() => {
                 setIsDialogOpen(false);
-                alert("Experiment data saved!");
+                alert("Chemical formula saved!");
               }}
-              className="px-6 py-2 bg-gradient-to-r from-emerald-400 to-green-500
-                text-white font-medium rounded-lg"
+              className="w-full sm:w-auto px-6 py-2 bg-gradient-to-r from-emerald-400 to-green-500
+                text-white font-medium rounded-lg hover:from-emerald-500 hover:to-green-600
+                transition-colors"
             >
-              Save Data
-            </motion.button>
+              Record
+            </button>
           </StyledDialogFooter>
         </StyledDialogContent>
       </StyledDialog>

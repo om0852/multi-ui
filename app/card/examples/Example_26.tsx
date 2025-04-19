@@ -14,22 +14,14 @@ const Example_26 = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 mb-8">
           <div className="lg:col-span-8">
             <Card26
-              title="The Future of Web Development"
-              description="Explore the latest trends and technologies shaping the future of web development. From AI-powered tools to revolutionary frameworks."
-              link="/card26"
-              imageUrl="https://picsum.photos/seed/260/800/400"
-              btnText="Read Article"
+          
             />
           </div>
           <div className="lg:col-span-4 grid grid-cols-1 gap-8">
             {[1, 2].map((item) => (
               <Card26
                 key={item}
-                title={`Top Story ${item}`}
-                description="Essential insights and updates from the tech world."
-                link="/card26"
-                imageUrl={`https://picsum.photos/seed/${item + 261}/400/300`}
-                btnText="Read More"
+              
               />
             ))}
           </div>
@@ -40,11 +32,7 @@ const Example_26 = () => {
           {[1, 2, 3].map((item) => (
             <Card26
               key={item}
-              title={`Latest Post ${item}`}
-              description="Stay updated with our recent articles and insights."
-              link="/card26"
-              imageUrl={`https://picsum.photos/seed/${item + 263}/500/300`}
-              btnText="View Post"
+            
             />
           ))}
         </div>

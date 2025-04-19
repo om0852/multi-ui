@@ -24,33 +24,7 @@ const Example_28 = () => {
           ))}
         </div>
 
-        {/* Department Heads */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
-          {[1, 2, 3, 4].map((item) => (
-            <Card28
-              key={item}
-              title={`Department Head ${item}`}
-              description="Leading innovative initiatives and driving team success."
-              link="/card28"
-              imageUrl={`https://picsum.photos/seed/${item + 283}/400/400`}
-              btnText="Learn More"
-            />
-          ))}
-        </div>
-
-        {/* Team Members */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
-          {[1, 2, 3, 4, 5, 6].map((item) => (
-            <Card28
-              key={item}
-              title={`Team Member ${item}`}
-              description="Dedicated professional contributing to our success."
-              link="/card28"
-              imageUrl={`https://picsum.photos/seed/${item + 287}/300/300`}
-              btnText="View Bio"
-            />
-          ))}
-        </div>
+       
       </div>
     </div>
   );

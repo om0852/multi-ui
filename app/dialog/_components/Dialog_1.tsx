@@ -4,11 +4,13 @@ import { motion, TargetAndTransition } from "framer-motion";
 
 type DialogProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
 type DialogTriggerProps = {
   children: React.ReactNode;
   onClick: () => void;
+  className?: string;
 };
 
 type DialogContentProps = {
@@ -17,22 +19,27 @@ type DialogContentProps = {
   onClose: () => void;
   animationType?: AnimationType;
   customAnimation?: TargetAndTransition;
+  className?: string;
 };
 
 type DialogHeaderProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
 type DialogTitleProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
 type DialogDescriptionProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
 type DialogFooterProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
 type AnimationType = keyof typeof animations;
@@ -115,14 +122,14 @@ const animations = {
   },
 };
 
-export function Dialog({ children }: DialogProps) {
-  return <div className="relative z-50">{children}</div>;
+export function Dialog({ children, className }: DialogProps) {
+  return <div className={`relative z-50 ${className || ""}`}>{children}</div>;
 }
 
-export function DialogTrigger({ children, onClick }: DialogTriggerProps) {
+export function DialogTrigger({ children, onClick, className }: DialogTriggerProps) {
   return (
     <button
-      className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300"
+      className={`bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 focus:outline-none focus:ring focus:ring-blue-300 transition-colors ${className || ""}`}
       onClick={onClick}
     >
       {children}
@@ -135,6 +142,7 @@ export function DialogContent({
   isOpen,
   onClose,
   animationType = "fade",
+  className,
 }: DialogContentProps) {
   if (!isOpen) return null;
 
@@ -146,17 +154,17 @@ export function DialogContent({
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4 z-50">
       <motion.div
         initial={animation.initial}
         animate={animation.animate}
         exit={animation.exit}
         transition={{ duration: 0.3 }}
-        className="bg-white rounded-lg shadow-lg w-full max-w-md p-6 relative"
+        className={`bg-white rounded-lg shadow-lg w-full max-w-[90%] sm:max-w-md md:max-w-lg p-4 sm:p-6 relative overflow-y-auto max-h-[90vh] ${className || ""}`}
       >
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-gray-500 hover:text-gray-700 focus:outline-none"
+          className="absolute top-2 sm:top-4 right-2 sm:right-4 text-gray-500 hover:text-gray-700 focus:outline-none z-10"
         >
           &#x2715;
         </button>
@@ -166,20 +174,20 @@ export function DialogContent({
   );
 }
 
-export function DialogHeader({ children }: DialogHeaderProps) {
-  return <div className="mb-4">{children}</div>;
+export function DialogHeader({ children, className }: DialogHeaderProps) {
+  return <div className={`mb-4 ${className || ""}`}>{children}</div>;
 }
 
-export function DialogTitle({ children }: DialogTitleProps) {
-  return <h2 className="text-xl font-semibold text-gray-900">{children}</h2>;
+export function DialogTitle({ children, className }: DialogTitleProps) {
+  return <h2 className={`text-lg sm:text-xl font-semibold text-gray-900 ${className || ""}`}>{children}</h2>;
 }
 
-export function DialogDescription({ children }: DialogDescriptionProps) {
-  return <p className="text-gray-600 mt-2">{children}</p>;
+export function DialogDescription({ children, className }: DialogDescriptionProps) {
+  return <p className={`text-sm sm:text-base text-gray-600 mt-2 ${className || ""}`}>{children}</p>;
 }
 
-export function DialogFooter({ children }: DialogFooterProps) {
-  return <div className="mt-6 flex justify-end space-x-4">{children}</div>;
+export function DialogFooter({ children, className }: DialogFooterProps) {
+  return <div className={`mt-4 sm:mt-6 flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-4 ${className || ""}`}>{children}</div>;
 }
 
 // Example Usage
@@ -196,7 +204,6 @@ export function Example() {
           isOpen={isDialogOpen}
           onClose={() => setIsDialogOpen(false)}
           animationType="flip"
-          
         >
           <DialogHeader>
             <DialogTitle>Confirm Action</DialogTitle>
@@ -207,7 +214,7 @@ export function Example() {
           <DialogFooter>
             <button
               onClick={() => setIsDialogOpen(false)}
-              className="bg-gray-200 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-300"
+              className="w-full sm:w-auto bg-gray-200 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-300"
             >
               Cancel
             </button>
@@ -216,7 +223,7 @@ export function Example() {
                 setIsDialogOpen(false);
                 alert("Action confirmed!");
               }}
-              className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+              className="w-full sm:w-auto bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
             >
               Confirm
             </button>

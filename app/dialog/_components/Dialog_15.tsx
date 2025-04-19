@@ -31,11 +31,13 @@ const animationStyles = {
 
 type DialogProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
 type DialogTriggerProps = {
   children: React.ReactNode;
   onClick: () => void;
+  className?: string;
 };
 
 type DialogContentProps = {
@@ -43,22 +45,26 @@ type DialogContentProps = {
   isOpen: boolean;
   onClose: () => void;
   animationType: keyof typeof animationStyles;
+  className?: string;
 };
 
 type DialogHeaderProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
 type DialogDescriptionProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
 type DialogFooterProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
-export function StyledDialog({ children }: DialogProps) {
-  return <div className="relative z-50">{children}</div>;
+export function StyledDialog({ children, className }: DialogProps) {
+  return <div className={`relative z-50 ${className || ""}`}>{children}</div>;
 }
 
 export function StyledDialogContent({
@@ -66,6 +72,7 @@ export function StyledDialogContent({
   isOpen,
   onClose,
   animationType,
+  className,
 }: DialogContentProps) {
   const animation = animationStyles[animationType];
 
@@ -83,8 +90,8 @@ export function StyledDialogContent({
           <div className="fixed inset-0 flex items-center justify-center">
             <motion.div
               {...animation}
-              className="relative bg-black/80 border border-cyan-500/30 rounded-lg
-                w-full max-w-lg overflow-hidden backdrop-blur-xl"
+              className={`relative bg-black/80 border border-cyan-500/30 rounded-lg
+                w-full max-w-lg overflow-hidden backdrop-blur-xl ${className || ""}`}
             >
               {/* Holographic effects */}
               <div className="absolute inset-0 bg-gradient-to-b from-cyan-500/10 to-purple-500/10" />
@@ -128,15 +135,15 @@ export function StyledDialogContent({
   );
 }
 
-export function StyledDialogTrigger({ children, onClick }: DialogTriggerProps) {
+export function StyledDialogTrigger({ children, onClick, className }: DialogTriggerProps) {
   return (
     <motion.button
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
-      className="px-8 py-3 bg-black/80 text-cyan-500 font-medium rounded
+      className={`px-8 py-3 bg-black/80 text-cyan-500 font-medium rounded
         shadow-lg shadow-cyan-500/20 hover:shadow-cyan-500/40 
         transition-all duration-300 border border-cyan-500/30
-        backdrop-blur-xl relative overflow-hidden group"
+        backdrop-blur-xl relative overflow-hidden group ${className || ""}`}
       onClick={onClick}
     >
       <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-purple-500/10" />
@@ -145,12 +152,12 @@ export function StyledDialogTrigger({ children, onClick }: DialogTriggerProps) {
   );
 }
 
-export function StyledDialogHeader({ children }: DialogHeaderProps) {
+export function StyledDialogHeader({ children, className }: DialogHeaderProps) {
   return (
     <motion.div
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="mb-6"
+      className={`mb-6 ${className || ""}`}
     >
       <h2 className="text-3xl font-bold text-cyan-500 flex items-center gap-2">
         <span className="w-2 h-2 bg-cyan-500 rounded-full animate-pulse" />
@@ -160,24 +167,24 @@ export function StyledDialogHeader({ children }: DialogHeaderProps) {
   );
 }
 
-export function StyledDialogDescription({ children }: DialogDescriptionProps) {
+export function StyledDialogDescription({ children, className }: DialogDescriptionProps) {
   return (
     <motion.p
       initial={{ y: 20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="text-cyan-100 leading-relaxed"
+      className={`text-cyan-100 leading-relaxed ${className || ""}`}
     >
       {children}
     </motion.p>
   );
 }
 
-export function StyledDialogFooter({ children }: DialogFooterProps) {
+export function StyledDialogFooter({ children, className }: DialogFooterProps) {
   return (
     <motion.div
       initial={{ y: 20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="mt-8 flex justify-end space-x-4"
+      className={`mt-8 flex justify-end space-x-4 ${className || ""}`}
     >
       {children}
     </motion.div>

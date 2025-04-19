@@ -13,11 +13,7 @@ const Example_10 = () => {
         {[1, 2, 3].map((item) => (
           <Card10
             key={item}
-            title={`Clean Card ${item}`}
-            description="A minimalist design with subtle animations. Hover to reveal more details and see the smooth transitions."
-            link="/card10"
-            imageUrl={`https://picsum.photos/seed/${item + 90}/500/300`}
-            btnText="View Details"
+         
           />
         ))}
       </div>

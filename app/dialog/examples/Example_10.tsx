@@ -24,20 +24,20 @@ export default function Example_10() {
   };
 
   return (
-    <div className="p-8 space-y-8 bg-gradient-to-br from-gray-900 via-black to-gray-900 min-h-[400px]">
-      <div className="space-y-4">
-        <h2 className="text-4xl font-extrabold bg-gradient-to-r from-cyan-400 via-pink-500 to-red-500 text-transparent bg-clip-text">
+    <div className="p-4 sm:p-6 md:p-8 space-y-6 sm:space-y-8 bg-gradient-to-br from-gray-900 via-black to-gray-900 min-h-[400px] max-w-5xl mx-auto">
+      <div className="space-y-3 sm:space-y-4">
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-extrabold bg-gradient-to-r from-cyan-400 via-pink-500 to-red-500 text-transparent bg-clip-text">
           Cyberpunk Dialog
         </h2>
-        <p className="text-cyan-300">
+        <p className="text-sm sm:text-base text-cyan-300">
           A futuristic dialog with animated borders and neon effects.
         </p>
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap gap-2 sm:gap-3">
           {animations.map((animation) => (
             <button
               key={animation}
               onClick={() => setCurrentAnimation(animation)}
-              className={`px-4 py-2 rounded-full text-white bg-gradient-to-r ${
+              className={`px-3 sm:px-4 py-1.5 sm:py-2 rounded-full text-xs sm:text-sm text-white bg-gradient-to-r ${
                 currentAnimation === animation
                   ? animationColors[animation]
                   : "from-gray-800 to-gray-900"
@@ -49,10 +49,10 @@ export default function Example_10() {
         </div>
       </div>
 
-      <div className="flex items-center space-x-4">
+      <div className="flex flex-col sm:flex-row items-center sm:space-x-4 space-y-4 sm:space-y-0">
         <StyledDialog>
           <StyledDialogTrigger onClick={() => setIsDialogOpen(true)}>
-            Launch Cyberpunk Dialog
+            <span className="block text-sm sm:text-base">Launch Cyberpunk Dialog</span>
           </StyledDialogTrigger>
           <StyledDialogContent
             isOpen={isDialogOpen}
@@ -66,11 +66,11 @@ export default function Example_10() {
               Step into the future with our cyberpunk-inspired dialog. 
               Experience the {currentAnimation} animation with neon accents and pulsing borders.
             </StyledDialogDescription>
-            <div className="my-6">
-              <p className="text-pink-400 font-semibold">
+            <div className="my-3 sm:my-4 md:my-6">
+              <p className="text-pink-400 font-semibold text-sm sm:text-base">
                 Dialog_10 features:
               </p>
-              <ul className="list-disc list-inside mt-2 space-y-1 text-cyan-200">
+              <ul className="list-disc list-inside mt-2 space-y-1 text-cyan-200 text-sm sm:text-base">
                 <li>Double animated borders with neon glow</li>
                 <li>Cyberpunk-inspired color scheme</li>
                 <li>Enhanced backdrop blur effect</li>
@@ -79,24 +79,34 @@ export default function Example_10() {
               </ul>
             </div>
             <StyledDialogFooter>
-              <button
-                onClick={() => setIsDialogOpen(false)}
-                className="bg-gray-800 text-cyan-300 py-2 px-4 rounded-full hover:bg-gray-700 border border-cyan-500/30 transition-colors"
-              >
-                Cancel
-              </button>
-              <button
-                onClick={() => {
-                  setIsDialogOpen(false);
-                  alert("Welcome to the future!");
-                }}
-                className="bg-gradient-to-r from-pink-500 to-purple-500 text-white py-2 px-6 rounded-full hover:shadow-lg hover:shadow-pink-500/30 transition-all duration-300"
-              >
-                Proceed
-              </button>
+              <div className="flex flex-col sm:flex-row gap-2 sm:gap-0 w-full justify-end">
+                <button
+                  onClick={() => setIsDialogOpen(false)}
+                  className="w-full sm:w-auto bg-gray-800 text-cyan-300 py-2 px-4 rounded-full hover:bg-gray-700 border border-cyan-500/30 transition-colors text-sm sm:text-base"
+                >
+                  Cancel
+                </button>
+                <button
+                  onClick={() => {
+                    setIsDialogOpen(false);
+                    alert("Welcome to the future!");
+                  }}
+                  className="w-full sm:w-auto bg-gradient-to-r from-pink-500 to-purple-500 text-white py-2 px-6 rounded-full hover:shadow-lg hover:shadow-pink-500/30 transition-all duration-300 text-sm sm:text-base"
+                >
+                  Proceed
+                </button>
+              </div>
             </StyledDialogFooter>
           </StyledDialogContent>
         </StyledDialog>
+        
+        <div className="hidden sm:block text-sm bg-black/50 p-3 rounded-xl text-cyan-300 max-w-xs border border-cyan-500/30">
+          <p>Experience the future with this cyberpunk-inspired dialog featuring neon accents and animated borders.</p>
+        </div>
+      </div>
+      
+      <div className="sm:hidden text-sm bg-black/50 p-3 rounded-xl text-cyan-300 border border-cyan-500/30 mb-4">
+        <p>Experience the future with this cyberpunk-inspired dialog featuring neon accents and animated borders.</p>
       </div>
 
       <style jsx global>{`
@@ -107,9 +117,9 @@ export default function Example_10() {
         }
       `}</style>
 
-      <div className="mt-8 p-6 rounded-xl bg-black/50 border-2 border-dotted border-cyan-500">
-        <h3 className="text-cyan-400 font-bold mb-2 neon-text">About this Dialog</h3>
-        <p className="text-cyan-200">
+      <div className="mt-4 sm:mt-8 p-3 sm:p-6 rounded-xl bg-black/50 border-2 border-dotted border-cyan-500">
+        <h3 className="text-cyan-400 font-bold mb-2 neon-text text-base sm:text-lg">About this Dialog</h3>
+        <p className="text-cyan-200 text-sm sm:text-base">
           Dialog_10 pushes the boundaries of modern UI design with its cyberpunk aesthetic.
           It features animated double borders, neon text effects, and a dark futuristic theme.
           The combination of cyan and pink accents creates a striking visual experience that

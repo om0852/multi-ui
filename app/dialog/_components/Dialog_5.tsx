@@ -12,43 +12,50 @@ const neonAnimations = {
 
 type DialogProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
 type DialogTriggerProps = {
   children: React.ReactNode;
   onClick: () => void;
+  className?: string;
 };
 
 type DialogContentProps = {
   children: React.ReactNode;
   isOpen: boolean;
   onClose: () => void;
+  className?: string;
 };
 
 type DialogHeaderProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
 type DialogTitleProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
 type DialogDescriptionProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
 type DialogFooterProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
-export function NeonDialog({ children }: DialogProps) {
-  return <div className="relative z-50">{children}</div>;
+export function NeonDialog({ children, className }: DialogProps) {
+  return <div className={`relative z-50 ${className || ""}`}>{children}</div>;
 }
 
-export function NeonDialogTrigger({ children, onClick }: DialogTriggerProps) {
+export function NeonDialogTrigger({ children, onClick, className }: DialogTriggerProps) {
   return (
     <button
-      className="bg-black text-cyan-300 py-2 px-4 rounded-lg hover:text-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-500"
+      className={`bg-black text-cyan-300 py-2 px-4 rounded-lg hover:text-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-500 transition-colors ${className || ""}`}
       onClick={onClick}
     >
       {children}
@@ -60,23 +67,24 @@ export function NeonDialogContent({
   children,
   isOpen,
   onClose,
+  className,
 }: DialogContentProps) {
   if (!isOpen) return null;
 
   const animation = neonAnimations.glow;
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-70 p-4 z-50">
       <motion.div
         initial={animation.initial}
         animate={animation.animate}
         exit={animation.exit}
         transition={{ duration: 0.4 }}
-        className="bg-black text-cyan-300 rounded-lg shadow-lg w-full max-w-lg p-6 relative border border-cyan-300"
+        className={`bg-black text-cyan-300 rounded-lg shadow-lg w-full max-w-[90%] sm:max-w-md md:max-w-lg p-4 sm:p-6 relative overflow-y-auto max-h-[90vh] border border-cyan-300 ${className || ""}`}
       >
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-cyan-400 hover:text-cyan-500 focus:outline-none"
+          className="absolute top-2 sm:top-4 right-2 sm:right-4 text-cyan-400 hover:text-cyan-500 focus:outline-none z-10"
         >
           &#x2715;
         </button>
@@ -86,20 +94,20 @@ export function NeonDialogContent({
   );
 }
 
-export function NeonDialogHeader({ children }: DialogHeaderProps) {
-  return <div className="mb-4 text-cyan-400">{children}</div>;
+export function NeonDialogHeader({ children, className }: DialogHeaderProps) {
+  return <div className={`mb-4 text-cyan-400 ${className || ""}`}>{children}</div>;
 }
 
-export function NeonDialogTitle({ children }: DialogTitleProps) {
-  return <h2 className="text-2xl font-bold text-cyan-300">{children}</h2>;
+export function NeonDialogTitle({ children, className }: DialogTitleProps) {
+  return <h2 className={`text-xl sm:text-2xl font-bold text-cyan-300 ${className || ""}`}>{children}</h2>;
 }
 
-export function NeonDialogDescription({ children }: DialogDescriptionProps) {
-  return <p className="text-cyan-500 mt-2">{children}</p>;
+export function NeonDialogDescription({ children, className }: DialogDescriptionProps) {
+  return <p className={`text-sm sm:text-base text-cyan-500 mt-2 ${className || ""}`}>{children}</p>;
 }
 
-export function NeonDialogFooter({ children }: DialogFooterProps) {
-  return <div className="mt-6 flex justify-end space-x-4">{children}</div>;
+export function NeonDialogFooter({ children, className }: DialogFooterProps) {
+  return <div className={`mt-4 sm:mt-6 flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-4 ${className || ""}`}>{children}</div>;
 }
 
 // Example Usage
@@ -125,7 +133,7 @@ export function NeonExample() {
           <NeonDialogFooter>
             <button
               onClick={() => setIsDialogOpen(false)}
-              className="bg-gray-800 text-cyan-300 py-2 px-4 rounded-lg hover:bg-gray-700"
+              className="w-full sm:w-auto bg-gray-800 text-cyan-300 py-2 px-4 rounded-lg hover:bg-gray-700"
             >
               Cancel
             </button>
@@ -134,7 +142,7 @@ export function NeonExample() {
                 setIsDialogOpen(false);
                 alert("Neon action confirmed!");
               }}
-              className="bg-cyan-300 text-black py-2 px-4 rounded-lg hover:bg-cyan-400"
+              className="w-full sm:w-auto bg-cyan-300 text-black py-2 px-4 rounded-lg hover:bg-cyan-400"
             >
               Confirm
             </button>

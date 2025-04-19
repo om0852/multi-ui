@@ -31,11 +31,13 @@ const animationStyles = {
 
 type DialogProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
 type DialogTriggerProps = {
   children: React.ReactNode;
   onClick: () => void;
+  className?: string;
 };
 
 type DialogContentProps = {
@@ -43,22 +45,26 @@ type DialogContentProps = {
   isOpen: boolean;
   onClose: () => void;
   animationType: keyof typeof animationStyles;
+  className?: string;
 };
 
 type DialogHeaderProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
 type DialogDescriptionProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
 type DialogFooterProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
-export function StyledDialog({ children }: DialogProps) {
-  return <div className="relative z-50">{children}</div>;
+export function StyledDialog({ children, className }: DialogProps) {
+  return <div className={`relative z-50 ${className || ""}`}>{children}</div>;
 }
 
 export function StyledDialogContent({
@@ -66,6 +72,7 @@ export function StyledDialogContent({
   isOpen,
   onClose,
   animationType,
+  className,
 }: DialogContentProps) {
   const animation = animationStyles[animationType];
 
@@ -77,15 +84,15 @@ export function StyledDialogContent({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/75 backdrop-blur-[2px]"
+            className="fixed inset-0 bg-black/75 backdrop-blur-[2px] z-50"
             onClick={onClose}
           />
-          <div className="fixed inset-0 flex items-center justify-center">
+          <div className="fixed inset-0 flex items-center justify-center p-4 z-50">
             <motion.div
               {...animation}
-              className="relative bg-[#1a1b2e] border-4 border-[#4a5568] rounded-lg
-                p-8 w-full max-w-lg shadow-[0_0_20px_rgba(66,153,225,0.5)]
-                [image-rendering:pixelated]"
+              className={`relative bg-[#1a1b2e] border-4 border-[#4a5568] rounded-lg
+                p-4 sm:p-8 w-full max-w-[90%] sm:max-w-md md:max-w-lg shadow-[0_0_20px_rgba(66,153,225,0.5)]
+                [image-rendering:pixelated] overflow-y-auto max-h-[90vh] ${className || ""}`}
             >
               {/* Pixel corners */}
               <div className="absolute -top-2 -left-2 w-4 h-4 bg-[#48bb78]" />
@@ -97,8 +104,8 @@ export function StyledDialogContent({
                 whileHover={{ scale: 1.1, rotate: 90 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={onClose}
-                className="absolute top-2 right-2 w-8 h-8 flex items-center justify-center
-                  bg-red-500 hover:bg-red-600 text-white font-bold rounded"
+                className="absolute top-2 sm:top-2 right-2 sm:right-2 w-8 h-8 flex items-center justify-center
+                  bg-red-500 hover:bg-red-600 text-white font-bold rounded z-10"
               >
                 ×
               </motion.button>
@@ -111,15 +118,15 @@ export function StyledDialogContent({
   );
 }
 
-export function StyledDialogTrigger({ children, onClick }: DialogTriggerProps) {
+export function StyledDialogTrigger({ children, onClick, className }: DialogTriggerProps) {
   return (
     <motion.button
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
-      className="px-8 py-3 bg-[#48bb78] text-white font-bold rounded
+      className={`px-8 py-3 bg-[#48bb78] text-white font-bold rounded
         shadow-[0_4px_0_#2f855a] hover:shadow-[0_2px_0_#2f855a] 
         hover:translate-y-[2px] transition-all duration-150
-        border-2 border-[#276749]"
+        border-2 border-[#276749] ${className || ""}`}
       onClick={onClick}
     >
       {children}
@@ -127,14 +134,14 @@ export function StyledDialogTrigger({ children, onClick }: DialogTriggerProps) {
   );
 }
 
-export function StyledDialogHeader({ children }: DialogHeaderProps) {
+export function StyledDialogHeader({ children, className }: DialogHeaderProps) {
   return (
     <motion.div
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="mb-6 text-center"
+      className={`mb-4 sm:mb-6 text-center ${className || ""}`}
     >
-      <h2 className="text-3xl font-bold text-[#48bb78] uppercase
+      <h2 className="text-xl sm:text-3xl font-bold text-[#48bb78] uppercase
         tracking-wider [text-shadow:2px_2px_0_#276749]">
         {children}
       </h2>
@@ -142,25 +149,25 @@ export function StyledDialogHeader({ children }: DialogHeaderProps) {
   );
 }
 
-export function StyledDialogDescription({ children }: DialogDescriptionProps) {
+export function StyledDialogDescription({ children, className }: DialogDescriptionProps) {
   return (
     <motion.p
       initial={{ y: 20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="text-gray-300 text-center leading-relaxed
-        [text-shadow:1px_1px_0_#000]"
+      className={`text-sm sm:text-base text-gray-300 text-center leading-relaxed
+        [text-shadow:1px_1px_0_#000] ${className || ""}`}
     >
       {children}
     </motion.p>
   );
 }
 
-export function StyledDialogFooter({ children }: DialogFooterProps) {
+export function StyledDialogFooter({ children, className }: DialogFooterProps) {
   return (
     <motion.div
       initial={{ y: 20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="mt-8 flex justify-center space-x-4"
+      className={`mt-4 sm:mt-8 flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-4 ${className || ""}`}
     >
       {children}
     </motion.div>
@@ -199,35 +206,35 @@ export function DialogExample() {
           animationType={animationType}
         >
           <StyledDialogHeader>
-            Level Complete!
+            8-Bit Dialog
           </StyledDialogHeader>
           <StyledDialogDescription>
-            Congratulations! You&apos;ve cleared the stage with a perfect score.
-            Ready to take on the next challenge?
+            Choose your adventure! This retro-inspired dialog brings the charm of 
+            classic video games with pixelated corners and game-like animations.
           </StyledDialogDescription>
           <StyledDialogFooter>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setIsDialogOpen(false)}
-              className="px-6 py-2 bg-[#4a5568] text-white font-bold rounded
+              className="w-full sm:w-auto px-6 py-2 bg-[#4a5568] text-white font-bold rounded
                 hover:bg-[#718096] transition-colors uppercase tracking-wide
                 border-2 border-[#2d3748]"
             >
-              Quit
+              Cancel
             </motion.button>
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => {
                 setIsDialogOpen(false);
-                alert("Next level starting!");
+                alert("Game started!");
               }}
-              className="px-6 py-2 bg-[#48bb78] text-white font-bold rounded
+              className="w-full sm:w-auto px-6 py-2 bg-[#48bb78] text-white font-bold rounded
                 hover:bg-[#38a169] transition-colors uppercase tracking-wide
                 border-2 border-[#276749]"
             >
-              Continue
+              Play
             </motion.button>
           </StyledDialogFooter>
         </StyledDialogContent>

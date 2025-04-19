@@ -13,21 +13,13 @@ const Example_25 = () => {
         {/* Featured Gallery */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
           <Card25
-            title="Art Exhibition"
-            description="Explore our curated collection of contemporary artworks."
-            link="/card25"
-            imageUrl="https://picsum.photos/seed/250/800/600"
-            btnText="View Gallery"
+           
           />
           <div className="grid grid-cols-2 gap-4">
             {[1, 2, 3, 4].map((item) => (
               <Card25
                 key={item}
-                title={`Artwork ${item}`}
-                description="A stunning piece from our collection."
-                link="/card25"
-                imageUrl={`https://picsum.photos/seed/${item + 251}/400/400`}
-                btnText="View Details"
+                
               />
             ))}
           </div>
@@ -38,11 +30,7 @@ const Example_25 = () => {
           {[1, 2, 3, 4, 5].map((item) => (
             <Card25
               key={item}
-              title={`Gallery ${item}`}
-              description="Discover more from our collection."
-              link="/card25"
-              imageUrl={`https://picsum.photos/seed/${item + 255}/400/500`}
-              btnText="Explore"
+             
             />
           ))}
         </div>

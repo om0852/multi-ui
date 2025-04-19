@@ -42,16 +42,8 @@ export default function BarExample8() {
   };
 
   // Function to get the appropriate legend labels
-  const getLegendLabels = () => {
-    switch (activeDataset) {
-      case 'sales': return { groupA: "2023 Sales", groupB: "2022 Sales" };
-      case 'budget': return { groupA: "Budget", groupB: "Actual" };
-      case 'platform': return { groupA: "Last Year", groupB: "This Year" };
-      default: return { groupA: "Group A", groupB: "Group B" };
-    }
-  };
 
-  const legendLabels = getLegendLabels();
+
 
   return (
     <div className="p-4 sm:p-6 md:p-8 min-h-screen bg-white">

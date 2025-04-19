@@ -127,6 +127,21 @@ export default function BarExample26() {
             className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
           />
         </div>
+
+        <div>
+          <label className="block text-xs sm:text-sm font-medium mb-1">
+            Inner Radius: {innerRadius}
+          </label>
+          <input
+            type="range"
+            min="0"
+            max="100"
+            step="5"
+            value={innerRadius}
+            onChange={(e) => setInnerRadius(parseInt(e.target.value))}
+            className="w-full h-2 bg-gray-700 rounded-lg appearance-none cursor-pointer"
+          />
+        </div>
       </div>
       
       {/* Chart Display */}

@@ -1,53 +1,77 @@
 "use client"
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Confetti_9 from '../_components/Confetti_9';
 
 const Example_9: React.FC = () => {
   const [darkMode, setDarkMode] = useState(false);
   const [isConfettiVisible, setIsConfettiVisible] = useState(false);
 
+  const toggleDarkMode = () => {
+    setDarkMode(!darkMode);
+  };
+
+  const showConfetti = () => {
+    setIsConfettiVisible(true);
+    // Hide confetti after 5 seconds
+    setTimeout(() => setIsConfettiVisible(false), 5000);
+  };
+
+  // Auto-trigger confetti when component mounts
+  useEffect(() => {
+    // Slight delay to ensure component is fully rendered
+    const timer = setTimeout(() => {
+      showConfetti();
+    }, 500);
+    
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
-    <div className={`min-h-screen p-8 ${darkMode ? 'bg-gray-900 text-white' : 'bg-gray-50 text-gray-800'}`}>
-      <div className="max-w-md mx-auto">
-        <div className="flex justify-between items-center mb-8">
-          <h1 className="text-2xl font-bold">Career Milestone</h1>
-          <button
-            onClick={() => setDarkMode(!darkMode)}
-            className={`px-4 py-2 rounded-lg ${
-              darkMode 
-                ? 'bg-gray-800 text-white border border-gray-700' 
-                : 'bg-white text-gray-900 border border-gray-200'
-            } shadow-sm`}
-          >
-            {darkMode ? 'Light Mode' : 'Dark Mode'}
-          </button>
+    <div
+      className={`w-full rounded-lg overflow-hidden transition-colors duration-300 relative ${
+        darkMode ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'
+      }`}
+      style={{ minHeight: '300px' }}
+    >
+      <div className="absolute top-4 right-4 z-20">
+        <button
+          onClick={toggleDarkMode}
+          className={`p-2 rounded-full ${
+            darkMode ? 'bg-gray-700 text-yellow-300' : 'bg-gray-200 text-gray-700'
+          }`}
+        >
+          {darkMode ? '☀️' : '🌙'}
+        </button>
+      </div>
+
+      <div className="p-4 sm:p-6 md:p-8 flex flex-col items-center justify-center h-full">
+        <h2 className="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4 text-center">
+          Promotion Celebration
+        </h2>
+        
+        <div className="text-center mb-6 sm:mb-8">
+          <p className="text-sm sm:text-base md:text-lg mb-2">
+            Congratulations on your promotion!
+          </p>
+          <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">
+            You&apos;ve earned this milestone
+          </p>
         </div>
 
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg p-6 text-center relative overflow-hidden">
-          <div className="mb-6">
-            <div className="inline-block p-3 bg-gradient-to-r from-amber-400 to-amber-600 rounded-full mb-4">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-10 w-10 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <h2 className="text-3xl font-bold mb-2">You Got Promoted!</h2>
-            <p className="text-gray-600 dark:text-gray-400">Congratulations on your new role as Senior Developer</p>
-          </div>
-          
-          <button
-            onClick={() => setIsConfettiVisible(true)}
-            className="px-6 py-3 bg-gradient-to-r from-amber-500 to-amber-700 text-white rounded-lg font-semibold hover:from-amber-600 hover:to-amber-800 transition-all"
-          >
-            Celebrate Your Success! 🌟
-          </button>
+        <button
+          onClick={showConfetti}
+          className={`px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium text-white
+            bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700
+            transform transition-all duration-300 hover:scale-105 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50
+            text-sm sm:text-base`}
+        >
+          {isConfettiVisible ? "Celebrate Again! 🎉" : "Celebrate! 🎉"}
+        </button>
+      </div>
 
-          {isConfettiVisible && (
-            <div className="absolute inset-0">
-              <Confetti_9 />
-            </div>
-          )}
-        </div>
+      <div className={`transition-opacity duration-300 ${isConfettiVisible ? 'opacity-100' : 'opacity-0'}`}>
+        <Confetti_9 />
       </div>
     </div>
   );

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 import Collapsible_4 from '../_components/Collapsible_4';
-import { FaMusic, FaPlay, FaForward, FaBackward, FaList, FaHeart, FaVolumeHigh, FaGear } from 'react-icons/fa6';
+import { FaMusic, FaPlay, FaForward, FaBackward, FaList, FaGear } from 'react-icons/fa6';
 
 const Example_4: React.FC = () => {
   const [darkMode, setDarkMode] = useState(false);

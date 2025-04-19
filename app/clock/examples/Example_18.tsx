@@ -41,25 +41,12 @@ const Example_18: React.FC = () => {
             <h2 className="text-xl font-semibold mb-4">Default Flip Clock</h2>
             <div className="h-48 overflow-hidden rounded-lg">
               <FlipDigitalClock 
-                containerClass="h-full"
-                backgroundColor="bg-gray-900"
-                borderColor="border-green-500"
               />
             </div>
           </div>
 
           {/* Large Flip Clock */}
-          <div className={`p-6 rounded-lg ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
-            <h2 className="text-xl font-semibold mb-4">Large Flip Clock</h2>
-            <div className="h-48 overflow-hidden rounded-lg">
-              <FlipDigitalClock 
-                containerClass="h-full"
-                backgroundColor="bg-black"
-                borderColor="border-blue-500"
-                size={48}
-              />
-            </div>
-          </div>
+       
         </div>
       </div>
     </div>

@@ -232,7 +232,6 @@ export default function BarExample28() {
             showPercentages={showPercentages}
             animationDuration={animationDuration}
             gapBetweenLevels={isCompact ? Math.min(6, gapBetweenLevels) : gapBetweenLevels}
-            fontSize={isCompact ? 12 : 14}
           />
         </div>
       </div>

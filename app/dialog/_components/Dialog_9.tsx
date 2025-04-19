@@ -27,11 +27,13 @@ const animationStyles = {
 
 type DialogProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
 type DialogTriggerProps = {
   children: React.ReactNode;
   onClick: () => void;
+  className?: string;
 };
 
 type DialogContentProps = {
@@ -39,32 +41,37 @@ type DialogContentProps = {
   isOpen: boolean;
   onClose: () => void;
   animationType: keyof typeof animationStyles;
+  className?: string;
 };
 
 type DialogHeaderProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
 type DialogTitleProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
 type DialogDescriptionProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
 type DialogFooterProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
-export function StyledDialog({ children }: DialogProps) {
-  return <div className="relative z-50">{children}</div>;
+export function StyledDialog({ children, className }: DialogProps) {
+  return <div className={`relative z-50 ${className || ""}`}>{children}</div>;
 }
 
-export function StyledDialogTrigger({ children, onClick }: DialogTriggerProps) {
+export function StyledDialogTrigger({ children, onClick, className }: DialogTriggerProps) {
   return (
     <button
-      className="bg-gradient-to-r from-cyan-400 via-teal-500 to-green-500 text-white py-2 px-4 rounded-xl shadow-lg hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500"
+      className={`bg-gradient-to-r from-cyan-400 via-teal-500 to-green-500 text-white py-2 px-4 rounded-xl shadow-lg hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-teal-500 ${className || ""}`}
       onClick={onClick}
     >
       {children}
@@ -77,6 +84,7 @@ export function StyledDialogContent({
   isOpen,
   onClose,
   animationType,
+  className,
 }: DialogContentProps) {
   if (!isOpen) return null;
 
@@ -89,7 +97,7 @@ export function StyledDialogContent({
         animate={animation.animate}
         exit={animation.exit}
         transition={{ duration: 0.6 }}
-        className="bg-gradient-to-br from-gray-900 via-slate-800 to-gray-600 text-white rounded-lg shadow-xl w-full max-w-lg p-6 relative border border-gray-500"
+        className={`bg-gradient-to-br from-gray-900 via-slate-800 to-gray-600 text-white rounded-lg shadow-xl w-full max-w-lg p-6 relative border border-gray-500 ${className || ""}`}
       >
         <button
           onClick={onClose}
@@ -103,20 +111,20 @@ export function StyledDialogContent({
   );
 }
 
-export function StyledDialogHeader({ children }: DialogHeaderProps) {
-  return <div className="mb-4 text-white text-lg font-semibold">{children}</div>;
+export function StyledDialogHeader({ children, className }: DialogHeaderProps) {
+  return <div className={`mb-4 text-white text-lg font-semibold ${className || ""}`}>{children}</div>;
 }
 
-export function StyledDialogTitle({ children }: DialogTitleProps) {
-  return <h2 className="text-3xl font-extrabold text-lime-400">{children}</h2>;
+export function StyledDialogTitle({ children, className }: DialogTitleProps) {
+  return <h2 className={`text-3xl font-extrabold text-lime-400 ${className || ""}`}>{children}</h2>;
 }
 
-export function StyledDialogDescription({ children }: DialogDescriptionProps) {
-  return <p className="text-gray-300 mt-2">{children}</p>;
+export function StyledDialogDescription({ children, className }: DialogDescriptionProps) {
+  return <p className={`text-gray-300 mt-2 ${className || ""}`}>{children}</p>;
 }
 
-export function StyledDialogFooter({ children }: DialogFooterProps) {
-  return <div className="mt-6 flex justify-end space-x-4">{children}</div>;
+export function StyledDialogFooter({ children, className }: DialogFooterProps) {
+  return <div className={`mt-6 flex justify-end space-x-4 ${className || ""}`}>{children}</div>;
 }
 
 // Example Usage

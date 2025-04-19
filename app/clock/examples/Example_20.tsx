@@ -41,33 +41,11 @@ const Example_20: React.FC = () => {
             <h2 className="text-xl font-semibold mb-4">Small Size</h2>
             <div className="h-48 overflow-hidden rounded-lg">
               <DecorativeDigitalClock 
-                size="small"
-                containerClass="h-full"
               />
             </div>
           </div>
 
-          {/* Medium Size */}
-          <div className={`p-6 rounded-lg ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
-            <h2 className="text-xl font-semibold mb-4">Medium Size</h2>
-            <div className="h-48 overflow-hidden rounded-lg">
-              <DecorativeDigitalClock 
-                size="medium"
-                containerClass="h-full"
-              />
-            </div>
-          </div>
-
-          {/* Large Size */}
-          <div className={`p-6 rounded-lg ${darkMode ? 'bg-gray-800' : 'bg-white'} shadow-lg`}>
-            <h2 className="text-xl font-semibold mb-4">Large Size</h2>
-            <div className="h-48 overflow-hidden rounded-lg">
-              <DecorativeDigitalClock 
-                size="large"
-                containerClass="h-full"
-              />
-            </div>
-          </div>
+        
         </div>
       </div>
     </div>

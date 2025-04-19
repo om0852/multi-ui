@@ -67,18 +67,7 @@ export default function BarExample18() {
   const isCompact = containerWidth < 640;
 
   // Format Y-axis values based on dataset
-  const formatYValue = (value: number, dataset: keyof typeof datasets) => {
-    switch (dataset) {
-      case 'sales':
-        return `$${(value / 1000).toFixed(0)}k`;
-      case 'engagement':
-        return `${(value / 1000).toFixed(1)}k`;
-      case 'performance':
-        return `${value}%`;
-      default:
-        return value.toString();
-    }
-  };
+  
 
   return (
     <div ref={containerRef} className="p-4 sm:p-6 md:p-8 min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 text-white">
@@ -108,8 +97,6 @@ export default function BarExample18() {
               width={Math.min(800, containerWidth - 24)}
               height={Math.min(400, (containerWidth - 24) * 0.6)}
               lineColor={datasets[currentDataset].lineColor}
-              areaColor={datasets[currentDataset].areaColor}
-              formatYValue={(value) => formatYValue(value, currentDataset)}
             />
           </div>
         </div>

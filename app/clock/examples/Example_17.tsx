@@ -21,52 +21,11 @@ const Example_17: React.FC = () => {
             <h2 className="text-base sm:text-lg md:text-xl font-semibold mb-2 sm:mb-4">New York</h2>
             <div className="h-36 sm:h-48 md:h-64 flex items-center justify-center transform scale-90 sm:scale-100">
               <WorldClock 
-                timezone="America/New_York"
-                containerClassName="flex flex-col items-center"
-                timeClassName="text-2xl sm:text-3xl md:text-4xl font-bold text-blue-600"
-                dateClassName="text-xs sm:text-sm md:text-base text-gray-500 mt-2"
               />
             </div>
           </div>
 
-          {/* London */}
-          <div className="p-3 sm:p-4 md:p-6 rounded-lg bg-white shadow-lg">
-            <h2 className="text-base sm:text-lg md:text-xl font-semibold mb-2 sm:mb-4">London</h2>
-            <div className="h-36 sm:h-48 md:h-64 flex items-center justify-center transform scale-90 sm:scale-100">
-              <WorldClock 
-                timezone="Europe/London"
-                containerClassName="flex flex-col items-center"
-                timeClassName="text-2xl sm:text-3xl md:text-4xl font-bold text-indigo-600"
-                dateClassName="text-xs sm:text-sm md:text-base text-gray-500 mt-2"
-              />
-            </div>
-          </div>
-
-          {/* Tokyo */}
-          <div className="p-3 sm:p-4 md:p-6 rounded-lg bg-white shadow-lg">
-            <h2 className="text-base sm:text-lg md:text-xl font-semibold mb-2 sm:mb-4">Tokyo</h2>
-            <div className="h-36 sm:h-48 md:h-64 flex items-center justify-center transform scale-90 sm:scale-100">
-              <WorldClock 
-                timezone="Asia/Tokyo"
-                containerClassName="flex flex-col items-center"
-                timeClassName="text-2xl sm:text-3xl md:text-4xl font-bold text-pink-600"
-                dateClassName="text-xs sm:text-sm md:text-base text-gray-500 mt-2"
-              />
-            </div>
-          </div>
-
-          {/* Sydney */}
-          <div className="p-3 sm:p-4 md:p-6 rounded-lg bg-white shadow-lg">
-            <h2 className="text-base sm:text-lg md:text-xl font-semibold mb-2 sm:mb-4">Sydney</h2>
-            <div className="h-36 sm:h-48 md:h-64 flex items-center justify-center transform scale-90 sm:scale-100">
-              <WorldClock 
-                timezone="Australia/Sydney"
-                containerClassName="flex flex-col items-center"
-                timeClassName="text-2xl sm:text-3xl md:text-4xl font-bold text-green-600"
-                dateClassName="text-xs sm:text-sm md:text-base text-gray-500 mt-2"
-              />
-            </div>
-          </div>
+      
         </div>
       </div>
     </div>

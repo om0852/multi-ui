@@ -1,64 +1,7 @@
+'use client';
 import React, { useState, useEffect } from "react";
-import { motion } from "framer-motion";
-
-// Array of image URLs passed by the user
-const images = [
-  "https://img.icons8.com/?size=100&id=63230&format=png&color=000000",
-  "https://img.icons8.com/?size=100&id=t0pRVC1Kipju&format=png&color=000000",
-  "https://img.icons8.com/?size=100&id=17570&format=png&color=000000",
-  // Add more image URLs as needed
-];
-
-const generateRandom = (min: number, max: number) => Math.random() * (max - min) + min;
 
 interface ConfettiPieceProps {
-  delay: number;
-  duration: number;
-  startX: number;
-  endX: number;
-  endY: number;
-  size: number;
-  imageUrl: string;
-}
-
-const ConfettiPiece: React.FC<ConfettiPieceProps> = ({
-  delay,
-  duration,
-  startX,
-  endX,
-  endY,
-  size,
-  imageUrl,
-}) => {
-  return (
-    <motion.div
-      className={`absolute`}
-      style={{
-        width: `${size}px`,
-        height: `${size}px`,
-        left: startX,
-        top: 0,
-      }}
-      initial={{ opacity: 0, x: 0, y: 0, scale: 0.5, rotate: 0 }}
-      animate={{
-        opacity: [0, 1, 0],
-        x: endX,
-        y: endY,
-        rotate: [0, 180, 360],
-        scale: [1, 1.8, 1],
-      }}
-      transition={{
-        delay,
-        duration,
-        repeat: Infinity,
-        ease: "easeInOut",
-      }}
-    >
-      <img src={imageUrl} alt="confetti" className="w-full h-full object-contain" />
-    </motion.div>
-  );
-};
-interface PiecesProps{
   id: number;
   delay: number;
   duration: number;
@@ -66,48 +9,106 @@ interface PiecesProps{
   endX: number;
   endY: number;
   size: number;
-  imageUrl: string;
+  imageIndex: number;
+  rotate: number;
 }
-const Confetti: React.FC = () => {
 
-  const [confettiPieces, setConfettiPieces] = useState<PiecesProps[]>([]);
+// Define base64 encoded simple shapes instead of external images
+const confettiImages = [
+  // Simple star shape (base64 SVG)
+  "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iI0ZGRDcwMCIgZD0iTTEyIDEuNWwzLjA5IDYuMjYgNi45MSAxLS41IDcuMjUtNi41IDQuOTlMMTIgMTcuMjVsLTMuMDkgMy43NS02LjUtNC45OS0uNS03LjI1IDYuOTEtMUwxMiAxLjV6Ii8+PC9zdmc+",
+  // Simple circle shape (base64 SVG)
+  "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiIGZpbGw9IiM0MTY5RTEiLz48L3N2Zz4=",
+  // Simple heart shape (base64 SVG)
+  "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNCAyNCI+PHBhdGggZmlsbD0iI0ZGNjk0NyIgZD0iTTEyIDIxLjM1bC0xLjQ1LTEuMzJDNS40IDE1LjM2IDIgMTIuMjggMiA4LjUgMiA1LjQyIDQuNDIgMyA3LjUgM2MxLjc4IDAgMy40MS44MSA0LjUgMi4wOUMxMy4wOSAzLjgxIDE0Ljc2IDMgMTYuNSAzIDE5LjU4IDMgMjIgNS40MiAyMiA4LjVjMCAzLjc4LTMuNCA2Ljg2LTguNTUgMTEuNTRMMTIgMjEuMzV6Ii8+PC9zdmc+",
+];
+
+const generateRandom = (min: number, max: number) => Math.random() * (max - min) + min;
+
+const Confetti_7: React.FC = () => {
+  const [confettiPieces, setConfettiPieces] = useState<ConfettiPieceProps[]>([]);
 
   useEffect(() => {
-    const screenWidth = window.innerWidth;
-    const screenHeight = window.innerHeight;
+    // Get the window dimensions for responsive behavior
+    const generatePieces = () => {
+      const screenWidth = window.innerWidth;
+      const screenHeight = window.innerHeight;
+      
+      const pieces = Array.from({ length: 50 }).map((_, i) => ({
+        id: i,
+        delay: generateRandom(0, 2),
+        duration: generateRandom(3, 6),
+        startX: generateRandom(0, screenWidth),
+        endX: generateRandom(-screenWidth/4, screenWidth/4),
+        endY: generateRandom(screenHeight/2, screenHeight),
+        size: generateRandom(20, 40),
+        imageIndex: Math.floor(generateRandom(0, confettiImages.length)),
+        rotate: generateRandom(0, 360),
+      }));
 
-    const pieces = Array.from({ length: 200 }).map((_, i) => ({
-      id: i,
-      delay: generateRandom(0, 2),
-      duration: generateRandom(3, 6),
-      startX: generateRandom(0, screenWidth),
-      endX: generateRandom(-300, 300), // Drift horizontally
-      endY: generateRandom(screenHeight / 2, screenHeight), // Fall to varying depths
-      size: generateRandom(20, 50), // Smaller to add variety
-      imageUrl: images[Math.floor(generateRandom(0, images.length))], // Random image
-    }));
+      setConfettiPieces(pieces);
+    };
 
-    setConfettiPieces(pieces);
+    generatePieces();
+
+    // Regenerate pieces when window is resized
+    window.addEventListener('resize', generatePieces);
+    
+    // Cleanup event listener
+    return () => {
+      window.removeEventListener('resize', generatePieces);
+    };
   }, []);
 
-  if (confettiPieces.length === 0) return null;
-
   return (
-    <div className="relative w-full h-screen overflow-hidden">
-      {confettiPieces.map(({ id, delay, duration, startX, endX, endY, size, imageUrl }) => (
-        <ConfettiPiece
-          key={id}
-          delay={delay}
-          duration={duration}
-          startX={startX}
-          endX={endX + startX}
-          endY={endY}
-          size={size}
-          imageUrl={imageUrl}
-        />
+    <div className="fixed inset-0 w-full h-full pointer-events-none overflow-hidden z-10">
+      <style jsx>{`
+        @keyframes fall {
+          0% {
+            transform: translateY(0) translateX(0) rotate(0deg) scale(0);
+            opacity: 0;
+          }
+          10% {
+            opacity: 1;
+            transform: translateY(5vh) translateX(5vw) rotate(45deg) scale(1);
+          }
+          100% {
+            transform: translateY(100vh) translateX(var(--end-x)) rotate(var(--rotate-end)) scale(0.5);
+            opacity: 0;
+          }
+        }
+        
+        .confetti-piece {
+          position: absolute;
+          top: -50px;
+          animation: fall var(--duration) ease-in-out forwards;
+          animation-delay: var(--delay);
+        }
+      `}</style>
+      
+      {confettiPieces.map((piece) => (
+        <div
+          key={piece.id}
+          className="confetti-piece"
+          style={{
+            '--delay': `${piece.delay}s`,
+            '--duration': `${piece.duration}s`,
+            '--end-x': `${piece.endX}px`,
+            '--rotate-end': `${piece.rotate}deg`,
+            left: `${piece.startX}px`,
+            width: `${piece.size}px`,
+            height: `${piece.size}px`,
+          } as React.CSSProperties}
+        >
+          <img 
+            src={confettiImages[piece.imageIndex]} 
+            alt="" 
+            className="w-full h-full object-contain"
+          />
+        </div>
       ))}
     </div>
   );
 };
 
-export default Confetti;
+export default Confetti_7;

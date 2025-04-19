@@ -1,20 +1,20 @@
 "use client"
 import React from "react";
-import BadgeExample1 from "./collapsible/examples/Example_11";
-import BadgeExample2 from "./collapsible/examples/Example_12";
-import BadgeExample3 from "./collapsible/examples/Example_13";
-import BadgeExample4 from "./collapsible/examples/Example_14";
-import BadgeExample5 from "./collapsible/examples/Example_15";
-import BadgeExample6 from "./collapsible/examples/Example_16";
-import BadgeExample7 from "./collapsible/examples/Example_17";
-import BadgeExample8 from "./collapsible/examples/Example_18";
-import BadgeExample9 from "./collapsible/examples/Example_19"; 
-import BadgeExample10 from "./collapsible/examples/Example_20";
+import BadgeExample1 from "./drawer/examples/Example_1";
+import BadgeExample2 from "./drawer/examples/Example_2";
+import BadgeExample3 from "./drawer/examples/Example_3";
+import BadgeExample4 from "./drawer/examples/Example_4";
+import BadgeExample5 from "./drawer/examples/Example_5";
+import BadgeExample6 from "./drawer/examples/Example_6";
+import BadgeExample7 from "./drawer/examples/Example_7";
+import BadgeExample8 from "./drawer/examples/Example_8";
+import BadgeExample9 from "./drawer/examples/Example_9"; 
+import BadgeExample10 from "./drawer/examples/Example_10";
 import Image from 'next/image'
 
 const page = () => {
   return (
-    <div className="text-2xl flex flex-col items-center justify-center">
+    <div className="text-2xl w-[30vh] overflow-hidden flex flex-col items-center justify-center">
       <div>Demo</div>
       <BadgeExample1/>
       <BadgeExample2/>

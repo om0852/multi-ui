@@ -31,11 +31,13 @@ const animationStyles = {
 
 type DialogProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
 type DialogTriggerProps = {
   children: React.ReactNode;
   onClick: () => void;
+  className?: string;
 };
 
 type DialogContentProps = {
@@ -43,22 +45,26 @@ type DialogContentProps = {
   isOpen: boolean;
   onClose: () => void;
   animationType: keyof typeof animationStyles;
+  className?: string;
 };
 
 type DialogHeaderProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
 type DialogDescriptionProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
 type DialogFooterProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
-export function StyledDialog({ children }: DialogProps) {
-  return <div className="relative z-50">{children}</div>;
+export function StyledDialog({ children, className }: DialogProps) {
+  return <div className={`relative z-50 ${className || ""}`}>{children}</div>;
 }
 
 export function StyledDialogContent({
@@ -66,6 +72,7 @@ export function StyledDialogContent({
   isOpen,
   onClose,
   animationType,
+  className,
 }: DialogContentProps) {
   const animation = animationStyles[animationType];
 
@@ -77,14 +84,15 @@ export function StyledDialogContent({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-sky-900/50 backdrop-blur-md"
+            className="fixed inset-0 bg-sky-900/50 backdrop-blur-md z-50"
             onClick={onClose}
           />
-          <div className="fixed inset-0 flex items-center justify-center">
+          <div className="fixed inset-0 flex items-center justify-center p-4 z-50">
             <motion.div
               {...animation}
-              className="relative bg-gradient-to-br from-sky-100 to-white 
-                rounded-3xl shadow-2xl p-8 w-full max-w-lg overflow-hidden"
+              className={`relative bg-gradient-to-br from-sky-100 to-white 
+                rounded-3xl shadow-2xl p-4 sm:p-8 w-full max-w-[90%] sm:max-w-md md:max-w-lg 
+                overflow-hidden overflow-y-auto max-h-[90vh] ${className || ""}`}
             >
               {/* Weather effects */}
               <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_120%,rgba(120,180,255,0.2),transparent_70%)]" />
@@ -95,9 +103,9 @@ export function StyledDialogContent({
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={onClose}
-                className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center
+                className="absolute top-2 sm:top-4 right-2 sm:right-4 w-8 h-8 flex items-center justify-center
                   bg-sky-500/10 hover:bg-sky-500/20 rounded-full text-sky-700
-                  transition-colors"
+                  transition-colors z-10"
               >
                 ✕
               </motion.button>
@@ -110,14 +118,14 @@ export function StyledDialogContent({
   );
 }
 
-export function StyledDialogTrigger({ children, onClick }: DialogTriggerProps) {
+export function StyledDialogTrigger({ children, onClick, className }: DialogTriggerProps) {
   return (
     <motion.button
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
-      className="px-8 py-3 bg-gradient-to-r from-sky-400 to-blue-500
+      className={`px-8 py-3 bg-gradient-to-r from-sky-400 to-blue-500
         text-white font-medium rounded-full shadow-lg 
-        hover:shadow-sky-400/50 transition-shadow duration-300"
+        hover:shadow-sky-400/50 transition-shadow duration-300 ${className || ""}`}
       onClick={onClick}
     >
       {children}
@@ -125,38 +133,38 @@ export function StyledDialogTrigger({ children, onClick }: DialogTriggerProps) {
   );
 }
 
-export function StyledDialogHeader({ children }: DialogHeaderProps) {
+export function StyledDialogHeader({ children, className }: DialogHeaderProps) {
   return (
     <motion.div
       initial={{ y: -20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="mb-6"
+      className={`mb-4 sm:mb-6 ${className || ""}`}
     >
-      <h2 className="text-3xl font-bold text-sky-900">
+      <h2 className="text-xl sm:text-3xl font-bold text-sky-900">
         {children}
       </h2>
     </motion.div>
   );
 }
 
-export function StyledDialogDescription({ children }: DialogDescriptionProps) {
+export function StyledDialogDescription({ children, className }: DialogDescriptionProps) {
   return (
     <motion.p
       initial={{ y: 20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="text-sky-700 leading-relaxed"
+      className={`text-sm sm:text-base text-sky-700 leading-relaxed ${className || ""}`}
     >
       {children}
     </motion.p>
   );
 }
 
-export function StyledDialogFooter({ children }: DialogFooterProps) {
+export function StyledDialogFooter({ children, className }: DialogFooterProps) {
   return (
     <motion.div
       initial={{ y: 20, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      className="mt-8 flex justify-end space-x-4"
+      className={`mt-4 sm:mt-8 flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-4 ${className || ""}`}
     >
       {children}
     </motion.div>
@@ -198,31 +206,28 @@ export function DialogExample() {
             Weather Forecast
           </StyledDialogHeader>
           <StyledDialogDescription>
-            Today will be mostly sunny with a high of 75°F. 
-            Perfect weather for outdoor activities!
+            Today&apos;s forecast shows perfect conditions with a gentle breeze and clear skies.
+            The temperature will range from 68°F to 75°F throughout the day.
           </StyledDialogDescription>
           <StyledDialogFooter>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            <button
               onClick={() => setIsDialogOpen(false)}
-              className="px-6 py-2 bg-gray-100 text-gray-700 
+              className="w-full sm:w-auto px-6 py-2 bg-gray-100 text-sky-700 
                 font-medium rounded-full hover:bg-gray-200 transition-colors"
             >
               Close
-            </motion.button>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+            </button>
+            <button
               onClick={() => {
                 setIsDialogOpen(false);
-                alert("Forecast saved!");
+                alert("Weather details saved!");
               }}
-              className="px-6 py-2 bg-gradient-to-r from-sky-400 to-blue-500
-                text-white font-medium rounded-full"
+              className="w-full sm:w-auto px-6 py-2 bg-gradient-to-r from-sky-400 to-blue-500
+                text-white font-medium rounded-full hover:from-sky-500 hover:to-blue-600
+                transition-colors"
             >
-              Save Forecast
-            </motion.button>
+              Save
+            </button>
           </StyledDialogFooter>
         </StyledDialogContent>
       </StyledDialog>

@@ -4,11 +4,13 @@ import { motion, TargetAndTransition } from "framer-motion";
 
 type DialogProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
 type DialogTriggerProps = {
   children: React.ReactNode;
   onClick: () => void;
+  className?: string;
 };
 
 type DialogContentProps = {
@@ -17,22 +19,27 @@ type DialogContentProps = {
   onClose: () => void;
   animationType?: AnimationType;
   customAnimation?: TargetAndTransition;
+  className?: string;
 };
 
 type DialogHeaderProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
 type DialogTitleProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
 type DialogDescriptionProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
 type DialogFooterProps = {
   children: React.ReactNode;
+  className?: string;
 };
 
 type AnimationType = keyof typeof animations;
@@ -55,14 +62,14 @@ const animations = {
   },
 };
 
-export function Dialog({ children }: DialogProps) {
-  return <div className="relative z-50">{children}</div>;
+export function Dialog({ children, className }: DialogProps) {
+  return <div className={`relative z-50 ${className || ""}`}>{children}</div>;
 }
 
-export function DialogTrigger({ children, onClick }: DialogTriggerProps) {
+export function DialogTrigger({ children, onClick, className }: DialogTriggerProps) {
   return (
     <button
-      className="bg-gradient-to-r from-blue-500 to-teal-400 text-white py-2 px-4 rounded-lg hover:from-teal-400 hover:to-blue-500 focus:outline-none focus:ring focus:ring-cyan-300 shadow-neon"
+      className={`bg-gradient-to-r from-blue-500 to-teal-400 text-white py-2 px-4 rounded-lg hover:from-teal-400 hover:to-blue-500 focus:outline-none focus:ring focus:ring-cyan-300 shadow-neon transition-colors ${className || ""}`}
       onClick={onClick}
     >
       {children}
@@ -75,6 +82,7 @@ export function DialogContent({
   isOpen,
   onClose,
   animationType = "pulseGlow",
+  className,
 }: DialogContentProps) {
   if (!isOpen) return null;
 
@@ -86,17 +94,17 @@ export function DialogContent({
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60">
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-60 p-4 z-50">
       <motion.div
         initial={animation.initial}
         animate={animation.animate}
         exit={animation.exit}
         transition={{ duration: 0.4 }}
-        className="bg-gray-900 text-cyan-400 rounded-lg shadow-neon w-full max-w-lg p-6 relative border border-cyan-400"
+        className={`bg-gray-900 text-cyan-400 rounded-lg shadow-neon w-full max-w-[90%] sm:max-w-md md:max-w-lg p-4 sm:p-6 relative overflow-y-auto max-h-[90vh] border border-cyan-400 ${className || ""}`}
       >
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 text-cyan-400 hover:text-cyan-200 focus:outline-none"
+          className="absolute top-2 sm:top-4 right-2 sm:right-4 text-cyan-400 hover:text-cyan-200 focus:outline-none z-10"
         >
           &#x2715;
         </button>
@@ -106,20 +114,20 @@ export function DialogContent({
   );
 }
 
-export function DialogHeader({ children }: DialogHeaderProps) {
-  return <div className="mb-4 border-b border-cyan-400 pb-2">{children}</div>;
+export function DialogHeader({ children, className }: DialogHeaderProps) {
+  return <div className={`mb-4 border-b border-cyan-400 pb-2 ${className || ""}`}>{children}</div>;
 }
 
-export function DialogTitle({ children }: DialogTitleProps) {
-  return <h2 className="text-2xl font-semibold text-cyan-400">{children}</h2>;
+export function DialogTitle({ children, className }: DialogTitleProps) {
+  return <h2 className={`text-xl sm:text-2xl font-semibold text-cyan-400 ${className || ""}`}>{children}</h2>;
 }
 
-export function DialogDescription({ children }: DialogDescriptionProps) {
-  return <p className="text-cyan-200 mt-2">{children}</p>;
+export function DialogDescription({ children, className }: DialogDescriptionProps) {
+  return <p className={`text-sm sm:text-base text-cyan-200 mt-2 ${className || ""}`}>{children}</p>;
 }
 
-export function DialogFooter({ children }: DialogFooterProps) {
-  return <div className="mt-6 flex justify-end space-x-4">{children}</div>;
+export function DialogFooter({ children, className }: DialogFooterProps) {
+  return <div className={`mt-4 sm:mt-6 flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-4 ${className || ""}`}>{children}</div>;
 }
 
 // Example Usage
@@ -133,7 +141,6 @@ export function NeonExample() {
           Open Neon Dialog
         </DialogTrigger>
         <DialogContent
-        
           isOpen={isDialogOpen}
           onClose={() => setIsDialogOpen(false)}
           animationType="glowExpand"
@@ -147,7 +154,7 @@ export function NeonExample() {
           <DialogFooter>
             <button
               onClick={() => setIsDialogOpen(false)}
-              className="bg-gray-800 text-cyan-400 py-2 px-4 rounded-lg hover:bg-gray-700"
+              className="w-full sm:w-auto bg-gray-800 text-cyan-400 py-2 px-4 rounded-lg hover:bg-gray-700"
             >
               Close
             </button>
