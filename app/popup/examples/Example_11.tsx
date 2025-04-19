@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import Popup_11 from '../_components/Popup_11';
+import Popup_11 from '../tsx/Popup_11';
 
 export default function PopupExample() {
   // Define menu items for the popup with music player controls

@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useRef, useEffect, useState } from 'react';
-import Counter_1 from '../_components/Counter_1';
+import Counter_1 from '../tsx/Counter_1';
 
 const Example_1: React.FC = () => {
   const [containerWidth, setContainerWidth] = useState(0);

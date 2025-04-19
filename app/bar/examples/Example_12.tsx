@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { Sparkline } from "../_components/Bar_12";
+import { Sparkline } from "../tsx/Bar_12";
 
 export default function BarExample12() {
   const [containerWidth, setContainerWidth] = useState(0);

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { Histogram } from "../_components/Bar_13";
+import { Histogram } from "../tsx/Bar_13";
 
 export default function BarExample13() {
   const [containerWidth, setContainerWidth] = useState(0);

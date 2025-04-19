@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react';
-import MinimalistClock from '../_components/Clock_15';
+import MinimalistClock from '../tsx/Clock_15';
 import { FaClock } from 'react-icons/fa6';
 
 const Example_15: React.FC = () => {

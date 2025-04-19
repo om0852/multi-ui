@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import FileUpload from "../_components/FileInput_19";
+import FileUpload from "../tsx/FileInput_19";
 
 export default function Example_19() {
   const handleFilesSelected = (files: FileList | null) => {

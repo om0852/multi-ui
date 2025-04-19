@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import GradientBorderBadge from '../_components/Badge_9';
+import GradientBorderBadge from '../tsx/Badge_9';
 
 export default function BadgeExample9() {
   return (

@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import Popup_18 from '../_components/Popup_18';
+import Popup_18 from '../tsx/Popup_18';
 
 export default function PopupExample() {
   // Define menu items for the popup with social media platforms

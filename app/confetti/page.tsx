@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
-import Confetti_14 from "./_components/Confetti_14";
-import Confetti_15 from "./_components/Confetti_15";
-import Confetti_16 from "./_components/Confetti_16";
-import Confetti_17 from "./_components/Confetti_17";
+import Confetti_14 from "./tsx/Confetti_14";
+import Confetti_15 from "./tsx/Confetti_15";
+import Confetti_16 from "./tsx/Confetti_16";
+import Confetti_17 from "./tsx/Confetti_17";
 
 const ConfettiPage = () => {
   return (

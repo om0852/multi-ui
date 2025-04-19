@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import HolographicListGroup from '../_components/ListGroup_16';
+import HolographicListGroup from '../tsx/ListGroup_16';
 
 const Example_16: React.FC = () => {
   const [activeItem, setActiveItem] = useState('item1');

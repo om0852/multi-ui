@@ -7,7 +7,7 @@ import {
   StyledDialogHeader,
   StyledDialogDescription,
   StyledDialogFooter,
-} from "../_components/Dialog_12";
+} from "../tsx/Dialog_12";
 
 type AnimationType = "powerUp" | "levelUp" | "gameOver" | "combo";
 

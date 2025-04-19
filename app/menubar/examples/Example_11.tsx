@@ -9,7 +9,7 @@ import {
   MenubarShortcut,
   MenubarSub,
   MenubarTrigger,
-} from "../_components/Menubar_11";
+} from "../tsx/Menubar_11";
 
 export default function Example_11() {
   return (

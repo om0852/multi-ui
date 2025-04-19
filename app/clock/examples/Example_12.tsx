@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react';
-import GradientClock from '../_components/Clock_12';
+import GradientClock from '../tsx/Clock_12';
 import { FaClock } from 'react-icons/fa6';
 
 const Example_12: React.FC = () => {

@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import FlipBadge from '../_components/Badge_6';
+import FlipBadge from '../tsx/Badge_6';
 
 export default function BadgeExample6() {
   return (

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import BubbleChart from "../_components/Bar_25";
+import BubbleChart from "../tsx/Bar_25";
 
 export default function BarExample25() {
   const [containerWidth, setContainerWidth] = useState(0);

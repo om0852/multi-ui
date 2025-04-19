@@ -8,7 +8,7 @@ import {
   StyledDialogHeader,
   StyledDialogDescription,
   StyledDialogFooter,
-} from "../_components/Dialog_11";
+} from "../tsx/Dialog_11";
 
 type AnimationType = "elastic" | "swirl" | "slide3D" | "bounce";
 

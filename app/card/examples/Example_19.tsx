@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import Card19 from '../_components/Card_19';
+import Card19 from '../tsx/Card_19';
 
 const Example_19 = () => {
   const featuredCard = {

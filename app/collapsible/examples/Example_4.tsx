@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from 'react';
-import Collapsible_4 from '../_components/Collapsible_4';
+import Collapsible_4 from '../tsx/Collapsible_4';
 import { FaMusic, FaPlay, FaForward, FaBackward, FaList, FaGear } from 'react-icons/fa6';
 
 const Example_4: React.FC = () => {

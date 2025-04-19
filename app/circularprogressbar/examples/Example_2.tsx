@@ -1,6 +1,6 @@
 "use client";
 import React, { useState, useEffect } from 'react';
-import CircularProgressBar from '../_components/CircularProgressBar_2';
+import CircularProgressBar from '../tsx/CircularProgressBar_2';
 
 const Example_2 = () => {
   const [progress, setProgress] = useState(50);

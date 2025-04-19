@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import Card27 from '../_components/Card_27';
+import Card27 from '../tsx/Card_27';
 
 const Example_27 = () => {
   return (

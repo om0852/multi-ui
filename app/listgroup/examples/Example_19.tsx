@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import CosmicListGroup from '../_components/ListGroup_19';
+import CosmicListGroup from '../tsx/ListGroup_19';
 
 const Example_19: React.FC = () => {
   const [activeItem, setActiveItem] = useState('item1');

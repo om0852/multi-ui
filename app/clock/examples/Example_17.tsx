@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react';
-import WorldClock from '../_components/Clock_17';
+import WorldClock from '../tsx/Clock_17';
 import { FaEarthAmericas } from 'react-icons/fa6';
 
 const Example_17: React.FC = () => {

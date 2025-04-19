@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import RangeSlider from '../_components/RangeSlider_4';
+import RangeSlider from '../tsx/RangeSlider_4';
 
 export default function RangeSliderExample() {
   return (

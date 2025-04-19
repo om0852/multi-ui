@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import PieChart from "../_components/Bar_16";
+import PieChart from "../tsx/Bar_16";
 
 export default function BarExample16() {
   const [containerWidth, setContainerWidth] = useState(0);

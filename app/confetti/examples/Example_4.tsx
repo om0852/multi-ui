@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from 'react';
-import Confetti_4 from '../_components/Confetti_4';
+import Confetti_4 from '../tsx/Confetti_4';
 
 const Example_4: React.FC = () => {
   const [darkMode, setDarkMode] = useState(false);

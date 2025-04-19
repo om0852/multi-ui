@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react';
-import FlipClock from '../_components/Clock_13';
+import FlipClock from '../tsx/Clock_13';
 import { FaClock } from 'react-icons/fa6';
 
 const Example_13: React.FC = () => {

@@ -1,6 +1,6 @@
 "use client"
 import React from "react";
-import TextBasedProgressBar from "./_components/ProgressBar_22";
+import TextBasedProgressBar from "./tsx/ProgressBar_22";
 import ProgressBarExample from "./examples/Example_1";
 
 const Example1 = () => {

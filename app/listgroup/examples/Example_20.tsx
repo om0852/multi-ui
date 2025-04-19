@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import AquaListGroup from '../_components/ListGroup_20';
+import AquaListGroup from '../tsx/ListGroup_20';
 
 const Example_20: React.FC = () => {
   const [activeItem, setActiveItem] = useState('item1');

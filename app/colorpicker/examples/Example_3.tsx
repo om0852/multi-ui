@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from 'react';
-import ColorPicker_3 from '../_components/ColorPicker_3';
+import ColorPicker_3 from '../tsx/ColorPicker_3';
 
 export default function Example_3() {
   const [darkMode, setDarkMode] = useState(false);

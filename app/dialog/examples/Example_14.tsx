@@ -8,7 +8,7 @@ import {
   StyledDialogHeader,
   StyledDialogDescription,
   StyledDialogFooter,
-} from "../_components/Dialog_14";
+} from "../tsx/Dialog_14";
 
 type AnimationType = "bubble" | "reaction" | "dissolve" | "catalyst";
 

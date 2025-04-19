@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import Popup_15 from '../_components/Popup_15';
+import Popup_15 from '../tsx/Popup_15';
 
 export default function PopupExample() {
   // Define menu items for the popup with transportation options

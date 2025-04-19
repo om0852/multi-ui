@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import EditableContainer from "../_components/Editable_1";
+import EditableContainer from "../tsx/Editable_1";
 
 export default function Example_1() {
   return (

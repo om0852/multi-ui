@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useRef, useEffect } from 'react';
-import Counter_17 from '../_components/Counter_17';
+import Counter_17 from '../tsx/Counter_17';
 
 const Example_17: React.FC = () => {
   const [isComplete, setIsComplete] = useState(false);

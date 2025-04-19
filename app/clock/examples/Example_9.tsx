@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react';
-import EnhancedAnalogClock from '../_components/Clock_9';
+import EnhancedAnalogClock from '../tsx/Clock_9';
 import { FaClock } from 'react-icons/fa6';
 
 const Example_9: React.FC = () => {

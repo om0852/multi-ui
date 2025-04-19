@@ -1,23 +1,23 @@
 'use client';
 import React from 'react';
-import Collapsible_1 from './_components/Collapsible_1';
-import Collapsible_2 from './_components/Collapsible_2';
-import Collapsible_3 from './_components/Collapsible_3';
-import Collapsible_4 from './_components/Collapsible_4';
-import Collapsible_5 from './_components/Collapsible_5';
-import Collapsible_6 from './_components/Collapsible_6';
-import Collapsible_7 from './_components/Collapsible_7';
-import Collapsible_8 from './_components/Collapsible_8';
-import Collapsible_9 from './_components/Collapsible_9';
-import Collapsible_10 from './_components/Collapsible_10';
-import Collapsible_11 from './_components/Collapsible_11';
-import Collapsible_12 from './_components/Collapsible_12';
-import Collapsible_13 from './_components/Collapsible_13';
-import Collapsible_14 from './_components/Collapsible_14';
-import Collapsible_15 from './_components/Collapsible_15';
-import Collapsible_16 from './_components/Collapsible_16';
-import Collapsible_17 from './_components/Collapsible_17';
-import Collapsible_18 from './_components/Collapsible_18';
+import Collapsible_1 from './tsx/Collapsible_1';
+import Collapsible_2 from './tsx/Collapsible_2';
+import Collapsible_3 from './tsx/Collapsible_3';
+import Collapsible_4 from './tsx/Collapsible_4';
+import Collapsible_5 from './tsx/Collapsible_5';
+import Collapsible_6 from './tsx/Collapsible_6';
+import Collapsible_7 from './tsx/Collapsible_7';
+import Collapsible_8 from './tsx/Collapsible_8';
+import Collapsible_9 from './tsx/Collapsible_9';
+import Collapsible_10 from './tsx/Collapsible_10';
+import Collapsible_11 from './tsx/Collapsible_11';
+import Collapsible_12 from './tsx/Collapsible_12';
+import Collapsible_13 from './tsx/Collapsible_13';
+import Collapsible_14 from './tsx/Collapsible_14';
+import Collapsible_15 from './tsx/Collapsible_15';
+import Collapsible_16 from './tsx/Collapsible_16';
+import Collapsible_17 from './tsx/Collapsible_17';
+import Collapsible_18 from './tsx/Collapsible_18';
 
 const CollapsiblePage = () => {
   return (

@@ -7,7 +7,7 @@ import {
   StyledDialogHeader,
   StyledDialogDescription,
   StyledDialogFooter,
-} from "../_components/Dialog_13";
+} from "../tsx/Dialog_13";
 
 type AnimationType = "rain" | "thunder" | "wind" | "sun";
 

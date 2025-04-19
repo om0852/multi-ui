@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import GlassmorphicListGroup from '../_components/ListGroup_7';
+import GlassmorphicListGroup from '../tsx/ListGroup_7';
 
 const Example_7: React.FC = () => {
   const [activeItem, setActiveItem] = useState('item1');

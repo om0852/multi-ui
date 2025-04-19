@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { InteractiveBarChart } from "../_components/Bar_9";
+import { InteractiveBarChart } from "../tsx/Bar_9";
 
 export default function BarExample9() {
   const [containerWidth, setContainerWidth] = useState(0);

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import RadialBarChart from "../_components/Bar_22";
+import RadialBarChart from "../tsx/Bar_22";
 
 export default function BarExample22() {
   const [containerWidth, setContainerWidth] = useState(0);

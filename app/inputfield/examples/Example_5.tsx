@@ -1,6 +1,6 @@
 "use client"
 import React from 'react';
-import UrlInput, { EmailInput } from '../_components/InputField_5';
+import UrlInput, { EmailInput } from '../tsx/InputField_5';
 
 const Example_5: React.FC = () => {
   return (

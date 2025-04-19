@@ -1,8 +1,8 @@
 "use client"
 import React from 'react'
-import RangeSlider1 from './_components/RangeSlider_1'
-import RangeSlider2 from './_components/RangeSlider_2'
-import RangeSlider3 from './_components/RangeSlider_3'
+import RangeSlider1 from './tsx/RangeSlider_1'
+import RangeSlider2 from './tsx/RangeSlider_2'
+import RangeSlider3 from './tsx/RangeSlider_3'
 
 const RangeSlidersDemo = () => {
   return (

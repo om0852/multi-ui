@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { AreaChart } from "../_components/Bar_11";
+import { AreaChart } from "../tsx/Bar_11";
 
 export default function BarExample11() {
   const [containerWidth, setContainerWidth] = useState(0);

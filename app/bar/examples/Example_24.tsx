@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import CircularProgressChart from "../_components/Bar_24";
+import CircularProgressChart from "../tsx/Bar_24";
 
 export default function BarExample24() {
   const [containerWidth, setContainerWidth] = useState(0);

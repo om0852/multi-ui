@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import RangeSlider from '../_components/RangeSlider_2';
+import RangeSlider from '../tsx/RangeSlider_2';
 
 export default function RangeSliderExample() {
   const [volume, setVolume] = useState(75);

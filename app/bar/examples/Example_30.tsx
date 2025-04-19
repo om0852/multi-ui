@@ -1,7 +1,7 @@
 'use client'
 
 import { useState, useRef, useEffect } from 'react'
-import RadialProgressChart from '../_components/Bar_30'
+import RadialProgressChart from '../tsx/Bar_30'
 
 export default function BarExample30() {
   const [containerWidth, setContainerWidth] = useState(0);

@@ -5,7 +5,7 @@ import {
   Drawer,
   DrawerTrigger,
   DrawerContent,
-} from "../_components/Drawer_7";
+} from "../tsx/Drawer_7";
 
 export default function Example_7() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);

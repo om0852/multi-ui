@@ -1,5 +1,5 @@
 import React from 'react'
-import { CenterSlideLink } from './_components/Link_3'
+import { CenterSlideLink } from './tsx/Link_3'
 
 export default function Example() {
     return (

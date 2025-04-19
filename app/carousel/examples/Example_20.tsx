@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from 'react';
-import Carousel from '../_components/Carousel_20';
+import Carousel from '../tsx/Carousel_20';
 
 const Example_20 = () => {
   const [autoPlay, setAutoPlay] = useState(true);

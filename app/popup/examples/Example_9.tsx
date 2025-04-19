@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import Popup_9 from '../_components/Popup_9';
+import Popup_9 from '../tsx/Popup_9';
 
 export default function PopupExample() {
   // Define menu items for the popup with emojis

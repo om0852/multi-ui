@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { PopulationPyramid } from "../_components/Bar_6";
+import { PopulationPyramid } from "../tsx/Bar_6";
 
 export default function BarExample6() {
   // Sample data for US population pyramid

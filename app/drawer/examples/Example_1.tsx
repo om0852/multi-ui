@@ -9,7 +9,7 @@ import {
   DrawerTitle,
   DrawerDescription,
   DrawerFooter,
-} from "../_components/Drawer_1";
+} from "../tsx/Drawer_1";
 
 export default function Example_1() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);

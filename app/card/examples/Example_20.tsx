@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import Card20 from '../_components/Card_20';
+import Card20 from '../tsx/Card_20';
 
 const Example_20 = () => {
   const settingsGroups = [

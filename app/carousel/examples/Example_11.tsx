@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import Carousel from '../_components/Carousel_11';
+import Carousel from '../tsx/Carousel_11';
 import Image from 'next/image';
 
 const Example_11 = () => {

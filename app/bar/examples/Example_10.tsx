@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import { LineChart } from '../_components/Bar_10';
+import { LineChart } from '../tsx/Bar_10';
 
 export default function BarExample10() {
   // Sample data for the line chart

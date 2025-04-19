@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { GroupedBarChart } from "../_components/Bar_4";
+import { GroupedBarChart } from "../tsx/Bar_4";
 
 export default function BarExample4() {
   // Sample data for the grouped bar chart

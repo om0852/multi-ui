@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import BlurBadge from '../_components/Badge_1';
+import BlurBadge from '../tsx/Badge_1';
 
 export default function BadgeExample1() {
   return (

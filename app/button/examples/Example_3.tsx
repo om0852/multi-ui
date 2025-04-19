@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import Button3 from '../_components/Button_3'
+import Button3 from '../tsx/Button_3'
 
 export default function ButtonExample3() {
   const [theme, setTheme] = useState<'light' | 'dark'>('light')

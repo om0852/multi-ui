@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import Popup_20 from '../_components/Popup_20';
+import Popup_20 from '../tsx/Popup_20';
 
 export default function PopupExample() {
   // Define menu items for the popup with productivity tools

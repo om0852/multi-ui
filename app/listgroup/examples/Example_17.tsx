@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import NeonListGroup from '../_components/ListGroup_17';
+import NeonListGroup from '../tsx/ListGroup_17';
 
 const Example_17: React.FC = () => {
   const [activeItem, setActiveItem] = useState('item1');

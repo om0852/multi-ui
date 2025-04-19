@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { RotatingRadioGroup as RadioGroup } from '../_components/RadioGroup_20';
+import { RotatingRadioGroup as RadioGroup } from '../tsx/RadioGroup_20';
 
 export default function RadioGroupExample() {
   const [selectedOption, setSelectedOption] = useState<string>("option1");

@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import CyberpunkListGroup from '../_components/ListGroup_10';
+import CyberpunkListGroup from '../tsx/ListGroup_10';
 
 const Example_10: React.FC = () => {
   const [activeItem, setActiveItem] = useState('item1');

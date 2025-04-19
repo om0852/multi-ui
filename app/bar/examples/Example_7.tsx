@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import { ProgressBarChart } from "../_components/Bar_7";
+import { ProgressBarChart } from "../tsx/Bar_7";
 
 export default function BarExample7() {
   const [containerWidth, setContainerWidth] = useState(0);

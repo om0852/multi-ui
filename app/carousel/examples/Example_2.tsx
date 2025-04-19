@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import Carousel from '../_components/Carousel_2';
+import Carousel from '../tsx/Carousel_2';
 
 const Example_2 = () => {
   return (

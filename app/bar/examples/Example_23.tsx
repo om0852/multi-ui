@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import StackedHorizontalBarChart from "../_components/Bar_23";
+import StackedHorizontalBarChart from "../tsx/Bar_23";
 
 export default function BarExample23() {
   const [containerWidth, setContainerWidth] = useState(0);

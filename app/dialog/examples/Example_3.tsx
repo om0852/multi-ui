@@ -8,7 +8,7 @@ import {
   DialogTitle,
   DialogDescription,
   DialogFooter,
-} from "../_components/Dialog_3";
+} from "../tsx/Dialog_3";
 
 type AnimationType = "dropIn" | "zoomBounce" | "slideDiagonal";
 

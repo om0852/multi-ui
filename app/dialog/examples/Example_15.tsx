@@ -8,7 +8,7 @@ import {
   StyledDialogHeader,
   StyledDialogDescription,
   StyledDialogFooter,
-} from "../_components/Dialog_15";
+} from "../tsx/Dialog_15";
 
 type AnimationType = "hologram" | "warpSpeed" | "teleport" | "quantum";
 

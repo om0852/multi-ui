@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import MagneticListGroup from '../_components/ListGroup_12';
+import MagneticListGroup from '../tsx/ListGroup_12';
 
 const Example_12: React.FC = () => {
   const [activeItem, setActiveItem] = useState('item1');

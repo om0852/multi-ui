@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import LineGraph from "../_components/Bar_17";
+import LineGraph from "../tsx/Bar_17";
 
 export default function BarExample17() {
   const [containerWidth, setContainerWidth] = useState(0);

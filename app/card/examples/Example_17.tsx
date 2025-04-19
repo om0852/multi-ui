@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import Card17 from '../_components/Card_17';
+import Card17 from '../tsx/Card_17';
 
 const Example_17 = () => {
   const standardCards = [1, 2, 3].map((item) => ({

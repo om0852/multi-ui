@@ -1,7 +1,7 @@
 "use client";
 
 import React from 'react';
-import FloatingBadge from '../_components/Badge_7';
+import FloatingBadge from '../tsx/Badge_7';
 
 export default function BadgeExample7() {
   return (

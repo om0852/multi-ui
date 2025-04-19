@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
-import LineGraphDesign4 from "../_components/Bar_20";
+import LineGraphDesign4 from "../tsx/Bar_20";
 
 export default function BarExample20() {
   const [containerWidth, setContainerWidth] = useState(0);

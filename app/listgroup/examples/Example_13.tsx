@@ -1,6 +1,6 @@
 "use client"
 import React, { useState } from 'react';
-import RetroGamingListGroup from '../_components/ListGroup_13';
+import RetroGamingListGroup from '../tsx/ListGroup_13';
 
 const Example_13: React.FC = () => {
   const [activeItem, setActiveItem] = useState('item1');
