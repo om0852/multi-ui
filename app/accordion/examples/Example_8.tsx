@@ -1,9 +1,9 @@
 "use client";
 
 import React from 'react';
-import Accordion from '../tsx/Accordian_4';
+import Accordion from '../tsx/Accordion_8';
 
-export default  function AccordionExample4() {
+export default  function AccordionExample8() {
   const accordionItems = [
     {
       title: "Section 1",
@@ -20,8 +20,8 @@ export default  function AccordionExample4() {
   ];
 
   return (
-    <div className="p-4 min-h-screen bg-white">
-      <h2 className="text-2xl font-bold text-gray-800 mb-6">Minimal Accordion</h2>
+    <div className="p-4 min-h-screen">
+      <h2 className="text-2xl font-bold text-white mb-6">Liquid Flow Accordion</h2>
       
       <div className="max-w-2xl mx-auto">
         <Accordion items={accordionItems} allowMultiple={true} />

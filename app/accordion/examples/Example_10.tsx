@@ -1,9 +1,9 @@
 "use client";
 
 import React from 'react';
-import Accordion from '../tsx/Accordian_16';
+import Accordion from '../tsx/Accordion_10';
 
-export default  function AccordionExample16() {
+export default  function AccordionExample10() {
   const accordionItems = [
     {
       title: "Section 1",
@@ -21,7 +21,7 @@ export default  function AccordionExample16() {
 
   return (
     <div className="p-4 min-h-screen">
-      <h2 className="text-2xl font-bold mb-6" style={{ color: '#ff00ff', textShadow: '0 0 5px #ff00ff' }}>Neon Border Accordion</h2>
+      <h2 className="text-2xl font-bold mb-6" style={{ color: '#ff00ff', textShadow: '0 0 10px #ff00ff' }}>Retro Grid Accordion</h2>
       
       <div className="max-w-2xl mx-auto">
         <Accordion items={accordionItems} allowMultiple={true} />

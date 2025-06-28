@@ -7,7 +7,7 @@ import {
   AccordionTrigger,
   AccordionContent,
   AccordionControls
-} from '../tsx/Accordian_1';
+} from '../tsx/Accordion_1';
 
 export default function AccordionExample1() {
   const items = ['item-1', 'item-2', 'item-3'];
