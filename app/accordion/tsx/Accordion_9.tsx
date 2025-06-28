@@ -28,19 +28,7 @@ const MatrixButton = styled(motion.button)`
   overflow: hidden;
   text-shadow: 0 0 5px #0f0;
   
-  &::before {
-    content: '01001010101110101010';
-    position: absolute;
-    font-family: monospace;
-    font-size: 12px;
-    white-space: nowrap;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    opacity: 0.3;
-    animation: ${matrixRain} 2s linear infinite;
-  }
-  
+
   &:hover {
     background: rgba(0, 255, 0, 0.2);
     border-color: rgba(0, 255, 0, 0.5);
@@ -63,18 +51,6 @@ const Content = styled.div`
   overflow: hidden;
   text-shadow: 0 0 3px #0f0;
   
-  &::before {
-    content: '10101010101010101010';
-    position: absolute;
-    font-family: monospace;
-    font-size: 12px;
-    white-space: nowrap;
-    top: 0;
-    left: 50%;
-    transform: translateX(-50%);
-    opacity: 0.2;
-    animation: ${matrixRain} 3s linear infinite;
-  }
 `;
 
 const Title = styled.span`
@@ -177,16 +153,7 @@ export default  function Accordion({ items, allowMultiple = false }: AccordionPr
 
   return (
     <Container>
-      {Array.from({ length: 10 }).map((_, i) => (
-        <RainColumn
-          key={i}
-          delay={i * 0.5}
-          duration={2 + Math.random() * 2}
-          style={{ left: `${i * 10}%` }}
-        >
-          {generateRandomBinary(20)}
-        </RainColumn>
-      ))}
+   
       {items.map((item, index) => (
         <AccordionItem
           key={index}

@@ -1,182 +1,207 @@
-'use client';
+'use client'
 
-import { useState } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import styled, { keyframes } from 'styled-components';
+import React, { useState } from 'react'
+import { motion, AnimatePresence } from 'framer-motion'
+import styled, { keyframes } from 'styled-components'
 
-const morphAnimation = keyframes`
-  0% { border-radius: 60% 40% 30% 70%/60% 30% 70% 40%; }
-  50% { border-radius: 30% 60% 70% 40%/50% 60% 30% 60%; }
-  100% { border-radius: 60% 40% 30% 70%/60% 30% 70% 40%; }
-`;
+/* ─────────────────── blob‑morph keyframes ─────────────────── */
+const morph = keyframes`
+  0%   { border-radius: 65% 35% 30% 70%/60% 35% 65% 40%; }
+  50%  { border-radius: 30% 60% 70% 40%/55% 60% 35% 65%; }
+  100% { border-radius: 65% 35% 30% 70%/60% 35% 65% 40%; }
+`
 
+/* ───────────────────── layout wrappers ───────────────────── */
 const Container = styled.div`
-  padding: 1rem;
+  padding: 3rem 1rem;
   background: linear-gradient(45deg, #12c2e9, #c471ed, #f64f59);
   min-height: 100%;
   position: relative;
   overflow: hidden;
-`;
+  display: flex;
+  justify-content: center;
+`
 
-const MorphingButton = styled(motion.button)`
-  width: 100%;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(10px);
-  border: none;
-  padding: 1rem;
-  color: white;
+const Blobs = styled.div`
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+`
+
+const Blob = styled.div<{ delay: number; size: number; color: string }>`
+  position: absolute;
+  width: ${({ size }) => size}px;
+  height: ${({ size }) => size}px;
+  background: ${({ color }) => color};
+  opacity: 0.35;
+  filter: blur(60px);
+  animation: ${morph} ${({ delay }) => 10 + delay}s ease-in-out infinite;
+`
+
+const Panel = styled.div`
   position: relative;
+  z-index: 1;
+  width: min(560px, 90vw);    /* responsive width */
+`
+
+/* ───────────────────── accordion pieces ───────────────────── */
+const Button = styled(motion.button)`
+  width: 100%;
+  padding: 1.2rem 1rem;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 1rem;
+  backdrop-filter: blur(12px);
   overflow: hidden;
-  animation: ${morphAnimation} 8s ease-in-out infinite;
-  
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.05) inset,
+              0 6px 14px rgba(0, 0, 0, 0.25);
+  transition: background 0.3s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.18);
+  }
+
   &::before {
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.3),
+      transparent
+    );
     transform: translateX(-100%);
-    transition: transform 0.5s ease;
+    transition: transform 0.6s ease;
   }
-  
   &:hover::before {
     transform: translateX(100%);
   }
-`;
+`
 
-const ContentWrapper = styled(motion.div)`
+const ContentWrap = styled(motion.div)`
   overflow: hidden;
+  border-radius: 0 0 1rem 1rem;
   margin-top: 0.5rem;
-`;
+`
 
-const Content = styled.div`
-  background: rgba(255, 255, 255, 0.05);
-  backdrop-filter: blur(10px);
-  border: none;
-  padding: 1rem;
+const Card = styled.div`
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-top: none;
+  padding: 1.15rem;
   color: rgba(255, 255, 255, 0.9);
-  position: relative;
-  animation: ${morphAnimation} 8s ease-in-out infinite;
-  animation-delay: -4s;
-`;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25) inset;
+`
 
 const Title = styled.span`
   font-size: 1.125rem;
   font-weight: 500;
-  color: white;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-`;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+`
 
-const IconWrapper = styled(motion.div)`
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 1.25rem;
-`;
+const Arrow = styled(motion.svg)`
+  width: 1.25rem;
+  height: 1.25rem;
+  stroke: rgba(255, 255, 255, 0.9);
+  stroke-width: 2.2;
+  fill: none;
+`
 
-const Shape = styled.div<{ delay: number; size: number; color: string }>`
-  position: absolute;
-  width: ${props => props.size}px;
-  height: ${props => props.size}px;
-  background: ${props => props.color};
-  opacity: 0.5;
-  filter: blur(40px);
-  animation: ${morphAnimation} ${props => 8 + props.delay}s ease-in-out infinite;
-`;
-
+/* ─────────────────── component interfaces ─────────────────── */
 interface AccordionItemProps {
-  title: string;
-  content: string;
-  isOpen: boolean;
-  onClick: () => void;
+  title: string
+  content: string
+  isOpen: boolean
+  onClick: () => void
 }
 
- export function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) {
+interface AccordionProps {
+  items: { title: string; content: string }[]
+  allowMultiple?: boolean
+}
+
+/* ───────────────────── item component ───────────────────── */
+function AccordionItem({ title, content, isOpen, onClick }: AccordionItemProps) {
   return (
-    <div className="mb-4">
-      <MorphingButton
+    <div className="mb-5">
+      <Button
         onClick={onClick}
-        whileHover={{ scale: 1.02 }}
+        whileHover={{ scale: 1.015 }}
         whileTap={{ scale: 0.98 }}
       >
-        <div className="flex justify-between items-center">
+        <div className="flex items-center justify-between gap-4">
           <Title>{title}</Title>
-          <IconWrapper
-            animate={{ 
-              rotate: isOpen ? 180 : 0,
-              scale: isOpen ? 1.2 : 1
-            }}
-            transition={{ type: "spring", stiffness: 200 }}
+          <Arrow
+            viewBox="0 0 24 24"
+            animate={{ rotate: isOpen ? 180 : 0 }}
+            transition={{ type: 'spring', stiffness: 250 }}
           >
-            ▼
-          </IconWrapper>
+            <polyline points="6 9 12 15 18 9" />
+          </Arrow>
         </div>
-      </MorphingButton>
-      <AnimatePresence>
+      </Button>
+
+      <AnimatePresence initial={false}>
         {isOpen && (
-          <ContentWrapper
+          <ContentWrap
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3 }}
           >
-            <Content>
-              {content}
-            </Content>
-          </ContentWrapper>
+            <Card>{content}</Card>
+          </ContentWrap>
         )}
       </AnimatePresence>
     </div>
-  );
+  )
 }
 
-interface AccordionProps {
-  items: Array<{ title: string; content: string }>;
-  allowMultiple?: boolean;
-}
+/* ─────────────────── accordion root ─────────────────── */
+export default function Accordion({ items, allowMultiple = false }: AccordionProps) {
+  const [openIndexes, setOpenIndexes] = useState<number[]>([])
 
-export default  function Accordion({ items, allowMultiple = false }: AccordionProps) {
-  const [openIndexes, setOpenIndexes] = useState<number[]>([]);
-
-  const handleClick = (index: number) => {
-    if (allowMultiple) {
-      setOpenIndexes(openIndexes.includes(index)
-        ? openIndexes.filter(i => i !== index)
-        : [...openIndexes, index]
-      );
-    } else {
-      setOpenIndexes(openIndexes.includes(index) ? [] : [index]);
-    }
-  };
+  const toggle = (idx: number) =>
+    setOpenIndexes((prev) =>
+      allowMultiple
+        ? prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx]
+        : prev.includes(idx) ? [] : [idx]
+    )
 
   return (
     <Container>
-      <Shape delay={0} size={200} color="#12c2e9" style={{ top: '10%', left: '10%' }} />
-      <Shape delay={2} size={300} color="#c471ed" style={{ top: '40%', right: '20%' }} />
-      <Shape delay={4} size={250} color="#f64f59" style={{ bottom: '10%', left: '30%' }} />
-      {items.map((item, index) => (
-        <AccordionItem
-          key={index}
-          title={item.title}
-          content={item.content}
-          isOpen={openIndexes.includes(index)}
-          onClick={() => handleClick(index)}
-        />
-      ))}
+      {/* neon blobs */}
+      <Blobs>
+        <Blob delay={0} size={280} color="#12c2e9" style={{ top: '6%', left: '8%' }} />
+        <Blob delay={2} size={380} color="#c471ed" style={{ top: '46%', right: '12%' }} />
+        <Blob delay={4} size={320} color="#f64f59" style={{ bottom: '6%', left: '28%' }} />
+      </Blobs>
+
+      <Panel>
+        {items.map((it, i) => (
+          <AccordionItem
+            key={i}
+            title={it.title}
+            content={it.content}
+            isOpen={openIndexes.includes(i)}
+            onClick={() => toggle(i)}
+          />
+        ))}
+      </Panel>
     </Container>
-  );
+  )
 }
 
-// Export individual components
-export { Container as MorphingContainer };
-export { MorphingButton };
-export { Content as MorphingContent };
-export { AccordionItem as MorphingAccordionItem };
-export { Shape };
-
-export const Example = () => {
-  const items = [
-    { title: "Morphing Design", content: "Accordion with shape-morphing background." },
-    { title: "Colorful", content: "Vibrant color transitions." },
-    { title: "Animated", content: "Smooth shape transformations." }
-  ];
-
-  return <Accordion items={items} />;
-};
+export const Example = () => (
+  <Accordion
+    items={[
+      { title: 'Morphing Design', content: 'Accordion with shape‑morphing blobs.' },
+      { title: 'Vibrant Colors', content: 'Neon gradient background & glow.' },
+      { title: 'Interactive', content: 'Smooth spring‑based animations.' },
+    ]}
+  />
+)
