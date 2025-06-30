@@ -14,7 +14,7 @@ type InteractiveBarChartProps = {
 };
 
 // InteractiveBarChart Component
-export function InteractiveBarChart({ data }: InteractiveBarChartProps) {
+export function InteractiveBarChart({ data,...props }: InteractiveBarChartProps) {
   const width = 700;
   const height = 400;
   const margin = { top: 20, right: 20, bottom: 100, left: 80 };
@@ -34,7 +34,7 @@ export function InteractiveBarChart({ data }: InteractiveBarChartProps) {
   } | null>(null);
 
   return (
-    <div className="w-full max-w-[700px] mx-auto pt-10">
+    <div className="w-full max-w-[700px] mx-auto pt-10" {...props}>
       <svg className="w-full" viewBox={`0 0 ${width} ${height}`}>
         {/* Draw Axes */}
         {/* X Axis */}
@@ -163,5 +163,5 @@ const exampleData: InteractiveBarChartData[] = [
 ];
 
 export function Component() {
-  return <InteractiveBarChart data={exampleData} />;
+  return <InteractiveBarChart data={exampleData}  />;
 }

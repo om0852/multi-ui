@@ -61,6 +61,7 @@ export function CustomBarChart({ data, config, className }: BarChartProps) {
           y={height - margin.bottom + 20}
           textAnchor="middle"
           fontSize="12"
+          color="white"
         >
           {item["month"]}
         </text>

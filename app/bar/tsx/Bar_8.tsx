@@ -13,7 +13,7 @@ type OverlappingBarChartProps = {
   data: OverlappingBarChartData[];
 };
 
-export function OverlappingBarChart({ data }: OverlappingBarChartProps) {
+export function OverlappingBarChart({ data ,...props}: OverlappingBarChartProps) {
   const [dimensions, setDimensions] = useState({ width: 700, height: 400 });
   const containerRef = useRef<HTMLDivElement>(null);
 
@@ -63,7 +63,7 @@ export function OverlappingBarChart({ data }: OverlappingBarChartProps) {
   const fontSize = Math.min(dimensions.width * 0.02, 12);
 
   return (
-    <div ref={containerRef} className="w-full h-full min-w-[300px]">
+    <div ref={containerRef} className="w-full h-full min-w-[300px]" {...props}>
       <svg
         className="w-full h-full"
         viewBox={`0 0 ${dimensions.width} ${dimensions.height}`}
