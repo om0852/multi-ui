@@ -22,6 +22,7 @@ export default function LineGraph({
   height = 400,
   lineColor = "#3B82F6",
   dotColor = "#2563EB",
+  ...props
 }: LineGraphProps) {
   const [pathLength, setPathLength] = useState(0);
   const padding = 40;
@@ -52,7 +53,7 @@ export default function LineGraph({
   }, [data]);
 
   return (
-    <div className="relative" style={{ width, height }}>
+    <div className="relative" style={{ width, height }} {...props}>
       <svg width={width} height={height}>
         {/* Y-axis */}
         <line

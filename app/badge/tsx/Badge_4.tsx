@@ -8,6 +8,7 @@ type BouncingGlowBadgeProps = {
 const BouncingGlowBadge: React.FC<BouncingGlowBadgeProps> = ({
   text,
   color = "bg-amber-500",
+  ...props
 }) => {
   const [hovered, setHovered] = useState(false);
 
@@ -21,6 +22,7 @@ const BouncingGlowBadge: React.FC<BouncingGlowBadgeProps> = ({
       style={{
         animation: hovered ? "bounce 0.6s infinite alternate" : undefined,
       }}
+      {...props}
     >
       {text}
       <style>

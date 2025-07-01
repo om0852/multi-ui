@@ -5,10 +5,11 @@ type GlowBadgeProps = {
   color?: string;
 };
 
-const GlowBadge: React.FC<GlowBadgeProps> = ({ text, color = "bg-indigo-500" }) => {
+const GlowBadge: React.FC<GlowBadgeProps> = ({ text, color = "bg-indigo-500", ...props }) => {
   return (
     <span
       className={`inline-block px-4 py-2 text-white text-sm font-bold rounded-full shadow-lg ${color} relative animate-glow`}
+      {...props}
     >
       {text}
       <style>

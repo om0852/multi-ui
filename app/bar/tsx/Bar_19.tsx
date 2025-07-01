@@ -24,7 +24,8 @@ export default function LineGraphDesign3({
   lineColor = '#EF4444',
   gradientStart = '#FEE2E2',
   gradientEnd = '#EF4444',
-  dotColor = '#DC2626'
+  dotColor = '#DC2626',
+  ...props
 }: LineGraphProps) {
   const padding = 50
   const chartWidth = width - padding * 2
@@ -47,7 +48,7 @@ export default function LineGraphDesign3({
   const points = data.map(d => `${xScale(d.x)},${yScale(d.y)}`).join(' ')
 
   return (
-    <div className="relative" style={{ width, height }}>
+    <div className="relative" style={{ width, height }} {...props}>
       <svg width={width} height={height}>
         {/* Gradient Background */}
         <defs>

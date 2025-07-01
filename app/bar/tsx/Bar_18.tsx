@@ -24,6 +24,7 @@ export default function LineGraphAlt({
   lineColor = "#10B981",
   dotColor = "#059669",
   backgroundColor = "#F0FDF4",
+  ...props
 }: LineGraphProps) {
   const [pathLength, setPathLength] = useState(0);
   const padding = 50;
@@ -54,7 +55,7 @@ export default function LineGraphAlt({
   }, [data]);
 
   return (
-    <div className="relative" style={{ width, height, backgroundColor }}>
+    <div className="relative" style={{ width, height, backgroundColor }} {...props}>
       <svg width={width} height={height}>
         {/* Y-axis */}
         <line

@@ -26,7 +26,8 @@ export default function RadialBarChart({
   innerRadius = 80,
   animationDuration = 0.8,
   showLabels = true,
-  showValues = true
+  showValues = true,
+  ...props
 }: RadialBarChartProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
   
@@ -41,7 +42,7 @@ export default function RadialBarChart({
   const anglePerSegment = (2 * Math.PI) / data.length
   
   return (
-    <div className="relative" style={{ width, height }}>
+    <div className="relative bg-white" style={{ width, height }} {...props}>
       <svg width={width} height={height}>
         {/* Background circle */}
         <circle

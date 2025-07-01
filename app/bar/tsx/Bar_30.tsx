@@ -32,7 +32,8 @@ export default function RadialProgressChart({
   animationDuration = 1.2,
   showLabels = true,
   colorPalette = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899', '#6366F1'],
-  gradientOffset = 0.2
+  gradientOffset = 0.2,
+  ...props
 }: RadialProgressChartProps) {
   const [hoveredRing, setHoveredRing] = useState<number | null>(null);
   
@@ -70,7 +71,7 @@ export default function RadialProgressChart({
   });
   
   return (
-    <div className="relative" style={{ width, height }}>
+    <div className="relative bg-white" style={{ width, height }} {...props}>
       <svg width={width} height={height}>
         {/* Gradients */}
         <defs>

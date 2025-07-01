@@ -22,7 +22,9 @@ interface WaterfallChartProps {
     negative: string;
     total: string;
   };
+
 }
+
 
 export default function WaterfallChart({
   data,
@@ -35,7 +37,8 @@ export default function WaterfallChart({
     positive: '#10B981',
     negative: '#EF4444',
     total: '#3B82F6'
-  }
+  },
+  ...props
 }: WaterfallChartProps) {
   const [hoveredBar, setHoveredBar] = useState<number | null>(null);
   
@@ -87,7 +90,7 @@ export default function WaterfallChart({
   });
   
   return (
-    <div className="relative" style={{ width, height }}>
+    <div className="relative bg-white" style={{ width, height }} {...props}>
       <svg width={width} height={height}>
         {/* Grid lines */}
         {Array.from({ length: 6 }).map((_, i) => {

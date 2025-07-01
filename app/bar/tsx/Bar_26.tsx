@@ -31,6 +31,7 @@ export default function PolarAreaChart({
   animationDuration = 0.8,
   showLabels = true,
   colorPalette = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899', '#6366F1', '#14B8A6', '#F97316', '#06B6D4']
+  ,...props
 }: PolarAreaChartProps) {
   const [hoveredSegment, setHoveredSegment] = useState<number | null>(null);
   
@@ -71,7 +72,7 @@ export default function PolarAreaChart({
   });
   
   return (
-    <div className="relative" style={{ width, height }}>
+    <div className="relative bg-white" style={{ width, height }} {...props}>
       <svg width={width} height={height}>
         {/* Background circle */}
         <circle

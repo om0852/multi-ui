@@ -10,11 +10,12 @@ const OrbitingDotsBadge: React.FC<OrbitingDotsBadgeProps> = ({
   text,
   color = "bg-purple-600",
   dotColor = "bg-pink-400",
+  ...props
 }) => {
   const [dots] = useState(new Array(6).fill(0)); // 6 dots orbiting
 
   return (
-    <div className="relative flex items-center justify-center">
+    <div className="relative flex items-center justify-center" {...props}>
       <span
         className={`relative z-10 px-6 py-3 text-white font-semibold rounded-full ${color}`}
       >

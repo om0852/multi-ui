@@ -8,6 +8,7 @@ type FallingConfettiBadgeProps = {
 const FallingConfettiBadge: React.FC<FallingConfettiBadgeProps> = ({
   text,
   color = "bg-purple-500",
+  ...props
 }) => {
   const [isClient, setIsClient] = useState(false);
 
@@ -20,7 +21,7 @@ const FallingConfettiBadge: React.FC<FallingConfettiBadgeProps> = ({
   }
 
   return (
-    <div className="relative inline-block">
+    <div className="relative inline-block" {...props}>
       <span
         className={`text-white ${color} px-4 py-2 rounded-md font-semibold`}
       >

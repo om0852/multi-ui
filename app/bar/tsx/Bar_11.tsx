@@ -18,7 +18,7 @@ type AreaChartProps = {
   className?: string;
 };
 
-export function AreaChart({ data, config, xKey, yKeys, className }: AreaChartProps) {
+export function AreaChart({ data, config, xKey, yKeys, className ,...props}: AreaChartProps) {
   const [hoveredPoint, setHoveredPoint] = useState<{ key: string; index: number } | null>(null);
 
   const width = 600;
@@ -35,7 +35,7 @@ export function AreaChart({ data, config, xKey, yKeys, className }: AreaChartPro
     height - margin.bottom - (value / maxValue) * (height - margin.top - margin.bottom);
 
   return (
-    <svg className={`w-full ${className}`} viewBox={`0 0 ${width} ${height}`}>
+    <svg className={`w-full ${className}`} viewBox={`0 0 ${width} ${height}`} {...props}>
       {/* X and Y Axes */}
       <line
         x1={margin.left}

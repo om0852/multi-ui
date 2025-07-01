@@ -7,6 +7,7 @@ type BoxPlotProps = {
   width?: number;
   height?: number;
   className?: string;
+  
 };
 
 function calculateBoxPlotStats(data: number[]) {
@@ -32,6 +33,7 @@ export function BoxPlot({
   width = 400,
   height = 200,
   className = "",
+  ...props
 }: BoxPlotProps) {
   const { q1, median, q3, lowerWhisker, upperWhisker, outliers } = calculateBoxPlotStats(data);
 
@@ -53,6 +55,7 @@ export function BoxPlot({
       className={`w-full ${className}`}
       viewBox={`0 0 ${width} ${height}`}
       style={{ overflow: "visible" }}
+      {...props}
     >
       {/* Box Plot */}
       <g>

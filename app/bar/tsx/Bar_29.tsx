@@ -34,7 +34,8 @@ export default function CirclePackingChart({
   height = 800,
   padding = 2,
   animationDuration = 0.8,
-  colorPalette = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899', '#6366F1']
+  colorPalette = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899', '#6366F1'],
+  ...props
 }: CirclePackingChartProps) {
   const [hoveredCircle, setHoveredCircle] = useState<Circle | null>(null);
   
@@ -109,7 +110,7 @@ export default function CirclePackingChart({
     const isHovered = hoveredCircle === circle;
     
     return (
-      <g key={circle.node.id}>
+      <g key={circle.node.id} >
         <motion.circle
           cx={centerX + circle.x}
           cy={centerY + circle.y}
@@ -157,7 +158,7 @@ export default function CirclePackingChart({
   }
   
   return (
-    <div className="relative" style={{ width, height }}>
+    <div className="relative bg-white" style={{ width, height }} {...props}>
       <svg width={width} height={height}>
         {renderCircle(packedData)}
       </svg>

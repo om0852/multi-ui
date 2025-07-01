@@ -29,7 +29,8 @@ export default function CircularProgressChart({
   animationDuration = 1.5,
   showLabels = true,
   showValues = true,
-  maxValue = 100
+  maxValue = 100,
+  ...props
 }: CircularProgressChartProps) {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   
@@ -44,7 +45,7 @@ export default function CircularProgressChart({
   const arcAngle = (360 - data.length * arcSpacing) / data.length;
 
   return (
-    <div className="relative" style={{ width, height }}>
+    <div className="relative bg-white" style={{ width, height }} {...props}>
       <svg width={width} height={height}>
         {data.map((item, index) => {
           // Calculate the start and end angles for this arc

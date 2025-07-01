@@ -16,7 +16,7 @@ interface PieChartProps {
   height?: number
 }
 
-export default function PieChart({ data, width = 400, height = 400 }: PieChartProps) {
+export default function PieChart({ data, width = 400, height = 400,...props }: PieChartProps) {
   const [selectedSlice, setSelectedSlice] = useState<string | null>(null)
   
   // Calculate total for percentages
@@ -64,7 +64,7 @@ export default function PieChart({ data, width = 400, height = 400 }: PieChartPr
   })
 
   return (
-    <div className="relative" style={{ width, height }}>
+    <div className="relative" style={{ width, height }} {...props}>
       <svg width={width} height={height}>
         {slices.map((slice) => (
           <g key={slice.id}>

@@ -82,9 +82,6 @@ const RainColumn = styled.div<{ delay: number; duration: number }>`
   white-space: pre;
 `;
 
-const generateRandomBinary = (length: number) => {
-  return Array.from({ length }, () => Math.round(Math.random())).join('');
-};
 
 interface AccordionItemProps {
   title: string;

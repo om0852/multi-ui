@@ -8,9 +8,10 @@ type PulseGlowBadgeProps = {
 const PulseGlowBadge: React.FC<PulseGlowBadgeProps> = ({
   text,
   color = "bg-blue-500",
+  ...props
 }) => {
   return (
-    <div className="relative inline-block">
+    <div className="relative inline-block" {...props}>
       {/* Badge text */}
       <span
         className={`relative z-10 px-4 py-2 text-white font-semibold rounded-full ${color}`}

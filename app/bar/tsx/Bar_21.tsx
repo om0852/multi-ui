@@ -22,7 +22,8 @@ export default function Histogram({
   barColor = '#3B82F6',
   hoverColor = '#2563EB',
   showTooltip = true,
-  animationDuration = 0.5
+  animationDuration = 0.5,
+  ...props
 }: HistogramProps) {
   const [hoveredBar, setHoveredBar] = useState<number | null>(null)
 
@@ -58,7 +59,7 @@ export default function Histogram({
   const yScale = (count: number) => (count / maxCount) * chartHeight
 
   return (
-    <div className="relative" style={{ width, height }}>
+    <div className="relative bg-white" style={{ width, height }} {...props}>
       <svg width={width} height={height}>
         {/* Y-axis */}
         <line x1={padding} y1={padding} x2={padding} y2={height - padding} stroke="#E5E7EB" />

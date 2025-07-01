@@ -27,7 +27,8 @@ export default function FunnelChart({
   gapBetweenLevels = 4,
   animationDuration = 0.8,
   showPercentages = true,
-  colorPalette = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899', '#6366F1']
+  colorPalette = ['#3B82F6', '#10B981', '#F59E0B', '#EF4444', '#8B5CF6', '#EC4899', '#6366F1'],
+  ...props
 }: FunnelChartProps) {
   const [hoveredLevel, setHoveredLevel] = useState<number | null>(null);
   
@@ -61,7 +62,7 @@ export default function FunnelChart({
   });
   
   return (
-    <div className="relative" style={{ width, height }}>
+    <div className="relative bg-white" style={{ width, height }} {...props}>
       <svg width={width} height={height}>
         {/* Funnel levels */}
         {levels.map((level, index) => {

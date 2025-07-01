@@ -29,7 +29,8 @@ export default function StackedHorizontalBarChart({
   barHeight = 40,
   animationDuration = 0.8,
   showLegend = true,
-  showValues = true
+  showValues = true,
+  ...props
 }: StackedHorizontalBarChartProps) {
   const [hoveredSegment, setHoveredSegment] = useState<{ row: number; segment: number } | null>(null);
   
@@ -54,7 +55,7 @@ export default function StackedHorizontalBarChart({
   );
   
   return (
-    <div className="relative" style={{ width, height: calculatedHeight }}>
+    <div className="relative bg-white" style={{ width, height: calculatedHeight }} {...props}>
       <svg width={width} height={calculatedHeight}>
         {/* Y-axis labels (bar labels) */}
         {data.map((item, rowIndex) => (

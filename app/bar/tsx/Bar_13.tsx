@@ -16,6 +16,7 @@ export function Histogram({
   width = 400,
   height = 300,
   className = "",
+  ...props
 }: HistogramProps) {
   // Sort the data to create bins
   const min = Math.min(...data);
@@ -38,6 +39,7 @@ export function Histogram({
       className={`w-full ${className}`}
       viewBox={`0 0 ${width} ${height}`}
       style={{ overflow: "visible" }}
+      {...props}
     >
       {binCounts.map((count, index) => {
         const barHeight = (count / maxBinCount) * height;

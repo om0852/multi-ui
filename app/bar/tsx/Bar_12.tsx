@@ -19,6 +19,7 @@ export function Sparkline({
   height = 30,
   strokeWidth = 2,
   className = "",
+  ...props
 }: SparklineProps) {
   const [hoverIndex, setHoverIndex] = useState<number | null>(null);
 
@@ -33,6 +34,7 @@ export function Sparkline({
       className={`w-full ${className}`}
       viewBox={`0 0 ${width} ${height}`}
       style={{ overflow: "visible" }}
+      {...props}
     >
       {/* Line Path */}
       <motion.path

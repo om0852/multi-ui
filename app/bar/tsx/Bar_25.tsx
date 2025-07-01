@@ -35,7 +35,8 @@ export default function BubbleChart({
     'Category C': '#F59E0B',
     'Category D': '#8B5CF6',
     'Category E': '#EC4899'
-  }
+  },
+  ...props
 }: BubbleChartProps) {
   const [hoveredBubble, setHoveredBubble] = useState<number | null>(null);
   
@@ -91,7 +92,7 @@ export default function BubbleChart({
   const categories = Array.from(new Set(data.map(item => item.category)));
 
   return (
-    <div className="relative" style={{ width, height }}>
+    <div className="relative bg-white" style={{ width, height }} {...props}>
       <svg width={width} height={height}>
         {/* Background grid */}
         <rect

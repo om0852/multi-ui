@@ -23,7 +23,8 @@ export default function LineGraphDesign4({
   height = 400,
   lineColor = '#6366F1',
   dotColor = '#4F46E5',
-  backgroundColor = '#EEF2FF'
+  backgroundColor = '#EEF2FF',
+  ...props
 }: LineGraphProps) {
   const padding = 50
   const chartWidth = width - padding * 2
@@ -53,7 +54,7 @@ export default function LineGraphDesign4({
   }, [data])
 
   return (
-    <div className="relative" style={{ width, height, backgroundColor }}>
+    <div className="relative" style={{ width, height, backgroundColor }} {...props}>
       <svg width={width} height={height}>
         {/* Background grid */}
         {Array.from({ length: 5 }).map((_, i) => (
