@@ -1,19 +1,9 @@
-import React from "react";
-
-interface SplitSlideButtonProps {
-  text: string;
-  color1?: string;
-  color2?: string;
-  size?: string;
-  onClick?: () => void;
-}
-
-const Button30: React.FC<SplitSlideButtonProps> = ({
-  text,
+const Button30 = ({
+  text = 'Split Slide',
   color1 = "bg-green-500",
   color2 = "bg-green-700",
   size = "w-40 h-12",
-  onClick,
+  onClick = () => console.log('Split slide button clicked!'),
   ...props
 }) => {
   return (
@@ -33,4 +23,4 @@ const Button30: React.FC<SplitSlideButtonProps> = ({
   );
 };
 
-export default Button30;
+render(<Button30 />);

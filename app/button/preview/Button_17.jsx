@@ -1,17 +1,8 @@
-import React from "react";
-
-interface GearButtonProps {
-  text: string;
-  color?: string;
-  size?: string;
-  onClick?: () => void;
-}
-
-const Button17: React.FC<GearButtonProps> = ({
-  text,
+const Button17 = ({
+  text = 'Gear Button',
   color = "bg-red-500",
   size = "w-36 h-36",
-  onClick,
+  onClick = () => console.log('Gear button clicked!'),
   ...props
 }) => {
   return (
@@ -26,4 +17,4 @@ const Button17: React.FC<GearButtonProps> = ({
   );
 };
 
-export default Button17;
+render(<Button17 />);

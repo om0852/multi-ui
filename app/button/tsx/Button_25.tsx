@@ -12,6 +12,7 @@ const Button25: React.FC<RippleButtonProps> = ({
   color = "bg-teal-500",
   size = "w-36 h-12",
   onClick,
+  ...props
 }) => {
   const [ripple, setRipple] = useState({ x: 0, y: 0, show: false });
 
@@ -30,6 +31,7 @@ const Button25: React.FC<RippleButtonProps> = ({
     <button
       className={`relative ${size} ${color} text-white font-bold rounded-lg overflow-hidden`}
       onClick={handleRipple}
+      {...props}
     >
       {ripple.show && (
         <span

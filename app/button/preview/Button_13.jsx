@@ -1,26 +1,19 @@
-import React, { useState } from "react";
+const { useState } = React;
 
-interface TrailRippleButtonProps {
-  text: string;
-  color?: string;
-  size?: string;
-  onClick?: () => void;
-}
-
-const Button13: React.FC<TrailRippleButtonProps> = ({
-  text,
+const Button13 = ({
+  text = 'Click Me',
   color = "bg-blue-500",
   size = "w-40 h-12",
-  onClick,
+  onClick = () => console.log('Button clicked!'),
   ...props
 }) => {
-  const [ripples, setRipples] = useState<number[]>([]);
+  const [ripples, setRipples] = useState([]);
 
-  const handleClick = () => {
+  const handleClick = (e) => {
     const id = Date.now();
-    setRipples((prev) => [...prev, id]);
-    setTimeout(() => setRipples((prev) => prev.filter((r) => r !== id)), 600);
-    if (onClick) onClick();
+    setRipples(prev => [...prev, id]);
+    setTimeout(() => setRipples(prev => prev.filter(r => r !== id)), 600);
+    onClick();
   };
 
   return (
@@ -44,4 +37,4 @@ const Button13: React.FC<TrailRippleButtonProps> = ({
   );
 };
 
-export default Button13;
+render(<Button13 />);

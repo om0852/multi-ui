@@ -1,19 +1,9 @@
-import React from "react";
-
-interface RippleEffectButtonProps {
-  text: string;
-  color?: string; // Tailwind color class like 'bg-red-500'
-  textColor?: string; // Tailwind text color like 'text-white'
-  size?: string; // Tailwind size classes like 'text-lg', 'text-sm'
-  onClick: () => void;
-}
-
-const Button2: React.FC<RippleEffectButtonProps> = ({
-  text,
+const Button2 = ({
+  text = 'Click Me',
   color = "bg-blue-500",
   textColor = "text-white",
   size = "text-lg",
-  onClick,
+  onClick = () => console.log('Button 2 clicked!'),
   ...props
 }) => {
   return (
@@ -40,4 +30,7 @@ const Button2: React.FC<RippleEffectButtonProps> = ({
   );
 };
 
-export default Button2;
+render(<Button2 />);
+
+
+

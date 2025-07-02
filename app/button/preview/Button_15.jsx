@@ -1,17 +1,8 @@
-import React from "react";
-
-interface ElasticButtonProps {
-  text: string;
-  color?: string;
-  size?: string;
-  onClick?: () => void;
-}
-
-const Button15: React.FC<ElasticButtonProps> = ({
-  text,
+const Button15 = ({
+  text = 'Elastic Button',
   color = "bg-green-500",
   size = "w-32 h-10",
-  onClick,
+  onClick = () => console.log('Elastic button clicked!'),
   ...props
 }) => {
   return (
@@ -25,4 +16,4 @@ const Button15: React.FC<ElasticButtonProps> = ({
   );
 };
 
-export default Button15;
+render(<Button15 />);

@@ -1,28 +1,20 @@
-import React, { useState } from "react";
+const { useState } = React;
 
-interface CubeButtonProps {
-  activeText: string;
-  inactiveText: string;
-  activeColor?: string;
-  inactiveColor?: string;
-  size?: "small" | "medium" | "large";
-  onToggle?: (isActive: boolean) => void;
-}
-
-const Button11: React.FC<CubeButtonProps> = ({
-  activeText,
-  inactiveText,
+const Button11 = ({
+  activeText = 'ON',
+  inactiveText = 'OFF',
   activeColor = "bg-green-500",
   inactiveColor = "bg-red-500",
   size = "medium",
-  onToggle,
+  onToggle = (isActive) => console.log(isActive ? 'Active' : 'Inactive'),
   ...props
 }) => {
   const [isActive, setIsActive] = useState(false);
 
   const handleClick = () => {
-    setIsActive(!isActive);
-    if (onToggle) onToggle(!isActive);
+    const newState = !isActive;
+    setIsActive(newState);
+    onToggle(newState);
   };
 
   const sizeClasses = {
@@ -45,14 +37,10 @@ const Button11: React.FC<CubeButtonProps> = ({
           transformStyle: "preserve-3d",
         }}
       >
-        <div
-          className={`absolute inset-0 flex items-center justify-center backface-hidden`}
-        >
+        <div className="absolute inset-0 flex items-center justify-center backface-hidden">
           {inactiveText}
         </div>
-        <div
-          className={`absolute inset-0 flex items-center justify-center backface-hidden rotate-y-180`}
-        >
+        <div className="absolute inset-0 flex items-center justify-center backface-hidden rotate-y-180">
           {activeText}
         </div>
       </div>
@@ -60,4 +48,4 @@ const Button11: React.FC<CubeButtonProps> = ({
   );
 };
 
-export default Button11;
+render(<Button11 />);

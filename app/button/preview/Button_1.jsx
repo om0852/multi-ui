@@ -1,14 +1,7 @@
-import React from "react";
 
-interface AnimatedButtonProps {
-  label: string;
-  onClick: () => void;
-  className?: string; // Optional for additional styling
-}
-
-const Button1: React.FC<AnimatedButtonProps> = ({
-  label,
-  onClick,
+const Button1 = ({
+  label = 'Click Me',
+  onClick = () => console.log('Button clicked!'),
   className = "",
   ...props
 }) => {
@@ -24,4 +17,4 @@ const Button1: React.FC<AnimatedButtonProps> = ({
   );
 };
 
-export default Button1;
+render(<Button1 />);

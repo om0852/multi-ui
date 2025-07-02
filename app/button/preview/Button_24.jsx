@@ -1,17 +1,8 @@
-import React from "react";
-
-interface OrbitButtonProps {
-  text: string;
-  color?: string;
-  size?: string;
-  onClick?: () => void;
-}
-
-const Button24: React.FC<OrbitButtonProps> = ({
-  text,
+const Button24 = ({
+  text = 'Orbit Button',
   color = "bg-pink-500",
   size = "w-40 h-14",
-  onClick,
+  onClick = () => console.log('Orbit button clicked!'),
   ...props
 }) => {
   return (
@@ -37,4 +28,16 @@ const Button24: React.FC<OrbitButtonProps> = ({
   );
 };
 
-export default Button24;
+render(
+  <>
+    <style>
+      {`
+        @keyframes spin {
+          from { transform: rotate(0deg) translateX(40px) rotate(0deg); }
+          to { transform: rotate(360deg) translateX(40px) rotate(-360deg); }
+        }
+      `}
+    </style>
+    <Button24 />
+  </>
+);

@@ -1,17 +1,8 @@
-import React from "react";
-
-interface ExpandingOutlineButtonProps {
-  text: string;
-  color?: string;
-  size?: string;
-  onClick?: () => void;
-}
-
-const Button28: React.FC<ExpandingOutlineButtonProps> = ({
-  text,
+const Button28 = ({
+  text = 'Expand Outline',
   color = "text-blue-500",
   size = "w-40 h-12",
-  onClick,
+  onClick = () => console.log('Expanding outline button clicked!'),
   ...props
 }) => {
   return (
@@ -24,9 +15,9 @@ const Button28: React.FC<ExpandingOutlineButtonProps> = ({
         className="absolute inset-0 bg-blue-500 rounded-lg scale-0 group-hover:scale-100 transition-transform duration-300 ease-in-out"
         style={{ zIndex: -1 }}
       ></span>
-      <span className="relative group-hover:text-white">{text}</span>
+      <span className="relative group-hover:text-white transition-colors duration-300">{text}</span>
     </button>
   );
 };
 
-export default Button28;
+render(<Button28 />);

@@ -12,11 +12,13 @@ const Button27: React.FC<TiltHoverButtonProps> = ({
   color = "bg-orange-400",
   size = "w-36 h-12",
   onClick,
+  ...props
 }) => {
   return (
     <button
       className={`relative ${size} ${color} text-white font-bold rounded-lg flex items-center justify-center overflow-hidden cursor-pointer transition-transform transform hover:rotate-6 hover:scale-105`}
       onClick={onClick}
+      {...props}
     >
       {text}
     </button>

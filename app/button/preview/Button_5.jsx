@@ -1,19 +1,9 @@
-import React from "react";
-
-interface SlideInButtonProps {
-  text: string;
-  color?: string; // Tailwind background color
-  textColor?: string; // Tailwind text color
-  size?: string; // Tailwind padding classes
-  onClick: () => void;
-}
-
-const Button5: React.FC<SlideInButtonProps> = ({
-  text,
+const Button5 = ({
+  text = 'Slide In',
   color = "bg-blue-600",
   textColor = "text-white",
   size = "px-6 py-3",
-  onClick,
+  onClick = () => console.log('Slide in button clicked!'),
   ...props
 }) => {
   return (
@@ -28,4 +18,4 @@ const Button5: React.FC<SlideInButtonProps> = ({
   );
 };
 
-export default Button5;
+render(<Button5 />);

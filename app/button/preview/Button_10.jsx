@@ -1,19 +1,9 @@
-import React from "react";
-
-interface GradientSwipeButtonProps {
-  text: string;
-  gradientColors?: string[];
-  textColor?: string;
-  size?: "small" | "medium" | "large";
-  onClick?: () => void;
-}
-
-const Button10: React.FC<GradientSwipeButtonProps> = ({
-  text,
+const Button10 = ({
+  text = 'Gradient Swipe',
   gradientColors = ["from-blue-500", "to-green-500"],
   textColor = "text-white",
   size = "medium",
-  onClick,
+  onClick = () => console.log('Gradient button clicked!'),
   ...props
 }) => {
   const sizeClasses =
@@ -39,4 +29,4 @@ const Button10: React.FC<GradientSwipeButtonProps> = ({
   );
 };
 
-export default Button10;
+render(<Button10 />);

@@ -12,11 +12,13 @@ const Button29: React.FC<FloatingBubbleButtonProps> = ({
   color = "bg-purple-600",
   size = "w-36 h-12",
   onClick,
+  ...props
 }) => {
   return (
     <button
       className={`relative ${size} ${color} text-white font-bold rounded-lg overflow-hidden group`}
       onClick={onClick}
+      {...props}
     >
       <div className="absolute inset-0 flex justify-center items-center overflow-hidden">
         {Array.from({ length: 5 }).map((_, index) => (

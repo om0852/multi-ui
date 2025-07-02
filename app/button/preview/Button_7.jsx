@@ -1,30 +1,18 @@
-import React from "react";
-
-interface FlipButtonProps {
-  frontText: string;
-  backText: string;
-  color?: string; // Tailwind front background color
-  backColor?: string; // Tailwind back background color
-  textColor?: string; // Tailwind text color
-  size?: string; // Tailwind padding classes
-  onClick: () => void;
-}
-
-const Button7: React.FC<FlipButtonProps> = ({
-  frontText,
-  backText,
+const Button7 = ({
+  frontText = 'Hover to Flip',
+  backText = 'Flipped!',
   color = "bg-green-500",
   backColor = "bg-black",
   textColor = "text-white",
   size = "px-6 py-3",
-  onClick,
+  onClick = () => console.log('Flip button clicked!'),
   ...props
 }) => {
   return (
     <div className="group perspective" {...props}>
       <button
         onClick={onClick}
-        className={`relative ${size} ${textColor} font-semibold rounded overflow-hidden`}
+        className={`relative ${size} ${textColor} font-semibold rounded overflow-hidden group-hover:rotate-y-180 transition-transform duration-500`}
         style={{ transformStyle: "preserve-3d" }}
       >
         <span
@@ -44,4 +32,4 @@ const Button7: React.FC<FlipButtonProps> = ({
   );
 };
 
-export default Button7;
+render(<Button7 />);

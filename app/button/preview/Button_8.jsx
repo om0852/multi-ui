@@ -1,19 +1,9 @@
-import React from "react";
-
-interface BounceButtonProps {
-  text: string;
-  color?: string; // Tailwind background color
-  textColor?: string; // Tailwind text color
-  size?: string; // Tailwind size classes
-  onClick: () => void;
-}
-
-const Button8: React.FC<BounceButtonProps> = ({
-  text,
+const Button8 = ({
+  text = 'Bounce Me',
   color = "bg-red-500",
   textColor = "text-white",
   size = "px-6 py-3",
-  onClick,
+  onClick = () => console.log('Bounce button clicked!'),
   ...props
 }) => {
   return (
@@ -27,4 +17,4 @@ const Button8: React.FC<BounceButtonProps> = ({
   );
 };
 
-export default Button8;
+render(<Button8 />);

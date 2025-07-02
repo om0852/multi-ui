@@ -1,19 +1,9 @@
-import React from "react";
-
-interface GlowButtonProps {
-  text: string;
-  color?: string; // Tailwind background color
-  textColor?: string; // Tailwind text color
-  size?: string; // Tailwind size classes
-  onClick: () => void;
-}
-
-const Button6: React.FC<GlowButtonProps> = ({
-  text,
+const Button6 = ({
+  text = 'Glow Effect',
   color = "bg-cyan-500",
   textColor = "text-black",
   size = "px-6 py-3",
-  onClick,
+  onClick = () => console.log('Glow button clicked!'),
   ...props
 }) => {
   return (
@@ -27,4 +17,4 @@ const Button6: React.FC<GlowButtonProps> = ({
   );
 };
 
-export default Button6;
+render(<Button6 />);

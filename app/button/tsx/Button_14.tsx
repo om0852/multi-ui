@@ -12,6 +12,7 @@ const Button14: React.FC<GlowingButtonProps> = ({
   color = "bg-pink-500",
   size = "w-36 h-12",
   onClick,
+  ...props
 }) => {
   return (
     <button
@@ -21,6 +22,7 @@ const Button14: React.FC<GlowingButtonProps> = ({
         animation: "pulse 2s infinite",
       }}
       onClick={onClick}
+      {...props}
     >
       {text}
     </button>

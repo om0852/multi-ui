@@ -12,11 +12,13 @@ const Button19: React.FC<ZoomButtonProps> = ({
   color = "bg-purple-500",
   size = "w-32 h-12",
   onClick,
+  ...props
 }) => {
   return (
     <button
       className={`relative ${size} ${color} text-white rounded-lg flex items-center justify-center overflow-hidden cursor-pointer`}
       onClick={onClick}
+      {...props}
     >
       <span className="absolute inset-0 bg-opacity-20 animate-pulse"></span>
       <span className="relative">{text}</span>

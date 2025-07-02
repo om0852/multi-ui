@@ -1,19 +1,9 @@
-import React from "react";
-
-interface PulseButtonProps {
-  text: string;
-  color?: string; // Tailwind background color
-  textColor?: string; // Tailwind text color
-  size?: string; // Tailwind padding classes
-  onClick: () => void;
-}
-
-const Button4: React.FC<PulseButtonProps> = ({
-  text,
+const Button4 = ({
+  text = 'Pulse Me',
   color = "bg-purple-500",
   textColor = "text-white",
   size = "px-6 py-3",
-  onClick,
+  onClick = () => console.log('Pulse button clicked!'),
   ...props
 }) => {
   return (
@@ -27,4 +17,4 @@ const Button4: React.FC<PulseButtonProps> = ({
   );
 };
 
-export default Button4;
+render(<Button4 />);
