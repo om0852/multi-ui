@@ -598,4 +598,4 @@ const ColorPickerWithStyles = () => {
   );
 };
 
-  root.render(<ColorPickerWithStyles />);
+  render(<ColorPickerWithStyles />);
