@@ -24,7 +24,9 @@ export const EditableContainer: React.FC<EditableContainerProps> = ({
 
   return (
     <motion.div
-      className={`bg-gray-100 rounded-2xl p-6 shadow-[8px_8px_16px_#d1d1d1,-8px_-8px_16px_#ffffff] ${className}`}
+      className={`bg-gray-100 dark:bg-gray-800 rounded-2xl p-6 
+        shadow-[8px_8px_16px_#d1d1d1,-8px_-8px_16px_#ffffff] 
+        dark:shadow-[8px_8px_16px_#1f2937,-8px_-8px_16px_#111827] ${className}`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
@@ -41,7 +43,10 @@ export const EditableContainer: React.FC<EditableContainerProps> = ({
               <textarea
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
-                className="w-full min-h-[120px] p-4 bg-gray-50 rounded-xl shadow-[inset_4px_4px_8px_#d1d1d1,inset_-4px_-4px_8px_#ffffff] text-gray-700 focus:outline-none resize-none"
+                className="w-full min-h-[120px] p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl 
+                  shadow-[inset_4px_4px_8px_#d1d1d1,inset_-4px_-4px_8px_#ffffff] 
+                  dark:shadow-[inset_4px_4px_8px_#1f2937,inset_-4px_-4px_8px_#374151] 
+                  text-gray-700 dark:text-gray-200 focus:outline-none resize-none"
                 placeholder="Type something..."
               />
             </div>
@@ -50,7 +55,12 @@ export const EditableContainer: React.FC<EditableContainerProps> = ({
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={() => setIsEditing(false)}
-                className="px-6 py-2 text-sm text-gray-600 bg-gray-100 rounded-xl shadow-[4px_4px_8px_#d1d1d1,-4px_-4px_8px_#ffffff] hover:shadow-[2px_2px_4px_#d1d1d1,-2px_-2px_4px_#ffffff] transition-shadow"
+                className="px-6 py-2 text-sm text-gray-600 dark:text-gray-300 bg-gray-100 dark:bg-gray-700 rounded-xl 
+                  shadow-[4px_4px_8px_#d1d1d1,-4px_-4px_8px_#ffffff] 
+                  dark:shadow-[4px_4px_8px_#1f2937,-4px_-4px_8px_#374151] 
+                  hover:shadow-[2px_2px_4px_#d1d1d1,-2px_-2px_4px_#ffffff] 
+                  dark:hover:shadow-[2px_2px_4px_#1f2937,-2px_-2px_4px_#374151] 
+                  transition-shadow"
               >
                 Cancel
               </motion.button>
@@ -58,7 +68,12 @@ export const EditableContainer: React.FC<EditableContainerProps> = ({
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={handleSave}
-                className="px-6 py-2 text-sm text-blue-600 bg-gray-100 rounded-xl shadow-[4px_4px_8px_#d1d1d1,-4px_-4px_8px_#ffffff] hover:shadow-[2px_2px_4px_#d1d1d1,-2px_-2px_4px_#ffffff] transition-shadow"
+                className="px-6 py-2 text-sm text-blue-600 dark:text-blue-400 bg-gray-100 dark:bg-gray-700 rounded-xl 
+                  shadow-[4px_4px_8px_#d1d1d1,-4px_-4px_8px_#ffffff] 
+                  dark:shadow-[4px_4px_8px_#1f2937,-4px_-4px_8px_#374151] 
+                  hover:shadow-[2px_2px_4px_#d1d1d1,-2px_-2px_4px_#ffffff] 
+                  dark:hover:shadow-[2px_2px_4px_#1f2937,-2px_-2px_4px_#374151] 
+                  transition-shadow"
               >
                 Save
               </motion.button>
@@ -73,12 +88,12 @@ export const EditableContainer: React.FC<EditableContainerProps> = ({
             className="group cursor-pointer"
           >
             <div className="flex items-center justify-between">
-              <p className="text-gray-600">
+              <p className="text-gray-600 dark:text-gray-300">
                 {content || 'Click to add content...'}
               </p>
               <div className="p-2 opacity-0 group-hover:opacity-100 transition-opacity">
                 <svg
-                  className="w-5 h-5 text-blue-500"
+                  className="w-5 h-5 text-blue-500 dark:text-blue-400"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"

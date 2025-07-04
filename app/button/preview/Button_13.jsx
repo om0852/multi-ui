@@ -1,4 +1,3 @@
-const { useState } = React;
 
 const Button13 = ({
   text = 'Click Me',

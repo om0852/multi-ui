@@ -1,6 +1,4 @@
 // React Live compatible Card_24 component with inline styles and global dependencies
-const { useState } = React;
-const { motion } = window.framerMotion;
 
 const GlowEffect = ({ isHovered }) => {
   return (

@@ -1,6 +1,4 @@
 // React Live compatible Card_20 component with inline styles and global dependencies
-const { useState } = React;
-const { motion } = window.framerMotion;
 
 const Card_20 = () => {
   const [isHovered, setIsHovered] = useState(false);

@@ -44,7 +44,8 @@ export default function EditableContainerV3({ initialContent, className = '' }: 
 
   return (
     <motion.div
-      className={`relative overflow-hidden border-b-2 border-gray-200 transition-all ${className}`}
+      className={`relative overflow-hidden border-b-2 border-gray-200 dark:border-gray-700 transition-all ${className}
+        bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-100`}
       variants={containerVariants}
       initial="collapsed"
       animate={isEditing ? "expanded" : "collapsed"}
@@ -60,13 +61,13 @@ export default function EditableContainerV3({ initialContent, className = '' }: 
             animate="collapsed"
             exit="expanded"
           >
-            <p className="text-lg font-light leading-relaxed">{content}</p>
+            <p className="text-lg font-light leading-relaxed text-gray-800 dark:text-gray-200">{content}</p>
           </motion.div>
         )}
         {isEditing && (
           <motion.div
             key="edit"
-            className="absolute inset-0 bg-white"
+            className="absolute inset-0 bg-white dark:bg-gray-800"
             variants={editVariants}
             initial="collapsed"
             animate="expanded"
@@ -76,13 +77,15 @@ export default function EditableContainerV3({ initialContent, className = '' }: 
               ref={textareaRef}
               value={content}
               onChange={handleChange}
-              className="w-full h-full p-6 text-lg font-light leading-relaxed resize-none focus:outline-none"
+              className="w-full h-full p-6 text-lg font-light leading-relaxed resize-none focus:outline-none
+                bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200"
             />
           </motion.div>
         )}
       </AnimatePresence>
       <motion.button
-        className="absolute top-4 right-4 p-2 rounded-full bg-gray-100 text-gray-600 hover:bg-gray-200 transition-colors"
+        className="absolute top-4 right-4 p-2 rounded-full bg-gray-100 dark:bg-gray-700 
+          text-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors"
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
         onClick={handleEditToggle}

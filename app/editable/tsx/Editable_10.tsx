@@ -36,7 +36,7 @@ export const EditableContainer: React.FC<EditableContainerProps> = ({
 
   return (
     <motion.div
-      className={`relative p-4 bg-white rounded-lg shadow-md ${className}`}
+      className={`relative p-4 bg-white dark:bg-gray-800 rounded-lg shadow-md ${className}`}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
@@ -56,14 +56,18 @@ export const EditableContainer: React.FC<EditableContainerProps> = ({
               ref={textareaRef}
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              className="w-full h-32 p-3 text-gray-800 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="w-full h-32 p-3 text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-800 
+                border border-gray-300 dark:border-gray-600 rounded-md focus:outline-none 
+                focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400"
             />
             <div className="flex justify-between items-center">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleCancel}
-                className="px-4 py-2 text-sm text-gray-600 bg-gray-200 rounded-md hover:bg-gray-300 focus:outline-none focus:ring-2 focus:ring-gray-400"
+                className="px-4 py-2 text-sm text-gray-700 dark:text-gray-200 bg-gray-200 dark:bg-gray-700 
+                  rounded-md hover:bg-gray-300 dark:hover:bg-gray-600 focus:outline-none 
+                  focus:ring-2 focus:ring-gray-400 dark:focus:ring-gray-500"
               >
                 Cancel
               </motion.button>
@@ -71,7 +75,8 @@ export const EditableContainer: React.FC<EditableContainerProps> = ({
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={handleSave}
-                className="px-4 py-2 text-sm text-white bg-blue-500 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-400"
+                className="px-4 py-2 text-sm text-white bg-blue-500 rounded-md hover:bg-blue-600 
+                  focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-500"
               >
                 Save
               </motion.button>
@@ -87,7 +92,7 @@ export const EditableContainer: React.FC<EditableContainerProps> = ({
             className="cursor-pointer"
             onClick={() => setIsEditing(true)}
           >
-            <p className="text-gray-800">{content || 'Click to edit...'}</p>
+            <p className="text-gray-800 dark:text-gray-200">{content || 'Click to edit...'}</p>
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -97,7 +102,8 @@ export const EditableContainer: React.FC<EditableContainerProps> = ({
               <img
                 src="https://img.icons8.com/ios-filled/50/000000/edit.png"
                 alt="Edit"
-                className="w-6 h-6 text-blue-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+                className="w-6 h-6 text-blue-500 dark:text-blue-400 opacity-0 
+                  group-hover:opacity-100 transition-opacity duration-200"
               />
             </motion.div>
           </motion.div>

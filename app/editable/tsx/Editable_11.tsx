@@ -51,7 +51,8 @@ export const EditableContainer: React.FC<EditableContainerProps> = ({
 
   return (
     <motion.div
-      className={`relative p-4 bg-gradient-to-r from-gray-50 to-white rounded-xl shadow-lg hover:shadow-xl transition-shadow ${className}`}
+      className={`relative p-4 bg-gradient-to-r from-gray-50 to-white dark:from-gray-800 dark:to-gray-900 
+        rounded-xl shadow-lg hover:shadow-xl transition-shadow ${className}`}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: -20 }}
@@ -73,10 +74,13 @@ export const EditableContainer: React.FC<EditableContainerProps> = ({
                 value={content}
                 onChange={(e) => setContent(e.target.value)}
                 onKeyDown={handleKeyDown}
-                className="w-full min-h-[120px] p-4 text-gray-700 bg-white border-2 border-indigo-100 rounded-lg focus:outline-none focus:border-indigo-400 focus:ring-2 focus:ring-indigo-200 transition-all duration-200 resize-none"
+                className="w-full min-h-[120px] p-4 text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 
+                  border-2 border-indigo-100 dark:border-gray-700 rounded-lg focus:outline-none 
+                  focus:border-indigo-400 dark:focus:border-indigo-500 focus:ring-2 
+                  focus:ring-indigo-200 dark:focus:ring-indigo-500/30 transition-all duration-200 resize-none"
                 placeholder={placeholder}
               />
-              <div className="absolute bottom-2 right-2 text-xs text-gray-400">
+              <div className="absolute bottom-2 right-2 text-xs text-gray-400 dark:text-gray-500">
                 Press Ctrl + Enter to save, Esc to cancel
               </div>
             </div>
@@ -85,7 +89,10 @@ export const EditableContainer: React.FC<EditableContainerProps> = ({
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={handleCancel}
-                className="px-4 py-2 text-sm font-medium text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-300 transition-colors duration-200"
+                className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-200 
+                  bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 
+                  focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-500 
+                  transition-colors duration-200"
               >
                 Cancel
               </motion.button>
@@ -93,7 +100,9 @@ export const EditableContainer: React.FC<EditableContainerProps> = ({
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 onClick={handleSave}
-                className="px-4 py-2 text-sm font-medium text-white bg-indigo-500 rounded-lg hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-300 transition-colors duration-200"
+                className="px-4 py-2 text-sm font-medium text-white bg-indigo-500 rounded-lg 
+                  hover:bg-indigo-600 focus:outline-none focus:ring-2 focus:ring-indigo-300 
+                  dark:focus:ring-indigo-500 transition-colors duration-200"
               >
                 Save Changes
               </motion.button>
@@ -110,7 +119,7 @@ export const EditableContainer: React.FC<EditableContainerProps> = ({
             className="group cursor-pointer relative"
           >
             <div className="min-h-[60px] p-2">
-              <p className="text-gray-700 break-words">
+              <p className="text-gray-700 dark:text-gray-200 break-words">
                 {content || placeholder}
               </p>
             </div>
@@ -119,9 +128,9 @@ export const EditableContainer: React.FC<EditableContainerProps> = ({
               animate={{ opacity: 1 }}
               className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200"
             >
-              <div className="p-2 bg-indigo-100 rounded-full">
+              <div className="p-2 bg-indigo-100 dark:bg-gray-700 rounded-full">
                 <svg
-                  className="w-4 h-4 text-indigo-600"
+                  className="w-4 h-4 text-indigo-600 dark:text-indigo-400"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"

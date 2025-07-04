@@ -59,7 +59,7 @@ const MaskedInput: React.FC<MaskedInputProps> = ({
         <motion.label
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          className="mb-4 text-xl font-semibold text-blue-600"
+          className="mb-4 text-xl font-semibold text-blue-600 dark:text-blue-400"
         >
           {label}
         </motion.label>
@@ -69,8 +69,8 @@ const MaskedInput: React.FC<MaskedInputProps> = ({
         value={inputValue}
         onChange={handleChange}
         placeholder={placeholder}
-        className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
-        whileFocus={{ scale: 1.05, boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.1)" }}
+        className="w-full px-4 py-2 border border-gray-300 dark:border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:focus:ring-indigo-400 bg-white dark:bg-gray-800 text-gray-900 dark:text-white"
+        whileFocus={{ scale: 1.05, boxShadow: "0px 4px 12px rgba(0, 0, 0, 0.2)" }}
       />
     </motion.div>
   );

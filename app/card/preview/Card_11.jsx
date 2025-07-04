@@ -1,6 +1,4 @@
 // React Live compatible Card_11 component with inline styles and global dependencies
-const { useState } = React;
-const { motion } = window.framerMotion;
 
 const LeafParticles = ({ isHovered }) => {
   return (

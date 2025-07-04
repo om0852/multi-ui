@@ -1,7 +1,27 @@
 import React, { InputHTMLAttributes } from "react";
 import styled, { keyframes } from "styled-components";
 
-const primaryColor = "#0077FF";
+// Color variables for dark/light mode
+const getThemeColors = () => ({
+  // Dark mode colors
+  dark: {
+    primary: "#60a5fa",
+    text: "#f3f4f6",
+    placeholder: "#9ca3af",
+    border: "#4b5563",
+    success: "#34d399",
+    background: "#1f2937"
+  },
+  // Light mode colors
+  light: {
+    primary: "#0077FF",
+    text: "#223254",
+    placeholder: "#9098A9",
+    border: "#c8ccd4",
+    success: "#10b981",
+    background: "#ffffff"
+  }
+});
 
 // Keyframe animation for the elastic input effect
 const elasticInput = keyframes`
@@ -17,10 +37,32 @@ const elasticInput = keyframes`
 const Container = styled.div`
   height: 100%;
   display: grid;
-  font-family: Avenir, sans-serif;
+  font-family: Avenir, sans-serif, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   -webkit-text-size-adjust: 100%;
   -webkit-font-smoothing: antialiased;
   overflow: hidden;
+  background: var(--bg-color, #ffffff);
+  transition: background-color 0.3s ease, color 0.3s ease;
+  
+  /* System color scheme detection */
+  @media (prefers-color-scheme: dark) {
+    --primary-color: #60a5fa;
+    --text-color: #f3f4f6;
+    --placeholder-color: #9ca3af;
+    --border-color: #4b5563;
+    --success-color: #34d399;
+    --bg-color: #1f2937;
+  }
+  
+  @media (prefers-color-scheme: light) {
+    --primary-color: #0077FF;
+    --text-color: #223254;
+    --placeholder-color: #9098A9;
+    --border-color: #c8ccd4;
+    --success-color: #10b981;
+    --bg-color: #ffffff;
+  }
+  
   * {
     box-sizing: border-box;
   }
@@ -37,24 +79,39 @@ const InputWrapper = styled.label`
 const StyledInput = styled.input`
   width: 100%;
   height: 48px;
-  padding: 0;
+  padding: 0 16px 0 0;
   font-size: 16px;
   font-weight: 500;
-  background: none;
+  background: transparent;
   border: none;
-  color: #223254;
-  transition: all 0.15s ease;
+  color: var(--text-color);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover, 
+  &:-webkit-autofill:focus, 
+  &:-webkit-autofill:active  {
+    -webkit-text-fill-color: var(--text-color) !important;
+    -webkit-box-shadow: 0 0 0 30px var(--bg-color) inset !important;
+    transition: background-color 5000s ease-in-out 0s;
+  }
+  
   &:focus {
     outline: none;
     & + .border path {
-      stroke: ${primaryColor};
+      stroke: var(--primary-color);
+      stroke-width: 2.5;
     }
   }
+  
   &:valid + .border path {
     animation: ${elasticInput} 0.8s ease forwards;
+    stroke: var(--success-color);
   }
+  
   &::placeholder {
-    color: #9098A9;
+    color: var(--placeholder-color);
+    opacity: 0.8;
   }
 `;
 
@@ -65,9 +122,9 @@ const Border = styled.svg`
   height: 18px;
   fill: none;
   path {
-    stroke: #c8ccd4;
+    stroke: var(--border-color);
     stroke-width: 2;
-    transition: all 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 `;
 
@@ -83,8 +140,9 @@ const CheckMark = styled.svg`
     transform: translate(0, 0) scale(1);
   }
   path {
-    stroke: ${primaryColor};
-    stroke-width: 2;
+    stroke: var(--success-color);
+    stroke-width: 2.5;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 `;
 

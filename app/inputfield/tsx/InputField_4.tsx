@@ -20,24 +20,47 @@ const FormGroup = styled.div`
   padding: 15px 0 0;
   margin-top: 10px;
   width: 50%;
+  
+  /* System color scheme detection */
+  @media (prefers-color-scheme: dark) {
+    --input-text: #e2e8f0;
+    --input-border: #4a5568;
+    --input-placeholder: #a0aec0;
+    --label-color: #a0aec0;
+    --label-focus: #81e6d9;
+    --gradient-start: #81e6d9;
+    --gradient-end: #4fd1c5;
+    --error-color: #fc8181;
+  }
+  
+  @media (prefers-color-scheme: light) {
+    --input-text: #2d3748;
+    --input-border: #cbd5e0;
+    --input-placeholder: #a0aec0;
+    --label-color: #718096;
+    --label-focus: #2c7a7b;
+    --gradient-start: #11998e;
+    --gradient-end: #38ef7d;
+    --error-color: #e53e3e;
+  }
 `;
 
 const InputField = styled.input<{ error?: string }>`
   font-family: inherit;
   width: 100%;
   border: 0;
-  border-bottom: 2px solid #9b9b9b;
+  border-bottom: 2px solid var(--input-border);
   outline: 0;
-  font-size: 1.3rem;
-  color: white;
+  font-size: 1.1rem;
+  color: var(--input-text);
   padding: 7px 0;
   background: transparent;
-  transition: border-color 0.2s;
+  transition: all 0.3s ease;
 
   ${({ error }) =>
     error &&
     css`
-      border-bottom-color: red;
+      border-bottom-color: var(--error-color);
     `}
 
   &::placeholder {
@@ -45,22 +68,23 @@ const InputField = styled.input<{ error?: string }>`
   }
 
   &:placeholder-shown ~ .form__label {
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     cursor: text;
     top: 20px;
+    color: var(--label-color);
   }
 
   &:focus {
     ~ .form__label {
-      font-size: 1rem;
-      color: #11998e;
-      font-weight: 700;
-      top: -0px;
+      font-size: 0.9rem;
+      color: var(--label-focus);
+      font-weight: 600;
+      top: -5px;
     }
     padding-bottom: 6px;
-    font-weight: 700;
-    border-width: 3px;
-    border-image: linear-gradient(to right, #11998e, #38ef7d);
+    font-weight: 500;
+    border-width: 2px;
+    border-image: linear-gradient(to right, var(--gradient-start), var(--gradient-end));
     border-image-slice: 1;
   }
 
@@ -72,19 +96,25 @@ const InputField = styled.input<{ error?: string }>`
 
 const Label = styled.label`
   position: absolute;
-  top: 30px;
+  top: 20px;
+  left: 0;
   display: block;
-  transition: 0.2s;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   font-size: 1rem;
-  color: #9b9b9b;
+  color: var(--label-color);
   pointer-events: none;
   z-index: 1;
+  background: ${({ theme }) => theme === 'dark' ? '#1a202c' : '#ffffff'};
+  padding: 0 5px;
+  margin-left: 5px;
 `;
 
 const ErrorText = styled.div`
-  color: red;
-  font-size: 0.9rem;
-  margin-top: 5px;
+  color: var(--error-color);
+  font-size: 0.85rem;
+  margin-top: 8px;
+  padding-left: 5px;
+  transition: color 0.3s ease;
 `;
 
 const InputField_4: FC<InputProps> = ({

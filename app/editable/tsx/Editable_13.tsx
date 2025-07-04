@@ -32,14 +32,15 @@ export const EditableContainer: React.FC<EditableContainerProps> = ({
       >
         {/* Front side */}
         <motion.div
-          className={`absolute w-full h-full p-4 bg-gradient-to-br from-emerald-50 to-teal-50 rounded-xl shadow-md cursor-pointer
-            ${isEditing ? 'backface-hidden' : ''}`}
+          className={`absolute w-full h-full p-4 bg-gradient-to-br from-emerald-50 to-teal-50 
+            dark:from-emerald-900/30 dark:to-teal-900/30 rounded-xl shadow-md cursor-pointer
+            ${isEditing ? 'backface-hidden' : ''} border border-emerald-100 dark:border-emerald-900/50`}
           onClick={() => setIsEditing(true)}
         >
           <div className="flex items-center justify-between">
-            <p className="text-emerald-700 font-medium">Click to edit</p>
+            <p className="text-emerald-700 dark:text-emerald-400 font-medium">Click to edit</p>
             <svg
-              className="w-5 h-5 text-emerald-500"
+              className="w-5 h-5 text-emerald-500 dark:text-emerald-400"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -52,31 +53,35 @@ export const EditableContainer: React.FC<EditableContainerProps> = ({
               />
             </svg>
           </div>
-          <p className="mt-3 text-gray-600">{content || 'Empty content...'}</p>
+          <p className="mt-3 text-gray-600 dark:text-gray-300">{content || 'Empty content...'}</p>
         </motion.div>
 
         {/* Back side */}
         <motion.div
-          className={`absolute w-full h-full p-4 bg-white rounded-xl shadow-md
+          className={`absolute w-full h-full p-4 bg-white dark:bg-gray-800 rounded-xl shadow-md
             ${!isEditing ? 'backface-hidden' : ''}`}
           style={{ transform: 'rotateY(180deg)' }}
         >
           <textarea
             value={content}
             onChange={(e) => setContent(e.target.value)}
-            className="w-full h-[120px] p-2 text-gray-700 border border-emerald-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-300 resize-none"
+            className="w-full h-[120px] p-2 text-gray-700 dark:text-gray-200 bg-white dark:bg-gray-800 
+              border border-emerald-200 dark:border-emerald-800 rounded-lg focus:outline-none 
+              focus:ring-2 focus:ring-emerald-300 dark:focus:ring-emerald-500 resize-none"
             placeholder="Enter your content..."
           />
           <div className="flex justify-end mt-2 space-x-2">
             <button
               onClick={() => setIsEditing(false)}
-              className="px-4 py-1 text-sm text-gray-600 hover:text-gray-800"
+              className="px-4 py-1 text-sm text-gray-600 dark:text-gray-300 
+                hover:text-gray-800 dark:hover:text-gray-100"
             >
               Cancel
             </button>
             <button
               onClick={handleSave}
-              className="px-4 py-1 text-sm text-white bg-emerald-500 rounded-md hover:bg-emerald-600"
+              className="px-4 py-1 text-sm text-white bg-emerald-500 rounded-md 
+                hover:bg-emerald-600 dark:bg-emerald-600 dark:hover:bg-emerald-700"
             >
               Save
             </button>

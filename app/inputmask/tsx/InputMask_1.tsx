@@ -55,18 +55,18 @@ const MaskedInput: React.FC<MaskedInputProps> = ({
       exit={{ opacity: 0, y: -20 }}
       className={`flex flex-col items-start w-full max-w-md mx-auto p-4 ${className}`}
     >
-      {label && <label className="mb-2 text-gray-700 font-medium">{label}</label>}
+      {label && <label className="mb-2 text-gray-700 dark:text-gray-200 font-medium">{label}</label>}
       <input
         type="text"
         value={inputValue}
         onChange={handleChange}
         placeholder={placeholder}
-        className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-400"
+        className="w-full p-2 border border-gray-300 dark:border-gray-600 rounded focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white"
       />
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: inputValue ? 1 : 0 }}
-        className="mt-2 text-sm text-gray-500"
+        className="mt-2 text-sm text-gray-500 dark:text-gray-400"
       >
         {inputValue && `You entered: ${inputValue}`}
       </motion.div>

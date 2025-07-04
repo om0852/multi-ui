@@ -1,4 +1,3 @@
-const { useState } = React;
 
 const Button25 = ({
   text = 'Click Ripple',

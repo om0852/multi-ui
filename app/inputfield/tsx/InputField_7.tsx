@@ -15,6 +15,15 @@ const Body = styled.div`
   display: grid;
 `;
 
+const ErrorText = styled.div`
+  color: var(--error-color);
+  font-size: 0.75rem;
+  margin-top: 6px;
+  padding: 0 16px;
+  line-height: 1.3;
+  display: grid;
+`;
+
 const Checkbox = styled.input`
   display: none;
 
@@ -88,6 +97,66 @@ const FormToggle = styled.label`
   }
 `;
 
+const InputContainer = styled.div<{ fullWidth?: boolean }>`
+  position: relative;
+  width: ${({ fullWidth }) => (fullWidth ? "100%" : "auto")};
+  margin-bottom: 1.5rem;
+
+  /* System color scheme detection */
+  @media (prefers-color-scheme: dark) {
+    --input-bg: #2d3748;
+    --input-text: #e2e8f0;
+    --input-border: #4a5568;
+    --input-placeholder: #a0aec0;
+    --label-color: #a0aec0;
+    --label-focus: #63b3ed;
+    --error-color: #fc8181;
+    --hover-border: #718096;
+    --filled-bg: rgba(255, 255, 255, 0.05);
+    --standard-border: #4a5568;
+  }
+
+  @media (prefers-color-scheme: light) {
+    --input-bg: #ffffff;
+    --input-text: #2d3748;
+    --input-border: #e2e8f0;
+    --input-placeholder: #a0aec0;
+    --label-color: #718096;
+    --label-focus: #3182ce;
+    --error-color: #e53e3e;
+    --hover-border: #4a5568;
+    --filled-bg: rgba(0, 0, 0, 0.05);
+    --standard-border: #cbd5e0;
+  }
+`;
+
+const Label = styled.label<{
+  isFloating: boolean;
+  variant?: string;
+  hasError?: boolean;
+  isFocused: boolean;
+}>`
+  position: absolute;
+  left: ${({ variant }) => (variant === "standard" ? 0 : "16px")};
+  top: ${({ isFloating, variant }) =>
+    isFloating ? (variant === "standard" ? "-20px" : "-8px") : "50%"};
+  transform: ${({ isFloating }) =>
+    isFloating ? "translateY(0) scale(0.75)" : "translateY(-50%)"};
+  font-size: ${({ isFloating }) => (isFloating ? "0.75rem" : "1rem")};
+  color: ${({ hasError, isFocused }) =>
+    hasError ? "var(--error-color)" : isFocused ? "var(--label-focus)" : "var(--label-color)"};
+  background: ${({ variant, isFloating }) =>
+    variant !== "standard" && isFloating ? "var(--input-bg)" : "transparent"};
+  padding: 0 4px;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  pointer-events: none;
+  z-index: 1;
+  max-width: calc(100% - 32px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+`;
+
 const FormInput = styled.input.attrs({
   placeholder: "E-mail",
   type: "email",
@@ -95,7 +164,7 @@ const FormInput = styled.input.attrs({
   required: true,
 })<{ $inputHeight?: string; $inputWidth?: string; }>`
   font: inherit;
-  color: ${yourPink};
+  color: var(--input-text);
   height: ${(props) => props.$inputHeight || "100%"};
   width: ${(props) => props.$inputWidth || "100%"};
   padding: 0 0.714em;
@@ -110,7 +179,7 @@ const FormInput = styled.input.attrs({
   transition: 0s;
 
   &::placeholder {
-    color: currentColor;
+    color: var(--input-placeholder);
   }
 
   &:required:valid {

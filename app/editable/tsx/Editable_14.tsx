@@ -35,24 +35,27 @@ export const EditableContainer: React.FC<EditableContainerProps> = ({
             animate={{ x: 0 }}
             exit={{ x: '-100%' }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
-            className="bg-gray-50 rounded-lg p-4"
+            className="bg-gray-50 dark:bg-gray-800 rounded-lg p-4"
           >
             <textarea
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              className="w-full min-h-[100px] bg-transparent text-gray-800 resize-none focus:outline-none"
+              className="w-full min-h-[100px] bg-transparent text-gray-800 dark:text-gray-200 
+                resize-none focus:outline-none"
               placeholder="Type your content..."
             />
             <div className="flex justify-end mt-2 space-x-2">
               <button
                 onClick={() => setIsEditing(false)}
-                className="text-sm text-gray-500 hover:text-gray-700"
+                className="text-sm text-gray-500 dark:text-gray-400 
+                  hover:text-gray-700 dark:hover:text-gray-200"
               >
                 Cancel
               </button>
               <button
                 onClick={handleSave}
-                className="text-sm text-blue-500 hover:text-blue-700"
+                className="text-sm text-blue-500 hover:text-blue-700 
+                  dark:text-blue-400 dark:hover:text-blue-300"
               >
                 Done
               </button>
@@ -66,16 +69,16 @@ export const EditableContainer: React.FC<EditableContainerProps> = ({
             exit={{ x: '100%' }}
             transition={{ type: 'spring', stiffness: 300, damping: 30 }}
             onClick={() => setIsEditing(true)}
-            className="group cursor-pointer p-4"
+            className="group cursor-pointer p-4 hover:bg-gray-50 dark:hover:bg-gray-800/50 rounded-lg transition-colors"
           >
             <div className="flex items-center justify-between">
-              <p className="text-gray-700">
+              <p className="text-gray-700 dark:text-gray-200">
                 {content || 'Click to add content...'}
               </p>
               <motion.span
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
-                className="text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity"
+                className="text-blue-400 dark:text-blue-400 opacity-0 group-hover:opacity-100 transition-opacity"
               >
                 Edit
               </motion.span>

@@ -1,4 +1,3 @@
-const { useState } = React;
 
 const Button11 = ({
   activeText = 'ON',

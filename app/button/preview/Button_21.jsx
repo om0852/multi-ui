@@ -1,4 +1,3 @@
-const { useState } = React;
 
 const Button21 = ({
   text = 'Floating Bubbles',

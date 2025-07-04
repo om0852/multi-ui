@@ -1,4 +1,3 @@
-const { useState } = React;
 
 const Card5 = ({
   title = '3D Card',

@@ -1,6 +1,4 @@
 // React Live compatible Card_25 component with inline styles and global dependencies
-const { useState } = React;
-const { motion } = window.framerMotion;
 
 const PulseEffect = ({ isHovered }) => {
   return (

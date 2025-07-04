@@ -1,6 +1,4 @@
-const { useState, useEffect } = React;
 const { FiChevronDown, FiChevronRight, FiSearch, FiBookOpen, FiFileText, FiVideo, FiDownload, FiExternalLink, FiTag, FiClock, FiThumbsUp } = window.ReactIcons;
-const { motion, AnimatePresence } = window.framerMotion;
 
 const Collapsible_20 = () => {
   // State for expanded categories and articles

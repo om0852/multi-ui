@@ -47,7 +47,7 @@ const MaskedInput: React.FC<MaskedInputProps> = ({
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       exit={{ opacity: 0, y: 20 }}
-      className={`flex flex-col items-start w-full max-w-md mx-auto p-6 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 shadow-lg rounded-xl ${className}`}
+      className={`flex flex-col items-start w-full max-w-md mx-auto p-6 bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 dark:from-indigo-600 dark:via-purple-600 dark:to-pink-600 shadow-lg rounded-xl ${className}`}
     >
       {label && (
         <motion.label
@@ -72,12 +72,12 @@ const MaskedInput: React.FC<MaskedInputProps> = ({
           value={inputValue}
           onChange={handleChange}
           placeholder={placeholder}
-          className="w-full px-6 py-4 text-lg text-gray-800 border-2 border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-300 ease-in-out bg-white"
+          className="w-full px-6 py-4 text-lg text-gray-800 dark:text-white border-2 border-transparent rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent transition-all duration-300 ease-in-out bg-white dark:bg-gray-900/30 backdrop-blur-sm"
         />
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: inputValue ? 1 : 0 }}
-          className="absolute top-full mt-3 text-sm text-gray-500"
+          className="absolute top-full mt-3 text-sm text-gray-200 dark:text-gray-300"
         >
           {inputValue && `Formatted: ${inputValue}`}
         </motion.div>
@@ -91,7 +91,7 @@ const MaskedInput: React.FC<MaskedInputProps> = ({
         <motion.span
           animate={{ opacity: inputValue ? 0 : 1 }}
           transition={{ duration: 0.2 }}
-          className="text-gray-400"
+          className="text-gray-200 dark:text-gray-300"
         >
           @
         </motion.span>

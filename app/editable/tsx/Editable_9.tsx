@@ -33,16 +33,18 @@ export const SlideEditContainer: React.FC<SlideEditContainerProps> = ({
         initial={{ y: '100%' }}
         animate={{ y: isEditing ? '0%' : '100%' }}
         transition={{ type: 'spring', stiffness: 400, damping: 40 }}
-        className="bg-gray-50 rounded-lg shadow-md p-6"
+        className="bg-gray-50 dark:bg-gray-800 rounded-lg shadow-md p-6"
       >
-        <div className="prose max-w-none text-gray-800">
+        <div className="prose dark:prose-invert max-w-none text-gray-800 dark:text-gray-200">
           {content}
         </div>
         <motion.button
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
           onClick={() => setIsEditing(true)}
-          className="absolute top-2 right-2 p-3 text-gray-600 hover:text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-300 rounded-full"
+          className="absolute top-2 right-2 p-3 text-gray-600 dark:text-gray-400 
+            hover:text-gray-800 dark:hover:text-gray-200 focus:outline-none 
+            focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-500 rounded-full"
           aria-label="Edit content"
         >
           <img
@@ -60,19 +62,22 @@ export const SlideEditContainer: React.FC<SlideEditContainerProps> = ({
             animate={{ y: '0%' }}
             exit={{ y: '100%' }}
             transition={{ type: 'spring', stiffness: 400, damping: 40 }}
-            className="absolute inset-0 bg-gray-200 rounded-lg shadow-md p-6"
+            className="absolute inset-0 bg-gray-200 dark:bg-gray-700 rounded-lg shadow-md p-6"
           >
             <textarea
               value={content}
               onChange={(e) => setContent(e.target.value)}
-              className="w-full h-full min-h-[150px] p-2 text-gray-800 border-2 border-gray-400 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 resize-none"
+              className="w-full h-full min-h-[150px] p-2 text-gray-800 dark:text-gray-200 
+                bg-white dark:bg-gray-800 border-2 border-gray-400 dark:border-gray-600 
+                rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-500 resize-none"
             />
             <div className="absolute bottom-4 right-4 flex space-x-4">
               <motion.button
                 whileHover={{ scale: 1.2 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={handleCancel}
-                className="p-3 text-gray-600 hover:text-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-300 rounded-full"
+                className="p-3 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white 
+                  focus:outline-none focus:ring-2 focus:ring-gray-300 dark:focus:ring-gray-500 rounded-full"
                 aria-label="Cancel editing"
               >
                 <img
@@ -85,7 +90,8 @@ export const SlideEditContainer: React.FC<SlideEditContainerProps> = ({
                 whileHover={{ scale: 1.2 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={handleSave}
-                className="p-3 text-blue-600 hover:text-blue-800 focus:outline-none focus:ring-2 focus:ring-blue-400 rounded-full"
+                className="p-3 text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 
+                  focus:outline-none focus:ring-2 focus:ring-blue-400 dark:focus:ring-blue-500 rounded-full"
                 aria-label="Save changes"
               >
                 <img

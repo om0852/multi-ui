@@ -18,22 +18,45 @@ const InputContainer = styled.div`
   position: relative;
   width: 100%;
   margin-bottom: 1.5rem;
+  
+  /* System color scheme detection */
+  @media (prefers-color-scheme: dark) {
+    --input-bg: #2d3748;
+    --input-text: #e2e8f0;
+    --input-border: #4a5568;
+    --input-placeholder: #a0aec0;
+    --label-bg: #1a202c;
+  }
+  
+  @media (prefers-color-scheme: light) {
+    --input-bg: #ffffff;
+    --input-text: #1a202c;
+    --input-border: #e2e8f0;
+    --input-placeholder: #a0aec0;
+    --label-bg: #ffffff;
+  }
 `;
 
 const StyledInput = styled.input<{ hasError: boolean; outlinecolor: string }>`
   width: 100%;
   padding: 1rem 0.5rem;
   font-size: 1rem;
-  border: 2px solid ${(props) => (props.hasError ? 'red' : props.outlinecolor || '#212121')};
+  border: 2px solid ${(props) => (props.hasError ? 'red' : props.outlinecolor || 'var(--input-border)')};
   border-radius: 4px;
-  color: #212121;
-  background: transparent;
+  color: var(--input-text);
+  background-color: var(--input-bg);
   outline: none;
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease;
+
+  &::placeholder {
+    color: var(--input-placeholder);
+    opacity: 0.7;
+  }
 
   &:focus + label,
   &:not(:placeholder-shown) + label {
-    color: ${(props) => (props.hasError ? 'red' : '#fab700')};
+    color: ${(props) => (props.hasError ? 'red' : props.outlinecolor || '#4f46e5')};
+    background-color: var(--label-bg);
   }
 `;
 
@@ -41,17 +64,18 @@ const StyledLabel = styled(motion.label)<{ labelColor: string; labelSize: string
   position: absolute;
   left: 0.5rem;
   top: 1rem;
-  background: white;
+  background: var(--label-bg);
   padding: 0 0.25rem;
-  font-weight: bold;
-  color: ${(props) => props.labelColor || '#212121'};
+  font-weight: 500;
+  color: ${(props) => props.labelColor || 'var(--input-text)'};
   font-size: ${(props) => props.labelSize || '1rem'};
   pointer-events: none;
   transform-origin: left top;
+  transition: all 0.2s ease;
 `;
 
 const ErrorText = styled.span`
-  color: red;
+  color: #f56565;
   font-size: 0.875rem;
   margin-top: 0.25rem;
   display: block;

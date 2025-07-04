@@ -1,6 +1,4 @@
-const { useState, useEffect } = React;
 const { FiChevronDown, FiChevronUp, FiRefreshCw, FiFilter, FiDownload, FiPlus, FiSearch, FiBarChart2, FiPieChart, FiTrendingUp, FiUsers, FiDollarSign, FiShoppingCart, FiClock } = window.ReactIcons;
-const { motion, AnimatePresence } = window.framerMotion;
 
 const Collapsible_19 = () => {
   // State for collapsible sections
