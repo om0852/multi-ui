@@ -1,4 +1,3 @@
-const { useState, useEffect, useRef } = React;
 
 const wheelAnimation = `
   @keyframes rotateWheel {

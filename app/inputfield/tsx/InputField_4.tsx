@@ -94,7 +94,7 @@ const InputField = styled.input<{ error?: string }>`
   }
 `;
 
-const Label = styled.label`
+const Label = styled.label<{ theme: { theme: string } }>`
   position: absolute;
   top: 20px;
   left: 0;
@@ -104,7 +104,7 @@ const Label = styled.label`
   color: var(--label-color);
   pointer-events: none;
   z-index: 1;
-  background: ${({ theme }) => theme === 'dark' ? '#1a202c' : '#ffffff'};
+  background: ${({ theme }) => theme.theme === 'dark' ? '#1a202c' : '#ffffff'};
   padding: 0 5px;
   margin-left: 5px;
 `;

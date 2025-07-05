@@ -1,4 +1,3 @@
-const { useState, useEffect } = React;
 const { motion, AnimatePresence } = FramerMotion;
 
 const UUIDInput = ({
