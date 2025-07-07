@@ -1,138 +1,110 @@
-'use client'
 
-/* animations */
-const mv = keyframes`
-  0%{background-position:0 0}
-  100%{background-position:50px 50px}
+const matrixRain = keyframes`
+  0% { transform: translateY(-100%); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateY(100%); opacity: 0; }
+`
+const digitFlicker = keyframes`
+  0%,100% { opacity: .3; }
+  50% { opacity: 1; }
 `
 
-/* backdrop */
-const Bg = styled.div`
-  padding:1rem;
-  min-height:100%;
-  background:
-    linear-gradient(45deg,#1a1a1a 25%,transparent 25%) -50px 0,
-    linear-gradient(-45deg,#1a1a1a 25%,transparent 25%) -50px 0,
-    linear-gradient(45deg,transparent 75%,#1a1a1a 75%),
-    linear-gradient(-45deg,transparent 75%,#1a1a1a 75%);
-  background-size:100px 100px;
-  background-color:#2a2a2a;
-  position:relative;
-  overflow:hidden;
+const Container = styled.div`
+  padding:1rem;background:linear-gradient(135deg,#000 0%,#001a00 100%);
+  min-height:100%;position:relative;overflow:hidden;
 `
-
-/* geometric blur shapes */
-const Shape = styled.div`
-  position:absolute;
-  width:${p=>p.sz}px;
-  height:${p=>p.sz}px;
-  background:${p=>p.clr};
-  opacity:${p=>p.op};
-  clip-path:polygon(50% 0%,100% 50%,50% 100%,0% 50%);
-  animation:${mv} 30s linear infinite;
-`
-
-/* button */
-const Btn = styled(motion.button)`
-  width:100%;
-  padding:1rem;
-  background:#2a2a2a;
-  color:#fff;
-  clip-path:polygon(0 10px,10px 0,calc(100% - 10px) 0,100% 10px,
-                    100% calc(100% - 10px),calc(100% - 10px) 100%,
-                    10px 100%,0 calc(100% - 10px));
-  position:relative;
-  overflow:hidden;
+const DigitalButton = styled(motion.button)`
+  width:100%;background:rgba(0,26,0,.6);backdrop-filter:blur(10px);
+  border:2px solid rgba(0,255,0,.2);padding:1.5rem;color:#0f0;
+  position:relative;overflow:hidden;border-radius:4px;text-align:left;
+  margin:1rem 0;font-family:"Courier New",monospace;
+  box-shadow:0 0 30px rgba(0,255,0,.1),inset 0 0 20px rgba(0,255,0,.1);
   &::before{
-    content:'';
-    position:absolute;
-    inset:0;
-    background:repeating-linear-gradient(45deg,#3498db,#3498db 10px,#2980b9 10px,#2980b9 20px);
-    opacity:.1;
-    animation:${mv} 20s linear infinite;
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(transparent 0%,rgba(0,255,0,.1) 50%,transparent 100%);
+    opacity:0;transition:.3s;
   }
-  &::after{
-    content:'';
-    position:absolute;
-    inset:2px;
-    background:#2a2a2a;
-    clip-path:inherit;
-  }
+  &:hover::before{opacity:1;}
+`
+const ContentWrapper = styled(motion.div)`
+  overflow:hidden;margin:.5rem 0;position:relative;
+`
+const Content = styled.div`
+  background:rgba(0,26,0,.4);backdrop-filter:blur(10px);
+  border:2px solid rgba(0,255,0,.1);padding:1.5rem;color:#0f0;
+  border-radius:4px;box-shadow:0 0 20px rgba(0,255,0,.1),inset 0 0 15px rgba(0,255,0,.1);
+  font-family:"Courier New",monospace;
+`
+const Title = styled.span`
+  font-size:1.125rem;font-weight:500;color:#0f0;text-shadow:0 0 10px rgba(0,255,0,.5);
+  letter-spacing:2px;font-family:"Courier New",monospace;
+`
+const IconWrapper = styled(motion.div)`
+  color:#0f0;font-size:1.25rem;text-shadow:0 0 10px rgba(0,255,0,.5);
+`
+const RainDrop = styled(motion.div)`
+  position:absolute;color:#0f0;font-family:"Courier New",monospace;font-size:14px;
+  line-height:1;white-space:nowrap;text-shadow:0 0 8px rgba(0,255,0,.5);
+  animation:${matrixRain} ${p=>p.speed}s linear infinite;
+  animation-delay:${p=>p.delay}s;opacity:.5;
+`
+const DigitalCharacter = styled(motion.div)`
+  position:absolute;color:#0f0;font-family:"Courier New",monospace;font-size:12px;
+  animation:${digitFlicker} ${() => 1+Math.random()}s ease-in-out infinite;
+  animation-delay:${p=>p.delay}s;opacity:.5;
 `
 
-/* content panel */
-const Wrap = styled(motion.div)`overflow:hidden;margin-top:.5rem`
-const Box = styled.div`
-  background:#2a2a2a;
-  padding:1rem;
-  color:rgba(255,255,255,.9);
-  clip-path:polygon(0 10px,10px 0,calc(100% - 10px) 0,100% 10px,
-                    100% calc(100% - 10px),calc(100% - 10px) 100%,
-                    10px 100%,0 calc(100% - 10px));
-  position:relative;
-  &::before{
-    content:'';
-    position:absolute;
-    inset:0;
-    background:repeating-linear-gradient(-45deg,#e74c3c,#e74c3c 10px,#c0392b 10px,#c0392b 20px);
-    opacity:.1;
-    animation:${mv} 20s linear infinite reverse;
-  }
-`
+const matrixChars='日ﾊﾐﾋｰｳｼﾅﾓﾆｻﾜﾂｵﾘｱﾎﾃﾏｹﾒｴｶｷﾑﾕﾗｾﾈｽﾀﾇﾍ'
+const randChar=()=>matrixChars[Math.floor(Math.random()*matrixChars.length)]
 
-/* text */
-const Title = styled.span`font-size:1.125rem;font-weight:500;color:#e1e6ea`
-const Icon  = styled(motion.div)`font-size:1.25rem;color:#3498db`
-
-/* item */
-const Item = ({t,c,o,tgl})=>(
-  <div className="mb-4">
-    <Btn onClick={tgl} whileHover={{scale:1.02}} whileTap={{scale:.98}}>
-      <div className="flex justify-between items-center">
-        <Title >{t}</Title>
-        <Icon animate={{rotate:o?180:0,scale:o?1.2:1}} transition={{type:'spring',stiffness:200}}>▼</Icon>
-      </div>
-    </Btn>
-    <AnimatePresence>
-      {o&&(
-        <Wrap
-          initial={{height:0,opacity:0}}
-          animate={{height:'auto',opacity:1}}
-          exit={{height:0,opacity:0}}
-          transition={{duration:.3}}
-        >
-          <Box>{c}</Box>
-        </Wrap>
-      )}
-    </AnimatePresence>
-  </div>
-)
-
-/* accordion root */
-const Accordion = ({data,multi=false})=>{
-  const [open,setOpen]=useState([])
-  const toggle=i=>setOpen(p=>multi?(p.includes(i)?p.filter(x=>x!==i):[...p,i]):p.includes(i)?[]:[i])
+const Accordion = ({ items })=>{
+  const [open,setOpen]=useState(null)
   return(
-    <Bg>
-      <Shape sz={200} clr="#3498db" op={.1} style={{top:'10%',left:'10%'}}/>
-      <Shape sz={150} clr="#e74c3c" op={.1} style={{top:'30%',right:'20%'}}/>
-      <Shape sz={180} clr="#2ecc71" op={.1} style={{bottom:'20%',left:'15%'}}/>
-      <Shape sz={160} clr="#f1c40f" op={.1} style={{bottom:'40%',right:'25%'}}/>
-      {data.map((d,i)=>(
-        <Item key={i} t={d.title} c={d.content} o={open.includes(i)} tgl={()=>toggle(i)}/>
+    <Container>
+      {items.map((it,i)=>(
+        <div key={i}>
+          <DigitalButton
+            onClick={()=>setOpen(open===i?null:i)}
+            whileHover={{scale:1.02}}
+            whileTap={{scale:.98}}
+          >
+            {Array.from({length:10},(_,j)=>(
+              <RainDrop key={j} delay={j*.3} speed={2+Math.random()*2} style={{left:`${Math.random()*100}%`,transform:'translateY(-100%)'}}>
+                {Array.from({length:8},randChar).join('')}
+              </RainDrop>
+            ))}
+            {Array.from({length:20},(_,j)=>(
+              <DigitalCharacter key={j} delay={j*.1} style={{top:`${Math.random()*100}%`,left:`${Math.random()*100}%`}}>
+                {randChar()}
+              </DigitalCharacter>
+            ))}
+            <div style={{display:'flex',justifyContent:'space-between',alignItems:'center'}}>
+              <Title>{it.title}</Title>
+              <IconWrapper animate={{rotate:open===i?180:0}} transition={{type:'spring',stiffness:200}}>▼</IconWrapper>
+            </div>
+          </DigitalButton>
+          <AnimatePresence>
+            {open===i&&(
+              <ContentWrapper
+                initial={{height:0,opacity:0}}
+                animate={{height:'auto',opacity:1}}
+                exit={{height:0,opacity:0}}
+                transition={{duration:.3}}
+              >
+                <Content>{it.content}</Content>
+              </ContentWrapper>
+            )}
+          </AnimatePresence>
+        </div>
       ))}
-    </Bg>
+    </Container>
   )
 }
 
-/* demo */
-const Example = ()=>{
-  const data=[
-    {title:'Geometric Shapes',content:'Accordion with polygon elements.'},
-    {title:'Bold colors',content:'Vibrant geometric color scheme.'},
-    {title:'Modern design',content:'Contemporary flat design aesthetics.'}
-  ]
-  return <Accordion data={data}/>
-}
+const data=[
+  {title:'System Logs',content:'Initializing sequence... OK\nLoading modules... OK\nReady.'},
+  {title:'User Bio',content:'I hack code in neon green. Coffee level: 9000.'},
+  {title:'Contact',content:'mail@matrix.dev'}
+]
 
-render(<Example/>)
+render(<Accordion items={data} />)

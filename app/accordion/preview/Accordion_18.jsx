@@ -81,8 +81,8 @@ const Box = styled.div`
 `
 
 /* text */
-const Title = styled.span`font-size:1.125rem;font-weight:500;color:#3498db`
-const Icon  = styled(motion.div)`font-size:1.25rem;color:#3498db`
+const Title = styled.span`font-size:1.125rem;font-weight:500;color:#3498db z-index:1;`
+const Icon  = styled(motion.div)`font-size:1.25rem;color:#3498db z-index:1;`
 
 /* item */
 const Item = ({t,c,o,tgl})=>(
