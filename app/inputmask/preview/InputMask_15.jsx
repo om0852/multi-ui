@@ -1,4 +1,3 @@
-const { motion, AnimatePresence } = FramerMotion;
 
 const EmailInput = ({
   label = "Get Started",

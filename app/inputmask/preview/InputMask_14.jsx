@@ -1,5 +1,3 @@
-const { useState } = React;
-const { motion, AnimatePresence } = FramerMotion;
 
 const EmailInput = ({
   label = "Email Address",

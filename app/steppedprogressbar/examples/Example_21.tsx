@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { StepsRoot } from "../_components/SteppedProgressBar_21";
+import { StepsRoot } from "../tsx/SteppedProgressBar_21";
 
 const SteppedProgressBarExample21 = () => {
   // Define the steps for the photography workflow

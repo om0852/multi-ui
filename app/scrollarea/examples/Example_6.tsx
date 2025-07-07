@@ -1,6 +1,6 @@
 "use client";
 import React from 'react';
-import { ScrollAreaDemo } from '../_components/ScrollArea_6';
+import { ScrollAreaDemo } from '../tsx/ScrollArea_6';
 
 export default function ScrollAreaExample() {
   return (

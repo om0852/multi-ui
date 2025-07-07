@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { StepsRoot } from "../_components/SteppedProgressBar_28";
+import { StepsRoot } from "../tsx/SteppedProgressBar_28";
 
 const SteppedProgressBarExample28 = () => {
   // Define the steps for the data science workflow

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import DNAHelixSeparator from "../_components/Separator_11";
+import DNAHelixSeparator from "../tsx/Separator_11";
 
 const SeparatorExample = () => {
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">("horizontal");

@@ -1,4 +1,3 @@
-const { motion } = FramerMotion;
 
 const CurrencyInput = ({
   label = "Amount",

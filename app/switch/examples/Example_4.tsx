@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import SmoothSwitch from "../_components/Switch_4";
+import SmoothSwitch from "../tsx/Switch_4";
 
 const SwitchExample4 = () => {
   const [autoUpdateEnabled, setAutoUpdateEnabled] = useState(true);

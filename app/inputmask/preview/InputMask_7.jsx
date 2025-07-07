@@ -1,5 +1,3 @@
-const { useState } = React;
-const { motion } = FramerMotion;
 
 const MaskedInput = ({
   label = "CVV / CVC",

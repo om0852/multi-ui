@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import SoundWaveSeparator from "../_components/Separator_14";
+import SoundWaveSeparator from "../tsx/Separator_14";
 
 const SeparatorExample = () => {
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">("horizontal");

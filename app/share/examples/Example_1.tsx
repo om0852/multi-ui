@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import ShareButton from "../_components/Share_1";
+import ShareButton from "../tsx/Share_1";
 
 const ShareExample1 = () => {
   return (

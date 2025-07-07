@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import SwitchFive from "../_components/Switch_18";
+import SwitchFive from "../tsx/Switch_18";
 
 const SwitchExample18 = () => {
   const [lightingEnabled, setLightingEnabled] = useState(true);

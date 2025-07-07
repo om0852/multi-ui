@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Switch from "../_components/Switch_8";
+import Switch from "../tsx/Switch_8";
 
 const SwitchExample8 = () => {
   const [privacyEnabled, setPrivacyEnabled] = useState(true);

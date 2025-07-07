@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Skeleton from "../_components/Skeleton_1";
+import Skeleton from "../tsx/Skeleton_1";
 
 const SkeletonExample1 = () => {
   const [width, setWidth] = useState("200px");

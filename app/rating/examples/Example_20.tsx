@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from "react";
-import Rating from "../_components/Rating_20";
+import Rating from "../tsx/Rating_20";
 
 export default function RatingExample() {
   const [rating, setRating] = useState(0);

@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import SmoothSwitch from "../_components/Switch_13";
+import SmoothSwitch from "../tsx/Switch_13";
 
 const SwitchExample13 = () => {
   const [bluetoothEnabled, setBluetoothEnabled] = useState(true);

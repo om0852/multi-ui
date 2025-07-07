@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { StepsRoot } from "../_components/SteppedProgressBar_29";
+import { StepsRoot } from "../tsx/SteppedProgressBar_29";
 
 const SteppedProgressBarExample29 = () => {
   // Define the steps for the digital transformation process

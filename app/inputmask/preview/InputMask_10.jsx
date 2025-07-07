@@ -1,4 +1,3 @@
-const { motion, AnimatePresence } = FramerMotion;
 
 const BarcodeInput = ({
   label = "Scan Barcode",

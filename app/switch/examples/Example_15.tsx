@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import SwitchTwo from "../_components/Switch_15";
+import SwitchTwo from "../tsx/Switch_15";
 
 const SwitchExample15 = () => {
   const [musicEnabled, setMusicEnabled] = useState(true);

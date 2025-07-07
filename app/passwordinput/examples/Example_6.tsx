@@ -1,6 +1,6 @@
 "use client";
 import React, { useState } from 'react';
-import { PasswordInput } from '../_components/PasswordInput_6';
+import { PasswordInput } from '../tsx/PasswordInput_6';
 
 export default function PasswordInputExample() {
   const [password, setPassword] = useState('');

@@ -1,5 +1,3 @@
-const { useState } = React;
-const { motion } = FramerMotion;
 
 const IPAddressInput = ({
   label = "IP Address",

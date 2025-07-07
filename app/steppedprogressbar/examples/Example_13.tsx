@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { StepsRoot } from "../_components/SteppedProgressBar_13";
+import { StepsRoot } from "../tsx/SteppedProgressBar_13";
 
 const SteppedProgressBarExample13 = () => {
   // Define the steps for the product launch process

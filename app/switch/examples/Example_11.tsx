@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import SmoothSwitch from "../_components/Switch_11";
+import SmoothSwitch from "../tsx/Switch_11";
 
 const SwitchExample11 = () => {
   const [flameEffectEnabled, setFlameEffectEnabled] = useState(true);

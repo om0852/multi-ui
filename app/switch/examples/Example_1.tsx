@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Switch } from "../_components/Switch_1";
+import { Switch } from "../tsx/Switch_1";
 
 const SwitchExample1 = () => {
   const [featureEnabled, setFeatureEnabled] = useState(false);

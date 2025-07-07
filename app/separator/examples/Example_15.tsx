@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import MatrixRainSeparator from "../_components/Separator_15";
+import MatrixRainSeparator from "../tsx/Separator_15";
 
 const SeparatorExample = () => {
   const [orientation, setOrientation] = useState<"horizontal" | "vertical">("horizontal");
